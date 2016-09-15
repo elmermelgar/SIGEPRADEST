@@ -59,7 +59,7 @@ class DefaultController extends Controller
      */
     public function controlRedirectAction(){
             //return $this->render('::base.html.twig');*/
-        $rol=$this->getUser()->getIdtipousuario()->getIdtipousuario();
+        $rol=$this->getUser()->getIdrol()->getIdrol();
         if($rol==1)
             return $this->redirectToRoute('admin');
         if($rol==2)
@@ -71,10 +71,10 @@ class DefaultController extends Controller
         //return $this->redirectToRoute('interesado');
     }
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/admin/tipo_curso/create", name="admin")
      */
     public function adminAction(){
-        return $this->render(':default:funcion.html.twig');
+        return $this->render('AppBundle::a.html.twig');
     }
     /**
      * @Route("/admin/funcion", name="funcion")

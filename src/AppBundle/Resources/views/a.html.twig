@@ -1,1 +1,33 @@
-<h1>hola</h1>
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header" data-original-title>
+            <h2></span>Crear Nuevo Tipo Curso</h2>
+            <div class="box-icon">
+                <a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <form class="form-horizontal" action="">
+                <fieldset>
+                    <div class="control-group" style="margin: 0 auto; width: 50%;">
+                        <label class="control-label" for="prependedInput">Tipo Curso</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <input id="tipocurso" name="tipocurso" size="16" type="text">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-actions" style="text-align: center;">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button class="btn">Cancel</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div><!--/span-->
+
+</div><!--/row-->
+{% endblock %}

@@ -26,11 +26,11 @@ security:
                 path: logout
                 invalidate_session: true
                 target: login
-   # access_control:
-    #     - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-     #    - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
-      #   - { path: ^/admin, roles: ROLE_admin }
-       #  - { path: ^/interesado, roles: ROLE_interesado}
-        # - { path: ^/doctor, roles: ROLE_doctor }
-         #- { path: ^/alumno, roles: ROLE_alumno }
+    access_control:
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/admin, roles: ROLE_admin }
+         - { path: ^/interesado, roles: ROLE_interesado}
+         - { path: ^/doctor, roles: ROLE_doctor }
+         - { path: ^/alumno, roles: ROLE_alumno }
         # - { path: ^/admin, roles: ROLE_ADMINISTRADOR }
