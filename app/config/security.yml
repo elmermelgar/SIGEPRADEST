@@ -26,6 +26,7 @@ security:
                 path: logout
                 invalidate_session: true
                 target: login
+
    # access_control:
     #     - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
      #    - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
