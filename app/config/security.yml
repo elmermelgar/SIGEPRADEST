@@ -1,24 +1,36 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
-
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    encoders:
+        AppBundle\Entity\Usuario: bcrypt
+    #role_hierarchy:
+        #ROLE_ADMINISTRADOR:       [ROLE_ESTRATEGICO,ROLE_TACTICO]
+        #ROLE_ESTRATEGICO:       ROLE_TACTICO
+        # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
-
+        our_db_provider:
+                entity:
+                    class: AppBundle:Usuario
+                    property: nomusuario
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
+        login:
             anonymous: ~
-            # activate different ways to authenticate
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            form_login:
+                csrf_provider: security.csrf.token_manager
+                login_path: login
+                check_path: login_check
+                #nomusuario_parameter: _username
+                #password_parameter: _password
+                default_target_path: control_redirect
+            logout:
+                path: logout
+                invalidate_session: true
+                target: login
+    access_control:
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/admin, roles: ROLE_admin }
+         - { path: ^/interesado, roles: ROLE_interesado}
+         - { path: ^/doctor, roles: ROLE_doctor }
+         - { path: ^/alumno, roles: ROLE_alumno }
+        # - { path: ^/admin, roles: ROLE_ADMINISTRADOR }
