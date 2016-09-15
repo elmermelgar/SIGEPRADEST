@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="DetalleHorario" table="detalle_horario">
+    <indexes>
+      <index name="a_fk" columns="id_he"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="detalle_horario_pk" columns="id_dhe"/>
+    </unique-constraints>
+    <id name="idDhe" type="integer" column="id_dhe">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="horaDhe" type="time" column="hora_dhe" nullable="true"/>
+    <field name="fechaDhe" type="date" column="fecha_dhe" nullable="true"/>
+    <field name="ocupado" type="boolean" column="ocupado" nullable="true"/>
+    <many-to-one field="idHe" target-entity="HorarioEntrevista">
+      <join-columns>
+        <join-column name="id_he" referenced-column-name="id_he"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

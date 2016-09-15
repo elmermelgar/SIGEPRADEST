@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Empleados" table="empleados">
+    <unique-constraints>
+      <unique-constraint name="empleados_pk" columns="id_empleado"/>
+    </unique-constraints>
+    <id name="idEmpleado" type="string" column="id_empleado" length="13">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="dui" type="integer" column="dui" nullable="true"/>
+    <field name="nombreCompleto" type="string" column="nombre_completo" length="100" nullable="true"/>
+    <field name="primerApellido" type="string" column="primer_apellido" length="30" nullable="true"/>
+    <field name="srgundoApellido" type="string" column="srgundo_apellido" length="30" nullable="true"/>
+    <field name="apellidoCasada" type="string" column="apellido_casada" length="30" nullable="true"/>
+    <field name="primerNombre" type="string" column="primer_nombre" length="30" nullable="true"/>
+    <field name="segundoNombre" type="string" column="segundo_nombre" length="30" nullable="true"/>
+    <field name="activo" type="integer" column="activo" nullable="true"/>
+    <field name="tipoEmpleado" type="integer" column="tipo_empleado" nullable="true"/>
+    <field name="usuario" type="string" column="usuario" length="50" nullable="true"/>
+    <field name="password" type="string" column="password" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

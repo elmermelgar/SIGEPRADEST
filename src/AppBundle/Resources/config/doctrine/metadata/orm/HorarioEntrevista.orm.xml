@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="HorarioEntrevista" table="horario_entrevista">
+    <unique-constraints>
+      <unique-constraint name="horario_entrevista_pk" columns="id_he"/>
+    </unique-constraints>
+    <id name="idHe" type="integer" column="id_he">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="defecha" type="date" column="defecha" nullable="true"/>
+    <field name="afecha" type="date" column="afecha" nullable="true"/>
+  </entity>
+</doctrine-mapping>

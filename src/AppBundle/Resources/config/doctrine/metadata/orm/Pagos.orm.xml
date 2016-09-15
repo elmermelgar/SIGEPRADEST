@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Pagos" table="pagos">
+    <indexes>
+      <index name="m_fk" columns="id_dc"/>
+      <index name="a27_fk" columns="id_cuota"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="pagos_pk" columns="id_pagos"/>
+    </unique-constraints>
+    <id name="idPagos" type="integer" column="id_pagos">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fechaPago" type="date" column="fecha_pago" nullable="true"/>
+    <field name="cuotaDiferenciada" type="boolean" column="cuota_diferenciada" nullable="true"/>
+    <field name="montoPagado" type="decimal" column="monto_pagado" precision="10" scale="2" nullable="true"/>
+    <field name="recibo" type="string" column="recibo" length="200" nullable="true"/>
+    <many-to-one field="idDc" target-entity="DetalleCurso">
+      <join-columns>
+        <join-column name="id_dc" referenced-column-name="id_dc"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idCuota" target-entity="Cuotas">
+      <join-columns>
+        <join-column name="id_cuota" referenced-column-name="id_cuota"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="TipoCurso" table="tipo_curso">
+    <unique-constraints>
+      <unique-constraint name="tipo_curso_pk" columns="id_tc"/>
+    </unique-constraints>
+    <id name="idTc" type="integer" column="id_tc">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreTc" type="string" column="nombre_tc" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

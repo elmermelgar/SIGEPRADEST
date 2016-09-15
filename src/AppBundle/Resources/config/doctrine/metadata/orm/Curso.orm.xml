@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Curso" table="curso">
+    <indexes>
+      <index name="o_fk" columns="id_tc"/>
+      <index name="v_fk" columns="id_hc"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="curso_pk" columns="id_curso"/>
+    </unique-constraints>
+    <id name="idCurso" type="integer" column="id_curso">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreCurso" type="string" column="nombre_curso" length="200" nullable="true"/>
+    <field name="cantAlumnosLimit" type="integer" column="cant_alumnos_limit" nullable="true"/>
+    <field name="textoInformativo" type="string" column="texto_informativo" length="400" nullable="true"/>
+    <field name="broshureInformativo" type="string" column="broshure_informativo" length="400" nullable="true"/>
+    <field name="numCuotas" type="integer" column="num_cuotas" nullable="true"/>
+    <field name="rutaPdf" type="string" column="ruta_pdf" length="200" nullable="true"/>
+    <many-to-one field="idTc" target-entity="TipoCurso">
+      <join-columns>
+        <join-column name="id_tc" referenced-column-name="id_tc"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idHc" target-entity="HorarioCurso">
+      <join-columns>
+        <join-column name="id_hc" referenced-column-name="id_hc"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="idDoctores" target-entity="Doctores" inversed-by="idCurso">
+      <join-table name="d1">
+        <join-columns>
+          <join-column name="id_curso" referenced-column-name="id_curso"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="id_doctores" referenced-column-name="id_doctores"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

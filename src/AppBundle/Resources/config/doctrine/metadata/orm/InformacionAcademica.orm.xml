@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="InformacionAcademica" table="informacion_academica">
+    <indexes>
+      <index name="relationship_12_fk" columns="id_solicitud1"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="informacion_academica_pk" columns="id_ifacad"/>
+    </unique-constraints>
+    <id name="idIfacad" type="integer" column="id_ifacad">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="institucion" type="string" column="institucion" length="100" nullable="true"/>
+    <field name="titulo" type="string" column="titulo" length="100" nullable="true"/>
+    <field name="fechaObtenido" type="date" column="fecha_obtenido" nullable="true"/>
+    <many-to-one field="idSolicitud1" target-entity="Solicitud">
+      <join-columns>
+        <join-column name="id_solicitud1" referenced-column-name="id_solicitud1"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

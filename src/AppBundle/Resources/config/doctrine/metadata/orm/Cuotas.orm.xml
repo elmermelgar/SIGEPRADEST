@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Cuotas" table="cuotas">
+    <indexes>
+      <index name="s_fk" columns="id_curso"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="cuotas_pk" columns="id_cuota"/>
+    </unique-constraints>
+    <id name="idCuota" type="integer" column="id_cuota">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="cuota" type="string" column="cuota" length="20" nullable="true"/>
+    <field name="monto" type="decimal" column="monto" precision="10" scale="2" nullable="true"/>
+    <many-to-one field="idCurso" target-entity="Curso">
+      <join-columns>
+        <join-column name="id_curso" referenced-column-name="id_curso"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

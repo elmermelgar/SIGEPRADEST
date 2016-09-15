@@ -1,0 +1,312 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Usuario
+ *
+ * @ORM\Table(name="usuario", uniqueConstraints={@ORM\UniqueConstraint(name="usuario_pk", columns={"id_ui"})}, indexes={@ORM\Index(name="d_fk", columns={"id_empleado"}), @ORM\Index(name="e_fk", columns={"id_rol"})})
+ * @ORM\Entity
+ */
+class Usuario
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_ui", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="usuario_id_ui_seq", allocationSize=1, initialValue=1)
+     */
+    private $idUi;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=40, nullable=true)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apellido", type="string", length=40, nullable=true)
+     */
+    private $apellido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correo", type="string", length=50, nullable=true)
+     */
+    private $correo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=9, nullable=true)
+     */
+    private $telefono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomusuario", type="string", length=50, nullable=true)
+     */
+    private $nomusuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=30, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="isactive", type="integer", nullable=true)
+     */
+    private $isactive;
+
+    /**
+     * @var \Empleados
+     *
+     * @ORM\ManyToOne(targetEntity="Empleados")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_empleado", referencedColumnName="id_empleado")
+     * })
+     */
+    private $idEmpleado;
+
+    /**
+     * @var \Roles
+     *
+     * @ORM\ManyToOne(targetEntity="Roles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_rol", referencedColumnName="id_rol")
+     * })
+     */
+    private $idRol;
+
+
+
+    /**
+     * Get idUi
+     *
+     * @return integer 
+     */
+    public function getIdUi()
+    {
+        return $this->idUi;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Usuario
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellido
+     *
+     * @param string $apellido
+     * @return Usuario
+     */
+    public function setApellido($apellido)
+    {
+        $this->apellido = $apellido;
+
+        return $this;
+    }
+
+    /**
+     * Get apellido
+     *
+     * @return string 
+     */
+    public function getApellido()
+    {
+        return $this->apellido;
+    }
+
+    /**
+     * Set correo
+     *
+     * @param string $correo
+     * @return Usuario
+     */
+    public function setCorreo($correo)
+    {
+        $this->correo = $correo;
+
+        return $this;
+    }
+
+    /**
+     * Get correo
+     *
+     * @return string 
+     */
+    public function getCorreo()
+    {
+        return $this->correo;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     * @return Usuario
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string 
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set nomusuario
+     *
+     * @param string $nomusuario
+     * @return Usuario
+     */
+    public function setNomusuario($nomusuario)
+    {
+        $this->nomusuario = $nomusuario;
+
+        return $this;
+    }
+
+    /**
+     * Get nomusuario
+     *
+     * @return string 
+     */
+    public function getNomusuario()
+    {
+        return $this->nomusuario;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Usuario
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set isactive
+     *
+     * @param integer $isactive
+     * @return Usuario
+     */
+    public function setIsactive($isactive)
+    {
+        $this->isactive = $isactive;
+
+        return $this;
+    }
+
+    /**
+     * Get isactive
+     *
+     * @return integer 
+     */
+    public function getIsactive()
+    {
+        return $this->isactive;
+    }
+
+    /**
+     * Set idEmpleado
+     *
+     * @param \AppBundle\Entity\Empleados $idEmpleado
+     * @return Usuario
+     */
+    public function setIdEmpleado(\AppBundle\Entity\Empleados $idEmpleado = null)
+    {
+        $this->idEmpleado = $idEmpleado;
+
+        return $this;
+    }
+
+    /**
+     * Get idEmpleado
+     *
+     * @return \AppBundle\Entity\Empleados 
+     */
+    public function getIdEmpleado()
+    {
+        return $this->idEmpleado;
+    }
+
+    /**
+     * Set idRol
+     *
+     * @param \AppBundle\Entity\Roles $idRol
+     * @return Usuario
+     */
+    public function setIdRol(\AppBundle\Entity\Roles $idRol = null)
+    {
+        $this->idRol = $idRol;
+
+        return $this;
+    }
+
+    /**
+     * Get idRol
+     *
+     * @return \AppBundle\Entity\Roles 
+     */
+    public function getIdRol()
+    {
+        return $this->idRol;
+    }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Idioma" table="idioma">
+    <indexes>
+      <index name="w_fk" columns="id_curriculum"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="idioma_pk" columns="id_idioma"/>
+    </unique-constraints>
+    <id name="idIdioma" type="integer" column="id_idioma">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="idioma" type="string" column="idioma" length="50" nullable="true"/>
+    <field name="comprensionAuditiva" type="string" column="comprension_auditiva" length="20" nullable="true"/>
+    <field name="expresionOral" type="string" column="expresion_oral" length="20" nullable="true"/>
+    <field name="expresionEscrita" type="string" column="expresion_escrita" length="20" nullable="true"/>
+    <field name="leguaMaterna" type="boolean" column="legua_materna" nullable="true"/>
+    <many-to-one field="idCurriculum" target-entity="Curriculum">
+      <join-columns>
+        <join-column name="id_curriculum" referenced-column-name="id_curriculum"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

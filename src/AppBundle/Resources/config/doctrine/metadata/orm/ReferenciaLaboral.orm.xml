@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ReferenciaLaboral" table="referencia_laboral">
+    <indexes>
+      <index name="y_fk" columns="id_curriculum"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="referencia_laboral_pk" columns="id_rf"/>
+    </unique-constraints>
+    <id name="idRf" type="integer" column="id_rf">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="descripcionRf" type="string" column="descripcion_rf" length="200" nullable="true"/>
+    <field name="personaRf" type="string" column="persona_rf" length="100" nullable="true"/>
+    <field name="telefonoRf" type="string" column="telefono_rf" length="9" nullable="true"/>
+    <field name="puestoRf" type="string" column="puesto_rf" length="60" nullable="true"/>
+    <field name="empresaOrigenRf" type="string" column="empresa_origen_rf" length="100" nullable="true"/>
+    <many-to-one field="idCurriculum" target-entity="Curriculum">
+      <join-columns>
+        <join-column name="id_curriculum" referenced-column-name="id_curriculum"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

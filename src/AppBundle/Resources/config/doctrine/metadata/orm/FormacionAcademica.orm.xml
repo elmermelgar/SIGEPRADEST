@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="FormacionAcademica" table="formacion_academica">
+    <indexes>
+      <index name="x_fk" columns="id_curriculum"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="formacion_academica_pk" columns="id_fa"/>
+    </unique-constraints>
+    <id name="idFa" type="integer" column="id_fa">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="tipoFa" type="string" column="tipo_fa" length="40" nullable="true"/>
+    <field name="institucionFa" type="string" column="institucion_fa" length="100" nullable="true"/>
+    <field name="fechaInicioFa" type="date" column="fecha_inicio_fa" nullable="true"/>
+    <field name="fechaFinFa" type="date" column="fecha_fin_fa" nullable="true"/>
+    <field name="formal" type="boolean" column="formal" nullable="true"/>
+    <field name="imgTitulo" type="string" column="img_titulo" length="200" nullable="true"/>
+    <many-to-one field="idCurriculum" target-entity="Curriculum">
+      <join-columns>
+        <join-column name="id_curriculum" referenced-column-name="id_curriculum"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="OtrasCompetencias" table="otras_competencias">
+    <indexes>
+      <index name="b1_fk" columns="id_curriculum"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="otras_competencias_pk" columns="id_oc"/>
+    </unique-constraints>
+    <id name="idOc" type="integer" column="id_oc">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="competencia" type="string" column="competencia" length="100" nullable="true"/>
+    <field name="descripcionComp" type="string" column="descripcion_comp" length="200" nullable="true"/>
+    <many-to-one field="idCurriculum" target-entity="Curriculum">
+      <join-columns>
+        <join-column name="id_curriculum" referenced-column-name="id_curriculum"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

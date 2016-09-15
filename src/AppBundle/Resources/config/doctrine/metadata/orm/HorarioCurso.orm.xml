@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="HorarioCurso" table="horario_curso">
+    <unique-constraints>
+      <unique-constraint name="horario_curso_pk" columns="id_hc"/>
+    </unique-constraints>
+    <id name="idHc" type="integer" column="id_hc">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fechaInicio" type="date" column="fecha_inicio" nullable="true"/>
+    <field name="fechaFin" type="date" column="fecha_fin" nullable="true"/>
+    <field name="inicioRecepDoc" type="date" column="inicio_recep_doc" nullable="true"/>
+    <field name="finRecepDoc" type="date" column="fin_recep_doc" nullable="true"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Expediente" table="expediente">
+    <indexes>
+      <index name="j_fk" columns="id_alumno"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="expediente_pk" columns="id_exp"/>
+    </unique-constraints>
+    <id name="idExp" type="integer" column="id_exp">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreExp" type="string" column="nombre_exp" length="100" nullable="true"/>
+    <field name="datosCarrera" type="string" column="datos_carrera" length="200" nullable="true"/>
+    <field name="genero" type="string" column="genero" length="15" nullable="true"/>
+    <field name="paisNacimiento" type="string" column="pais_nacimiento" length="30" nullable="true"/>
+    <field name="nacionalidad" type="string" column="nacionalidad" length="40" nullable="true"/>
+    <field name="fechaNaci" type="date" column="fecha_naci" nullable="true"/>
+    <field name="duiExp" type="string" column="dui_exp" length="11" nullable="true"/>
+    <field name="nitExp" type="string" column="nit_exp" length="17" nullable="true"/>
+    <field name="estadoCivilExp" type="string" column="estado_civil_exp" length="20" nullable="true"/>
+    <field name="situacionLaboral" type="string" column="situacion_laboral" length="50" nullable="true"/>
+    <field name="tipoEstudiante" type="string" column="tipo_estudiante" length="50" nullable="true"/>
+    <field name="direccionExp" type="string" column="direccion_exp" length="300" nullable="true"/>
+    <field name="deptoRecidencia" type="string" column="depto_recidencia" length="40" nullable="true"/>
+    <field name="municipioRecidencia" type="string" column="municipio_recidencia" length="40" nullable="true"/>
+    <field name="telefono" type="string" column="telefono" length="9" nullable="true"/>
+    <field name="emailExp" type="string" column="email_exp" length="50" nullable="true"/>
+    <field name="fechaTitulacion" type="date" column="fecha_titulacion" nullable="true"/>
+    <field name="fechaExpTitulo" type="date" column="fecha_exp_titulo" nullable="true"/>
+    <field name="institucionExp" type="string" column="institucion_exp" length="50" nullable="true"/>
+    <field name="bachillerato" type="string" column="bachillerato" length="40" nullable="true"/>
+    <field name="cambiosCarreraAprob" type="integer" column="cambios_carrera_aprob" nullable="true"/>
+    <field name="fechaRegistro" type="date" column="fecha_registro" nullable="true"/>
+    <many-to-one field="idAlumno" target-entity="Alumno">
+      <join-columns>
+        <join-column name="id_alumno" referenced-column-name="id_alumno"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

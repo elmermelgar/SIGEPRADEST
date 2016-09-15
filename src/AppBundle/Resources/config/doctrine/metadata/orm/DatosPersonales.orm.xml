@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="DatosPersonales" table="datos_personales">
+    <unique-constraints>
+      <unique-constraint name="datos_personales_pk" columns="id_dp"/>
+    </unique-constraints>
+    <id name="idDp" type="integer" column="id_dp">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="duiAlumno" type="string" column="dui_alumno" length="11" nullable="true"/>
+    <field name="nitAlumno" type="string" column="nit_alumno" length="19" nullable="true"/>
+    <field name="fechaNacimeitno" type="date" column="fecha_nacimeitno" nullable="true"/>
+    <field name="estadoCivil" type="string" column="estado_civil" length="30" nullable="true"/>
+    <field name="direccionParticular" type="string" column="direccion_particular" length="300" nullable="true"/>
+    <field name="lugarTrabajo" type="string" column="lugar_trabajo" length="100" nullable="true"/>
+    <field name="direccionTrabajo" type="string" column="direccion_trabajo" length="300" nullable="true"/>
+    <field name="telefonoMovil" type="string" column="telefono_movil" length="9" nullable="true"/>
+  </entity>
+</doctrine-mapping>

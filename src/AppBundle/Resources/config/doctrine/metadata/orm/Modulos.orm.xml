@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Modulos" table="modulos">
+    <indexes>
+      <index name="t_fk" columns="id_curso"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="modulos_pk" columns="id_modulo"/>
+    </unique-constraints>
+    <id name="idModulo" type="integer" column="id_modulo">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreModulo" type="string" column="nombre_modulo" length="50" nullable="true"/>
+    <many-to-one field="idCurso" target-entity="Curso">
+      <join-columns>
+        <join-column name="id_curso" referenced-column-name="id_curso"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

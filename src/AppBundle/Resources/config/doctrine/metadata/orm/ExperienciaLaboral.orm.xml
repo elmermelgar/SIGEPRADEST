@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ExperienciaLaboral" table="experiencia_laboral">
+    <indexes>
+      <index name="z_fk" columns="id_curriculum"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="experiencia_laboral_pk" columns="id_el"/>
+    </unique-constraints>
+    <id name="idEl" type="integer" column="id_el">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="institucionEl" type="string" column="institucion_el" length="100" nullable="true"/>
+    <field name="cargoEl" type="string" column="cargo_el" length="60" nullable="true"/>
+    <field name="paisEl" type="string" column="pais_el" length="60" nullable="true"/>
+    <field name="fechaInicioEl" type="date" column="fecha_inicio_el" nullable="true"/>
+    <field name="fechaFinEl" type="date" column="fecha_fin_el" nullable="true"/>
+    <field name="infoAdicionalEl" type="string" column="info_adicional_el" length="200" nullable="true"/>
+    <many-to-one field="idCurriculum" target-entity="Curriculum">
+      <join-columns>
+        <join-column name="id_curriculum" referenced-column-name="id_curriculum"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
