@@ -1,0 +1,49 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+
+    <ol class="breadcrumb">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Cosas</a></li>
+        <li class="active">Mas...</li>
+    </ol>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Form Element Examples
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6" style="margin: 0 auto;">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>Text Input</label>
+                                    <input class="form-control" />
+                                    <p class="help-block">Help text here.</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Submit Button</button>
+                                <button type="reset" class="btn btn-default">Reset Button</button>
+
+                            </form>
+
+
+
+                        </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+
+{% endblock %}

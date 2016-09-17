@@ -54,27 +54,12 @@ class DefaultController extends Controller
         echo 'Insertado';
         die();
     }*/
+
     /**
-     * @Route("/index", name="control_redirect")
-     */
-    public function controlRedirectAction(){
-            //return $this->render('::base.html.twig');*/
-        $rol=$this->getUser()->getIdrol()->getIdrol();
-        if($rol==1)
-            return $this->redirectToRoute('admin');
-        if($rol==2)
-            return $this->redirectToRoute('doctor');
-        if($rol==3)
-            return $this->redirectToRoute('alumno');
-        if($rol==4)
-            return $this->redirectToRoute('interesado');
-        //return $this->redirectToRoute('interesado');
-    }
-    /**
-     * @Route("/admin/tipo_curso/create", name="admin")
+     * @Route("/admin/tipo_curso/create", name="creartipocurso")
      */
     public function adminAction(){
-        return $this->render('AppBundle::a.html.twig');
+        return $this->render('AppBundle:Admin:tipo_curso.html.twig');
     }
     /**
      * @Route("/admin/funcion", name="funcion")
@@ -82,67 +67,18 @@ class DefaultController extends Controller
     public function funcionAction(){
         return $this->render(':default:funcion.html.twig');
     }
+
     /**
-     * @Route("/login", name="login")
+     * @Route("/admin/form", name="funcion")
      */
-    public function loginAction(Request $request)
-    {
-        $error = null;
-
-        $authenticationUtils = $this->get('security.authentication_utils');
-
-        //obtenemos el error del login si hay alguno
-        $error = $authenticationUtils->getLastAuthenticationError();
-
-        //obtenemos el ultimo nombre de usuario ingresado
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render(':login:login.html.twig',
-            array(
-                'last_username' => $lastUsername,
-                'error' => $error));
-
-        //Preguntar como redirigir de el formulario del login a otra pag.
-
+    public function formAction(){
+        return $this->render('AppBundle:Admin:formularios.html.twig');
     }
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route("/admin/tipo", name="tipo")
      */
-    public function loginCheckAction()
-    {
+    public function tipocursoAction(){
+        return $this->render('AppBundle:Admin:tipo_curso.html.twig');
     }
-    /**
-     * @Route("/interesado", name="interesado")
-     */
-    public function interesadoAction()
-    {
-        echo 'Zona de Interesado';
-        die();
-    }
-    /**
-     * @Route("/doctor", name="doctor")
-     */
-    public function doctorAction()
-    {
-        echo 'Zona de Doctor';
-        die();
-    }
-    /**
-     * @Route("/alumno", name="alumno")
-     */
-    public function alumnoAction()
-    {
-        echo 'Zona de Alumno';
-        die();
-    }
-    /**
-     * @Route("/logout", name="logout")
-     */
-    public function logoutAction()
-    {
-    }
-
-
-
 
 }

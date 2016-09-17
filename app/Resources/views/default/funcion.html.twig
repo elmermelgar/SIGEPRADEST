@@ -1,7 +1,11 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
 {% block body %}
-    <div id="wrapper">
-       <h1>Funciona esto Chelito</h1>
-    </div>
+       <ol class="breadcrumb">
+              <li><a href="#">Inicio</a></li>
+              <li><a href="#">Cosas</a></li>
+              <li class="active">Mas...</li>
+       </ol>
+       <h2>Funciona esto Chelito</h2>
+
 {% endblock %}
