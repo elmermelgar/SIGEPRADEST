@@ -1,0 +1,57 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+<div class="col-md-12">
+    <ol class="breadcrumb">
+        <li><a href="{{ path('admin') }}">Inicio</a></li>
+        <li class="active">Usuarios</li>
+    </ol>
+    <h2>Usuarios</h2>
+</div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Usuarios del Sistema <a href="{{ path('empleados') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Agregar Nuevo Usuario</a>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>ID Empleado</th>
+                            <th>Correo</th>
+                            <th>Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for usuarios in usuarios %}
+                        <tr>
+                            <td>{{ usuarios.idUi }}</td>
+                            <td>{{ usuarios.nombre }}</td>
+                            <td>{{ usuarios.apellido }}</td>
+                            <td>{{ usuarios.idEmpleado }}</td>
+                            <td>{{ usuarios.correo }}</td>
+                            <td>{{ usuarios.nomusuario }}</td>
+                            <td style="text-align: center;">
+                                <a href="#" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                -
+                                <a href="#" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+                            </td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End  Kitchen Sink -->
+    </div>
+{% endblock %}

@@ -73,12 +73,9 @@ class Usuario implements AdvancedUserInterface, \Serializable
     private $isactive;
 
     /**
-     * @var \Empleados
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Empleados")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_empleado", referencedColumnName="id_empleado")
-     * })
+     * @ORM\Column(name="id_empleado", type="string", length=13, nullable=true)
      */
     private $idEmpleado;
 
@@ -268,10 +265,10 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Set idEmpleado
      *
-     * @param \AppBundle\Entity\Empleados $idEmpleado
+     * @param string $idEmpleado
      * @return Usuario
      */
-    public function setIdEmpleado(\AppBundle\Entity\Empleados $idEmpleado = null)
+    public function setIdEmpleado($idEmpleado)
     {
         $this->idEmpleado = $idEmpleado;
 
@@ -281,7 +278,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get idEmpleado
      *
-     * @return \AppBundle\Entity\Empleados 
+     * @return string
      */
     public function getIdEmpleado()
     {
