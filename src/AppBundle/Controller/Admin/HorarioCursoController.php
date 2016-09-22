@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +23,7 @@ class HorarioCursoController extends Controller
      *
      * @Route("/", name="horario_curso")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/HorarioCurso:index.html.twig")
      */
     public function indexAction()
     {
@@ -40,7 +40,7 @@ class HorarioCursoController extends Controller
      *
      * @Route("/", name="horario_curso_create")
      * @Method("POST")
-     * @Template("AppBundle:HorarioCurso:new.html.twig")
+     * @Template("AppBundle:Admin/HorarioCurso:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -86,7 +86,7 @@ class HorarioCursoController extends Controller
      *
      * @Route("/new", name="horario_curso_new")
      * @Method("GET")
-     * @Template()
+     *  @Template("AppBundle:Admin/HorarioCurso:new.html.twig")
      */
     public function newAction()
     {
@@ -129,7 +129,7 @@ class HorarioCursoController extends Controller
      *
      * @Route("/{id}/edit", name="horario_curso_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/HorarioCurso:edit.html.twig")
      */
     public function editAction($id)
     {
@@ -152,16 +152,16 @@ class HorarioCursoController extends Controller
     }
 
     /**
-    * Creates a form to edit a HorarioCurso entity.
-    *
-    * @param HorarioCurso $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a HorarioCurso entity.
+     *
+     * @param HorarioCurso $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(HorarioCurso $entity)
     {
         $form = $this->createForm(new HorarioCursoType(), $entity, array(
-            'action' => $this->generateUrl('horario_curso_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('horario_curso_update', array('id' => $entity->getIdHc())),
             'method' => 'PUT',
         ));
 
@@ -174,7 +174,7 @@ class HorarioCursoController extends Controller
      *
      * @Route("/{id}", name="horario_curso_update")
      * @Method("PUT")
-     * @Template("AppBundle:HorarioCurso:edit.html.twig")
+     * @Template("AppBundle:Admin/HorarioCurso:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -242,6 +242,6 @@ class HorarioCursoController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
-        ;
+            ;
     }
 }

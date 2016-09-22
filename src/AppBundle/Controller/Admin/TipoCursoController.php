@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +23,7 @@ class TipoCursoController extends Controller
      *
      * @Route("/", name="tipocurso")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/TipoCurso:index.html.twig")
      */
     public function indexAction()
     {
@@ -40,7 +40,7 @@ class TipoCursoController extends Controller
      *
      * @Route("/", name="tipocurso_create")
      * @Method("POST")
-     * @Template("AppBundle:TipoCurso:new.html.twig")
+     * @Template("AppBundle:Admin/TipoCurso:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -86,7 +86,7 @@ class TipoCursoController extends Controller
      *
      * @Route("/new", name="tipocurso_new")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/TipoCurso:new.html.twig")
      */
     public function newAction()
     {
@@ -104,7 +104,7 @@ class TipoCursoController extends Controller
      *
      * @Route("/{id}", name="tipocurso_show")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/TipoCurso:show.html.twig")
      */
     public function showAction($id)
     {
@@ -129,7 +129,7 @@ class TipoCursoController extends Controller
      *
      * @Route("/{id}/edit", name="tipocurso_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/TipoCurso:edit.html.twig")
      */
     public function editAction($id)
     {
@@ -152,16 +152,16 @@ class TipoCursoController extends Controller
     }
 
     /**
-    * Creates a form to edit a TipoCurso entity.
-    *
-    * @param TipoCurso $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a TipoCurso entity.
+     *
+     * @param TipoCurso $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(TipoCurso $entity)
     {
         $form = $this->createForm(new TipoCursoType(), $entity, array(
-            'action' => $this->generateUrl('tipocurso_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('tipocurso_update', array('id' => $entity->getIdTc())),
             'method' => 'PUT',
         ));
 
@@ -174,7 +174,7 @@ class TipoCursoController extends Controller
      *
      * @Route("/{id}", name="tipocurso_update")
      * @Method("PUT")
-     * @Template("AppBundle:TipoCurso:edit.html.twig")
+     * @Template("AppBundle:Admin/TipoCurso:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -242,6 +242,6 @@ class TipoCursoController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
-        ;
+            ;
     }
 }
