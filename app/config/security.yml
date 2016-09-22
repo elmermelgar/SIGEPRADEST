@@ -28,6 +28,7 @@ security:
                 target: login
     access_control:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
          - { path: ^/admin, roles: ROLE_admin }
          - { path: ^/interesado, roles: ROLE_interesado}
