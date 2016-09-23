@@ -1,0 +1,77 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li class="active">Cursos</li>
+        </ol>
+        <h2>Cursos</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Cursos Disponibles <a href="{{ path('createCurso') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Agregar Nuevo Curso</a>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Alumnos</th>
+                            <th>Descripcion</th>
+                            <th>Informacion</th>
+                            <th>Cuotas</th>
+                            <th>Doctores</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for cursos in cursos %}
+                            <tr>
+                                <td>{{ cursos.idCurso }}</td>
+                                <td>{{ cursos.nombreCurso }}</td>
+                                <td>{{ cursos.cantAlumnosLimit }}</td>
+                                <td>{{ cursos.textoInformativo }}</td>
+                                <td>{{ cursos.broshureInformativo }}</td>
+                                <td>{{ cursos.numCuotas }}</td>
+                                <td>#</td>
+                                <td style="text-align: center;">
+                                    <a href="{{ asset('/admin/curso_edit') }}/{{ cursos.idCurso }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                    -
+                                    <button onClick="confirmar()" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End  Kitchen Sink -->
+    </div>
+    
+    {% for cursos in cursos %}
+        <script>
+
+            function confirmar(){
+                //un confirm
+                alertify.confirm("<p>Esta seguro que desea eliminar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                    if (e) {
+                        location.href="{{ asset('app_dev.php/delete') }}/{{ cursos.idCurso }}";
+                    } else { alertify.error("Has cancelado la operacion");
+                    }
+                });
+                return false
+            }
+
+        </script>
+    {% endfor %}
+
+{% endblock %}
