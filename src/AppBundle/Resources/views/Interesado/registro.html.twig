@@ -33,32 +33,36 @@
                     <strong>  Nuevo Usuario </strong>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" action="{{ path('register') }}" method="post">
                         <br/>
                         <div class="form-group input-group">
                             <span class="input-group-addon"><i class="fa fa-circle-o-notch"  ></i></span>
-                            <input type="text" class="form-control" placeholder="Your Name" />
+                            <input type="text" class="form-control" placeholder="Nombre" name="nombre" value="{{ interesado.nombre }}" />
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="fa fa-circle-o-notch"  ></i></span>
+                            <input type="text" class="form-control" placeholder="Apellido" name="apellido" value="{{ interesado.apellido }}" />
                         </div>
                         <div class="form-group input-group">
                             <span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
-                            <input type="text" class="form-control" placeholder="Desired Username" />
+                            <input type="text" class="form-control" placeholder="Usuario" name="usuario" value="{{ interesado.nomusuario }}" />
                         </div>
                         <div class="form-group input-group">
                             <span class="input-group-addon">@</span>
-                            <input type="text" class="form-control" placeholder="Your Email" />
+                            <input type="text" class="form-control" placeholder="Correo electrónico" name="email" value="{{ interesado.correo }}" />
                         </div>
                         <div class="form-group input-group">
                             <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-                            <input type="password" class="form-control" placeholder="Enter Password" />
+                            <input type="password" class="form-control" placeholder="Password" name="password" value="{{ interesado.password }}" />
                         </div>
                         <div class="form-group input-group">
                             <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-                            <input type="password" class="form-control" placeholder="Retype Password" />
+                            <input type="password" class="form-control" placeholder="Ingresar Password otra vez" />
                         </div>
 
                         <button type="submit" class="btn btn-success ">Registrarme</button>
                         <hr />
-                        Ya esta Resgistrado ?  <a href="login.html" >Iniciar Sesión</a>
+                        Ya esta Resgistrado ?  <a href="{{ path('login') }}" >Iniciar Sesión</a>
                     </form>
                 </div>
 

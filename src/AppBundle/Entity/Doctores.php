@@ -36,15 +36,6 @@ class Doctores
      */
     private $turno;
 
-    /**
-     * @var \Empleados
-     *
-     * @ORM\ManyToOne(targetEntity="Empleados")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_empleado", referencedColumnName="id_empleado")
-     * })
-     */
-    private $idEmpleado;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -116,29 +107,6 @@ class Doctores
     public function getTurno()
     {
         return $this->turno;
-    }
-
-    /**
-     * Set idEmpleado
-     *
-     * @param \AppBundle\Entity\Empleados $idEmpleado
-     * @return Doctores
-     */
-    public function setIdEmpleado(\AppBundle\Entity\Empleados $idEmpleado = null)
-    {
-        $this->idEmpleado = $idEmpleado;
-
-        return $this;
-    }
-
-    /**
-     * Get idEmpleado
-     *
-     * @return \AppBundle\Entity\Empleados 
-     */
-    public function getIdEmpleado()
-    {
-        return $this->idEmpleado;
     }
 
     /**

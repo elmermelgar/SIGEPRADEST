@@ -12,6 +12,13 @@ class DefaultController extends Controller
 {
 
     /**
+     * @Route("/", name="index")
+     */
+    public function indexAction(){
+        return $this->render('AppBundle:Principal:index.html.twig');
+    }
+
+    /**
      * @Route("/sql",name="sql")
      */
     public function sqlAction(){

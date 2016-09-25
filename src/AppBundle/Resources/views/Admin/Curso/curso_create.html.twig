@@ -1,0 +1,119 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
+            <li class="active">Crear</li>
+        </ol>
+        <h2>Crear Nuevo Curso</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+
+            <div class="box-content">
+                <form class="form-horizontal" action="{{ path('createCurso') }}" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <div class="control-group" style="margin: 0 auto; width: 50%;">
+                            <label class="control-label" for="prependedInput">Horario Curso</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <select id="hc" name="hc"class="form-control">
+                                            {% for hc in hc %}
+                                        <option  value="{{ hc.idHc}}">{{ hc.idHc }}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="control-group" style="margin: 0 auto; width: 50%;">
+                            <label class="control-label" for="prependedInput">Tipo Curso</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <select id="tc" name="tc" class="form-control">
+                                        {% for tc in tc %}
+                                        <option  value="{{ tc.idTc }}">{{ tc.nombreTc }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="control-group" style="margin: 0 auto; width: 50%;">
+                            <label class="control-label" for="prependedInput">Nombre Curso</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <input id="nombrecurso" name="nombrecurso" size="16" type="text" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="control-group" style="margin: 0 auto; width: 50%;">
+                            <label class="control-label" for="prependedInput">Cantidad de Alumnos</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <input id="cant_alum" name="cant_alum" size="16" type="number" min="1" placeholder="Numero" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="control-group" style="margin: 0 auto; width: 50%;">
+                            <label class="control-label" for="prependedInput">Descripcion Informacion</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <textarea name="des_info" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="control-group" style="margin: 0 auto; width: 50%;">
+                            <label class="control-label" for="prependedInput">Broschure Informacion</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <input type="file" required name="imagen">
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="control-group" style="margin: 0 auto; width: 50%;">
+                            <label class="control-label" for="prependedInput">Numero de Cuotas</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <input id="nun_cuo" name="nun_cuo" size="16" type="number" min="1" placeholder="Numero" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="control-group" style="margin: 0 auto; width: 50%;">
+                            <label class="control-label" for="prependedInput">Ruta PDF</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <input type="file" required name="archivo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button class="btn">Cancel</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div><!--/span-->
+
+    </div><!--/row-->
+{% endblock %}
