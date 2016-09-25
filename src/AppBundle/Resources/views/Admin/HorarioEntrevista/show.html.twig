@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>HorarioEntrevista</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idhe</th>
+                <td>{{ entity.idHe }}</td>
+            </tr>
+            <tr>
+                <th>Defecha</th>
+                <td>{{ entity.defecha|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Afecha</th>
+                <td>{{ entity.afecha|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('horarioentrevista') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('horarioentrevista_edit', { 'id': entity.idHe }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>HorarioEntrevista list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idhe</th>
+                <th>Defecha</th>
+                <th>Afecha</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('horarioentrevista_show', { 'id': entity.idHe }) }}">{{ entity.idHe }}</a></td>
+                <td>{% if entity.defecha %}{{ entity.defecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.afecha %}{{ entity.afecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('horarioentrevista_show', { 'id': entity.idHe }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('horarioentrevista_edit', { 'id': entity.idHe }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('horarioentrevista_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
