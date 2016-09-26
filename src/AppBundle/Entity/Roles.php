@@ -35,7 +35,7 @@ class Roles implements RoleInterface
     /**
      * Get idRol
      *
-     * @return integer 
+     * @return integer
      */
     public function getIdRol()
     {
@@ -58,7 +58,7 @@ class Roles implements RoleInterface
     /**
      * Get nombreRol
      *
-     * @return string 
+     * @return string
      */
     public function getNombreRol()
     {

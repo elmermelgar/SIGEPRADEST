@@ -1,17 +1,17 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block styles %}
-    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
-    {% endblock %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block Header %}
-<div class="col-md-12">
-    <ol class="breadcrumb">
-        <li><a href="{{ path('admin') }}">Inicio</a></li>
-        <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
-        <li class="active">Empleados</li>
-    </ol>
-    <h2>Crear Nuevo Usuario</h2>
-</div>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
+            <li class="active">Empleados</li>
+        </ol>
+        <h2>Crear Nuevo Usuario</h2>
+    </div>
 {% endblock %}
 {% block body %}
     <div class="row">
@@ -36,14 +36,17 @@
                             </thead>
                             <tbody>
                             {% for empleados in empleados %}
-                            <tr class="odd gradeX">
-                                <td>{{ empleados.id_empleado }}</td>
-                                <td>{{ empleados.dui }}</td>
-                                <td>{{ empleados.nombre_completo }}</td>
-                                <td class="center">{% if empleados.tipo_empleado==1 %}Docente{% else %}Administrativo{% endif %}</td>
-                                <td class="center">{{ empleados.usuario }}</td>
-                                <td class="center"><a href="{{ asset('admin/usuario/create') }}/{{ empleados.usuario }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;">Crear</a></td>
-                            </tr>
+                                <tr class="odd gradeX">
+                                    <td>{{ empleados.id_empleado }}</td>
+                                    <td>{{ empleados.dui }}</td>
+                                    <td>{{ empleados.nombre_completo }}</td>
+                                    <td class="center">{% if empleados.tipo_empleado==1 %}Docente{% else %}Administrativo{% endif %}</td>
+                                    <td class="center">{{ empleados.usuario }}</td>
+                                    <td class="center"><a
+                                                href="{{ asset('admin/usuario/create') }}/{{ empleados.usuario }}"
+                                                title="Editar" class="btn btn-default"
+                                                style="background: #0AA5E2;color: #ffffff;">Crear</a></td>
+                                </tr>
                             {% endfor %}
                             </tbody>
                         </table>

@@ -25,6 +25,13 @@ class Usuario
     /**
      * @var string
      *
+     * @ORM\Column(name="id_empleado", type="string", length=13, nullable=true)
+     */
+    private $idEmpleado;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="nombre", type="string", length=40, nullable=true)
      */
     private $nombre;
@@ -60,7 +67,7 @@ class Usuario
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=30, nullable=true)
+     * @ORM\Column(name="password", type="string", length=200, nullable=true)
      */
     private $password;
 
@@ -70,16 +77,6 @@ class Usuario
      * @ORM\Column(name="isactive", type="integer", nullable=true)
      */
     private $isactive;
-
-    /**
-     * @var \Empleados
-     *
-     * @ORM\ManyToOne(targetEntity="Empleados")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_empleado", referencedColumnName="id_empleado")
-     * })
-     */
-    private $idEmpleado;
 
     /**
      * @var \Roles
@@ -101,6 +98,29 @@ class Usuario
     public function getIdUi()
     {
         return $this->idUi;
+    }
+
+    /**
+     * Set idEmpleado
+     *
+     * @param string $idEmpleado
+     * @return Usuario
+     */
+    public function setIdEmpleado($idEmpleado)
+    {
+        $this->idEmpleado = $idEmpleado;
+
+        return $this;
+    }
+
+    /**
+     * Get idEmpleado
+     *
+     * @return string 
+     */
+    public function getIdEmpleado()
+    {
+        return $this->idEmpleado;
     }
 
     /**
@@ -262,29 +282,6 @@ class Usuario
     public function getIsactive()
     {
         return $this->isactive;
-    }
-
-    /**
-     * Set idEmpleado
-     *
-     * @param \AppBundle\Entity\Empleados $idEmpleado
-     * @return Usuario
-     */
-    public function setIdEmpleado(\AppBundle\Entity\Empleados $idEmpleado = null)
-    {
-        $this->idEmpleado = $idEmpleado;
-
-        return $this;
-    }
-
-    /**
-     * Get idEmpleado
-     *
-     * @return \AppBundle\Entity\Empleados 
-     */
-    public function getIdEmpleado()
-    {
-        return $this->idEmpleado;
     }
 
     /**

@@ -1,15 +1,97 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Cita creation</h1>
-
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('cita') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{% extends'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
 {% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('cita') }}">Cita</a></li>
+            <li class="active">Nueva cita</li>
+        </ol>
+        <h2>Crear Nueva Cita</h2>
+    </div>
+{% endblock %}
+{% block body -%}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Advanced Tables -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    Formulario para el ingreso de una nueva cita
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            {{ form_start(form) }}
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> <label>Usuario Interesado </label> </label>
+                                    {{ form_widget(form.idUi,{"attr":{"class":"form-control"},"required":"required"}) }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label> <label>Horario entrevistas </label> </label>
+                                    {{ form_widget(form.idDhe  ,{"attr":{"class":"form-control"},"required":"required"}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> <label>Usuario Interesado </label> </label>
+                                    {{ form_widget(form.comentarioCita,{"attr":{"class":"form-control"},"required":"required"}) }}
+                                </div>
+                            </div>
+                              </table>
+                    </div>
+
+                    <div>
+                        <div class="col-md-12 col-md-offset-4">
+                        <form name="appbundle_cita" method="post" action="/sigepradest/web/app_dev.php/cita/">
+                            <div id="appbundle_cita">
+                                <div>
+                                    {#<button type="submit" id="appbundle_cita_submit" name="appbundle_cita[submit]"#}
+                                            {#style="width: 30%;"#}
+                                            {#class="btn btn-primary">Create#}
+                                    {#</button>#}
+
+                                    {#<button type="submit" id="appbundle_cita_submit" name="appbundle_cita[submit]">Create</button>#}
+
+                                    {#{{ form_widget(form.save,{"attr":{"class":"btn btn-primary"},"required":"required"}) }}#}
+                                    {#{{ form_end(form) }}#}
+
+
+
+
+                                    <div id="appbundle_cita">
+                                        <div>
+
+
+                                            <div><button type="submit" class="btn btn-primary" style="width: 30%;" id="appbundle_cita_submit" name="appbundle_cita[submit]">Guardar </button></div><input type="hidden" id="appbundle_cita__token" name="appbundle_cita[_token]" value="y_y6ber3dbqG8KxNqMWNx5I0JEUbcs7WrvU2XVQ4yKs">
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                              </div>
+                        </form>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    {#{{ form(form) }}#}
+{% endblock %}
+
+

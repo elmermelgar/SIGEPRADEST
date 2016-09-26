@@ -94,7 +94,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get idUi
      *
-     * @return integer 
+     * @return integer
      */
     public function getIdUi()
     {
@@ -117,7 +117,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get nombre
      *
-     * @return string 
+     * @return string
      */
     public function getNombre()
     {
@@ -140,7 +140,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get apellido
      *
-     * @return string 
+     * @return string
      */
     public function getApellido()
     {
@@ -163,7 +163,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get correo
      *
-     * @return string 
+     * @return string
      */
     public function getCorreo()
     {
@@ -186,7 +186,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get telefono
      *
-     * @return string 
+     * @return string
      */
     public function getTelefono()
     {
@@ -209,7 +209,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get nomusuario
      *
-     * @return string 
+     * @return string
      */
     public function getNomusuario()
     {
@@ -232,7 +232,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -255,7 +255,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get isactive
      *
-     * @return integer 
+     * @return integer
      */
     public function getIsactive()
     {
@@ -301,7 +301,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get idRol
      *
-     * @return \AppBundle\Entity\Roles 
+     * @return \AppBundle\Entity\Roles
      */
     public function getIdRol()
     {
