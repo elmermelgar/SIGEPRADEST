@@ -4,12 +4,16 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Usuario
  *
  * @ORM\Table(name="usuario", uniqueConstraints={@ORM\UniqueConstraint(name="usuario_pk", columns={"id_ui"})}, indexes={@ORM\Index(name="d_fk", columns={"id_empleado"}), @ORM\Index(name="e_fk", columns={"id_rol"})})
  * @ORM\Entity
+ * @UniqueEntity("correo")
+ * @UniqueEntity("nomusuario")
  */
 class Usuario implements AdvancedUserInterface, \Serializable
 {
@@ -41,6 +45,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="correo", type="string", length=50, nullable=true)
+     * @Assert\NotBlank()
      */
     private $correo;
 
@@ -55,6 +60,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="nomusuario", type="string", length=50, nullable=true)
+     * @Assert\NotBlank()
      */
     private $nomusuario;
 

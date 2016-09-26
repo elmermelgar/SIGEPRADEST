@@ -22,8 +22,7 @@ class InteresadoController extends Controller
             $u->setNomusuario($request->get("usuario"));
             $u->setNombre($request->get("nombre"));
             //interesado = 4
-            //$u->setIdRol($em->getRepository('AppBundle:Roles')->find('4'));
-            $u->setIdRol('4');
+            $u->setIdRol($em->getRepository('AppBundle:Roles')->find('4'));
             $u->setCorreo($request->get("email"));
             $u->setApellido($request->get("apellido"));
             $u->setIsactive(1);
