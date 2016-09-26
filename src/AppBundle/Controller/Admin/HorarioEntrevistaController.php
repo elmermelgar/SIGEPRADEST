@@ -1,50 +1,50 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\HorarioCurso;
-use AppBundle\Form\HorarioCursoType;
+use AppBundle\Entity\HorarioEntrevista;
+use AppBundle\Form\HorarioEntrevistaType;
 
 /**
- * HorarioCurso controller.
+ * HorarioEntrevista controller.
  *
- * @Route("/horario_curso")
+ * @Route("/horarioentrevista")
  */
-class HorarioCursoController extends Controller
+class HorarioEntrevistaController extends Controller
 {
 
     /**
-     * Lists all HorarioCurso entities.
+     * Lists all HorarioEntrevista entities.
      *
-     * @Route("/", name="horario_curso")
+     * @Route("/", name="horarioentrevista")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/HorarioEntrevista:index.html.twig")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:HorarioCurso')->findAll();
+        $entities = $em->getRepository('AppBundle:HorarioEntrevista')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new HorarioCurso entity.
+     * Creates a new HorarioEntrevista entity.
      *
-     * @Route("/", name="horario_curso_create")
+     * @Route("/", name="horarioentrevista_create")
      * @Method("POST")
-     * @Template("AppBundle:HorarioCurso:new.html.twig")
+     * @Template("AppBundle:Admin/HorarioEntrevista:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new HorarioCurso();
+        $entity = new HorarioEntrevista();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +53,7 @@ class HorarioCursoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('horario_curso_show', array('id' => $entity->getIdHc())));
+            return $this->redirect($this->generateUrl('horarioentrevista_show', array('id' => $entity->getIdHe())));
         }
 
         return array(
@@ -63,16 +63,16 @@ class HorarioCursoController extends Controller
     }
 
     /**
-     * Creates a form to create a HorarioCurso entity.
+     * Creates a form to create a HorarioEntrevista entity.
      *
-     * @param HorarioCurso $entity The entity
+     * @param HorarioEntrevista $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(HorarioCurso $entity)
+    private function createCreateForm(HorarioEntrevista $entity)
     {
-        $form = $this->createForm(new HorarioCursoType(), $entity, array(
-            'action' => $this->generateUrl('horario_curso_create'),
+        $form = $this->createForm(new HorarioEntrevistaType(), $entity, array(
+            'action' => $this->generateUrl('horarioentrevista_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +82,15 @@ class HorarioCursoController extends Controller
     }
 
     /**
-     * Displays a form to create a new HorarioCurso entity.
+     * Displays a form to create a new HorarioEntrevista entity.
      *
-     * @Route("/new", name="horario_curso_new")
+     * @Route("/new", name="horarioentrevista_new")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/HorarioEntrevista:new.html.twig")
      */
     public function newAction()
     {
-        $entity = new HorarioCurso();
+        $entity = new HorarioEntrevista();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,20 +100,20 @@ class HorarioCursoController extends Controller
     }
 
     /**
-     * Finds and displays a HorarioCurso entity.
+     * Finds and displays a HorarioEntrevista entity.
      *
-     * @Route("/{id}", name="horario_curso_show")
+     * @Route("/{id}", name="horarioentrevista_show")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/HorarioEntrevista:show.html.twig")
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:HorarioCurso')->find($id);
+        $entity = $em->getRepository('AppBundle:HorarioEntrevista')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find HorarioCurso entity.');
+            throw $this->createNotFoundException('Unable to find HorarioEntrevista entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,20 +125,20 @@ class HorarioCursoController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing HorarioCurso entity.
+     * Displays a form to edit an existing HorarioEntrevista entity.
      *
-     * @Route("/{id}/edit", name="horario_curso_edit")
+     * @Route("/{id}/edit", name="horarioentrevista_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Admin/HorarioEntrevista:edit.html.twig")
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:HorarioCurso')->find($id);
+        $entity = $em->getRepository('AppBundle:HorarioEntrevista')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find HorarioCurso entity.');
+            throw $this->createNotFoundException('Unable to find HorarioEntrevista entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +152,16 @@ class HorarioCursoController extends Controller
     }
 
     /**
-    * Creates a form to edit a HorarioCurso entity.
+    * Creates a form to edit a HorarioEntrevista entity.
     *
-    * @param HorarioCurso $entity The entity
+    * @param HorarioEntrevista $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(HorarioCurso $entity)
+    private function createEditForm(HorarioEntrevista $entity)
     {
-        $form = $this->createForm(new HorarioCursoType(), $entity, array(
-            'action' => $this->generateUrl('horario_curso_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new HorarioEntrevistaType(), $entity, array(
+            'action' => $this->generateUrl('horarioentrevista_update', array('id' => $entity->getIdHe())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +170,20 @@ class HorarioCursoController extends Controller
         return $form;
     }
     /**
-     * Edits an existing HorarioCurso entity.
+     * Edits an existing HorarioEntrevista entity.
      *
-     * @Route("/{id}", name="horario_curso_update")
+     * @Route("/{id}", name="horarioentrevista_update")
      * @Method("PUT")
-     * @Template("AppBundle:HorarioCurso:edit.html.twig")
+     * @Template("AppBundle:Admin/HorarioEntrevista:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:HorarioCurso')->find($id);
+        $entity = $em->getRepository('AppBundle:HorarioEntrevista')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find HorarioCurso entity.');
+            throw $this->createNotFoundException('Unable to find HorarioEntrevista entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +193,7 @@ class HorarioCursoController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('horario_curso_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('horarioentrevista_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +203,9 @@ class HorarioCursoController extends Controller
         );
     }
     /**
-     * Deletes a HorarioCurso entity.
+     * Deletes a HorarioEntrevista entity.
      *
-     * @Route("/{id}", name="horario_curso_delete")
+     * @Route("/{id}", name="horarioentrevista_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +215,21 @@ class HorarioCursoController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:HorarioCurso')->find($id);
+            $entity = $em->getRepository('AppBundle:HorarioEntrevista')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find HorarioCurso entity.');
+                throw $this->createNotFoundException('Unable to find HorarioEntrevista entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('horario_curso'));
+        return $this->redirect($this->generateUrl('horarioentrevista'));
     }
 
     /**
-     * Creates a form to delete a HorarioCurso entity by id.
+     * Creates a form to delete a HorarioEntrevista entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +238,7 @@ class HorarioCursoController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('horario_curso_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('horarioentrevista_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

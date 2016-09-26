@@ -1,50 +1,51 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
+
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\TipoCurso;
-use AppBundle\Form\TipoCursoType;
+use AppBundle\Entity\Cita;
+use AppBundle\Form\CitaType;
 
 /**
- * TipoCurso controller.
+ * Cita controller.
  *
- * @Route("/tipocurso")
+ * @Route("/cita")
  */
-class TipoCursoController extends Controller
+class CitaController extends Controller
 {
 
     /**
-     * Lists all TipoCurso entities.
+     * Lists all Cita entities.
      *
-     * @Route("/", name="tipocurso")
+     * @Route("/", name="cita")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Interesado/Cita/index.html.twig")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:TipoCurso')->findAll();
+        $entities = $em->getRepository('AppBundle:Cita')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new TipoCurso entity.
+     * Creates a new Cita entity.
      *
-     * @Route("/", name="tipocurso_create")
+     * @Route("/", name="cita_create")
      * @Method("POST")
-     * @Template("AppBundle:TipoCurso:new.html.twig")
+     * @Template("@App/Interesado/Cita/new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new TipoCurso();
+        $entity = new Cita();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +54,7 @@ class TipoCursoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('tipocurso_show', array('id' => $entity->getIdTc())));
+            return $this->redirect($this->generateUrl('cita_show', array('id' => $entity->getIdCita())));
         }
 
         return array(
@@ -63,16 +64,16 @@ class TipoCursoController extends Controller
     }
 
     /**
-     * Creates a form to create a TipoCurso entity.
+     * Creates a form to create a Cita entity.
      *
-     * @param TipoCurso $entity The entity
+     * @param Cita $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(TipoCurso $entity)
+    private function createCreateForm(Cita $entity)
     {
-        $form = $this->createForm(new TipoCursoType(), $entity, array(
-            'action' => $this->generateUrl('tipocurso_create'),
+        $form = $this->createForm(new CitaType(), $entity, array(
+            'action' => $this->generateUrl('cita_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +83,15 @@ class TipoCursoController extends Controller
     }
 
     /**
-     * Displays a form to create a new TipoCurso entity.
+     * Displays a form to create a new Cita entity.
      *
-     * @Route("/new", name="tipocurso_new")
+     * @Route("/new", name="cita_new")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Interesado/Cita/new.html.twig")
      */
     public function newAction()
     {
-        $entity = new TipoCurso();
+        $entity = new Cita();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,20 +101,20 @@ class TipoCursoController extends Controller
     }
 
     /**
-     * Finds and displays a TipoCurso entity.
+     * Finds and displays a Cita entity.
      *
-     * @Route("/{id}", name="tipocurso_show")
+     * @Route("/{id}", name="cita_show")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Interesado/Cita/show.html.twig")
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:TipoCurso')->find($id);
+        $entity = $em->getRepository('AppBundle:Cita')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find TipoCurso entity.');
+            throw $this->createNotFoundException('Unable to find Cita entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,20 +126,20 @@ class TipoCursoController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing TipoCurso entity.
+     * Displays a form to edit an existing Cita entity.
      *
-     * @Route("/{id}/edit", name="tipocurso_edit")
+     * @Route("/{id}/edit", name="cita_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Interesado/Cita/edit.html.twig")
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:TipoCurso')->find($id);
+        $entity = $em->getRepository('AppBundle:Cita')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find TipoCurso entity.');
+            throw $this->createNotFoundException('Unable to find Cita entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +153,16 @@ class TipoCursoController extends Controller
     }
 
     /**
-    * Creates a form to edit a TipoCurso entity.
+    * Creates a form to edit a Cita entity.
     *
-    * @param TipoCurso $entity The entity
+    * @param Cita $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(TipoCurso $entity)
+    private function createEditForm(Cita $entity)
     {
-        $form = $this->createForm(new TipoCursoType(), $entity, array(
-            'action' => $this->generateUrl('tipocurso_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new CitaType(), $entity, array(
+            'action' => $this->generateUrl('cita_update', array('id' => $entity->getIdCita())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +171,20 @@ class TipoCursoController extends Controller
         return $form;
     }
     /**
-     * Edits an existing TipoCurso entity.
+     * Edits an existing Cita entity.
      *
-     * @Route("/{id}", name="tipocurso_update")
+     * @Route("/{id}", name="cita_update")
      * @Method("PUT")
-     * @Template("AppBundle:TipoCurso:edit.html.twig")
+     * @Template("@App/Interesado/Cita/edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:TipoCurso')->find($id);
+        $entity = $em->getRepository('AppBundle:Cita')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find TipoCurso entity.');
+            throw $this->createNotFoundException('Unable to find Cita entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +194,7 @@ class TipoCursoController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('tipocurso_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('cita_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +204,9 @@ class TipoCursoController extends Controller
         );
     }
     /**
-     * Deletes a TipoCurso entity.
+     * Deletes a Cita entity.
      *
-     * @Route("/{id}", name="tipocurso_delete")
+     * @Route("/{id}", name="cita_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +216,21 @@ class TipoCursoController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:TipoCurso')->find($id);
+            $entity = $em->getRepository('AppBundle:Cita')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find TipoCurso entity.');
+                throw $this->createNotFoundException('Unable to find Cita entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('tipocurso'));
+        return $this->redirect($this->generateUrl('cita'));
     }
 
     /**
-     * Creates a form to delete a TipoCurso entity by id.
+     * Creates a form to delete a Cita entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +239,7 @@ class TipoCursoController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('tipocurso_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('cita_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

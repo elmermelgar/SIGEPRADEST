@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Cita</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idcita</th>
+                <td>{{ entity.idCita }}</td>
+            </tr>
+            <tr>
+                <th>Comentariocita</th>
+                <td>{{ entity.comentarioCita }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('cita') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('cita_edit', { 'id': entity.idCita }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

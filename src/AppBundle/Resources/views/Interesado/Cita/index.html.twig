@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Cita list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idcita</th>
+                <th>Comentariocita</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('cita_show', { 'id': entity.idCita }) }}">{{ entity.idCita }}</a></td>
+                <td>{{ entity.comentarioCita }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('cita_show', { 'id': entity.idCita }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('cita_edit', { 'id': entity.idCita }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('cita_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
