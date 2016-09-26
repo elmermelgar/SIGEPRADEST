@@ -1,0 +1,40 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+    {% endblock %}
+{% block Header %}
+<div class="col-md-12">
+    <ol class="breadcrumb">
+        <li><a href="{{ path('admin') }}">Inicio</a></li>
+        <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
+        <li class="active">Doctores</li>
+    </ol>
+    <h2>Crear Nuevo Usuario</h2>
+    <form>
+        <select class="js-example-basic-multiple"  multiple="multiple" name="doc[]">
+                {% for empleados in empleados %}
+                    <option>{{ empleados.nombre_completo }}</option>
+                {% endfor %}
+        </select>
+    </form>
+</div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/assets/js/select2.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(".js-example-basic-multiple").select2();
+    </script>
+{% endblock %}
