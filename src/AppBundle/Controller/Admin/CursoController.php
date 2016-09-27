@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 class CursoController extends DSIController
@@ -30,13 +31,13 @@ class CursoController extends DSIController
     public function createCursoAction(Request $request)
     {
         $em=$this->getDoctrine()->getManager();
-        $hc=$em->getRepository("AppBundle:HorarioCurso")->findAll();
+        //$hc=$em->getRepository("AppBundle:HorarioCurso")->findAll();
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {
 
             if ($_FILES["imagen"]["error"] > 0 && $_FILES["archivo"]["error"] > 0)
-                return new Response('Error en subida de Imagen o del PDF');
+                return new Response('Error en subida de Imagen o de PDF');
 
             /*if ($_FILES["archivo"]["error"] > 0)
                 return new Response('Error en subida de PDF');*/
@@ -56,7 +57,7 @@ class CursoController extends DSIController
                         $nombrePDF=$nomCurso.$this->infoTipoImagen('archivo')[1];
 
                         //Recuperar valores encviados
-                        $hc = $request->get("hc");
+                        //$hc = $request->get("hc");
                         $tc = $request->get("tc");
                         $nom_cur = $request->get("nombrecurso");
                         $can_alum = $request->get("cant_alum");
@@ -67,7 +68,7 @@ class CursoController extends DSIController
 
                         //Proceso de almacenamiento de datos en entidad Curso
                         $curso=new Curso();
-                        $curso->setIdHc($em->getRepository("AppBundle:HorarioCurso")->find($hc));
+                        //$curso->setIdHc($em->getRepository("AppBundle:HorarioCurso")->find($hc));
                         $curso->setIdTc($em->getRepository("AppBundle:TipoCurso")->find($tc));
                         $curso->setNombreCurso($nom_cur);
                         $curso->setCantAlumnosLimit($can_alum);
@@ -85,7 +86,9 @@ class CursoController extends DSIController
                         $this->subirImagen('imagen',$nombreImagen);
                         //Subiendo el PDF
                         $this->subirPDF('archivo',$nombrePDF);
-                        return new Response("Curso creado correctamente!");
+
+                        $idcurso=$curso->getIdCurso();
+                        return $this->render("AppBundle:Admin/HorarioCurso:hc_create.html.twig",array("id"=>$idcurso,"nom"=>$nom_cur));
                     }
                 }
                 else
@@ -93,7 +96,7 @@ class CursoController extends DSIController
             }
         }
 
-        return $this->render("AppBundle:Admin/Curso:curso_create.html.twig",array("hc"=>$hc,"tc"=>$tc));
+        return $this->render("AppBundle:Admin/Curso:curso_create.html.twig",array("tc"=>$tc));
     }
 
     /**
@@ -170,9 +173,9 @@ class CursoController extends DSIController
 
 
     /**
-     * @Route("/admin/curso_delete",name="delete")
+     * @Route("/admin/curso_delete",name="delCurso")
      */
-    public  function deleteAction($idcurso, Request $request)
+    public function deleteAction($idcurso, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
         $curso=$em->getRepository('AppBundle:Curso')->find($idcurso);
@@ -192,4 +195,40 @@ class CursoController extends DSIController
 
     }
 
+    /**
+     * @Route("/admin/curso_add",name="addDoc")
+     */
+    public function addAction()
+    {
+        return new Response("Agregar Doc");
+    }
+
+    /**
+     * @Route("/admin/curso_horario",name="addHorario")
+     */
+    public function horarioAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+
+        if($request->isMethod("POST")) {
+
+
+            $hc=new HorarioCurso();
+
+            //Recuperar valores encviados y seteandolos
+            $hc->setFechaInicio(new \DateTime($request->get("fechaini")));
+            $hc->setFechaFin(new \DateTime($request->get("fechafin")));
+            $hc->setInicioRecepDoc(new \DateTime($request->get("fechainirec")));
+            $hc->setFinRecepDoc(new \DateTime($request->get("fechafinrec")));
+
+            //Persistir
+            $em->persist($hc);
+            //Guradar en la BD
+            $em->flush();
+
+            $this->updateCurso($hc->getIdHc(),$request->get("idCurso"));
+
+            return $this->redirectToRoute("verCurso");
+        }
+    }
 }

@@ -22,33 +22,6 @@
                     <fieldset>
                         <div class="col-md-6">
                         <div class="control-group" >
-                            <label class="control-label" for="prependedInput">Horario Curso</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <select id="hc" name="hc"class="form-control">
-                                            {% for hc in hc %}
-                                        <option  value="{{ hc.idHc}}">{{ hc.idHc }}</option>
-                                            {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="control-group" >
-                            <label class="control-label" for="prependedInput">Tipo Curso</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <select id="tc" name="tc" class="form-control">
-                                        {% for tc in tc %}
-                                        <option  value="{{ tc.idTc }}">{{ tc.nombreTc }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <br>
-                        <div class="control-group" >
                             <label class="control-label" for="prependedInput">Nombre Curso</label>
                             <div class="controls">
                                 <div class="input-prepend">
@@ -62,24 +35,41 @@
                             <label class="control-label" for="prependedInput">Cantidad de Alumnos</label>
                             <div class="controls">
                                 <div class="input-prepend">
-                                    <input id="cant_alum" class="form-control" name="cant_alum" size="16" type="number" min="1" placeholder="Numero" required>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-md-6">
-                        <div class="control-group" >
-                            <label class="control-label" for="prependedInput">Descripcion Informacion</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <textarea name="des_info" class="form-control" rows="2.5"></textarea>
+                                    <input id="cant_alum" class="form-control" name="cant_alum" size="16" type="number" min="8" placeholder="Numero" required>
                                 </div>
                             </div>
                         </div>
 
                         <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Descripcion Informacion</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <textarea name="des_info" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Tipo Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <select id="tc" name="tc" class="form-control">
+                                            {% for tc in tc %}
+                                                <option  value="{{ tc.idTc }}">{{ tc.nombreTc }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <br>
                         <div class="control-group" >
-                            <label class="control-label" for="prependedInput">Broschure Informacion</label>
+                            <label class="control-label" for="prependedInput">Broschure de Informacion (imagen)</label>
                             <div class="controls">
                                 <div class="input-prepend">
                                     <input type="file" required name="imagen">
@@ -88,7 +78,7 @@
                         </div>
                             <br>
                             <div class="control-group" >
-                                <label class="control-label" for="prependedInput">Ruta PDF</label>
+                                <label class="control-label" for="prependedInput">Archivo PDF</label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <input type="file" required name="archivo">

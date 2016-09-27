@@ -37,4 +37,14 @@ class DSIController extends Controller
     protected function subirPDF($archivo,$nombrePDF){
         move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\pdf\\".$nombrePDF);
     }
+
+    protected  function updateCurso($id_hc,$id_curso){
+        $sql="update curso set id_hc =:id_hc where id_curso=:id_curso";
+        $em=$this->getDoctrine()->getEntityManager();
+        $con=$em->getConnection();
+        $st=$con->prepare($sql);
+        $st->bindValue("id_hc",$id_hc);
+        $st->bindValue("id_curso",$id_curso);
+        $st->execute();
+    }
 }
