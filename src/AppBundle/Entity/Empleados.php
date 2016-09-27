@@ -95,7 +95,11 @@ class Empleados
     /**
      * @var string
      *
+<<<<<<< HEAD
      * @ORM\Column(name="password", type="string", length=50, nullable=true)
+=======
+     * @ORM\Column(name="password", type="string", length=200, nullable=true)
+>>>>>>> 3daae07b9f65b91e66a78b4a74a8b26c1d8e84c3
      */
     private $password;
 

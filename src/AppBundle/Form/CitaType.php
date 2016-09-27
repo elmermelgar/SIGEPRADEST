@@ -15,14 +15,15 @@ class CitaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('idUi', 'entity',array('class'=>'AppBundle\Entity\Usuario','property'=>'nombre'))
+            ->add('idDhe','entity',array('class'=>'AppBundle\Entity\DetalleHorario','choice_label' =>
+                function ($idDhe) {return $idDhe->getFechaDhe()->format('Y-m-d')." - ".$idDhe->getHoraDhe()->format('Y-m-d') ;  }
+            ))
+            ->add('comentarioCita','textarea')
 
-
-            ->add('idUi', 'entity',array('class'=>'AppBundle\Entity\Usuario','property'=>'idUi'))
-            ->add('idDhe','entity',array('class'=>'AppBundle\Entity\DetalleHorario','property'=>'idDhe'))
-            ->add('comentarioCita')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

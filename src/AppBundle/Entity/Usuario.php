@@ -4,12 +4,16 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Usuario
  *
  * @ORM\Table(name="usuario", uniqueConstraints={@ORM\UniqueConstraint(name="usuario_pk", columns={"id_ui"})}, indexes={@ORM\Index(name="d_fk", columns={"id_empleado"}), @ORM\Index(name="e_fk", columns={"id_rol"})})
  * @ORM\Entity
+ * @UniqueEntity("correo")
+ * @UniqueEntity("nomusuario")
  */
 class Usuario implements AdvancedUserInterface, \Serializable
 {
@@ -41,6 +45,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="correo", type="string", length=50, nullable=true)
+     * @Assert\NotBlank()
      */
     private $correo;
 
@@ -55,6 +60,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="nomusuario", type="string", length=50, nullable=true)
+     * @Assert\NotBlank()
      */
     private $nomusuario;
 
@@ -94,7 +100,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get idUi
      *
-     * @return integer 
+     * @return integer
      */
     public function getIdUi()
     {
@@ -117,7 +123,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get nombre
      *
-     * @return string 
+     * @return string
      */
     public function getNombre()
     {
@@ -140,7 +146,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get apellido
      *
-     * @return string 
+     * @return string
      */
     public function getApellido()
     {
@@ -163,7 +169,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get correo
      *
-     * @return string 
+     * @return string
      */
     public function getCorreo()
     {
@@ -186,7 +192,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get telefono
      *
-     * @return string 
+     * @return string
      */
     public function getTelefono()
     {
@@ -209,7 +215,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get nomusuario
      *
-     * @return string 
+     * @return string
      */
     public function getNomusuario()
     {
@@ -232,7 +238,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -255,7 +261,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get isactive
      *
-     * @return integer 
+     * @return integer
      */
     public function getIsactive()
     {
@@ -301,7 +307,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * Get idRol
      *
-     * @return \AppBundle\Entity\Roles 
+     * @return \AppBundle\Entity\Roles
      */
     public function getIdRol()
     {

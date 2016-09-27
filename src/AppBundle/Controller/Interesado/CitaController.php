@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Admin;
+namespace AppBundle\Controller\Interesado;
 
 
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +14,7 @@ use AppBundle\Form\CitaType;
 /**
  * Cita controller.
  *
- * @Route("/cita")
+ * @Route("/Interesado/cita")
  */
 class CitaController extends Controller
 {
@@ -77,7 +77,8 @@ class CitaController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Create','attr'=>array('class'=>'btn btn-primary',
+            'style'=>"width: 30%" )));
 
         return $form;
     }
@@ -166,7 +167,8 @@ class CitaController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar','attr'=>array('class'=>'btn btn-primary',
+            'style'=>"width: 100%" )));
 
         return $form;
     }
@@ -241,7 +243,8 @@ class CitaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('cita_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar','attr'=>array('class'=>'btn btn-danger',
+                'style'=>"width: 100%;" )))
             ->getForm()
         ;
     }
