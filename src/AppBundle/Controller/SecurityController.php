@@ -90,4 +90,12 @@ class SecurityController extends Controller
         return $this->render('AppBundle:Alumno:index.html.twig');
     }
 
+    //Para envio de mensajes Flash
+    protected function MensajeFlash($nombre,$mensaje){
+        $this->get('session')->getFlashBag()->add(
+            ''.$nombre,
+            ''.$mensaje
+        );
+    }
+
 }

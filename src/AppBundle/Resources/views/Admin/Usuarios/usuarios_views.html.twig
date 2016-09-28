@@ -1,5 +1,6 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
+
 {% block Header %}
 <div class="col-md-12">
     <ol class="breadcrumb">
@@ -43,7 +44,7 @@
                             <td style="text-align: center;">
                                 <a href="#" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                 -
-                                <a href="#" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+                                <a href="{{ path('eliminar_usuario', {'id': usuarios.idUi }) }}" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
                             </td>
                         </tr>
                             {% endfor %}
@@ -54,4 +55,22 @@
         </div>
         <!-- End  Kitchen Sink -->
     </div>
+{% endblock %}
+{% block javascripts %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('exito') %}
+        <script>
+            window.onload = function notificacion(){
+                alertify.success("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
 {% endblock %}

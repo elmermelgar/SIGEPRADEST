@@ -14,9 +14,8 @@ class InteresadoController extends Controller
      * @Route("/interesado/register", name="register")
      */
     public function registerAction(Request $request){
-        if ($request->isMethod('POST'))
-        {
-            $em=$this->getDoctrine()->getManager("default");
+        if ($request->isMethod('POST')) {
+            $em = $this->getDoctrine()->getManager("default");
             //Creando usuario
             $u = new Usuario();
             $u->setNomusuario($request->get("usuario"));
@@ -26,16 +25,27 @@ class InteresadoController extends Controller
             $u->setCorreo($request->get("email"));
             $u->setApellido($request->get("apellido"));
             $u->setIsactive(1);
-            //Cifra la contrase?a
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($u);
-            $password = $encoder->encodePassword($request->get("password"), $u->getSalt());
-            $u->setPassword($password);
-            //Persistencia
-            $em->persist($u);
-            $em->flush();
-            //redireccionamiento
-            return $this->redirectToRoute('interesado');
+            //Verificar que no existan el usuario y el correo
+            $qb = $em->getRepository('AppBundle:Usuario')->createQueryBuilder('usr');
+            $qb->select('COUNT(usr)');
+            $qb->where('usr.nomusuario = :u or usr.correo = :c');
+            $qb->setParameter('u',$request->get("usuario"));
+            $qb->setParameter('c',$request->get("email"));
+            $count = $qb->getQuery()->getSingleScalarResult();
+            if (0 == $count) {
+                //Cifra la contrase?a
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($u);
+                $password = $encoder->encodePassword($request->get("password"), $u->getSalt());
+                $u->setPassword($password);
+                //Persistencia
+                $em->persist($u);
+                $em->flush();
+                //redireccionamiento
+                return $this->redirectToRoute('interesado');
+            }else{
+                return $this->render('AppBundle:Interesado:registro.html.twig', array('interesado' => $u));
+            }
         }else {
             $interesado = new Usuario();
             return $this->render('AppBundle:Interesado:registro.html.twig', array('interesado' => $interesado));
