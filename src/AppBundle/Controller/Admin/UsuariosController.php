@@ -7,8 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Controller\SecurityController;
 
-class UsuariosController extends Controller
+class UsuariosController extends SecurityController
 {
     /**
      * @Route("/admin/empleados", name="empleados")
@@ -76,7 +77,11 @@ class UsuariosController extends Controller
             $em2->persist($u);
             $em2->flush();
             //redireccionamiento
-            return $this->redirectToRoute("empleados");
+            $this->MensajeFlash('exito','Usuario creado correctamente!');
+
+            $em2=$this->getDoctrine()->getManager("default");
+            $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
+            return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
         }
         return $this->render('AppBundle:Admin/Usuarios:nuevo_usuario.html.twig', array(
             'empleado' => $result,'ide' =>$ide));
@@ -89,6 +94,24 @@ class UsuariosController extends Controller
         $em2=$this->getDoctrine()->getManager("default");
         $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
         return $this->render('AppBundle:Admin/Usuarios:usuarios_views.html.twig', array('usuarios'=>$usuarios));
+    }
+    /**
+     * @Route("/admin/usuario/delete/{id}", name="eliminar_usuario")
+     */
+    public function deleteUsuarioAction($id, Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $usuario=$em->getRepository('AppBundle:Usuario')->find($id);
+        if(!$usuario){
+            throw $this->createNotFoundException('No existe el usuario con el ID'.$id);
+        }
+        $em->remove($usuario);
+        $em->flush();
+        $this->MensajeFlash('exito','Usuario eliminado correctamente!');
+
+        $em2=$this->getDoctrine()->getManager("default");
+        $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
+        return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
     }
 
 }
