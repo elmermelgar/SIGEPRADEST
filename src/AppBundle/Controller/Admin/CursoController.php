@@ -33,11 +33,7 @@ class CursoController extends DSIController
         $em=$this->getDoctrine()->getManager();
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
 
-        $db = $em->getConnection();
-        $sql = "SELECT * FROM doctores";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $doc = $stmt->fetchAll();
+        $doc = $this->mostrarCursos();
 
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {
@@ -46,7 +42,6 @@ class CursoController extends DSIController
 
             else {
                 if($this->infoTipoImagen('imagen')[0]=='image' && $this->infoTipoImagen('archivo')[0]=='application')
-                //if($this->infoTipoImagen('imagen')[0]=='application')
                 {
                     $nomCurso=$request->get('nombrecurso');
 
@@ -75,6 +70,7 @@ class CursoController extends DSIController
                         $curso->setBroshureInformativo("img/brochure/".$nombreImagen);
                         $curso->setNumCuotas($nun_cuo);
                         $curso->setRutaPdf("img/pdf/".$nombrePDF);
+
                         //Persistir
                         $em->persist($curso);
 
@@ -90,15 +86,9 @@ class CursoController extends DSIController
 
                         //Manejando relacion de muchos a muchos
                         for ($i = 0; $i < count($array_doc); $i++) {
-                            $sql="INSERT INTO d1 (id_curso,id_doctores) values (:id_curso,:id_doctores)";
-                            $em=$this->getDoctrine()->getEntityManager();
-                            $con=$em->getConnection();
-                            $st=$con->prepare($sql);
-                            $st->bindValue("id_curso",$idcurso);
-                            $st->bindValue("id_doctores",$array_doc[$i]);
-                            $st->execute();
-                        }
 
+                            $this->manytomany($idcurso,$array_doc[$i]);
+                        }
                         return $this->render("AppBundle:Admin/HorarioCurso:hc_create.html.twig",array("id"=>$idcurso,"nom"=>$nom_cur));
                     }
                 }
@@ -117,18 +107,7 @@ class CursoController extends DSIController
     {
         $em=$this->getDoctrine()->getManager();
 
-        $db = $em->getConnection();
-        $sql = "SELECT * FROM doctores";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $doc = $stmt->fetchAll();
-
-        //Sacando Id_hc con ayuda del IdCurso
-        $db = $em->getConnection();
-        $sql = "select id_hc from horario_curso where id_hc = (select id_hc from curso where id_curso=$id) ";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $idhc = $stmt->fetch();
+        $doc=$this->mostrarCursos();
 
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
         $datos=$em->getRepository('AppBundle:Curso')->find($id);
@@ -139,12 +118,8 @@ class CursoController extends DSIController
             if ($_FILES["imagen"]["error"] > 0 && $_FILES["archivo"]["error"] > 0)
                 return new Response('Error en subida de Imagen o del PDF');
 
-            /*if ($_FILES["archivo"]["error"] > 0)
-                return new Response('Error en subida de PDF');*/
-
             else {
                 if($this->infoTipoImagen('imagen')[0]=='image' && $this->infoTipoImagen('archivo')[0]=='application')
-                    //if($this->infoTipoImagen('imagen')[0]=='application')
                 {
                     $nomCurso=$request->get('nombrecurso');
                     $nombreImagen=$nomCurso.$this->infoTipoImagen('imagen')[1];
@@ -158,14 +133,10 @@ class CursoController extends DSIController
                     $nun_cuo = $request->get("nun_cuo");
                     $array_doc = $request->get("doc");
 
-                    //Descomponiendo el array
-                    foreach ($idhc as $idhc){
-                        $a=$idhc;
-                    }
-
-                    //Proceso de almacenamiento edicion de datos en entidad Curso
+                    $a=$this->IdCurso($id);
                     $hc=$em->getRepository("AppBundle:HorarioCurso")->find($a);
 
+                    //Proceso de almacenamiento edicion de datos en entidad Curso
                     $datos->setIdTc($em->getRepository("AppBundle:TipoCurso")->find($tc));
                     $datos->setNombreCurso($nom_cur);
                     $datos->setCantAlumnosLimit($can_alum);
@@ -182,22 +153,13 @@ class CursoController extends DSIController
                     //Subiendo el PDF
                     $this->subirPDF('archivo',$nombrePDF);
 
-                    $sql="delete from d1 where id_curso=$id";
-                    $em=$this->getDoctrine()->getEntityManager();
-                    $con=$em->getConnection();
-                    $st=$con->prepare($sql);
-                    $st->execute();
+                    $this->del_d1($id);
 
 
                     //Manejando relacion de muchos a muchos
                     for ($i = 0; $i < count($array_doc); $i++) {
-                        $sql="INSERT INTO d1 (id_curso,id_doctores) values (:id_curso,:id_doctores)";
-                        $em=$this->getDoctrine()->getEntityManager();
-                        $con=$em->getConnection();
-                        $st=$con->prepare($sql);
-                        $st->bindValue("id_curso",$id);
-                        $st->bindValue("id_doctores",$array_doc[$i]);
-                        $st->execute();
+
+                        $this->manytomany($id,$array_doc[$i]);
 
                     }
 
@@ -213,7 +175,7 @@ class CursoController extends DSIController
 
 
     /**
-     * @Route("/admin/curso_delete",name="delCurso")
+     * @Route("/admin/curso_delete/{idcurso}",name="delCurso")
      */
     public function deleteAction($idcurso, Request $request)
     {
@@ -222,17 +184,21 @@ class CursoController extends DSIController
         if(!$curso){
             throw $this->createNotFoundException('No existe el usuario con el ID'.$idcurso);
         }
-       /* if($em->getRepository('toosistemadeventasBundle:Producto')->findOneBy(array('idCategoria'=>$idCat))){
-            $this->MensajeFlash('fracaso','No puede eliminar una Categoria que ya contiene productos');
-            return $this->redirect($this->generateUrl('crudCat'));
-        }*/
-        else{
-            $em->remove($curso);
-            $em->flush();
-            $this->MensajeFlash('exito','Curso Eliminado correctamente');
-            return $this->redirectToRoute("ver");
-        }
 
+        $this->del_d1($idcurso);
+        $a=$this->IdCurso($idcurso);
+
+        $em->remove($curso);
+        $em->flush();
+
+        $sql="delete from horario_curso where id_hc=$a";
+        $con=$em->getConnection();
+        $st=$con->prepare($sql);
+        $st->execute();
+
+        $this->MensajeFlash('exito','Curso Eliminado correctamente');
+
+        return $this->redirectToRoute("verCurso");
     }
 
      /**
@@ -259,6 +225,8 @@ class CursoController extends DSIController
 
             $this->updateCurso($hc->getIdHc(),$request->get("idCurso"));
 
+            $this->MensajeFlash('exito','Curso creado correctamente!');
+
             return $this->redirectToRoute("verCurso");
         }
     }
@@ -272,17 +240,9 @@ class CursoController extends DSIController
 
         if($request->isMethod("POST")) {
 
-            //Sacando Id_hc con ayuda del IdCurso
-            $db = $em->getConnection();
-            $sql = "select id_hc from horario_curso where id_hc = (select id_hc from curso where id_curso=:idCurso) ";
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue("idCurso",$request->get("idCurso"));
-            $stmt->execute();
-            $idhc = $stmt->fetch();
+            $idCurso=$request->get("idCurso");
 
-            foreach ($idhc as $idhc){
-                $a=$idhc;
-            }
+            $a=$this->IdCurso($idCurso);
 
             $hc=$em->getRepository('AppBundle:HorarioCurso')->find($a);
 
@@ -295,7 +255,7 @@ class CursoController extends DSIController
             //Guradar en la BD
             $em->flush();
 
-            //$this->updateCurso($hc->getIdHc(),$request->get("idCurso"));
+            $this->MensajeFlash('exito','Curso editado correctamente!');
 
             return $this->redirectToRoute("verCurso");
         }

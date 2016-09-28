@@ -65,7 +65,7 @@
                 //un confirm
                 alertify.confirm("<p>Esta seguro que desea eliminar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
                     if (e) {
-                        location.href="{{ asset('app_dev.php/delete') }}/{{ cursos.idCurso }}";
+                        location.href="{{ asset('/admin/curso_delete') }}/{{ cursos.idCurso }}";
                     } else { alertify.error("Has cancelado la operacion");
                     }
                 });
@@ -75,4 +75,22 @@
         </script>
     {% endfor %}
 
+{% endblock %}
+{% block javascripts %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('exito') %}
+        <script>
+            window.onload = function notificacion(){
+                alertify.success("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
 {% endblock %}
