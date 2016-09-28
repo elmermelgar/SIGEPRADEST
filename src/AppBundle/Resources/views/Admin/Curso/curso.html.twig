@@ -42,9 +42,8 @@
                                 <td>{{ cursos.numCuotas }}</td>
                                 <td><a href="{{ asset('public') }}/{{ cursos.rutaPdf}}">Ver</a></td>
                                 <td></td>
+
                                 <td style="text-align: center;">
-                                    <a href="{{ asset('/admin/curso_add') }}/{{ cursos.idCurso }}" title="Agregar Doctor" class="btn btn-default" style="background: #4A9547;color: #ffffff;"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
-                                    -
                                     <a href="{{ asset('/admin/curso_edit') }}/{{ cursos.idCurso }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                     -
                                     <button onClick="confirmar()" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>

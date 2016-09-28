@@ -16,7 +16,7 @@
     </ol>
     <h2>Agregar Doctores a Cursos</h2>
     <form>
-        <select class="js-example-basic-multiple"  multiple="multiple" name="doc[]">
+        <select class="js-example-basic-multiple"  multiple="multiple" name="doc">
                 {% for empleados in empleados %}
                     <option>{{ empleados.nombre_completo }}</option>
                 {% endfor %}

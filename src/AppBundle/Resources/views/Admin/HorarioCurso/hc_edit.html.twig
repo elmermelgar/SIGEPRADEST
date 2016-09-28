@@ -18,7 +18,7 @@
     <div class="row-fluid sortable">
         <div class="box span12">
             <div class="box-content">
-                <form class="form-horizontal" action="{{ path('addHorario') }}" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ path('editHorario') }}" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <div class="col-md-6">
                             <div class="control-group" >
@@ -35,7 +35,7 @@
                                 <label class="control-label" for="prependedInput">Fecha Inicio Curso</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input id="fechaini" class="form-control" name="fechaini" size="16" type="date" required>
+                                        <input value="{{ hc.fechaInicio.format("Y-m-d") }}" id="fechaini" class="form-control" name="fechaini" size="16" type="date" required>
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                                 <label class="control-label" for="prependedInput">Fecha Fin Curso</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input id="fechafin" class="form-control" name="fechafin" size="16" type="date" required>
+                                        <input value="{{ hc.fechaFin.format("Y-m-d") }}" id="fechafin" class="form-control" name="fechafin" size="16" type="date" required>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 <label class="control-label" for="prependedInput">Inicio Recepcion Documentos</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input id="fechainirec" class="form-control" name="fechainirec" size="16" type="date" required>
+                                        <input value="{{ hc.inicioRecepDoc.format("Y-m-d") }}" id="fechainirec" class="form-control" name="fechainirec" size="16" type="date" required>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                 <label class="control-label" for="prependedInput">Fin Rescepcion Documentos</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input id="fechafinrec" class="form-control" name="fechafinrec" size="16" type="date" required>
+                                        <input value="{{ hc.finRecepDoc.format("Y-m-d") }}" id="fechafinrec" class="form-control" name="fechafinrec" size="16" type="date" required>
                                     </div>
                                 </div>
                             </div>
