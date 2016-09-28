@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 class CursoController extends DSIController
@@ -30,16 +31,18 @@ class CursoController extends DSIController
     public function createCursoAction(Request $request)
     {
         $em=$this->getDoctrine()->getManager();
-        $hc=$em->getRepository("AppBundle:HorarioCurso")->findAll();
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
+
+        $db = $em->getConnection();
+        $sql = "SELECT * FROM doctores";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $doc = $stmt->fetchAll();
+
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {
-
             if ($_FILES["imagen"]["error"] > 0 && $_FILES["archivo"]["error"] > 0)
-                return new Response('Error en subida de Imagen o del PDF');
-
-            /*if ($_FILES["archivo"]["error"] > 0)
-                return new Response('Error en subida de PDF');*/
+                return new Response('Error en subida de Imagen o de PDF');
 
             else {
                 if($this->infoTipoImagen('imagen')[0]=='image' && $this->infoTipoImagen('archivo')[0]=='application')
@@ -56,28 +59,25 @@ class CursoController extends DSIController
                         $nombrePDF=$nomCurso.$this->infoTipoImagen('archivo')[1];
 
                         //Recuperar valores encviados
-                        $hc = $request->get("hc");
                         $tc = $request->get("tc");
                         $nom_cur = $request->get("nombrecurso");
                         $can_alum = $request->get("cant_alum");
                         $des_info = $request->get("des_info");
-                        //$bros_info = $request->get("imagen");
                         $nun_cuo = $request->get("nun_cuo");
-                        //$ruta = $request->get("archivo");
+                        $array_doc = $request->get("doc");
 
                         //Proceso de almacenamiento de datos en entidad Curso
                         $curso=new Curso();
-                        $curso->setIdHc($em->getRepository("AppBundle:HorarioCurso")->find($hc));
                         $curso->setIdTc($em->getRepository("AppBundle:TipoCurso")->find($tc));
                         $curso->setNombreCurso($nom_cur);
                         $curso->setCantAlumnosLimit($can_alum);
                         $curso->setTextoInformativo($des_info);
                         $curso->setBroshureInformativo("img/brochure/".$nombreImagen);
-
                         $curso->setNumCuotas($nun_cuo);
                         $curso->setRutaPdf("img/pdf/".$nombrePDF);
                         //Persistir
                         $em->persist($curso);
+
                         //Guradar en la BD
                         $em->flush();
 
@@ -85,15 +85,29 @@ class CursoController extends DSIController
                         $this->subirImagen('imagen',$nombreImagen);
                         //Subiendo el PDF
                         $this->subirPDF('archivo',$nombrePDF);
-                        return new Response("Curso creado correctamente!");
+
+                        $idcurso=$curso->getIdCurso();
+
+                        //Manejando relacion de muchos a muchos
+                        for ($i = 0; $i < count($array_doc); $i++) {
+                            $sql="INSERT INTO d1 (id_curso,id_doctores) values (:id_curso,:id_doctores)";
+                            $em=$this->getDoctrine()->getEntityManager();
+                            $con=$em->getConnection();
+                            $st=$con->prepare($sql);
+                            $st->bindValue("id_curso",$idcurso);
+                            $st->bindValue("id_doctores",$array_doc[$i]);
+                            $st->execute();
+                        }
+
+                        return $this->render("AppBundle:Admin/HorarioCurso:hc_create.html.twig",array("id"=>$idcurso,"nom"=>$nom_cur));
                     }
                 }
                 else
-                    return new Response('El Archivo no es una imagen. Intente de nuevo!');
+                    return new Response('El Archivo no es una imagen o un PDF. Intente de nuevo!');
             }
         }
 
-        return $this->render("AppBundle:Admin/Curso:curso_create.html.twig",array("hc"=>$hc,"tc"=>$tc));
+        return $this->render("AppBundle:Admin/Curso:curso_create.html.twig",array("tc"=>$tc,"doc"=>$doc));
     }
 
     /**
@@ -102,7 +116,20 @@ class CursoController extends DSIController
     public function editCursoAction($id, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
-        $hc=$em->getRepository("AppBundle:HorarioCurso")->findAll();
+
+        $db = $em->getConnection();
+        $sql = "SELECT * FROM doctores";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $doc = $stmt->fetchAll();
+
+        //Sacando Id_hc con ayuda del IdCurso
+        $db = $em->getConnection();
+        $sql = "select id_hc from horario_curso where id_hc = (select id_hc from curso where id_curso=$id) ";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $idhc = $stmt->fetch();
+
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
         $datos=$em->getRepository('AppBundle:Curso')->find($id);
 
@@ -120,59 +147,75 @@ class CursoController extends DSIController
                     //if($this->infoTipoImagen('imagen')[0]=='application')
                 {
                     $nomCurso=$request->get('nombrecurso');
+                    $nombreImagen=$nomCurso.$this->infoTipoImagen('imagen')[1];
+                    $nombrePDF=$nomCurso.$this->infoTipoImagen('archivo')[1];
 
-                    if($em->getRepository('AppBundle:Curso')->findOneBy(array('nombreCurso'=>$nomCurso)))
-                    {
-                        return new Response("El Curso ya ha sido registrado!");
+                    //Recuperar valores encviados
+                    $tc = $request->get("tc");
+                    $nom_cur = $request->get("nombrecurso");
+                    $can_alum = $request->get("cant_alum");
+                    $des_info = $request->get("des_info");
+                    $nun_cuo = $request->get("nun_cuo");
+                    $array_doc = $request->get("doc");
+
+                    //Descomponiendo el array
+                    foreach ($idhc as $idhc){
+                        $a=$idhc;
                     }
-                    else {
-                        $nombreImagen=$nomCurso.$this->infoTipoImagen('imagen')[1];
-                        $nombrePDF=$nomCurso.$this->infoTipoImagen('archivo')[1];
 
-                        //Recuperar valores encviados
-                        $hc = $request->get("hc");
-                        $tc = $request->get("tc");
-                        $nom_cur = $request->get("nombrecurso");
-                        $can_alum = $request->get("cant_alum");
-                        $des_info = $request->get("des_info");
-                        //$bros_info = $request->get("imagen");
-                        $nun_cuo = $request->get("nun_cuo");
-                        //$ruta = $request->get("archivo");
+                    //Proceso de almacenamiento edicion de datos en entidad Curso
+                    $hc=$em->getRepository("AppBundle:HorarioCurso")->find($a);
 
-                        //Proceso de almacenamiento edicion de datos en entidad Curso
+                    $datos->setIdTc($em->getRepository("AppBundle:TipoCurso")->find($tc));
+                    $datos->setNombreCurso($nom_cur);
+                    $datos->setCantAlumnosLimit($can_alum);
+                    $datos->setTextoInformativo($des_info);
+                    $datos->setBroshureInformativo("img/brochure/".$nombreImagen);
+                    $datos->setNumCuotas($nun_cuo);
+                    $datos->setRutaPdf("img/pdf/".$nombrePDF);
 
-                        $datos->setIdHc($em->getRepository("AppBundle:HorarioCurso")->find($hc));
-                        $datos->setIdTc($em->getRepository("AppBundle:TipoCurso")->find($tc));
-                        $datos->setNombreCurso($nom_cur);
-                        $datos->setCantAlumnosLimit($can_alum);
-                        $datos->setTextoInformativo($des_info);
-                        $datos->setBroshureInformativo("img/brochure/".$nombreImagen);
-                        $datos->setNumCuotas($nun_cuo);
-                        $datos->setRutaPdf("img/pdf/".$nombrePDF);
+                    //Guradar en la BD
+                    $em->flush();
 
-                        //Guradar en la BD
-                        $em->flush();
+                    //Subiendo la Imagen
+                    $this->subirImagen('imagen',$nombreImagen);
+                    //Subiendo el PDF
+                    $this->subirPDF('archivo',$nombrePDF);
 
-                        //Subiendo la Imagen
-                        $this->subirImagen('imagen',$nombreImagen);
-                        //Subiendo el PDF
-                        $this->subirPDF('archivo',$nombrePDF);
-                        return new Response("Curso Editado Perfectamente!");
+                    $sql="delete from d1 where id_curso=$id";
+                    $em=$this->getDoctrine()->getEntityManager();
+                    $con=$em->getConnection();
+                    $st=$con->prepare($sql);
+                    $st->execute();
+
+
+                    //Manejando relacion de muchos a muchos
+                    for ($i = 0; $i < count($array_doc); $i++) {
+                        $sql="INSERT INTO d1 (id_curso,id_doctores) values (:id_curso,:id_doctores)";
+                        $em=$this->getDoctrine()->getEntityManager();
+                        $con=$em->getConnection();
+                        $st=$con->prepare($sql);
+                        $st->bindValue("id_curso",$id);
+                        $st->bindValue("id_doctores",$array_doc[$i]);
+                        $st->execute();
+
                     }
+
+                    return $this->render("AppBundle:Admin/HorarioCurso:hc_edit.html.twig",array("id"=>$id,"nom"=>$nom_cur,"hc"=>$hc));
                 }
                 else
-                    return new Response('El Archivo no es una imagen. Intente de nuevo!');
+                    return new Response('El Archivo no es una imagen o un PDF. Intente de nuevo!');
             }
         }
 
-        return $this->render("AppBundle:Admin/Curso:curso_edit.html.twig",array("hc"=>$hc,"tc"=>$tc,'datos'=>$datos));
+        return $this->render("AppBundle:Admin/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc));
     }
 
 
     /**
-     * @Route("/admin/curso_delete",name="delete")
+     * @Route("/admin/curso_delete",name="delCurso")
      */
-    public  function deleteAction($idcurso, Request $request)
+    public function deleteAction($idcurso, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
         $curso=$em->getRepository('AppBundle:Curso')->find($idcurso);
@@ -192,4 +235,69 @@ class CursoController extends DSIController
 
     }
 
+     /**
+     * @Route("/admin/curso_horario",name="addHorario")
+     */
+    public function horarioAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+
+        if($request->isMethod("POST")) {
+
+            $hc=new HorarioCurso();
+
+            //Recuperar valores encviados y seteandolos
+            $hc->setFechaInicio(new \DateTime($request->get("fechaini")));
+            $hc->setFechaFin(new \DateTime($request->get("fechafin")));
+            $hc->setInicioRecepDoc(new \DateTime($request->get("fechainirec")));
+            $hc->setFinRecepDoc(new \DateTime($request->get("fechafinrec")));
+
+            //Persistir
+            $em->persist($hc);
+            //Guradar en la BD
+            $em->flush();
+
+            $this->updateCurso($hc->getIdHc(),$request->get("idCurso"));
+
+            return $this->redirectToRoute("verCurso");
+        }
+    }
+
+    /**
+     * @Route("/admin/curso_horario_edit",name="editHorario")
+     */
+    public function edithorarioAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+
+        if($request->isMethod("POST")) {
+
+            //Sacando Id_hc con ayuda del IdCurso
+            $db = $em->getConnection();
+            $sql = "select id_hc from horario_curso where id_hc = (select id_hc from curso where id_curso=:idCurso) ";
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue("idCurso",$request->get("idCurso"));
+            $stmt->execute();
+            $idhc = $stmt->fetch();
+
+            foreach ($idhc as $idhc){
+                $a=$idhc;
+            }
+
+            $hc=$em->getRepository('AppBundle:HorarioCurso')->find($a);
+
+            //Recuperar valores encviados y seteandolos
+            $hc->setFechaInicio(new \DateTime($request->get("fechaini")));
+            $hc->setFechaFin(new \DateTime($request->get("fechafin")));
+            $hc->setInicioRecepDoc(new \DateTime($request->get("fechainirec")));
+            $hc->setFinRecepDoc(new \DateTime($request->get("fechafinrec")));
+
+            //Guradar en la BD
+            $em->flush();
+
+            //$this->updateCurso($hc->getIdHc(),$request->get("idCurso"));
+
+            return $this->redirectToRoute("verCurso");
+        }
+    }
 }

@@ -1,0 +1,98 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
+            <li><a href="{{ path('createCurso') }}">Crear</a></li>
+            <li class="active">Horario</li>
+        </ol>
+        <h2>Crear Horario Para Curso</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-content">
+                <form class="form-horizontal" action="{{ path('addHorario') }}" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <div class="col-md-6">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Id Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                    <input value="{{ id }}" type="text" id="idCurso" name="idCurso" class="form-control"  size="16"  readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fecha Inicio Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <input id="fechaini" class="form-control" name="fechaini" size="16" type="date" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fecha Fin Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <input id="fechafin" class="form-control" name="fechafin" size="16" type="date" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Nombre Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <input value="{{ nom }}" type="text" id="nomCurso" name="nomCurso" class="form-control"  size="16"  readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Inicio Recepcion Documentos</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <input id="fechainirec" class="form-control" name="fechainirec" size="16" type="date" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fin Rescepcion Documentos</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <input id="fechafinrec" class="form-control" name="fechafinrec" size="16" type="date" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br><br>
+                        <div class="col-md-12" style="text-align: center; margin-top: 10px">
+                            <button type="submit" class="btn btn-primary" style="width: 15%;">Guardar</button>
+                            <button class="btn" style="width: 15%;">Cancel</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div><!--/span-->
+
+    </div><!--/row-->
+{% endblock %}

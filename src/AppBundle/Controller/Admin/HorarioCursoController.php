@@ -13,7 +13,7 @@ use AppBundle\Form\HorarioCursoType;
 /**
  * HorarioCurso controller.
  *
- * @Route("/horario_curso")
+ * @Route("/admin/horario_curso")
  */
 class HorarioCursoController extends Controller
 {

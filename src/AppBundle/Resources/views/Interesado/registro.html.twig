@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Registro</title>
     <!-- BOOTSTRAP STYLES-->
-    <link href="{{ asset('public/assets/css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/assets/css/bootstrap.css') }}" rel="stylesheet"/>
     <!-- FONTAWESOME STYLES-->
-    <link href="{{ asset('public/assets/css/font-awesome.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/assets/css/font-awesome.css') }}" rel="stylesheet"/>
     <!-- CUSTOM STYLES-->
-    <link href="{{ asset('public/assets/css/custom.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/assets/css/custom.css') }}" rel="stylesheet"/>
     <!-- GOOGLE FONTS-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 
 </head>
 <body>
 <div class="container">
     <div class="row text-center  ">
         <div class="col-md-12">
-            <br /><br />
+            <br/><br/>
             <h2> Registro</h2>
 
             <h5>( Debe registrarse para tener acceso )</h5>
-            <br />
+            <br/>
         </div>
     </div>
     <div class="row">
@@ -30,39 +30,44 @@
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>  Nuevo Usuario </strong>
+                    <strong> Nuevo Usuario </strong>
                 </div>
                 <div class="panel-body">
                     <form role="form" action="{{ path('register') }}" method="post">
                         <br/>
                         <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="fa fa-circle-o-notch"  ></i></span>
-                            <input type="text" class="form-control" placeholder="Nombre" name="nombre" value="{{ interesado.nombre }}" />
+                            <span class="input-group-addon"><i class="fa fa-circle-o-notch"></i></span>
+                            <input type="text" class="form-control" placeholder="Nombre" name="nombre"
+                                   value="{{ interesado.nombre }}" required/>
                         </div>
                         <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="fa fa-circle-o-notch"  ></i></span>
-                            <input type="text" class="form-control" placeholder="Apellido" name="apellido" value="{{ interesado.apellido }}" />
+                            <span class="input-group-addon"><i class="fa fa-circle-o-notch"></i></span>
+                            <input type="text" class="form-control" placeholder="Apellido" name="apellido"
+                                   value="{{ interesado.apellido }}" required/>
                         </div>
                         <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
-                            <input type="text" class="form-control" placeholder="Usuario" name="usuario" value="{{ interesado.nomusuario }}" />
+                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                            <input type="text" class="form-control" placeholder="Usuario" name="usuario"
+                                   value="{{ interesado.nomusuario }}" required/>
                         </div>
                         <div class="form-group input-group">
                             <span class="input-group-addon">@</span>
-                            <input type="text" class="form-control" placeholder="Correo electrónico" name="email" value="{{ interesado.correo }}" />
+                            <input type="text" class="form-control" placeholder="Correo electrónico" name="email"
+                                   value="{{ interesado.correo }}" required/>
                         </div>
                         <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-                            <input type="password" class="form-control" placeholder="Password" name="password" value="{{ interesado.password }}" />
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            <input id="password" type="password" class="form-control" placeholder="Password" name="password"
+                                   value="{{ interesado.password }}" required/>
                         </div>
                         <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-                            <input type="password" class="form-control" placeholder="Ingresar Password otra vez" />
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            <input id="confirm_password" type="password" class="form-control" placeholder="Ingresar Password otra vez" required/>
                         </div>
 
                         <button type="submit" class="btn btn-success ">Registrarme</button>
-                        <hr />
-                        Ya esta Resgistrado ?  <a href="{{ path('login') }}" >Iniciar Sesión</a>
+                        <hr/>
+                        Ya esta Resgistrado ? <a href="{{ path('login') }}">Iniciar Sesión</a>
                     </form>
                 </div>
 
@@ -83,6 +88,22 @@
 <script src="{{ asset('public/assets/js/jquery.metisMenu.js') }}"></script>
 <!-- CUSTOM SCRIPTS -->
 <script src="{{ asset('public/assets/js/custom.js') }}"></script>
+
+<script>
+    var password = document.getElementById("password")
+            , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords no coinciden!");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>
 
 </body>
 </html>
