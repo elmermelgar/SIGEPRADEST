@@ -156,4 +156,15 @@ class DetalleHorario
     {
         return $this->idHe;
     }
+
+    public function horariosDisponibles(){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p FROM AppBundle:DetalleHorario p'
+            )
+            ->getResult();
+    }
+
+
+
 }
