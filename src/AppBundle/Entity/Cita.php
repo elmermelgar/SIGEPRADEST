@@ -129,4 +129,11 @@ class Cita
     {
         return $this->idUi;
     }
+
+
+    public function __toString() {
+        return $this->name;
+    }
+
+
 }

@@ -72,12 +72,17 @@ class CitaController extends Controller
      */
     private function createCreateForm(Cita $entity)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+
         $form = $this->createForm(new CitaType(), $entity, array(
             'action' => $this->generateUrl('cita_create'),
             'method' => 'POST',
+            'user'=> $user
+
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create','attr'=>array('class'=>'btn btn-primary',
+        $form->add('submit', 'submit', array('label' => 'Guardar','attr'=>array('class'=>'btn btn-primary',
             'style'=>"width: 30%" )));
 
         return $form;
@@ -155,6 +160,8 @@ class CitaController extends Controller
 
     /**
     * Creates a form to edit a Cita entity.
+     *  $user = $this->container->get('security.context')->getToken()->getUser();
+    echo $user;
     *
     * @param Cita $entity The entity
     *
@@ -162,13 +169,16 @@ class CitaController extends Controller
     */
     private function createEditForm(Cita $entity)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $form = $this->createForm(new CitaType(), $entity, array(
             'action' => $this->generateUrl('cita_update', array('id' => $entity->getIdCita())),
             'method' => 'PUT',
+            'user'=>$user
         ));
 
         $form->add('submit', 'submit', array('label' => 'Actualizar','attr'=>array('class'=>'btn btn-primary',
             'style'=>"width: 100%" )));
+
 
         return $form;
     }
