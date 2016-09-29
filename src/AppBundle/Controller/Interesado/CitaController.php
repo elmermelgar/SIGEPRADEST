@@ -28,14 +28,25 @@ class CitaController extends Controller
      */
     public function indexAction()
     {
+//        setlocale (LC_TIME, "es_ES");
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Cita')->findAll();
+//        $entities = $em->getRepository('AppBundle:Cita')->findBy(array());   ex validacion para encontrar todas
+        $user = $this->getUser();
+        $rol = $this->getUser()->getIdrol()->getIdrol();
+// validacion para ver si es un usuario adminitrador, o si es un interesado para solo mostrar los datos personales
+
+        // se pudo hacer con las entidades y los metodos get para no usar sql, pero dado que ya estan echas no es necesarios reacelar. referencia  $entity->getIdDhe()->setOcupado('false');// de esta maner podemos poner como apagado el bool de la otra clase
+        if ($rol == 1)
+            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use  ')->getResult();
+        else
+            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = FALSE and use.nomusuario = \'' . $user . '\'    ')->getResult();
 
         return array(
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Cita entity.
      *
@@ -49,8 +60,12 @@ class CitaController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
+        echo $entity->getIdDhe()->getIdDhe();//MERGE me mostro 25 , por lo que facilmente podria actualizar este id, con false en los horarios
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+
+            $entity->getIdDhe()->setOcupado('true');// de esta maner podemos poner como encendido el bool de la otra clase
             $em->persist($entity);
             $em->flush();
 
@@ -59,7 +74,7 @@ class CitaController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -78,12 +93,12 @@ class CitaController extends Controller
         $form = $this->createForm(new CitaType(), $entity, array(
             'action' => $this->generateUrl('cita_create'),
             'method' => 'POST',
-            'user'=> $user
+            'user' => $user
 
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Guardar','attr'=>array('class'=>'btn btn-primary',
-            'style'=>"width: 30%" )));
+        $form->add('submit', 'submit', array('label' => 'Guardar', 'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
 
         return $form;
     }
@@ -98,11 +113,11 @@ class CitaController extends Controller
     public function newAction()
     {
         $entity = new Cita();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -126,7 +141,7 @@ class CitaController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -152,36 +167,35 @@ class CitaController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Cita entity.
-     *  $user = $this->container->get('security.context')->getToken()->getUser();
-    echo $user;
-    *
-    * @param Cita $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Cita entity.
+     *
+     * @param Cita $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Cita $entity)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $form = $this->createForm(new CitaType(), $entity, array(
             'action' => $this->generateUrl('cita_update', array('id' => $entity->getIdCita())),
             'method' => 'PUT',
-            'user'=>$user
+            'user' => $user
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Actualizar','attr'=>array('class'=>'btn btn-primary',
-            'style'=>"width: 100%" )));
+        $form->add('submit', 'submit', array('label' => 'Actualizar', 'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 100%")));
 
 
         return $form;
     }
+
     /**
      * Edits an existing Cita entity.
      *
@@ -210,11 +224,12 @@ class CitaController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Cita entity.
      *
@@ -253,9 +268,36 @@ class CitaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('cita_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar','attr'=>array('class'=>'btn btn-danger',
-                'style'=>"width: 100%;" )))
-            ->getForm()
-        ;
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger',
+                'style' => "width: 100%;")))
+            ->getForm();
     }
+
+    /**
+     * Deletes a Cita entity from eny place.
+     *
+     * @Route("/{id}/delete", name="cita_delete_personal")
+     *
+     */
+    public function deletepersonalAction($id)
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:Cita')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cita entity.');
+        }
+
+        $entity->getIdDhe()->setOcupado('false');// de esta maner podemos poner como apagado el bool de la otra clase
+
+        $em->remove($entity);
+        $em->flush();
+
+
+        return $this->redirect($this->generateUrl('cita'));
+    }
+
+
 }

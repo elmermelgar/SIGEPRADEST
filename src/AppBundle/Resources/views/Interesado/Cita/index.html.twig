@@ -9,6 +9,7 @@
     </div>
 {% endblock %}
 {% block body -%}
+
     <div class="col-md-12">
         <!--   Kitchen Sink -->
         <div class="panel panel-default">
@@ -21,7 +22,10 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
                     <th>Comentario cita</th>
+                    <th>Ocupado</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
@@ -29,17 +33,29 @@
                 {% for entity in entities %}
                     <tr>
                         <td><a href="{{ path('cita_show', { 'id': entity.idCita }) }}">{{ entity.idCita }}</a></td>
+
+                        <td>{{ entity.idDhe.fechaDhe|date("l m/d/Y")|replace({
+                                'Monday'  : 'Lunes',
+                                'Tuesday'  : 'Martes',
+                                'Thursday'  : 'Jueves',
+                                'Wednesday'  : 'Miercoles',
+                                'Friday'  : 'Viernes',
+                                'Saturday'  : 'Sabado',
+                                'Sunday'  : 'Domingo',
+                            }) }}</td>
+                        <td>{{ entity.idDhe.horaDhe|date("h:i A") }}</td>
                         <td>{{ entity.comentarioCita }}</td>
+                        <td>{% if entity.idDhe.ocupado %}{{ 'Si' }}{% else %}{{ "No" }}{% endif %}</td>
+
                         <td>
 
                             <a href="{{ path('cita_show', { 'id': entity.idCita }) }}" title="Editar"
                                class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span
                                         class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                                    - <a href="{{ path('cita_edit', { 'id': entity.idCita }) }}" title="Editar"
-                               class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+                            - <a href="{{ path('cita_delete_personal', { 'id': entity.idCita }) }}" title="Editar"
+                                 class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+                           </td>
 
-
-                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

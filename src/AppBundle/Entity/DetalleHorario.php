@@ -165,6 +165,9 @@ class DetalleHorario
             ->getResult();
     }
 
-
+    public function __toString()
+    {
+        return (string) $this->getIdDhe();
+    }
 
 }
