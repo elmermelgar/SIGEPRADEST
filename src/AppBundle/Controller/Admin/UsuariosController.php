@@ -28,22 +28,6 @@ class UsuariosController extends SecurityController
     }
 
     /**
-     * @Route("/admin/doctores", name="doctores")
-     */
-    public function doctoresAction(){
-        $em=$this->getDoctrine()->getManager("foues");
-        $db = $em->getConnection();
-        //$sql = "SELECT * FROM empleados";
-        $sql = "SELECT * FROM empleados";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        return $this->render('AppBundle:Admin/Usuarios:doctores.html.twig', array(
-            'empleados' => $result));
-    }
-
-    /**
      * @Route("/admin/usuario/create/{id}", name="nuevo_usuario")
      */
     public function nuevoUsuarioAction($id, Request $request){
