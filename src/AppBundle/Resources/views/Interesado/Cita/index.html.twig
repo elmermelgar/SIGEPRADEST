@@ -3,12 +3,13 @@
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="{{ path('admin') }}">Inicio</a></li>
-            <li class="active">Usuarios</li>
+            <li class="active">Citas</li>
         </ol>
         <h2>Lista de Citas</h2>
     </div>
 {% endblock %}
 {% block body -%}
+
 
     <div class="col-md-12">
         <!--   Kitchen Sink -->
@@ -18,6 +19,34 @@
                                                     style="float: right; margin-top: -5px;" title="Agregar"
                                                     class="btn btn-success">Agregar Nueva Cita</a>
             </div>
+
+            {% block javascripts %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+            {% endblock %}
+            
+
+
+
+
+
+
+
+
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
@@ -25,7 +54,7 @@
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Comentario cita</th>
-                    <th>Ocupado</th>
+                    <th>Curso</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
@@ -45,7 +74,8 @@
                             }) }}</td>
                         <td>{{ entity.idDhe.horaDhe|date("h:i A") }}</td>
                         <td>{{ entity.comentarioCita }}</td>
-                        <td>{% if entity.idDhe.ocupado %}{{ 'Si' }}{% else %}{{ "No" }}{% endif %}</td>
+                        <td>{{ entity.idCurso.NombreCurso }}</td>
+                        {#<td>{% if entity.idDhe.ocupado %}{{ 'Si' }}{% else %}{{ "No" }}{% endif %}</td>#}
 
                         <td>
 

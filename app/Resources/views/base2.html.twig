@@ -67,6 +67,10 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Citas<span ></span></a>
+
+                    </li>
                 {% endif %}
                 {% if app.user.idrol.nombrerol== 'secretaria' %}
                 <li>

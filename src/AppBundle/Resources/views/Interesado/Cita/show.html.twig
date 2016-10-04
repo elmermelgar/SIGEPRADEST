@@ -22,6 +22,26 @@
 
                 Formulario para el ingreso de una nueva cita
             </div>
+
+
+            {% block javascripts %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+            {% endblock %}
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">

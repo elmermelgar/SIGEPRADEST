@@ -106,6 +106,7 @@
     {% endfor %}
 
 {% endblock %}
+<<<<<<< HEAD
 {% block javascripts %}
     {% for flashMessage in app.session.flashbag.get('error') %}
         <script>
@@ -133,3 +134,5 @@
     </script>
 
 {% endblock %}
+=======
+>>>>>>> f19ccc5cf1c255e537740ea70df5d1ba2eee72ca
