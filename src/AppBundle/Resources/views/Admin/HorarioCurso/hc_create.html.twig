@@ -2,6 +2,11 @@
 {% block active %}active-menu{% endblock %}
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
 {% endblock %}
 {% block Header %}
     <div class="col-md-12">
@@ -18,7 +23,7 @@
     <div class="row-fluid sortable">
         <div class="box span12">
             <div class="box-content">
-                <form class="form-horizontal" action="{{ path('addHorario') }}" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ path('addHorario') }}" method="post" enctype="multipart/form-data" name="formulario1">
                     <fieldset>
                         <div class="col-md-6">
                             <div class="control-group" >
@@ -86,7 +91,7 @@
 
                         <br><br>
                         <div class="col-md-12" style="text-align: center; margin-top: 10px">
-                            <button type="submit" class="btn btn-primary" style="width: 15%;">Guardar</button>
+                            <button onClick="validar()" type="button" class="btn btn-primary" style="width: 15%;">Guardar</button>
                             <button class="btn" style="width: 15%;">Cancel</button>
                         </div>
                     </fieldset>
@@ -95,4 +100,27 @@
         </div><!--/span-->
 
     </div><!--/row-->
+{% endblock %}
+{% block javascripts %}
+    <script>
+        /*funciones para validar que las fechas no esten invertidas*/
+        function validar() {
+            var iniciocurso = document.getElementById('fechaini').value;
+            var finalcurso  = document.getElementById('fechafin').value;
+            var iniciodocu = document.getElementById('fechainirec').value;
+            var finaldocu  = document.getElementById('fechafinrec').value;
+
+            if ( iniciocurso == '' || finalcurso =='' || iniciodocu=='' || finaldocu=='') {
+                alertify.error("Complete todos los campos por favor");
+            } else {
+
+                if (iniciocurso > finalcurso || iniciodocu > finaldocu){
+                    alertify.error("La fecha de inicio debe ser menor que la fecha de fin del curso");
+                } else {
+                    /*identifica el nombre del formulario*/
+                    document.formulario1.submit();
+                }
+            }
+        }
+    </script>
 {% endblock %}
