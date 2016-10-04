@@ -8,15 +8,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CitaType extends AbstractType
 {
+private  $isEdit=false;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
         $builder
             ->add('idUi', 'entity', array('class' => 'AppBundle\Entity\Usuario',
                 'query_builder' => function ($er) use ($options) {
@@ -33,16 +28,31 @@ class CitaType extends AbstractType
                     $qb = $er->createQueryBuilder('u');
                     // con este metodo agregamos unicamente los cirterios que deseamos para que se muestren
                     //  echo   $qb->getDql();  con esto vemos la DQL que se esta enviando , no se puede cambiar tan facilmente
-                    $qb->where('u.ocupado = false')
-                        ->orderBy('u.ocupado', 'ASC');
+                   if( $this->isEdit){
+                       // de esta manera podemos decir que muestre todas las variables, las encontraremos
+//                       $qb->where('u.ocupado = true');
+                        }
+                    else {
+                        $qb->where('u.ocupado = false');
+                    }
+                    $qb ->orderBy('u.ocupado', 'ASC');
                     return $qb;
                 }, 'choice_label' =>
                     function ($idDhe) {
-                        return $idDhe->getFechaDhe()->format('Y-m-d');
+
+                        $fechasDisponible = $idDhe->getFechaDhe()->format('Y-m-d');
+                        return $fechasDisponible;
                     }
 // para elegir el texto que se mostrara en los label que estaran presentes en el fomulario
             ))
-            ->add('comentarioCita', 'textarea');
+            ->add('comentarioCita', 'textarea')
+            ->add('idCurso','entity', array('class' => 'AppBundle\Entity\Curso'
+            , 'choice_label' =>
+                    function ($idCurso) {
+                        return $idCurso->getNombreCurso();
+                    }
+
+            ));
     }
 
     /**
@@ -63,4 +73,28 @@ class CitaType extends AbstractType
     {
         return 'appbundle_cita';
     }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getIsEdit()
+    {
+        return $this->isEdit;
+    }
+
+    /**
+     * @param mixed $isEdit
+     */
+    public function setIsEdit($isEdit)
+    {
+        $this->isEdit = $isEdit;
+    }
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+
+
 }

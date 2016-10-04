@@ -22,6 +22,30 @@
 
                 Formulario para el ingreso de una nueva cita
             </div>
+
+            {% block javascripts %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+            {% endblock %}
+
+
+
+
+
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -29,19 +53,23 @@
                         {{ form_start(edit_form) }}
 
                         <div class="col-md-6">
-                            <div class="form-group">
+                            <div class="form-group" style=" display:none;">
                                 <label> <label>Usuario Interesado </label> </label>
                                 {{ form_widget(edit_form.idUi,{"attr":{"class":"form-control"},"required":"required"}) }}
                             </div>
-
+                            <div class="form-group">
+                                <label> <label>Curso </label> </label>
+                                {{ form_widget(edit_form.idCurso  ,{"attr":{"class":"form-control"},"required":"required"}) }}
+                            </div>
                             <div class="form-group">
                                 <label> <label>Horario entrevistas </label> </label>
                                 {{ form_widget(edit_form.idDhe  ,{"attr":{"class":"form-control"},"required":"required"}) }}
                             </div>
+
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label> <label>Usuario Interesado </label> </label>
+                                <label> <label>Comentario de la cita</label> </label>
                                 {{ form_widget(edit_form.comentarioCita,{"attr":{"class":"form-control"},"required":"required"}) }}
                             </div>
                         </div>

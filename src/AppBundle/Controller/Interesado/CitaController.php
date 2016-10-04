@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Interesado;
 
 
+use AppBundle\Controller\DSIController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,9 +15,9 @@ use AppBundle\Form\CitaType;
 /**
  * Cita controller.
  *
- * @Route("/Interesado/cita")
+ * @Route("/interesado/cita")
  */
-class CitaController extends Controller
+class CitaController extends DSIController
 {
 
     /**
@@ -36,11 +37,12 @@ class CitaController extends Controller
         $rol = $this->getUser()->getIdrol()->getIdrol();
 // validacion para ver si es un usuario adminitrador, o si es un interesado para solo mostrar los datos personales
 
-        // se pudo hacer con las entidades y los metodos get para no usar sql, pero dado que ya estan echas no es necesarios reacelar. referencia  $entity->getIdDhe()->setOcupado('false');// de esta maner podemos poner como apagado el bool de la otra clase
-        if ($rol == 1)
-            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use  ')->getResult();
-        else
-            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = FALSE and use.nomusuario = \'' . $user . '\'    ')->getResult();
+//         if ($rol == 1)
+//            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use  ')->getResult();
+//        else
+            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = true and use.nomusuario = \'' . $user . '\'    ')->getResult();
+
+
 
         return array(
             'entities' => $entities,
@@ -68,7 +70,7 @@ class CitaController extends Controller
             $entity->getIdDhe()->setOcupado('true');// de esta maner podemos poner como encendido el bool de la otra clase
             $em->persist($entity);
             $em->flush();
-
+            $this->MensajeFlash('exito','Cita Creada correctamente');
             return $this->redirect($this->generateUrl('cita_show', array('id' => $entity->getIdCita())));
         }
 
@@ -93,7 +95,7 @@ class CitaController extends Controller
         $form = $this->createForm(new CitaType(), $entity, array(
             'action' => $this->generateUrl('cita_create'),
             'method' => 'POST',
-            'user' => $user
+            'user' => $user,
 
         ));
 
@@ -112,13 +114,31 @@ class CitaController extends Controller
      */
     public function newAction()
     {
+// para que me diga si hay posibles horarios a los que asignar
+
+        $user = $this->getUser();
+        $rol = $this->getUser()->getIdrol()->getIdrol();
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = true and use.nomusuario = \'' . $user . '\'    ')->getResult();
+       if (count($entities)==0){
+
+
+
+
         $entity = new Cita();
+
         $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
         );
+    }
+        else{
+            $this->MensajeFlash('error','No puede agregar mas de una cita');
+        return $this->redirect($this->generateUrl('cita'));
+    }
     }
 
     /**
@@ -183,10 +203,13 @@ class CitaController extends Controller
     private function createEditForm(Cita $entity)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $form = $this->createForm(new CitaType(), $entity, array(
+       $citaType =new CitaType();
+       $citaType->setIsEdit(true);
+        $form = $this->createForm($citaType, $entity, array(
             'action' => $this->generateUrl('cita_update', array('id' => $entity->getIdCita())),
             'method' => 'PUT',
-            'user' => $user
+            'user' => $user,
+
         ));
 
         $form->add('submit', 'submit', array('label' => 'Actualizar', 'attr' => array('class' => 'btn btn-primary',
@@ -209,6 +232,9 @@ class CitaController extends Controller
 
         $entity = $em->getRepository('AppBundle:Cita')->find($id);
 
+
+        $entity->getIdDhe()->setOcupado('false');
+        $em->flush();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Cita entity.');
         }
@@ -218,9 +244,12 @@ class CitaController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $entity->getIdDhe()->setOcupado('true');
             $em->flush();
-
-            return $this->redirect($this->generateUrl('cita_edit', array('id' => $id)));
+//
+//            return $this->redirect($this->generateUrl('cita_edit', array('id' => $id)));
+            $this->MensajeFlash('exito','Exito al actualizar la cita');
+            return $this->redirect($this->generateUrl('cita'));
         }
 
         return array(
@@ -252,7 +281,7 @@ class CitaController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->MensajeFlash('exito','Cita Eliminada');
         return $this->redirect($this->generateUrl('cita'));
     }
 
@@ -295,7 +324,7 @@ class CitaController extends Controller
         $em->remove($entity);
         $em->flush();
 
-
+        $this->MensajeFlash('exito','Cita Eliminada');
         return $this->redirect($this->generateUrl('cita'));
     }
 
