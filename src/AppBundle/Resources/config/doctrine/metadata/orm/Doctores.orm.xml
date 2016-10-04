@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Doctores" table="doctores">
-    <indexes>
-      <index name="c1_fk" columns="id_empleado"/>
-    </indexes>
     <unique-constraints>
       <unique-constraint name="doctores_pk" columns="id_doctores"/>
     </unique-constraints>
@@ -12,11 +9,7 @@
     </id>
     <field name="especialidad" type="string" column="especialidad" length="50" nullable="true"/>
     <field name="turno" type="string" column="turno" length="50" nullable="true"/>
-    <many-to-one field="idEmpleado" target-entity="Empleados">
-      <join-columns>
-        <join-column name="id_empleado" referenced-column-name="id_empleado"/>
-      </join-columns>
-    </many-to-one>
+    <field name="nombreDoc" type="string" column="nombre_doc" length="100" nullable="true"/>
     <many-to-many field="idCurso" target-entity="Curso" mapped-by="idDoctores"/>
   </entity>
 </doctrine-mapping>

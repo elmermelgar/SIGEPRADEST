@@ -1,0 +1,16 @@
+
+{% extends 'baseError.html.twig' %}
+
+{% block body %}
+    <div style="margin: 0 auto; width: 50%;text-align: center">
+    <h1>Pagina no encontrada</h1>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {# ... #}
+    {% endif %}
+
+    <p>
+        Esta pagina a la cual esta intentado acceder no se ha localizado. Verifique que la URL exista en el Sistema <a href="{{ path('control_redirect') }}">Volver al inicio</a>.
+    </p>
+    </div>
+{% endblock %}

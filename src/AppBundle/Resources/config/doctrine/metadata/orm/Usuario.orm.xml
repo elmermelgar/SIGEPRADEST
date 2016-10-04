@@ -11,21 +11,17 @@
     <id name="idUi" type="integer" column="id_ui">
       <generator strategy="SEQUENCE"/>
     </id>
+    <field name="idEmpleado" type="string" column="id_empleado" length="13" nullable="true"/>
     <field name="nombre" type="string" column="nombre" length="40" nullable="true"/>
     <field name="apellido" type="string" column="apellido" length="40" nullable="true"/>
     <field name="correo" type="string" column="correo" length="50" nullable="true"/>
     <field name="telefono" type="string" column="telefono" length="9" nullable="true"/>
     <field name="nomusuario" type="string" column="nomusuario" length="50" nullable="true"/>
-    <field name="password" type="string" column="password" length="30" nullable="true"/>
+    <field name="password" type="string" column="password" length="200" nullable="true"/>
     <field name="isactive" type="integer" column="isactive" nullable="true"/>
     <many-to-one field="idRol" target-entity="Roles">
       <join-columns>
         <join-column name="id_rol" referenced-column-name="id_rol"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="idEmpleado" target-entity="Empleados">
-      <join-columns>
-        <join-column name="id_empleado" referenced-column-name="id_empleado"/>
       </join-columns>
     </many-to-one>
   </entity>

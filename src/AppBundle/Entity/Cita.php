@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Cita
  *
- * @ORM\Table(name="cita", uniqueConstraints={@ORM\UniqueConstraint(name="cita_pk", columns={"id_cita"})}, indexes={@ORM\Index(name="b_fk", columns={"id_dhe"}), @ORM\Index(name="c_fk", columns={"id_ui"})})
+ * @ORM\Table(name="cita", uniqueConstraints={@ORM\UniqueConstraint(name="cita_pk", columns={"id_cita"})}, indexes={@ORM\Index(name="b_fk", columns={"id_dhe"}), @ORM\Index(name="c_fk", columns={"id_ui"}), @ORM\Index(name="IDX_3E379A6224BE01DC", columns={"id_curso"})})
  * @ORM\Entity
  */
 class Cita
@@ -48,6 +48,16 @@ class Cita
      * })
      */
     private $idUi;
+
+    /**
+     * @var \Curso
+     *
+     * @ORM\ManyToOne(targetEntity="Curso")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_curso", referencedColumnName="id_curso")
+     * })
+     */
+    private $idCurso;
 
 
 
@@ -130,10 +140,26 @@ class Cita
         return $this->idUi;
     }
 
+    /**
+     * Set idCurso
+     *
+     * @param \AppBundle\Entity\Curso $idCurso
+     * @return Cita
+     */
+    public function setIdCurso(\AppBundle\Entity\Curso $idCurso = null)
+    {
+        $this->idCurso = $idCurso;
 
-    public function __toString() {
-        return $this->name;
+        return $this;
     }
 
-
+    /**
+     * Get idCurso
+     *
+     * @return \AppBundle\Entity\Curso 
+     */
+    public function getIdCurso()
+    {
+        return $this->idCurso;
+    }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Doctores
  *
- * @ORM\Table(name="doctores", uniqueConstraints={@ORM\UniqueConstraint(name="doctores_pk", columns={"id_doctores"})}, indexes={@ORM\Index(name="c1_fk", columns={"id_empleado"})})
+ * @ORM\Table(name="doctores", uniqueConstraints={@ORM\UniqueConstraint(name="doctores_pk", columns={"id_doctores"})})
  * @ORM\Entity
  */
 class Doctores
@@ -37,14 +37,11 @@ class Doctores
     private $turno;
 
     /**
-     * @var \Empleados
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Empleados")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_empleado", referencedColumnName="id_empleado")
-     * })
+     * @ORM\Column(name="nombre_doc", type="string", length=100, nullable=true)
      */
-    private $idEmpleado;
+    private $nombreDoc;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -119,26 +116,26 @@ class Doctores
     }
 
     /**
-     * Set idEmpleado
+     * Set nombreDoc
      *
-     * @param \AppBundle\Entity\Empleados $idEmpleado
+     * @param string $nombreDoc
      * @return Doctores
      */
-    public function setIdEmpleado(\AppBundle\Entity\Empleados $idEmpleado = null)
+    public function setNombreDoc($nombreDoc)
     {
-        $this->idEmpleado = $idEmpleado;
+        $this->nombreDoc = $nombreDoc;
 
         return $this;
     }
 
     /**
-     * Get idEmpleado
+     * Get nombreDoc
      *
-     * @return \AppBundle\Entity\Empleados 
+     * @return string 
      */
-    public function getIdEmpleado()
+    public function getNombreDoc()
     {
-        return $this->idEmpleado;
+        return $this->nombreDoc;
     }
 
     /**

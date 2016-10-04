@@ -4,6 +4,7 @@
     <indexes>
       <index name="b_fk" columns="id_dhe"/>
       <index name="c_fk" columns="id_ui"/>
+      <index name="IDX_3E379A6224BE01DC" columns="id_curso"/>
     </indexes>
     <unique-constraints>
       <unique-constraint name="cita_pk" columns="id_cita"/>
@@ -12,6 +13,11 @@
       <generator strategy="SEQUENCE"/>
     </id>
     <field name="comentarioCita" type="string" column="comentario_cita" length="200" nullable="true"/>
+    <many-to-one field="idCurso" target-entity="Curso">
+      <join-columns>
+        <join-column name="id_curso" referenced-column-name="id_curso"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="idUi" target-entity="Usuario">
       <join-columns>
         <join-column name="id_ui" referenced-column-name="id_ui"/>

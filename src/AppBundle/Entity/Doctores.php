@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Doctores
  *
- * @ORM\Table(name="doctores", uniqueConstraints={@ORM\UniqueConstraint(name="doctores_pk", columns={"id_doctores"})}, indexes={@ORM\Index(name="c1_fk", columns={"id_empleado"})})
+ * @ORM\Table(name="doctores", uniqueConstraints={@ORM\UniqueConstraint(name="doctores_pk", columns={"id_doctores"})})
  * @ORM\Entity
  */
 class Doctores
@@ -36,6 +36,12 @@ class Doctores
      */
     private $turno;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_doc", type="string", length=100, nullable=true)
+     */
+    private $nombreDoc;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -107,6 +113,29 @@ class Doctores
     public function getTurno()
     {
         return $this->turno;
+    }
+
+    /**
+     * Set nombreDoc
+     *
+     * @param string $nombreDoc
+     * @return Doctores
+     */
+    public function setNombreDoc($nombreDoc)
+    {
+        $this->nombreDoc = $nombreDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreDoc
+     *
+     * @return string 
+     */
+    public function getNombreDoc()
+    {
+        return $this->nombreDoc;
     }
 
     /**
