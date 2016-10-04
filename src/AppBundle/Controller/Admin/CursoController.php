@@ -20,13 +20,18 @@ class CursoController extends DSIController
      */
     public function verCursoAction()
     {
-        $em=$this->getDoctrine()->getManager("default");
-        $cursos=$em->getRepository('AppBundle:Curso')->findAll();
-        $doctores=$em->getRepository('AppBundle:Doctores')->findAll();
+        if($this->getUser()){
+            $em=$this->getDoctrine()->getManager("default");
+            $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+            $doctores=$em->getRepository('AppBundle:Doctores')->findAll();
 
-        $d1=$this->mostrarD1();
+            $d1=$this->mostrarD1();
 
-        return $this->render('AppBundle:Admin/Curso:curso.html.twig', array('cursos'=>$cursos,'doctores'=>$doctores,'d1'=>$d1));
+            return $this->render('AppBundle:Admin/Curso:curso.html.twig', array('cursos'=>$cursos,'doctores'=>$doctores,'d1'=>$d1));
+        }else{
+            return $this->redirectToRoute('login');
+        }
+
     }
 
     /**

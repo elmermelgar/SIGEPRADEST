@@ -19,26 +19,6 @@
             <div class="panel-heading">
                 Cursos Disponibles <a href="{{ path('createCurso') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Agregar Nuevo Curso</a>
             </div>
-            {% block javascripts %}
-                {% for flashMessage in app.session.flashbag.get('error') %}
-                <script>
-                    window.onload = function error(){
-                        alertify.error("{{ flashMessage }}.");
-                        return false;
-                    }
-                </script>
-                {% endfor %}
-                {% for flashMessage in app.session.flashbag.get('exito') %}
-                <script>
-                    window.onload = function notificacion(){
-                        alertify.success("{{ flashMessage }}.");
-                        return false;
-                    }
-                </script>
-                {% endfor %}
-            {% endblock %}
-
-
 
             <div class="panel-body">
                 <div class="table-responsive">
@@ -87,23 +67,7 @@
         </div>
         <!-- End  Kitchen Sink -->
     </div>
-    
-    {% for cursos in cursos %}
-        <script>
 
-            function confirmar(){
-                //un confirm
-                alertify.confirm("<p>Esta seguro que desea eliminar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
-                    if (e) {
-                        location.href="{{ asset('/admin/curso_delete') }}/{{ cursos.idCurso }}";
-                    } else { alertify.error("Has cancelado la operacion");
-                    }
-                });
-                return false
-            }
-
-        </script>
-    {% endfor %}
 
 {% endblock %}
 {% block javascripts %}
@@ -124,6 +88,22 @@
         </script>
     {% endfor %}
 
+    {% for cursos in cursos %}
+        <script>
+
+            function confirmar(){
+                //un confirm
+                alertify.confirm("<p>Esta seguro que desea eliminar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                    if (e) {
+                        location.href="{{ asset('/admin/curso_delete') }}/{{ cursos.idCurso }}";
+                    } else { alertify.error("Has cancelado la operacion");
+                    }
+                });
+                return false
+            }
+
+        </script>
+    {% endfor %}
     <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
     <script>
