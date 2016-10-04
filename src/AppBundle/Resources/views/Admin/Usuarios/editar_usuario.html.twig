@@ -1,0 +1,90 @@
+{% extends 'base2.html.twig' %}
+{% block active1 %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('admin') }}">Inicio</a></li>
+        <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
+        <li class="active">Editar Usuario</li>
+    </ol>
+    <h2>Editando un usuario</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Datos Personales
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Editar Datos Complementarios</h3>
+
+                            <form role="form" action="{{ path('editar_usuario', {'id': usuario.idUi}) }}" method="post" >
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nombres </label>
+                                            <input class="form-control" name="nombre" value="{{ usuario.nombre }}" />
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Apellidos </label>
+                                            <input class="form-control" name="apellido" value="{{ usuario.apellido}}"/>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Correo </label>
+
+                                        <input class="form-control" type="email" name="email" value="{{ usuario.correo }}" required/>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Telefono </label>
+                                        <input class="form-control" type="text" name="tel" required max="9" value="{{ usuario.telefono }}" placeholder="9999-9999"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Usuario</label>
+                                            <input class="form-control" name="username" value="{{ usuario.nomusuario }}" readonly/>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Password</label>
+                                            <input class="form-control" name="pass" type="password" value="{{ usuario.password }}" readonly/>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Id Empleado</label>
+                                            <input class="form-control" name="id_emp" type="text" value="{{ usuario.idEmpleado }}" readonly/>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tipo de Usuario</label>
+                                        <select class="form-control" name="rol">
+                                            <option value="1">Administrador</option>
+                                            <option value="2">Docente</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-md-offset-4">
+                                    <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar Usuario</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+
+{% endblock %}

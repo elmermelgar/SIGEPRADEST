@@ -15,16 +15,21 @@ class UsuariosController extends SecurityController
      * @Route("/admin/empleados", name="empleados")
      */
     public function empleadosAction(){
-        $em=$this->getDoctrine()->getManager("foues");
-        $db = $em->getConnection();
-        //$sql = "SELECT * FROM empleados";
-        $sql = "SELECT * FROM empleados";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
+        if($this->getUser()){
+            $em=$this->getDoctrine()->getManager("foues");
+            $db = $em->getConnection();
+            //$sql = "SELECT * FROM empleados";
+            $sql = "SELECT * FROM empleados";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
 
-        return $this->render('AppBundle:Admin/Usuarios:empleados.html.twig', array(
-            'empleados' => $result));
+            return $this->render('AppBundle:Admin/Usuarios:empleados.html.twig', array(
+                'empleados' => $result));
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
     }
 
     /**
@@ -72,12 +77,54 @@ class UsuariosController extends SecurityController
     }
 
     /**
+     * @Route("/admin/usuario/{id}/edit", name="editar_usuario")
+     */
+    public function editarUsuarioAction($id, Request $request){
+        $em2=$this->getDoctrine()->getManager("default");
+        //Seleccionando un solo usuario";
+        $datos=$this->getDoctrine()->getRepository('AppBundle:Usuario')->find($id);
+        if($request->isMethod("POST"))
+        {
+
+            //$u->setNomusuario($request->get("username"));
+            $datos->setNombre($request->get("nombre"));
+            $datos->setIdRol($em2->getRepository('AppBundle:Roles')->find($request->get('rol')));
+            $datos->setCorreo($request->get("email"));
+            $datos->setApellido($request->get("apellido"));
+            $datos->setTelefono($request->get("tel"));
+            //$u->setIdEmpleado($request->get("id_emp"));
+           // $u->setIsactive(1);
+            //Cifra la contrase?a
+           // $factory = $this->get('security.encoder_factory');
+            //$encoder = $factory->getEncoder($u);
+           // $password = $encoder->encodePassword($request->get("pass"), $u->getSalt());
+            //$u->setPassword($password);
+            //Persistencia
+            //$em2->persist($u);
+            $em2->flush();
+            //redireccionamiento
+            $this->MensajeFlash('exito','Usuario actualizado correctamente!');
+
+            $em2=$this->getDoctrine()->getManager("default");
+            $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
+            return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
+        }
+        return $this->render('AppBundle:Admin/Usuarios:editar_usuario.html.twig', array(
+            'usuario' => $datos));
+    }
+
+    /**
      * @Route("/admin/usuarios/", name="usuarios")
      */
     public function usuariosViewsAction(Request $request){
-        $em2=$this->getDoctrine()->getManager("default");
-        $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
-        return $this->render('AppBundle:Admin/Usuarios:usuarios_views.html.twig', array('usuarios'=>$usuarios));
+        if($this->getUser()){
+            $em2=$this->getDoctrine()->getManager("default");
+            $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
+            return $this->render('AppBundle:Admin/Usuarios:usuarios_views.html.twig', array('usuarios'=>$usuarios));
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
     }
     /**
      * @Route("/admin/usuario/delete/{id}", name="eliminar_usuario")

@@ -50,16 +50,23 @@ class SecurityController extends Controller
      */
     public function controlRedirectAction(){
             //return $this->render('::base.html.twig');*/
-        $rol=$this->getUser()->getIdrol()->getIdrol();
-        if($rol==1)
-            return $this->redirectToRoute('admin');
-        if($rol==2)
-            return $this->redirectToRoute('doctor');
-        if($rol==3)
-            return $this->redirectToRoute('alumno');
-        if($rol==4)
-            return $this->redirectToRoute('interesado');
-        //return $this->redirectToRoute('interesado');
+        $exist=$this->getUser();
+        if($exist){
+            $rol=$this->getUser()->getIdrol()->getIdrol();
+            if($rol==1)
+                return $this->redirectToRoute('admin');
+            if($rol==2)
+                return $this->redirectToRoute('doctor');
+            if($rol==3)
+                return $this->redirectToRoute('alumno');
+            if($rol==4)
+                return $this->redirectToRoute('interesado');
+            //return $this->redirectToRoute('interesado');
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
+
     }
     /**
      * @Route("/admin/", name="admin")

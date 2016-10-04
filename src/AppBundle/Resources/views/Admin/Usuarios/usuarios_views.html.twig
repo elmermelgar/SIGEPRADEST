@@ -1,6 +1,8 @@
 {% extends 'base2.html.twig' %}
 {% block active1 %}active-menu{% endblock %}
-
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block Header %}
 <div class="col-md-12">
     <ol class="breadcrumb">
@@ -15,11 +17,11 @@
         <!--   Kitchen Sink -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                Usuarios del Sistema <a href="{{ path('empleados') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Usuario</a>
+                Usuarios del Sistema <a href="{{ path('empleados') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Usuario</a>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
                             <th style="text-align: center">#</th>
@@ -42,9 +44,9 @@
                             <td>{{ usuarios.correo }}</td>
                             <td>{{ usuarios.nomusuario }}</td>
                             <td style="text-align: center;">
-                                <a href="#" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                <a href="{{ path('editar_usuario', {'id': usuarios.idUi}) }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                 -
-                                <a href="{{ path('eliminar_usuario', {'id': usuarios.idUi }) }}" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+                                <button onClick="confirmar()" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
                             </td>
                         </tr>
                             {% endfor %}
@@ -57,6 +59,22 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    {% for usuarios in usuarios %}
+        <script>
+
+            function confirmar(){
+                //un confirm
+                alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                    if (e) {
+                        location.href="{{ path('eliminar_usuario', {'id': usuarios.idUi}) }}";
+                    } else { alertify.error("Has cancelado la operacion");
+                    }
+                });
+                return false
+            }
+
+        </script>
+    {% endfor %}
     {% for flashMessage in app.session.flashbag.get('error') %}
         <script>
             window.onload = function error(){
@@ -73,4 +91,11 @@
             }
         </script>
     {% endfor %}
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
 {% endblock %}
