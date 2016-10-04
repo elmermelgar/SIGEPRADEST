@@ -22,7 +22,11 @@ class CursoController extends DSIController
     {
         $em=$this->getDoctrine()->getManager("default");
         $cursos=$em->getRepository('AppBundle:Curso')->findAll();
-        return $this->render('AppBundle:Admin/Curso:curso.html.twig', array('cursos'=>$cursos));
+        $doctores=$em->getRepository('AppBundle:Doctores')->findAll();
+
+        $d1=$this->mostrarD1();
+
+        return $this->render('AppBundle:Admin/Curso:curso.html.twig', array('cursos'=>$cursos,'doctores'=>$doctores,'d1'=>$d1));
     }
 
     /**
@@ -185,8 +189,32 @@ class CursoController extends DSIController
             throw $this->createNotFoundException('No existe el usuario con el ID'.$idcurso);
         }
 
-        $this->del_d1($idcurso);
         $a=$this->IdCurso($idcurso);
+
+        $sql="select broshure_informativo from curso where id_curso=$a";
+        $con=$em->getConnection();
+        $st=$con->prepare($sql);
+        $st->execute();
+        $nombreImagen = $st->fetch();
+
+        foreach ($nombreImagen as $nombreImagen){
+            $a1=$nombreImagen;
+        }
+
+        $sql="select ruta_pdf from curso where id_curso=$a";
+        $con=$em->getConnection();
+        $st=$con->prepare($sql);
+        $st->execute();
+        $nombrePDF = $st->fetch();
+
+        foreach ($nombrePDF as $nombrePDF){
+            $a2=$nombrePDF;
+        }
+
+        $this->borrarImagen($a1);
+        $this->borrarPDF($a2);
+
+        $this->del_d1($idcurso);
 
         $em->remove($curso);
         $em->flush();
@@ -195,6 +223,8 @@ class CursoController extends DSIController
         $con=$em->getConnection();
         $st=$con->prepare($sql);
         $st->execute();
+
+
 
         $this->MensajeFlash('exito','Curso Eliminado correctamente');
 

@@ -33,9 +33,19 @@ class DSIController extends Controller
         move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\brochure\\".$nombreImagen);
     }
 
+    //Eliminar imagen del servidor
+    protected function borrarImagen($nombreImagen){
+        unlink($_SERVER['DOCUMENT_ROOT']."\\public\\".$nombreImagen);
+    }
+
     //Para subir la PDF al servidor
     protected function subirPDF($archivo,$nombrePDF){
         move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\pdf\\".$nombrePDF);
+    }
+
+    //Eliminar imagen del servidor
+    protected function borrarPDF($nombrePDF){
+        unlink($_SERVER['DOCUMENT_ROOT']."\\public\\".$nombrePDF);
     }
 
     protected function updateCurso($id_hc,$id_curso){
@@ -90,5 +100,15 @@ class DSIController extends Controller
         $con=$em->getConnection();
         $st=$con->prepare($sql);
         $st->execute();
+    }
+
+    protected function mostrarD1(){
+        $em=$this->getDoctrine()->getManager();
+        $db = $em->getConnection();
+        $sql = "SELECT * FROM d1";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $d1 = $stmt->fetchAll();
+        return $d1;
     }
 }
