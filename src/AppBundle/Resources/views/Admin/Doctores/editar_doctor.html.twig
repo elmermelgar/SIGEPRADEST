@@ -1,0 +1,64 @@
+{% extends 'base2.html.twig' %}
+{% block active2 %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('admin') }}">Inicio</a></li>
+        <li><a href="{{ path('doctores') }}">Doctores</a></li>
+        <li class="active">Editar Doctor</li>
+    </ol>
+    <h2>Editando un doctor</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Datos Personales
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Editar Datos Complementarios</h3>
+
+                            <form role="form" action="{{ path('editar_doctor', {'id': doctor.idDoctores}) }}" method="post" >
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nombre </label>
+                                            <input class="form-control" name="nombre_doc" value="{{ doctor.nombreDoc }}" />
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Especialidad </label>
+                                            <input class="form-control" name="especialidad" value="{{ doctor.especialidad }}"/>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Turno</label>
+                                            <input class="form-control" name="turno" value="{{ doctor.turno }}" />
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 col-md-offset-4">
+                                    <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar Usuario</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+
+{% endblock %}

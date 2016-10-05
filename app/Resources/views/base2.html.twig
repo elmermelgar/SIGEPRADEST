@@ -57,13 +57,13 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                     <a class="{% block active1 %}{% endblock %}"  href="{{ path('usuarios') }}"><i class="fa fa-users"></i> Usuarios</a>
                 </li>
                     <li>
-                        <a href="#"><i class="fa fa-graduation-cap"></i> Cursos<span class="fa arrow"></span></a>
+                        <a class="{% block active2 %}{% endblock %}" href="#"><i class="fa fa-graduation-cap"></i> Cursos<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="{{ path('verCurso') }}">Administrar Cursos</a>
                             </li>
                             <li>
-                                <a href="#">Administrar Doctores</a>
+                                <a href="{{ path('doctores') }}">Administrar Doctores</a>
                             </li>
                         </ul>
                     </li>
