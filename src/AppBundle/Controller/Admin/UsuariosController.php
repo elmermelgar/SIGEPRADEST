@@ -92,15 +92,7 @@ class UsuariosController extends SecurityController
             $datos->setCorreo($request->get("email"));
             $datos->setApellido($request->get("apellido"));
             $datos->setTelefono($request->get("tel"));
-            //$u->setIdEmpleado($request->get("id_emp"));
-           // $u->setIsactive(1);
-            //Cifra la contrase?a
-           // $factory = $this->get('security.encoder_factory');
-            //$encoder = $factory->getEncoder($u);
-           // $password = $encoder->encodePassword($request->get("pass"), $u->getSalt());
-            //$u->setPassword($password);
-            //Persistencia
-            //$em2->persist($u);
+
             $em2->flush();
             //redireccionamiento
             $this->MensajeFlash('exito','Usuario actualizado correctamente!');
@@ -118,8 +110,8 @@ class UsuariosController extends SecurityController
      */
     public function usuariosViewsAction(Request $request){
         if($this->getUser()){
-            $em2=$this->getDoctrine()->getManager("default");
-            $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
+            $em=$this->getDoctrine()->getManager();
+            $usuarios=$em->getRepository('AppBundle:Usuario')->findAll();
             return $this->render('AppBundle:Admin/Usuarios:usuarios_views.html.twig', array('usuarios'=>$usuarios));
         }
         else{
@@ -139,10 +131,7 @@ class UsuariosController extends SecurityController
         $em->remove($usuario);
         $em->flush();
         $this->MensajeFlash('exito','Usuario eliminado correctamente!');
-
-        $em2=$this->getDoctrine()->getManager("default");
-        $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
-        return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
+        return $this->redirectToRoute("usuarios");
     }
 
 }
