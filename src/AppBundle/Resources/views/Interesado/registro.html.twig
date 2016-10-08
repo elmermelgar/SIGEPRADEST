@@ -22,7 +22,10 @@
             <h2> Registro</h2>
 
             <h5>( Debe registrarse para tener acceso )</h5>
-            <br/>
+
+            {% if error %}
+                <div><h5 style="color:red">{{ error }}</h5></div>
+            {% endif %}
         </div>
     </div>
     <div class="row">
