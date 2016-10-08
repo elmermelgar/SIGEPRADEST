@@ -42,13 +42,15 @@ class InteresadoController extends Controller
                 $em->persist($u);
                 $em->flush();
                 //redireccionamiento
-                return $this->redirectToRoute('interesado');
+                return $this->redirectToRoute('login');
             }else{
-                return $this->render('AppBundle:Interesado:registro.html.twig', array('interesado' => $u));
+                $error = 'El usuario o el correo ya se estan usando, vuelva a ingresarlos nuevamente';
+                return $this->render('AppBundle:Interesado:registro.html.twig', array('interesado' => $u,'error' => $error));
             }
         }else {
             $interesado = new Usuario();
-            return $this->render('AppBundle:Interesado:registro.html.twig', array('interesado' => $interesado));
+            $error = '';
+            return $this->render('AppBundle:Interesado:registro.html.twig', array('interesado' => $interesado,'error' => $error));
         }
     }
 
