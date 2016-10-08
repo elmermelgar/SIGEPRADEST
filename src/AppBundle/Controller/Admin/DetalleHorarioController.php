@@ -13,7 +13,7 @@ use AppBundle\Form\DetalleHorarioType;
 /**
  * DetalleHorario controller.
  *
- * @Route("/detallehorario")
+ * @Route("/Admin/detallehorario")
  */
 class DetalleHorarioController extends Controller
 {
@@ -76,7 +76,8 @@ class DetalleHorarioController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
 
         return $form;
     }
@@ -165,7 +166,8 @@ class DetalleHorarioController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar','attr' => array('class' => 'btn btn-primary',
+        'style' => "width: 30%")));
 
         return $form;
     }
@@ -240,8 +242,8 @@ class DetalleHorarioController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('detallehorario_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'btn btn-danger',
+                'style' => "width: 100%;")))
+            ->getForm();
     }
 }

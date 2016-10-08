@@ -277,6 +277,7 @@ class CitaController extends DSIController
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Cita entity.');
             }
+            $entity->getIdDhe()->setOcupado('false');// de esta maner podemos poner como apagado el bool de la otra clase
 
             $em->remove($entity);
             $em->flush();

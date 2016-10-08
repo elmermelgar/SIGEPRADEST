@@ -41,6 +41,7 @@ private  $isEdit=false;
                     function ($idDhe) {
 
                         $fechasDisponible = $idDhe->getFechaDhe()->format('Y-m-d');
+                        $fechasDisponible= $fechasDisponible." - ". $idDhe->getHoraDhe()->format('h:i A');
                         return $fechasDisponible;
                     }
 // para elegir el texto que se mostrara en los label que estaran presentes en el fomulario

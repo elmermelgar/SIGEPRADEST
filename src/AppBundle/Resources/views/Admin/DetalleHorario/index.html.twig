@@ -1,9 +1,44 @@
-{% extends '::base.html.twig' %}
-
+{% extends '::base2.html.twig' %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li class="active">Detalles de Horario</li>
+        </ol>
+        <h2>Lista de Horarios</h2>
+    </div>
+{% endblock %}
 {% block body -%}
-    <h1>DetalleHorario list</h1>
+<div class="col-md-12">
+    <!--   Kitchen Sink -->
+    <div class="panel panel-default">
+        <div class="panel-heading" style="padding-bottom: 15px;">
+            Horarios posibles para realizar citas  <a href="{{ path('detallehorario_new') }}"
+                                                style="float: right; margin-top: -5px;" title="Agregar"
+                                                class="btn btn-success">Agregar Nueva Cita</a>
+        </div>
 
-    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+        {% block javascripts %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+            <script>
+                window.onload = function error(){
+                    alertify.error("{{ flashMessage }}.");
+                    return false;
+                }
+            </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+            <script>
+                window.onload = function notificacion(){
+                    alertify.success("{{ flashMessage }}.");
+                    return false;
+                }
+            </script>
+            {% endfor %}
+        {% endblock %}
+
+
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
             <tr>
                 <th>Iddhe</th>
@@ -21,25 +56,19 @@
                 <td>{% if entity.fechaDhe %}{{ entity.fechaDhe|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.ocupado  %}{{ 'Si' }}{% else %}{{ "No" }}{% endif %}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('detallehorario_show', { 'id': entity.idDhe }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('detallehorario_edit', { 'id': entity.idDhe }) }}">edit</a>
-                    </li>
-                </ul>
+
+                        <a href="{{ path('detallehorario_show', { 'id': entity.idDhe }) }}" title="Editar"
+                           class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span
+                                    class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                        - <a href="{{ path('detallehorario_edit', { 'id': entity.idDhe }) }}"  title="Editar"
+                             class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+        </div>
+    </div>
 
-        <ul>
-        <li>
-            <a href="{{ path('detallehorario_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}
