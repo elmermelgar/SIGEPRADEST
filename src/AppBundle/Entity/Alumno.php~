@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Alumno
  *
- * @ORM\Table(name="alumno", uniqueConstraints={@ORM\UniqueConstraint(name="alumno_pk", columns={"id_alumno"})}, indexes={@ORM\Index(name="i_fk", columns={"id_ui"})})
+ * @ORM\Table(name="alumno", uniqueConstraints={@ORM\UniqueConstraint(name="alumno_pk", columns={"id_alumno"})}, indexes={@ORM\Index(name="i_fk", columns={"id_ui"}), @ORM\Index(name="k2_fk", columns={"id_dp"})})
  * @ORM\Entity
  */
 class Alumno
@@ -23,6 +23,13 @@ class Alumno
     private $idAlumno;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="estado_alumno", type="string", length=50, nullable=true)
+     */
+    private $estadoAlumno;
+
+    /**
      * @var \Usuario
      *
      * @ORM\ManyToOne(targetEntity="Usuario")
@@ -31,6 +38,16 @@ class Alumno
      * })
      */
     private $idUi;
+
+    /**
+     * @var \DatosPersonales
+     *
+     * @ORM\ManyToOne(targetEntity="DatosPersonales")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_dp", referencedColumnName="id_dp")
+     * })
+     */
+    private $idDp;
 
 
 
@@ -42,6 +59,29 @@ class Alumno
     public function getIdAlumno()
     {
         return $this->idAlumno;
+    }
+
+    /**
+     * Set estadoAlumno
+     *
+     * @param string $estadoAlumno
+     * @return Alumno
+     */
+    public function setEstadoAlumno($estadoAlumno)
+    {
+        $this->estadoAlumno = $estadoAlumno;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoAlumno
+     *
+     * @return string 
+     */
+    public function getEstadoAlumno()
+    {
+        return $this->estadoAlumno;
     }
 
     /**
@@ -65,5 +105,28 @@ class Alumno
     public function getIdUi()
     {
         return $this->idUi;
+    }
+
+    /**
+     * Set idDp
+     *
+     * @param \AppBundle\Entity\DatosPersonales $idDp
+     * @return Alumno
+     */
+    public function setIdDp(\AppBundle\Entity\DatosPersonales $idDp = null)
+    {
+        $this->idDp = $idDp;
+
+        return $this;
+    }
+
+    /**
+     * Get idDp
+     *
+     * @return \AppBundle\Entity\DatosPersonales 
+     */
+    public function getIdDp()
+    {
+        return $this->idDp;
     }
 }

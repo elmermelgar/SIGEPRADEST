@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DatosPersonales
  *
- * @ORM\Table(name="datos_personales", uniqueConstraints={@ORM\UniqueConstraint(name="datos_personales_pk", columns={"id_dp"})})
+ * @ORM\Table(name="datos_personales", uniqueConstraints={@ORM\UniqueConstraint(name="datos_personales_pk", columns={"id_dp"})}, indexes={@ORM\Index(name="r2_fk", columns={"id_ui"})})
  * @ORM\Entity
  */
 class DatosPersonales
@@ -77,6 +77,16 @@ class DatosPersonales
      * @ORM\Column(name="telefono_movil", type="string", length=9, nullable=true)
      */
     private $telefonoMovil;
+
+    /**
+     * @var \Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_ui", referencedColumnName="id_ui")
+     * })
+     */
+    private $idUi;
 
 
 
@@ -272,5 +282,28 @@ class DatosPersonales
     public function getTelefonoMovil()
     {
         return $this->telefonoMovil;
+    }
+
+    /**
+     * Set idUi
+     *
+     * @param \AppBundle\Entity\Usuario $idUi
+     * @return DatosPersonales
+     */
+    public function setIdUi(\AppBundle\Entity\Usuario $idUi = null)
+    {
+        $this->idUi = $idUi;
+
+        return $this;
+    }
+
+    /**
+     * Get idUi
+     *
+     * @return \AppBundle\Entity\Usuario 
+     */
+    public function getIdUi()
+    {
+        return $this->idUi;
     }
 }

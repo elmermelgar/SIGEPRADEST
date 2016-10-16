@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="DetalleHorario" table="detalle_horario">
+  <entity name="EvaluacionPrevia" table="evaluacion_previa">
     <indexes>
-      <index name="a_fk" columns="id_he"/>
+      <index name="s4_fk" columns="id_solicitud"/>
+      <index name="s3_fk" columns="id_he"/>
     </indexes>
     <unique-constraints>
-      <unique-constraint name="detalle_horario_pk" columns="id_dhe"/>
+      <unique-constraint name="evaluacion_previa_pk" columns="id_ev"/>
     </unique-constraints>
-    <id name="idDhe" type="integer" column="id_dhe">
+    <id name="idEv" type="integer" column="id_ev">
       <generator strategy="SEQUENCE"/>
     </id>
-    <field name="horaDhe" type="time" column="hora_dhe" nullable="true"/>
-    <field name="fechaDhe" type="date" column="fecha_dhe" nullable="true"/>
-    <field name="ocupado" type="boolean" column="ocupado" nullable="true"/>
+    <field name="comentarioEvaluacion" type="string" column="comentario_evaluacion" length="100" nullable="true"/>
+    <many-to-one field="idSolicitud" target-entity="Solicitud">
+      <join-columns>
+        <join-column name="id_solicitud" referenced-column-name="id_solicitud"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="idHe" target-entity="HorarioEntrevista">
       <join-columns>
         <join-column name="id_he" referenced-column-name="id_he"/>

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Nota
  *
- * @ORM\Table(name="nota", uniqueConstraints={@ORM\UniqueConstraint(name="nota_pk", columns={"id_nota"})}, indexes={@ORM\Index(name="r_fk", columns={"id_modulo"}), @ORM\Index(name="p_fk", columns={"id_dc"})})
+ * @ORM\Table(name="nota", uniqueConstraints={@ORM\UniqueConstraint(name="nota_pk", columns={"id_nota"})}, indexes={@ORM\Index(name="r_fk", columns={"id_modulo"}), @ORM\Index(name="p_fk", columns={"id_dc"}), @ORM\Index(name="r7_fk", columns={"id_evaluacion"})})
  * @ORM\Entity
  */
 class Nota
@@ -25,21 +25,14 @@ class Nota
     /**
      * @var string
      *
-     * @ORM\Column(name="evaluacion", type="string", length=20, nullable=true)
-     */
-    private $evaluacion;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="nota", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $nota;
 
     /**
-     * @var \DetalleCurso
+     * @var \InscripcionCurso
      *
-     * @ORM\ManyToOne(targetEntity="DetalleCurso")
+     * @ORM\ManyToOne(targetEntity="InscripcionCurso")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_dc", referencedColumnName="id_dc")
      * })
@@ -56,6 +49,16 @@ class Nota
      */
     private $idModulo;
 
+    /**
+     * @var \Evaluacion
+     *
+     * @ORM\ManyToOne(targetEntity="Evaluacion")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_evaluacion", referencedColumnName="id_evaluacion")
+     * })
+     */
+    private $idEvaluacion;
+
 
 
     /**
@@ -66,29 +69,6 @@ class Nota
     public function getIdNota()
     {
         return $this->idNota;
-    }
-
-    /**
-     * Set evaluacion
-     *
-     * @param string $evaluacion
-     * @return Nota
-     */
-    public function setEvaluacion($evaluacion)
-    {
-        $this->evaluacion = $evaluacion;
-
-        return $this;
-    }
-
-    /**
-     * Get evaluacion
-     *
-     * @return string 
-     */
-    public function getEvaluacion()
-    {
-        return $this->evaluacion;
     }
 
     /**
@@ -117,10 +97,10 @@ class Nota
     /**
      * Set idDc
      *
-     * @param \AppBundle\Entity\DetalleCurso $idDc
+     * @param \AppBundle\Entity\InscripcionCurso $idDc
      * @return Nota
      */
-    public function setIdDc(\AppBundle\Entity\DetalleCurso $idDc = null)
+    public function setIdDc(\AppBundle\Entity\InscripcionCurso $idDc = null)
     {
         $this->idDc = $idDc;
 
@@ -130,7 +110,7 @@ class Nota
     /**
      * Get idDc
      *
-     * @return \AppBundle\Entity\DetalleCurso 
+     * @return \AppBundle\Entity\InscripcionCurso 
      */
     public function getIdDc()
     {
@@ -158,5 +138,28 @@ class Nota
     public function getIdModulo()
     {
         return $this->idModulo;
+    }
+
+    /**
+     * Set idEvaluacion
+     *
+     * @param \AppBundle\Entity\Evaluacion $idEvaluacion
+     * @return Nota
+     */
+    public function setIdEvaluacion(\AppBundle\Entity\Evaluacion $idEvaluacion = null)
+    {
+        $this->idEvaluacion = $idEvaluacion;
+
+        return $this;
+    }
+
+    /**
+     * Get idEvaluacion
+     *
+     * @return \AppBundle\Entity\Evaluacion 
+     */
+    public function getIdEvaluacion()
+    {
+        return $this->idEvaluacion;
     }
 }

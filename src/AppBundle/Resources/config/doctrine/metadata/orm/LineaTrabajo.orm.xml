@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="LineaTrabajo" table="linea_trabajo">
+    <indexes>
+      <index name="f5_fk" columns="id_unidad_presupuestaria__"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="linea_trabajo_pk" columns="id_linea_trabajo__"/>
+    </unique-constraints>
+    <id name="idLineaTrabajo" type="string" column="id_linea_trabajo__" length="10">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="codLineaTrabajo" type="string" column="cod_linea_trabajo__" length="10" nullable="true"/>
+    <field name="nombreLineaTrabajo" type="string" column="nombre_linea_trabajo__" length="100" nullable="true"/>
+    <many-to-one field="idUnidadPresupuestaria" target-entity="UnidadPresupuesto">
+      <join-columns>
+        <join-column name="id_unidad_presupuestaria__" referenced-column-name="id_unidad_presupuestaria__"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

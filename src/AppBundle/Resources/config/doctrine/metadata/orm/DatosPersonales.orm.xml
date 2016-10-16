@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="DatosPersonales" table="datos_personales">
+    <indexes>
+      <index name="r2_fk" columns="id_ui"/>
+    </indexes>
     <unique-constraints>
       <unique-constraint name="datos_personales_pk" columns="id_dp"/>
     </unique-constraints>
@@ -15,5 +18,10 @@
     <field name="lugarTrabajo" type="string" column="lugar_trabajo" length="100" nullable="true"/>
     <field name="direccionTrabajo" type="string" column="direccion_trabajo" length="300" nullable="true"/>
     <field name="telefonoMovil" type="string" column="telefono_movil" length="9" nullable="true"/>
+    <many-to-one field="idUi" target-entity="Usuario">
+      <join-columns>
+        <join-column name="id_ui" referenced-column-name="id_ui"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

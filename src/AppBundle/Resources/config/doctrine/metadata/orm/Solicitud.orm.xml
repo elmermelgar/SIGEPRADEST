@@ -7,15 +7,14 @@
       <index name="h_fk" columns="id_dp"/>
     </indexes>
     <unique-constraints>
-      <unique-constraint name="solicitud_pk" columns="id_solicitud1"/>
+      <unique-constraint name="solicitud_pk" columns="id_solicitud"/>
     </unique-constraints>
-    <id name="idSolicitud1" type="integer" column="id_solicitud1">
+    <id name="idSolicitud" type="integer" column="id_solicitud">
       <generator strategy="SEQUENCE"/>
     </id>
     <field name="estado" type="string" column="estado" length="20" nullable="true"/>
-    <field name="fechaEntrevista" type="date" column="fecha_entrevista" nullable="true"/>
-    <field name="fechaPrueba" type="date" column="fecha_prueba" nullable="true"/>
     <field name="fechaRegistro" type="date" column="fecha_registro" nullable="true"/>
+    <field name="rangoDisponibilidad" type="string" column="rango_disponibilidad" length="100" nullable="true"/>
     <many-to-one field="idCurso" target-entity="Curso">
       <join-columns>
         <join-column name="id_curso" referenced-column-name="id_curso"/>

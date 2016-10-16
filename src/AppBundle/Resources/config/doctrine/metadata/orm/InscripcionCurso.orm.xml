@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="DetalleCurso" table="detalle_curso">
+  <entity name="InscripcionCurso" table="inscripcion_curso">
     <indexes>
-      <index name="q_fk" columns="id_exp"/>
       <index name="k_fk" columns="id_curso"/>
+      <index name="q_fk" columns="id_alumno"/>
     </indexes>
     <unique-constraints>
-      <unique-constraint name="detalle_curso_pk" columns="id_dc"/>
+      <unique-constraint name="inscripcion_curso_pk" columns="id_dc"/>
     </unique-constraints>
     <id name="idDc" type="integer" column="id_dc">
       <generator strategy="SEQUENCE"/>
     </id>
-    <many-to-one field="idExp" target-entity="Expediente">
+    <many-to-one field="idAlumno" target-entity="Alumno">
       <join-columns>
-        <join-column name="id_exp" referenced-column-name="id_exp"/>
+        <join-column name="id_alumno" referenced-column-name="id_alumno"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="idCurso" target-entity="Curso">

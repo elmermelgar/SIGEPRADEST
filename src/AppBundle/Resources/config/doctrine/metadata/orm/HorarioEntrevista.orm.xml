@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="HorarioEntrevista" table="horario_entrevista">
+    <indexes>
+      <index name="s2_fk" columns="id_curso"/>
+    </indexes>
     <unique-constraints>
       <unique-constraint name="horario_entrevista_pk" columns="id_he"/>
     </unique-constraints>
     <id name="idHe" type="integer" column="id_he">
       <generator strategy="SEQUENCE"/>
     </id>
-    <field name="defecha" type="date" column="defecha" nullable="true"/>
-    <field name="afecha" type="date" column="afecha" nullable="true"/>
+    <field name="horaDhe" type="time" column="hora_dhe" nullable="true"/>
+    <field name="fechaDhe" type="date" column="fecha_dhe" nullable="true"/>
+    <field name="ocupado" type="boolean" column="ocupado" nullable="true"/>
+    <field name="tipoHorario" type="string" column="tipo_horario" length="50" nullable="true"/>
+    <many-to-one field="idCurso" target-entity="Curso">
+      <join-columns>
+        <join-column name="id_curso" referenced-column-name="id_curso"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

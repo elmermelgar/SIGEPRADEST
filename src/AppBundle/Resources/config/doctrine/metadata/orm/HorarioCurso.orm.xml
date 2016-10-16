@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="HorarioCurso" table="horario_curso">
+    <indexes>
+      <index name="v_fk" columns="id_curso"/>
+    </indexes>
     <unique-constraints>
       <unique-constraint name="horario_curso_pk" columns="id_hc"/>
     </unique-constraints>
@@ -11,5 +14,14 @@
     <field name="fechaFin" type="date" column="fecha_fin" nullable="true"/>
     <field name="inicioRecepDoc" type="date" column="inicio_recep_doc" nullable="true"/>
     <field name="finRecepDoc" type="date" column="fin_recep_doc" nullable="true"/>
+    <field name="defechaEntrevista" type="date" column="defecha_entrevista" nullable="true"/>
+    <field name="afechaEntrevista" type="date" column="afecha_entrevista" nullable="true"/>
+    <field name="defechaEvaluacion" type="date" column="defecha_evaluacion" nullable="true"/>
+    <field name="afechaEvaluacion" type="date" column="afecha_evaluacion" nullable="true"/>
+    <many-to-one field="idCurso" target-entity="Curso">
+      <join-columns>
+        <join-column name="id_curso" referenced-column-name="id_curso"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

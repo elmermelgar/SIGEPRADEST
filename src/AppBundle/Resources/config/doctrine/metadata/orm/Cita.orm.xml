@@ -2,9 +2,8 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Cita" table="cita">
     <indexes>
-      <index name="b_fk" columns="id_dhe"/>
-      <index name="c_fk" columns="id_ui"/>
-      <index name="IDX_3E379A6224BE01DC" columns="id_curso"/>
+      <index name="b_fk" columns="id_he"/>
+      <index name="c_fk" columns="id_solicitud"/>
     </indexes>
     <unique-constraints>
       <unique-constraint name="cita_pk" columns="id_cita"/>
@@ -13,19 +12,14 @@
       <generator strategy="SEQUENCE"/>
     </id>
     <field name="comentarioCita" type="string" column="comentario_cita" length="200" nullable="true"/>
-    <many-to-one field="idCurso" target-entity="Curso">
+    <many-to-one field="idSolicitud" target-entity="Solicitud">
       <join-columns>
-        <join-column name="id_curso" referenced-column-name="id_curso"/>
+        <join-column name="id_solicitud" referenced-column-name="id_solicitud"/>
       </join-columns>
     </many-to-one>
-    <many-to-one field="idUi" target-entity="Usuario">
+    <many-to-one field="idHe" target-entity="HorarioEntrevista">
       <join-columns>
-        <join-column name="id_ui" referenced-column-name="id_ui"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="idDhe" target-entity="DetalleHorario">
-      <join-columns>
-        <join-column name="id_dhe" referenced-column-name="id_dhe"/>
+        <join-column name="id_he" referenced-column-name="id_he"/>
       </join-columns>
     </many-to-one>
   </entity>

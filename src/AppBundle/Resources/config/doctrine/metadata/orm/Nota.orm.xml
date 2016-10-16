@@ -4,6 +4,7 @@
     <indexes>
       <index name="r_fk" columns="id_modulo"/>
       <index name="p_fk" columns="id_dc"/>
+      <index name="r7_fk" columns="id_evaluacion"/>
     </indexes>
     <unique-constraints>
       <unique-constraint name="nota_pk" columns="id_nota"/>
@@ -11,14 +12,18 @@
     <id name="idNota" type="integer" column="id_nota">
       <generator strategy="SEQUENCE"/>
     </id>
-    <field name="evaluacion" type="string" column="evaluacion" length="20" nullable="true"/>
     <field name="nota" type="decimal" column="nota" precision="10" scale="2" nullable="true"/>
+    <many-to-one field="idEvaluacion" target-entity="Evaluacion">
+      <join-columns>
+        <join-column name="id_evaluacion" referenced-column-name="id_evaluacion"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="idModulo" target-entity="Modulos">
       <join-columns>
         <join-column name="id_modulo" referenced-column-name="id_modulo"/>
       </join-columns>
     </many-to-one>
-    <many-to-one field="idDc" target-entity="DetalleCurso">
+    <many-to-one field="idDc" target-entity="InscripcionCurso">
       <join-columns>
         <join-column name="id_dc" referenced-column-name="id_dc"/>
       </join-columns>

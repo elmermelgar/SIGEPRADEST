@@ -3,6 +3,7 @@
   <entity name="Alumno" table="alumno">
     <indexes>
       <index name="i_fk" columns="id_ui"/>
+      <index name="k2_fk" columns="id_dp"/>
     </indexes>
     <unique-constraints>
       <unique-constraint name="alumno_pk" columns="id_alumno"/>
@@ -10,6 +11,12 @@
     <id name="idAlumno" type="integer" column="id_alumno">
       <generator strategy="SEQUENCE"/>
     </id>
+    <field name="estadoAlumno" type="string" column="estado_alumno" length="50" nullable="true"/>
+    <many-to-one field="idDp" target-entity="DatosPersonales">
+      <join-columns>
+        <join-column name="id_dp" referenced-column-name="id_dp"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="idUi" target-entity="Usuario">
       <join-columns>
         <join-column name="id_ui" referenced-column-name="id_ui"/>

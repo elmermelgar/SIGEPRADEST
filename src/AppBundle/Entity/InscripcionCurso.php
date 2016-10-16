@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DetalleCurso
+ * InscripcionCurso
  *
- * @ORM\Table(name="detalle_curso", uniqueConstraints={@ORM\UniqueConstraint(name="detalle_curso_pk", columns={"id_dc"})}, indexes={@ORM\Index(name="q_fk", columns={"id_exp"}), @ORM\Index(name="k_fk", columns={"id_curso"})})
+ * @ORM\Table(name="inscripcion_curso", uniqueConstraints={@ORM\UniqueConstraint(name="inscripcion_curso_pk", columns={"id_dc"})}, indexes={@ORM\Index(name="k_fk", columns={"id_curso"}), @ORM\Index(name="q_fk", columns={"id_alumno"})})
  * @ORM\Entity
  */
-class DetalleCurso
+class InscripcionCurso
 {
     /**
      * @var integer
@@ -18,7 +18,7 @@ class DetalleCurso
      * @ORM\Column(name="id_dc", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="detalle_curso_id_dc_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="inscripcion_curso_id_dc_seq", allocationSize=1, initialValue=1)
      */
     private $idDc;
 
@@ -33,14 +33,14 @@ class DetalleCurso
     private $idCurso;
 
     /**
-     * @var \Expediente
+     * @var \Alumno
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\ManyToOne(targetEntity="Alumno")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_exp", referencedColumnName="id_exp")
+     *   @ORM\JoinColumn(name="id_alumno", referencedColumnName="id_alumno")
      * })
      */
-    private $idExp;
+    private $idAlumno;
 
 
 
@@ -58,7 +58,7 @@ class DetalleCurso
      * Set idCurso
      *
      * @param \AppBundle\Entity\Curso $idCurso
-     * @return DetalleCurso
+     * @return InscripcionCurso
      */
     public function setIdCurso(\AppBundle\Entity\Curso $idCurso = null)
     {
@@ -78,25 +78,25 @@ class DetalleCurso
     }
 
     /**
-     * Set idExp
+     * Set idAlumno
      *
-     * @param \AppBundle\Entity\Expediente $idExp
-     * @return DetalleCurso
+     * @param \AppBundle\Entity\Alumno $idAlumno
+     * @return InscripcionCurso
      */
-    public function setIdExp(\AppBundle\Entity\Expediente $idExp = null)
+    public function setIdAlumno(\AppBundle\Entity\Alumno $idAlumno = null)
     {
-        $this->idExp = $idExp;
+        $this->idAlumno = $idAlumno;
 
         return $this;
     }
 
     /**
-     * Get idExp
+     * Get idAlumno
      *
-     * @return \AppBundle\Entity\Expediente 
+     * @return \AppBundle\Entity\Alumno 
      */
-    public function getIdExp()
+    public function getIdAlumno()
     {
-        return $this->idExp;
+        return $this->idAlumno;
     }
 }

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Curriculum" table="curriculum">
+  <entity name="Pago" table="pago">
     <indexes>
-      <index name="a1_fk" columns="id_alumno"/>
+      <index name="f11_fk" columns="id_especifico__"/>
     </indexes>
     <unique-constraints>
-      <unique-constraint name="curriculum_pk" columns="id_curriculum"/>
+      <unique-constraint name="pago_pk" columns="id_pago__"/>
     </unique-constraints>
-    <id name="idCurriculum" type="integer" column="id_curriculum">
+    <id name="idPago" type="integer" column="id_pago__">
       <generator strategy="SEQUENCE"/>
     </id>
-    <many-to-one field="idAlumno" target-entity="Alumno">
+    <field name="nombrePago" type="string" column="nombre_pago__" length="100" nullable="true"/>
+    <many-to-one field="idEspecifico" target-entity="Especifico">
       <join-columns>
-        <join-column name="id_alumno" referenced-column-name="id_alumno"/>
+        <join-column name="id_especifico__" referenced-column-name="id_especifico__"/>
       </join-columns>
     </many-to-one>
   </entity>
