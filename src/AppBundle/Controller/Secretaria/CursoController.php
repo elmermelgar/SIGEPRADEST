@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Admin;
+namespace AppBundle\Controller\Secretaria;
 
 use AppBundle\Controller\DSIController;
 use AppBundle\Entity\Curso;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\Date;
 class CursoController extends DSIController
 {
     /**
-     * @Route("/admin/cursos",name="verCurso")
+     * @Route("/secretaria/cursos",name="verCurso")
      */
     public function verCursoAction()
     {
@@ -27,7 +27,7 @@ class CursoController extends DSIController
 
             $d1=$this->mostrarD1();
 
-            return $this->render('AppBundle:Admin/Curso:curso.html.twig', array('cursos'=>$cursos,'doctores'=>$doctores,'d1'=>$d1));
+            return $this->render('AppBundle:Secretaria/Curso:curso.html.twig', array('cursos'=>$cursos,'doctores'=>$doctores,'d1'=>$d1));
         }else{
             return $this->redirectToRoute('login');
         }
@@ -35,7 +35,7 @@ class CursoController extends DSIController
     }
 
     /**
-     * @Route("/admin/curso_create",name="createCurso")
+     * @Route("/secretaria/curso_create",name="createCurso")
      */
     public function createCursoAction(Request $request)
     {
@@ -98,7 +98,7 @@ class CursoController extends DSIController
 
                             $this->manytomany($idcurso,$array_doc[$i]);
                         }
-                        return $this->render("AppBundle:Admin/HorarioCurso:hc_create.html.twig",array("id"=>$idcurso,"nom"=>$nom_cur));
+                        return $this->render("AppBundle:Secretaria/HorarioCurso:hc_create.html.twig",array("id"=>$idcurso,"nom"=>$nom_cur));
                     }
                 }
                 else
@@ -106,11 +106,11 @@ class CursoController extends DSIController
             }
         }
 
-        return $this->render("AppBundle:Admin/Curso:curso_create.html.twig",array("tc"=>$tc,"doc"=>$doc));
+        return $this->render("AppBundle:Secretaria/Curso:curso_create.html.twig",array("tc"=>$tc,"doc"=>$doc));
     }
 
     /**
-     * @Route("/admin/curso_edit/{id}",name="editCurso")
+     * @Route("/secretaria/curso_edit/{id}",name="editCurso")
      */
     public function editCursoAction($id, Request $request)
     {
@@ -179,12 +179,12 @@ class CursoController extends DSIController
             }
         }
 
-        return $this->render("AppBundle:Admin/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc));
+        return $this->render("AppBundle:Secretari/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc));
     }
 
 
     /**
-     * @Route("/admin/curso_delete/{idcurso}",name="delCurso")
+     * @Route("/secretaria/curso_delete/{idcurso}",name="delCurso")
      */
     public function deleteAction($idcurso, Request $request)
     {
@@ -237,7 +237,7 @@ class CursoController extends DSIController
     }
 
      /**
-     * @Route("/admin/curso_horario",name="addHorario")
+     * @Route("/secretaria/curso_horario",name="addHorario")
      */
     public function horarioAction(Request $request)
     {
@@ -267,7 +267,7 @@ class CursoController extends DSIController
     }
 
     /**
-     * @Route("/admin/curso_horario_edit",name="editHorario")
+     * @Route("/secretaria/curso_horario_edit",name="editHorario")
      */
     public function edithorarioAction(Request $request)
     {

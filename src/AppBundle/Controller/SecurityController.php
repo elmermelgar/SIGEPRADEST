@@ -49,7 +49,6 @@ class SecurityController extends Controller
      * @Route("/index", name="control_redirect")
      */
     public function controlRedirectAction(){
-            //return $this->render('::base.html.twig');*/
         $exist=$this->getUser();
         if($exist){
             $rol=$this->getUser()->getIdrol()->getIdrol();
@@ -61,7 +60,8 @@ class SecurityController extends Controller
                 return $this->redirectToRoute('alumno');
             if($rol==4)
                 return $this->redirectToRoute('interesado');
-            //return $this->redirectToRoute('interesado');
+            if($rol==5)
+                return $this->redirectToRoute('secretaria');
         }
         else{
             return $this->redirectToRoute('login');
@@ -95,6 +95,14 @@ class SecurityController extends Controller
     public function alumnoAction()
     {
         return $this->render('AppBundle:Alumno:index.html.twig');
+    }
+
+    /**
+     * @Route("/secretaria/", name="secretaria")
+     */
+    public function secretariaAction()
+    {
+        return $this->render('AppBundle:Secretaria:index.html.twig');
     }
 
     //Para envio de mensajes Flash
