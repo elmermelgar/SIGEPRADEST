@@ -52,7 +52,7 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                     <img src="{{ asset('public/assets/img/find_user.png') }}" class="user-image img-responsive"/>
                 </li>
 
-                {% if app.user.idrol.nombrerol== 'admin' %}
+                {% if app.user.idrol.nombrerol== 'administrador' %}
                 <li>
                     <a class="{% block active1 %}{% endblock %}"  href="{{ path('usuarios') }}"><i class="fa fa-users"></i> Usuarios</a>
                 </li>

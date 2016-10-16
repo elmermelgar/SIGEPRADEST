@@ -39,9 +39,23 @@ class Doctores
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre_doc", type="string", length=100, nullable=true)
+     * @ORM\Column(name="nombre_doc", type="string", length=50, nullable=true)
      */
     private $nombreDoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apellido_doc", type="string", length=50, nullable=true)
+     */
+    private $apellidoDoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dui_doc", type="string", length=10, nullable=true)
+     */
+    private $duiDoc;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -136,6 +150,52 @@ class Doctores
     public function getNombreDoc()
     {
         return $this->nombreDoc;
+    }
+
+    /**
+     * Set apellidoDoc
+     *
+     * @param string $apellidoDoc
+     * @return Doctores
+     */
+    public function setApellidoDoc($apellidoDoc)
+    {
+        $this->apellidoDoc = $apellidoDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get apellidoDoc
+     *
+     * @return string 
+     */
+    public function getApellidoDoc()
+    {
+        return $this->apellidoDoc;
+    }
+
+    /**
+     * Set duiDoc
+     *
+     * @param string $duiDoc
+     * @return Doctores
+     */
+    public function setDuiDoc($duiDoc)
+    {
+        $this->duiDoc = $duiDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get duiDoc
+     *
+     * @return string 
+     */
+    public function getDuiDoc()
+    {
+        return $this->duiDoc;
     }
 
     /**

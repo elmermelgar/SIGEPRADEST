@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class InteresadoController extends Controller
 {
     /**
-     * @Route("/interesado/register", name="register")
+     * @Route("/register", name="register")
      */
     public function registerAction(Request $request){
         if ($request->isMethod('POST')) {

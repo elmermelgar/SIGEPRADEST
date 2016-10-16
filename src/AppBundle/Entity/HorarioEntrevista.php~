@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * HorarioEntrevista
  *
- * @ORM\Table(name="horario_entrevista", uniqueConstraints={@ORM\UniqueConstraint(name="horario_entrevista_pk", columns={"id_he"})})
+ * @ORM\Table(name="horario_entrevista", uniqueConstraints={@ORM\UniqueConstraint(name="horario_entrevista_pk", columns={"id_he"})}, indexes={@ORM\Index(name="s2_fk", columns={"id_curso"})})
  * @ORM\Entity
  */
 class HorarioEntrevista
@@ -25,16 +25,40 @@ class HorarioEntrevista
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="defecha", type="date", nullable=true)
+     * @ORM\Column(name="hora_dhe", type="time", nullable=true)
      */
-    private $defecha;
+    private $horaDhe;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="afecha", type="date", nullable=true)
+     * @ORM\Column(name="fecha_dhe", type="date", nullable=true)
      */
-    private $afecha;
+    private $fechaDhe;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="ocupado", type="boolean", nullable=true)
+     */
+    private $ocupado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo_horario", type="string", length=50, nullable=true)
+     */
+    private $tipoHorario;
+
+    /**
+     * @var \Curso
+     *
+     * @ORM\ManyToOne(targetEntity="Curso")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_curso", referencedColumnName="id_curso")
+     * })
+     */
+    private $idCurso;
 
 
 
@@ -49,48 +73,117 @@ class HorarioEntrevista
     }
 
     /**
-     * Set defecha
+     * Set horaDhe
      *
-     * @param \DateTime $defecha
+     * @param \DateTime $horaDhe
      * @return HorarioEntrevista
      */
-    public function setDefecha($defecha)
+    public function setHoraDhe($horaDhe)
     {
-        $this->defecha = $defecha;
+        $this->horaDhe = $horaDhe;
 
         return $this;
     }
 
     /**
-     * Get defecha
+     * Get horaDhe
      *
      * @return \DateTime 
      */
-    public function getDefecha()
+    public function getHoraDhe()
     {
-        return $this->defecha;
+        return $this->horaDhe;
     }
 
     /**
-     * Set afecha
+     * Set fechaDhe
      *
-     * @param \DateTime $afecha
+     * @param \DateTime $fechaDhe
      * @return HorarioEntrevista
      */
-    public function setAfecha($afecha)
+    public function setFechaDhe($fechaDhe)
     {
-        $this->afecha = $afecha;
+        $this->fechaDhe = $fechaDhe;
 
         return $this;
     }
 
     /**
-     * Get afecha
+     * Get fechaDhe
      *
      * @return \DateTime 
      */
-    public function getAfecha()
+    public function getFechaDhe()
     {
-        return $this->afecha;
+        return $this->fechaDhe;
+    }
+
+    /**
+     * Set ocupado
+     *
+     * @param boolean $ocupado
+     * @return HorarioEntrevista
+     */
+    public function setOcupado($ocupado)
+    {
+        $this->ocupado = $ocupado;
+
+        return $this;
+    }
+
+    /**
+     * Get ocupado
+     *
+     * @return boolean 
+     */
+    public function getOcupado()
+    {
+        return $this->ocupado;
+    }
+
+    /**
+     * Set tipoHorario
+     *
+     * @param string $tipoHorario
+     * @return HorarioEntrevista
+     */
+    public function setTipoHorario($tipoHorario)
+    {
+        $this->tipoHorario = $tipoHorario;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoHorario
+     *
+     * @return string 
+     */
+    public function getTipoHorario()
+    {
+        return $this->tipoHorario;
+    }
+
+    /**
+     * Set idCurso
+     *
+     * @param \AppBundle\Entity\Curso $idCurso
+     * @return HorarioEntrevista
+     */
+    public function setIdCurso(\AppBundle\Entity\Curso $idCurso = null)
+    {
+        $this->idCurso = $idCurso;
+
+        return $this;
+    }
+
+    /**
+     * Get idCurso
+     *
+     * @return \AppBundle\Entity\Curso 
+     */
+    public function getIdCurso()
+    {
+        return $this->idCurso;
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * HorarioCurso
  *
- * @ORM\Table(name="horario_curso", uniqueConstraints={@ORM\UniqueConstraint(name="horario_curso_pk", columns={"id_hc"})})
+ * @ORM\Table(name="horario_curso", uniqueConstraints={@ORM\UniqueConstraint(name="horario_curso_pk", columns={"id_hc"})}, indexes={@ORM\Index(name="v_fk", columns={"id_curso"})})
  * @ORM\Entity
  */
 class HorarioCurso
@@ -49,6 +49,44 @@ class HorarioCurso
      * @ORM\Column(name="fin_recep_doc", type="date", nullable=true)
      */
     private $finRecepDoc;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="defecha_entrevista", type="date", nullable=true)
+     */
+    private $defechaEntrevista;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="afecha_entrevista", type="date", nullable=true)
+     */
+    private $afechaEntrevista;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="defecha_evaluacion", type="date", nullable=true)
+     */
+    private $defechaEvaluacion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="afecha_evaluacion", type="date", nullable=true)
+     */
+    private $afechaEvaluacion;
+
+    /**
+     * @var \Curso
+     *
+     * @ORM\ManyToOne(targetEntity="Curso")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_curso", referencedColumnName="id_curso")
+     * })
+     */
+    private $idCurso;
 
 
 
@@ -152,5 +190,120 @@ class HorarioCurso
     public function getFinRecepDoc()
     {
         return $this->finRecepDoc;
+    }
+
+    /**
+     * Set defechaEntrevista
+     *
+     * @param \DateTime $defechaEntrevista
+     * @return HorarioCurso
+     */
+    public function setDefechaEntrevista($defechaEntrevista)
+    {
+        $this->defechaEntrevista = $defechaEntrevista;
+
+        return $this;
+    }
+
+    /**
+     * Get defechaEntrevista
+     *
+     * @return \DateTime 
+     */
+    public function getDefechaEntrevista()
+    {
+        return $this->defechaEntrevista;
+    }
+
+    /**
+     * Set afechaEntrevista
+     *
+     * @param \DateTime $afechaEntrevista
+     * @return HorarioCurso
+     */
+    public function setAfechaEntrevista($afechaEntrevista)
+    {
+        $this->afechaEntrevista = $afechaEntrevista;
+
+        return $this;
+    }
+
+    /**
+     * Get afechaEntrevista
+     *
+     * @return \DateTime 
+     */
+    public function getAfechaEntrevista()
+    {
+        return $this->afechaEntrevista;
+    }
+
+    /**
+     * Set defechaEvaluacion
+     *
+     * @param \DateTime $defechaEvaluacion
+     * @return HorarioCurso
+     */
+    public function setDefechaEvaluacion($defechaEvaluacion)
+    {
+        $this->defechaEvaluacion = $defechaEvaluacion;
+
+        return $this;
+    }
+
+    /**
+     * Get defechaEvaluacion
+     *
+     * @return \DateTime 
+     */
+    public function getDefechaEvaluacion()
+    {
+        return $this->defechaEvaluacion;
+    }
+
+    /**
+     * Set afechaEvaluacion
+     *
+     * @param \DateTime $afechaEvaluacion
+     * @return HorarioCurso
+     */
+    public function setAfechaEvaluacion($afechaEvaluacion)
+    {
+        $this->afechaEvaluacion = $afechaEvaluacion;
+
+        return $this;
+    }
+
+    /**
+     * Get afechaEvaluacion
+     *
+     * @return \DateTime 
+     */
+    public function getAfechaEvaluacion()
+    {
+        return $this->afechaEvaluacion;
+    }
+
+    /**
+     * Set idCurso
+     *
+     * @param \AppBundle\Entity\Curso $idCurso
+     * @return HorarioCurso
+     */
+    public function setIdCurso(\AppBundle\Entity\Curso $idCurso = null)
+    {
+        $this->idCurso = $idCurso;
+
+        return $this;
+    }
+
+    /**
+     * Get idCurso
+     *
+     * @return \AppBundle\Entity\Curso 
+     */
+    public function getIdCurso()
+    {
+        return $this->idCurso;
     }
 }

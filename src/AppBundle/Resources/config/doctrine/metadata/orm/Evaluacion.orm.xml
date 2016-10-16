@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Evaluacion" table="evaluacion">
+    <unique-constraints>
+      <unique-constraint name="evaluacion_pk" columns="id_evaluacion"/>
+    </unique-constraints>
+    <id name="idEvaluacion" type="integer" column="id_evaluacion">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreEvaluacion" type="string" column="nombre_evaluacion" length="50" nullable="true"/>
+    <field name="porcentaje" type="decimal" column="porcentaje" precision="10" scale="2" nullable="true"/>
+  </entity>
+</doctrine-mapping>

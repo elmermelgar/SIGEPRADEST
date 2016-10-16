@@ -9,7 +9,9 @@
     </id>
     <field name="especialidad" type="string" column="especialidad" length="50" nullable="true"/>
     <field name="turno" type="string" column="turno" length="50" nullable="true"/>
-    <field name="nombreDoc" type="string" column="nombre_doc" length="100" nullable="true"/>
+    <field name="nombreDoc" type="string" column="nombre_doc" length="50" nullable="true"/>
+    <field name="apellidoDoc" type="string" column="apellido_doc" length="50" nullable="true"/>
+    <field name="duiDoc" type="string" column="dui_doc" length="10" nullable="true"/>
     <many-to-many field="idCurso" target-entity="Curso" mapped-by="idDoctores"/>
   </entity>
 </doctrine-mapping>

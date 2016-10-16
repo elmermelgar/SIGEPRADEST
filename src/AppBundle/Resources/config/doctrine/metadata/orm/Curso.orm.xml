@@ -3,7 +3,6 @@
   <entity name="Curso" table="curso">
     <indexes>
       <index name="o_fk" columns="id_tc"/>
-      <index name="v_fk" columns="id_hc"/>
     </indexes>
     <unique-constraints>
       <unique-constraint name="curso_pk" columns="id_curso"/>
@@ -17,14 +16,10 @@
     <field name="broshureInformativo" type="string" column="broshure_informativo" length="400" nullable="true"/>
     <field name="numCuotas" type="integer" column="num_cuotas" nullable="true"/>
     <field name="rutaPdf" type="string" column="ruta_pdf" length="200" nullable="true"/>
+    <field name="estadoCurso" type="string" column="estado_curso" length="50" nullable="true"/>
     <many-to-one field="idTc" target-entity="TipoCurso">
       <join-columns>
         <join-column name="id_tc" referenced-column-name="id_tc"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="idHc" target-entity="HorarioCurso">
-      <join-columns>
-        <join-column name="id_hc" referenced-column-name="id_hc"/>
       </join-columns>
     </many-to-one>
     <many-to-many field="idDoctores" target-entity="Doctores" inversed-by="idCurso">

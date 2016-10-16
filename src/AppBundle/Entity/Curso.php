@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Curso
  *
- * @ORM\Table(name="curso", uniqueConstraints={@ORM\UniqueConstraint(name="curso_pk", columns={"id_curso"})}, indexes={@ORM\Index(name="o_fk", columns={"id_tc"}), @ORM\Index(name="v_fk", columns={"id_hc"})})
+ * @ORM\Table(name="curso", uniqueConstraints={@ORM\UniqueConstraint(name="curso_pk", columns={"id_curso"})}, indexes={@ORM\Index(name="o_fk", columns={"id_tc"})})
  * @ORM\Entity
  */
 class Curso
@@ -65,6 +65,13 @@ class Curso
     private $rutaPdf;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="estado_curso", type="string", length=50, nullable=true)
+     */
+    private $estadoCurso;
+
+    /**
      * @var \TipoCurso
      *
      * @ORM\ManyToOne(targetEntity="TipoCurso")
@@ -73,16 +80,6 @@ class Curso
      * })
      */
     private $idTc;
-
-    /**
-     * @var \HorarioCurso
-     *
-     * @ORM\ManyToOne(targetEntity="HorarioCurso")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_hc", referencedColumnName="id_hc")
-     * })
-     */
-    private $idHc;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -257,6 +254,29 @@ class Curso
     }
 
     /**
+     * Set estadoCurso
+     *
+     * @param string $estadoCurso
+     * @return Curso
+     */
+    public function setEstadoCurso($estadoCurso)
+    {
+        $this->estadoCurso = $estadoCurso;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoCurso
+     *
+     * @return string 
+     */
+    public function getEstadoCurso()
+    {
+        return $this->estadoCurso;
+    }
+
+    /**
      * Set idTc
      *
      * @param \AppBundle\Entity\TipoCurso $idTc
@@ -277,29 +297,6 @@ class Curso
     public function getIdTc()
     {
         return $this->idTc;
-    }
-
-    /**
-     * Set idHc
-     *
-     * @param \AppBundle\Entity\HorarioCurso $idHc
-     * @return Curso
-     */
-    public function setIdHc(\AppBundle\Entity\HorarioCurso $idHc = null)
-    {
-        $this->idHc = $idHc;
-
-        return $this;
-    }
-
-    /**
-     * Get idHc
-     *
-     * @return \AppBundle\Entity\HorarioCurso 
-     */
-    public function getIdHc()
-    {
-        return $this->idHc;
     }
 
     /**

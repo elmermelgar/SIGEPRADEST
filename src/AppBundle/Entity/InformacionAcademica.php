@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * InformacionAcademica
  *
- * @ORM\Table(name="informacion_academica", uniqueConstraints={@ORM\UniqueConstraint(name="informacion_academica_pk", columns={"id_ifacad"})}, indexes={@ORM\Index(name="relationship_12_fk", columns={"id_solicitud1"})})
+ * @ORM\Table(name="informacion_academica", uniqueConstraints={@ORM\UniqueConstraint(name="informacion_academica_pk", columns={"id_ifacad"})}, indexes={@ORM\Index(name="relationship_12_fk", columns={"id_solicitud"})})
  * @ORM\Entity
  */
 class InformacionAcademica
@@ -48,10 +48,10 @@ class InformacionAcademica
      *
      * @ORM\ManyToOne(targetEntity="Solicitud")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_solicitud1", referencedColumnName="id_solicitud1")
+     *   @ORM\JoinColumn(name="id_solicitud", referencedColumnName="id_solicitud")
      * })
      */
-    private $idSolicitud1;
+    private $idSolicitud;
 
 
 
@@ -135,25 +135,25 @@ class InformacionAcademica
     }
 
     /**
-     * Set idSolicitud1
+     * Set idSolicitud
      *
-     * @param \AppBundle\Entity\Solicitud $idSolicitud1
+     * @param \AppBundle\Entity\Solicitud $idSolicitud
      * @return InformacionAcademica
      */
-    public function setIdSolicitud1(\AppBundle\Entity\Solicitud $idSolicitud1 = null)
+    public function setIdSolicitud(\AppBundle\Entity\Solicitud $idSolicitud = null)
     {
-        $this->idSolicitud1 = $idSolicitud1;
+        $this->idSolicitud = $idSolicitud;
 
         return $this;
     }
 
     /**
-     * Get idSolicitud1
+     * Get idSolicitud
      *
      * @return \AppBundle\Entity\Solicitud 
      */
-    public function getIdSolicitud1()
+    public function getIdSolicitud()
     {
-        return $this->idSolicitud1;
+        return $this->idSolicitud;
     }
 }

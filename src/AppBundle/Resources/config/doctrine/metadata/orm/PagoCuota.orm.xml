@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="PagoCuota" table="pago_cuota">
+    <indexes>
+      <index name="h1_fk" columns="id_cuota"/>
+      <index name="m_fk" columns="id_dc"/>
+      <index name="p4_fk" columns="id_pago__"/>
+      <index name="p5_fk" columns="id_linea_trabajo__"/>
+      <index name="p6_fk" columns="id_cuenta_banco__"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="pago_cuota_pk" columns="id_pagos"/>
+    </unique-constraints>
+    <id name="idPagos" type="integer" column="id_pagos">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fechaPago" type="date" column="fecha_pago" nullable="true"/>
+    <field name="cuotaDiferenciada" type="boolean" column="cuota_diferenciada" nullable="true"/>
+    <field name="montoPagado" type="decimal" column="monto_pagado" precision="10" scale="2" nullable="true"/>
+    <field name="imagenRecibo" type="string" column="imagen_recibo" length="200" nullable="true"/>
+    <field name="numeroRecibo" type="string" column="numero_recibo" length="30" nullable="true"/>
+    <many-to-one field="idCuentaBanco" target-entity="CuentaBanco">
+      <join-columns>
+        <join-column name="id_cuenta_banco__" referenced-column-name="id_cuenta_banco__"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idLineaTrabajo" target-entity="LineaTrabajo">
+      <join-columns>
+        <join-column name="id_linea_trabajo__" referenced-column-name="id_linea_trabajo__"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idPago" target-entity="Pago">
+      <join-columns>
+        <join-column name="id_pago__" referenced-column-name="id_pago__"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDc" target-entity="InscripcionCurso">
+      <join-columns>
+        <join-column name="id_dc" referenced-column-name="id_dc"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idCuota" target-entity="Cuotas">
+      <join-columns>
+        <join-column name="id_cuota" referenced-column-name="id_cuota"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

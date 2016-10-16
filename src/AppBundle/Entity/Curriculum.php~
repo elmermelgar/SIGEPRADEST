@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Curriculum
  *
- * @ORM\Table(name="curriculum", uniqueConstraints={@ORM\UniqueConstraint(name="curriculum_pk", columns={"id_curriculum"})}, indexes={@ORM\Index(name="a1_fk", columns={"id_exp"})})
+ * @ORM\Table(name="curriculum", uniqueConstraints={@ORM\UniqueConstraint(name="curriculum_pk", columns={"id_curriculum"})}, indexes={@ORM\Index(name="a1_fk", columns={"id_alumno"})})
  * @ORM\Entity
  */
 class Curriculum
@@ -23,14 +23,14 @@ class Curriculum
     private $idCurriculum;
 
     /**
-     * @var \Expediente
+     * @var \Alumno
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\ManyToOne(targetEntity="Alumno")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_exp", referencedColumnName="id_exp")
+     *   @ORM\JoinColumn(name="id_alumno", referencedColumnName="id_alumno")
      * })
      */
-    private $idExp;
+    private $idAlumno;
 
 
 
@@ -45,25 +45,25 @@ class Curriculum
     }
 
     /**
-     * Set idExp
+     * Set idAlumno
      *
-     * @param \AppBundle\Entity\Expediente $idExp
+     * @param \AppBundle\Entity\Alumno $idAlumno
      * @return Curriculum
      */
-    public function setIdExp(\AppBundle\Entity\Expediente $idExp = null)
+    public function setIdAlumno(\AppBundle\Entity\Alumno $idAlumno = null)
     {
-        $this->idExp = $idExp;
+        $this->idAlumno = $idAlumno;
 
         return $this;
     }
 
     /**
-     * Get idExp
+     * Get idAlumno
      *
-     * @return \AppBundle\Entity\Expediente 
+     * @return \AppBundle\Entity\Alumno 
      */
-    public function getIdExp()
+    public function getIdAlumno()
     {
-        return $this->idExp;
+        return $this->idAlumno;
     }
 }

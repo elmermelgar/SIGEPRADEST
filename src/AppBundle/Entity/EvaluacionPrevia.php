@@ -5,29 +5,29 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Cita
+ * EvaluacionPrevia
  *
- * @ORM\Table(name="cita", uniqueConstraints={@ORM\UniqueConstraint(name="cita_pk", columns={"id_cita"})}, indexes={@ORM\Index(name="b_fk", columns={"id_he"}), @ORM\Index(name="c_fk", columns={"id_solicitud"})})
+ * @ORM\Table(name="evaluacion_previa", uniqueConstraints={@ORM\UniqueConstraint(name="evaluacion_previa_pk", columns={"id_ev"})}, indexes={@ORM\Index(name="s4_fk", columns={"id_solicitud"}), @ORM\Index(name="s3_fk", columns={"id_he"})})
  * @ORM\Entity
  */
-class Cita
+class EvaluacionPrevia
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_cita", type="integer", nullable=false)
+     * @ORM\Column(name="id_ev", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="cita_id_cita_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="evaluacion_previa_id_ev_seq", allocationSize=1, initialValue=1)
      */
-    private $idCita;
+    private $idEv;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comentario_cita", type="string", length=200, nullable=true)
+     * @ORM\Column(name="comentario_evaluacion", type="string", length=100, nullable=true)
      */
-    private $comentarioCita;
+    private $comentarioEvaluacion;
 
     /**
      * @var \HorarioEntrevista
@@ -52,43 +52,43 @@ class Cita
 
 
     /**
-     * Get idCita
+     * Get idEv
      *
      * @return integer 
      */
-    public function getIdCita()
+    public function getIdEv()
     {
-        return $this->idCita;
+        return $this->idEv;
     }
 
     /**
-     * Set comentarioCita
+     * Set comentarioEvaluacion
      *
-     * @param string $comentarioCita
-     * @return Cita
+     * @param string $comentarioEvaluacion
+     * @return EvaluacionPrevia
      */
-    public function setComentarioCita($comentarioCita)
+    public function setComentarioEvaluacion($comentarioEvaluacion)
     {
-        $this->comentarioCita = $comentarioCita;
+        $this->comentarioEvaluacion = $comentarioEvaluacion;
 
         return $this;
     }
 
     /**
-     * Get comentarioCita
+     * Get comentarioEvaluacion
      *
      * @return string 
      */
-    public function getComentarioCita()
+    public function getComentarioEvaluacion()
     {
-        return $this->comentarioCita;
+        return $this->comentarioEvaluacion;
     }
 
     /**
      * Set idHe
      *
      * @param \AppBundle\Entity\HorarioEntrevista $idHe
-     * @return Cita
+     * @return EvaluacionPrevia
      */
     public function setIdHe(\AppBundle\Entity\HorarioEntrevista $idHe = null)
     {
@@ -111,7 +111,7 @@ class Cita
      * Set idSolicitud
      *
      * @param \AppBundle\Entity\Solicitud $idSolicitud
-     * @return Cita
+     * @return EvaluacionPrevia
      */
     public function setIdSolicitud(\AppBundle\Entity\Solicitud $idSolicitud = null)
     {

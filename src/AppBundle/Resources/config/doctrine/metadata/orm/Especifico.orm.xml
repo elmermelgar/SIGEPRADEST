@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Especifico" table="especifico">
+    <unique-constraints>
+      <unique-constraint name="especifico_pk" columns="id_especifico__"/>
+    </unique-constraints>
+    <id name="idEspecifico" type="string" column="id_especifico__" length="10">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreEspecifico" type="string" column="nombre_especifico__" length="100" nullable="true"/>
+    <field name="padre" type="string" column="padre__" length="100" nullable="true"/>
+  </entity>
+</doctrine-mapping>

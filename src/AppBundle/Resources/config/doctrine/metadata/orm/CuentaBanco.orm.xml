@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CuentaBanco" table="cuenta_banco">
+    <unique-constraints>
+      <unique-constraint name="cuenta_banco_pk" columns="id_cuenta_banco__"/>
+    </unique-constraints>
+    <id name="idCuentaBanco" type="string" column="id_cuenta_banco__" length="20">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreCuenta" type="string" column="nombre_cuenta__" length="100" nullable="true"/>
+  </entity>
+</doctrine-mapping>

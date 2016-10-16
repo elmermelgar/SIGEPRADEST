@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Cita
  *
- * @ORM\Table(name="cita", uniqueConstraints={@ORM\UniqueConstraint(name="cita_pk", columns={"id_cita"})}, indexes={@ORM\Index(name="b_fk", columns={"id_dhe"}), @ORM\Index(name="c_fk", columns={"id_ui"}), @ORM\Index(name="IDX_3E379A6224BE01DC", columns={"id_curso"})})
+ * @ORM\Table(name="cita", uniqueConstraints={@ORM\UniqueConstraint(name="cita_pk", columns={"id_cita"})}, indexes={@ORM\Index(name="b_fk", columns={"id_he"}), @ORM\Index(name="c_fk", columns={"id_solicitud"})})
  * @ORM\Entity
  */
 class Cita
@@ -30,34 +30,24 @@ class Cita
     private $comentarioCita;
 
     /**
-     * @var \DetalleHorario
+     * @var \HorarioEntrevista
      *
-     * @ORM\ManyToOne(targetEntity="DetalleHorario")
+     * @ORM\ManyToOne(targetEntity="HorarioEntrevista")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_dhe", referencedColumnName="id_dhe")
+     *   @ORM\JoinColumn(name="id_he", referencedColumnName="id_he")
      * })
      */
-    private $idDhe;
+    private $idHe;
 
     /**
-     * @var \Usuario
+     * @var \Solicitud
      *
-     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\ManyToOne(targetEntity="Solicitud")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_ui", referencedColumnName="id_ui")
+     *   @ORM\JoinColumn(name="id_solicitud", referencedColumnName="id_solicitud")
      * })
      */
-    private $idUi;
-
-    /**
-     * @var \Curso
-     *
-     * @ORM\ManyToOne(targetEntity="Curso")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_curso", referencedColumnName="id_curso")
-     * })
-     */
-    private $idCurso;
+    private $idSolicitud;
 
 
 
@@ -95,71 +85,48 @@ class Cita
     }
 
     /**
-     * Set idDhe
+     * Set idHe
      *
-     * @param \AppBundle\Entity\DetalleHorario $idDhe
+     * @param \AppBundle\Entity\HorarioEntrevista $idHe
      * @return Cita
      */
-    public function setIdDhe(\AppBundle\Entity\DetalleHorario $idDhe = null)
+    public function setIdHe(\AppBundle\Entity\HorarioEntrevista $idHe = null)
     {
-        $this->idDhe = $idDhe;
+        $this->idHe = $idHe;
 
         return $this;
     }
 
     /**
-     * Get idDhe
+     * Get idHe
      *
-     * @return \AppBundle\Entity\DetalleHorario 
+     * @return \AppBundle\Entity\HorarioEntrevista 
      */
-    public function getIdDhe()
+    public function getIdHe()
     {
-        return $this->idDhe;
+        return $this->idHe;
     }
 
     /**
-     * Set idUi
+     * Set idSolicitud
      *
-     * @param \AppBundle\Entity\Usuario $idUi
+     * @param \AppBundle\Entity\Solicitud $idSolicitud
      * @return Cita
      */
-    public function setIdUi(\AppBundle\Entity\Usuario $idUi = null)
+    public function setIdSolicitud(\AppBundle\Entity\Solicitud $idSolicitud = null)
     {
-        $this->idUi = $idUi;
+        $this->idSolicitud = $idSolicitud;
 
         return $this;
     }
 
     /**
-     * Get idUi
+     * Get idSolicitud
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return \AppBundle\Entity\Solicitud 
      */
-    public function getIdUi()
+    public function getIdSolicitud()
     {
-        return $this->idUi;
-    }
-
-    /**
-     * Set idCurso
-     *
-     * @param \AppBundle\Entity\Curso $idCurso
-     * @return Cita
-     */
-    public function setIdCurso(\AppBundle\Entity\Curso $idCurso = null)
-    {
-        $this->idCurso = $idCurso;
-
-        return $this;
-    }
-
-    /**
-     * Get idCurso
-     *
-     * @return \AppBundle\Entity\Curso 
-     */
-    public function getIdCurso()
-    {
-        return $this->idCurso;
+        return $this->idSolicitud;
     }
 }

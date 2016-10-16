@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Solicitud
  *
- * @ORM\Table(name="solicitud", uniqueConstraints={@ORM\UniqueConstraint(name="solicitud_pk", columns={"id_solicitud1"})}, indexes={@ORM\Index(name="f_fk", columns={"id_ui"}), @ORM\Index(name="n_fk", columns={"id_curso"}), @ORM\Index(name="h_fk", columns={"id_dp"})})
+ * @ORM\Table(name="solicitud", uniqueConstraints={@ORM\UniqueConstraint(name="solicitud_pk", columns={"id_solicitud"})}, indexes={@ORM\Index(name="f_fk", columns={"id_ui"}), @ORM\Index(name="n_fk", columns={"id_curso"}), @ORM\Index(name="h_fk", columns={"id_dp"})})
  * @ORM\Entity
  */
 class Solicitud
@@ -15,12 +15,12 @@ class Solicitud
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_solicitud1", type="integer", nullable=false)
+     * @ORM\Column(name="id_solicitud", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="solicitud_id_solicitud1_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="solicitud_id_solicitud_seq", allocationSize=1, initialValue=1)
      */
-    private $idSolicitud1;
+    private $idSolicitud;
 
     /**
      * @var string
@@ -32,23 +32,16 @@ class Solicitud
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_entrevista", type="date", nullable=true)
-     */
-    private $fechaEntrevista;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_prueba", type="date", nullable=true)
-     */
-    private $fechaPrueba;
-
-    /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="fecha_registro", type="date", nullable=true)
      */
     private $fechaRegistro;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rango_disponibilidad", type="string", length=100, nullable=true)
+     */
+    private $rangoDisponibilidad;
 
     /**
      * @var \Usuario
@@ -83,13 +76,13 @@ class Solicitud
 
 
     /**
-     * Get idSolicitud1
+     * Get idSolicitud
      *
      * @return integer 
      */
-    public function getIdSolicitud1()
+    public function getIdSolicitud()
     {
-        return $this->idSolicitud1;
+        return $this->idSolicitud;
     }
 
     /**
@@ -116,52 +109,6 @@ class Solicitud
     }
 
     /**
-     * Set fechaEntrevista
-     *
-     * @param \DateTime $fechaEntrevista
-     * @return Solicitud
-     */
-    public function setFechaEntrevista($fechaEntrevista)
-    {
-        $this->fechaEntrevista = $fechaEntrevista;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaEntrevista
-     *
-     * @return \DateTime 
-     */
-    public function getFechaEntrevista()
-    {
-        return $this->fechaEntrevista;
-    }
-
-    /**
-     * Set fechaPrueba
-     *
-     * @param \DateTime $fechaPrueba
-     * @return Solicitud
-     */
-    public function setFechaPrueba($fechaPrueba)
-    {
-        $this->fechaPrueba = $fechaPrueba;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaPrueba
-     *
-     * @return \DateTime 
-     */
-    public function getFechaPrueba()
-    {
-        return $this->fechaPrueba;
-    }
-
-    /**
      * Set fechaRegistro
      *
      * @param \DateTime $fechaRegistro
@@ -182,6 +129,29 @@ class Solicitud
     public function getFechaRegistro()
     {
         return $this->fechaRegistro;
+    }
+
+    /**
+     * Set rangoDisponibilidad
+     *
+     * @param string $rangoDisponibilidad
+     * @return Solicitud
+     */
+    public function setRangoDisponibilidad($rangoDisponibilidad)
+    {
+        $this->rangoDisponibilidad = $rangoDisponibilidad;
+
+        return $this;
+    }
+
+    /**
+     * Get rangoDisponibilidad
+     *
+     * @return string 
+     */
+    public function getRangoDisponibilidad()
+    {
+        return $this->rangoDisponibilidad;
     }
 
     /**
