@@ -4,9 +4,9 @@
     <div class="col-md-12">
 
     <ol class="breadcrumb">
-        <li><a href="{{ path('admin') }}">Inicio</a></li>
-        <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
-        <li><a href="{{ path('empleados') }}">Empleados</a></li>
+        <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+        <li><a href="{{ path('usuarios2') }}">Usuarios</a></li>
+        <li><a href="{{ path('empleados2') }}">Empleados</a></li>
         <li class="active">Nuevo Usuario</li>
     </ol>
     <h2>Creando un nuevo usuario a partir de un empleado</h2>
@@ -25,7 +25,7 @@
                         <div class="col-md-12">
                             <h3>Datos Complementarios</h3>
 
-                            <form role="form" action="{{ path('nuevo_usuario', {'id': 'x'}) }}" method="post" >
+                            <form role="form" action="{{ path('nuevo_usuario2', {'id': 'x'}) }}" method="post" >
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nombres </label>
