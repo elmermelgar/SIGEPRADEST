@@ -12,6 +12,9 @@
     <link href="{{ asset('public/assets/css/custom.css') }}" rel="stylesheet"/>
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <!-- ALERTYFY -->
+    <link href="{{ asset('public/alertify/alertify.core.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('public/alertify/alertify.default.css') }}" rel="stylesheet" type="text/css" media="all" />
 
 </head>
 <body>
@@ -26,6 +29,7 @@
             {% if error %}
                 <div><h5 style="color:red">{{ error }}</h5></div>
             {% endif %}
+
         </div>
     </div>
     <div class="row">
@@ -55,7 +59,7 @@
                         </div>
                         <div class="form-group input-group">
                             <span class="input-group-addon">@</span>
-                            <input type="text" class="form-control" placeholder="Correo electrónico" name="email"
+                            <input type="email" class="form-control" placeholder="Correo electrónico" name="email"
                                    value="{{ interesado.correo }}" required/>
                         </div>
                         <div class="form-group input-group">
@@ -81,7 +85,7 @@
     </div>
 </div>
 
-
+{% block javascripts %}
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
 <script src="{{ asset('public/assets/js/jquery-1.10.2.js') }}"></script>
@@ -91,6 +95,25 @@
 <script src="{{ asset('public/assets/js/jquery.metisMenu.js') }}"></script>
 <!-- CUSTOM SCRIPTS -->
 <script src="{{ asset('public/assets/js/custom.js') }}"></script>
+<!-- ALERTIFY SCRIPTS -->
+<script src="{{ asset('public/alertify/alertify.js') }}"></script>
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <script>
+        window.onload = function error(){
+            alertify.error("{{ flashMessage }}.");
+            return false;
+        }
+    </script>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('exito') %}
+    <script>
+        window.onload = function notificacion(){
+            alertify.success("{{ flashMessage }}.");
+            return false;
+        }
+    </script>
+{% endfor %}
 
 <script>
     var password = document.getElementById("password")
@@ -107,6 +130,6 @@
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
 </script>
-
+{% endblock %}
 </body>
 </html>

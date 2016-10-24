@@ -1,0 +1,70 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <span style="color:royalblue;margin-left: 20px;font-size: 14px;">Mi perfil</span>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('index_interesado') }}">Inicio</a></li>
+            <li class="active">Perfil</li>
+        </ol>
+
+        <div class="panel panel-default">
+
+                <label>Nombre:</label>
+                <label>{{ app.user.nombre }} {{ app.user.apellido }}</label>
+                {{ form_start(form, {'attr' : {'role' : 'form'}}) }}
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>DUI</label>
+                        {{ form_widget(form.duiAlumno, {'attr' : {'class' : 'form-control', 'placeholder' : 'DUI', 'required' : true}}) }}
+                        <span class="text-danger">{{ form_errors(form.duiAlumno) }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label>NIT</label>
+                        {{ form_widget(form.nitAlumno, {'attr' : {'class' : 'form-control', 'placeholder' : 'NIT', 'required' : true}}) }}
+                        <span class="text-danger">{{ form_errors(form.nitAlumno) }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de nacimiento</label>
+                        {{ form_widget(form.fechaNacimeitno, {'attr' : {'class' : 'form-control', 'required' : true}}) }}
+                        <span class="text-danger">{{ form_errors(form.fechaNacimeitno) }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado civil</label>
+                        {{ form_widget(form.estadoCivil, {'attr' : {'class' : 'form-control'}}) }}
+                        <span class="text-danger">{{ form_errors(form.estadoCivil) }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        {{ form_widget(form.telefonoMovil, {'attr' : {'class' : 'form-control', 'required' : true}}) }}
+                        <span class="text-danger">{{ form_errors(form.telefonoMovil) }}</span>
+                    </div>
+
+                    {{ form_widget(form.guardar, {'attr' : {'class' : 'btn btn-primary'}}) }}
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Dirección particular</label>
+                        {{ form_widget(form.direccionParticular, {'attr' : {'class' : 'form-control', 'rows' : '4', 'maxlength' : '300'}}) }}
+                        <span class="text-danger">{{ form_errors(form.direccionParticular) }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Lugar de trabajo</label>
+                        {{ form_widget(form.lugarTrabajo, {'attr' : {'class' : 'form-control', 'maxlength' : '100'}}) }}
+                        <span class="text-danger">{{ form_errors(form.lugarTrabajo) }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección de trabajo</label>
+                        {{ form_widget(form.direccionTrabajo, {'attr' : {'class' : 'form-control', 'rows' : '4', 'maxlength' : '300'}}) }}
+                        <span class="text-danger">{{ form_errors(form.direccionTrabajo) }}</span>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+
+        </div>
+
+    </div>
+{% endblock %}

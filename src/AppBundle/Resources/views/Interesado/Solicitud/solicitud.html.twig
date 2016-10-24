@@ -1,0 +1,14 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <span style="color:royalblue;margin-left: 20px;font-size: 14px;">Solicitud</span>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('index_interesado') }}">Inicio</a></li>
+            <li class="active">Solicitud</li>
+        </ol>
+
+    </div>
+{% endblock %}
