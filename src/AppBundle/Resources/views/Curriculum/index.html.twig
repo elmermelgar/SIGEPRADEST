@@ -1,0 +1,39 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+    <h1>Curriculum list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idcurriculum</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('curriculum_show', { 'id': entity.idCurriculum }) }}">{{ entity.idCurriculum }}</a></td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('curriculum_show', { 'id': entity.idCurriculum }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('curriculum_edit', { 'id': entity.idCurriculum }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('curriculum_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

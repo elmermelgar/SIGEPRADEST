@@ -1,0 +1,81 @@
+{% extends'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            {#<li><a href="{{ path('alumnos') }}">Nuevo alumno</a></li>#}
+            <li class="active">Agregar nuevo alumno</li>
+        </ol>
+        <h2>Agregar nuevo alumno</h2>
+    </div>
+{% endblock %}
+{% block body -%}
+<div class="row">
+    <div class="col-md-12">
+        <!-- Advanced Tables -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Solicitudes de interesados a convertirse en alumnos
+            </div>
+
+
+            {% block javascripts %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+            {% endblock %}
+    <table  class="table table-striped table-bordered table-hover" id="dataTables-example">
+        <thead>
+        <tr>
+            <th>Usuario   </th>
+            <th>Nombre   </th>
+            <th>Curso</th>
+            <th>Estado</th>
+
+            <th>Accion</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.idUi.nomusuario }}</td>
+                <td>{{ entity.idUi.nombre }}</td>
+                <td>{{ entity.idCurso.nombreCurso }}</td>
+                <td>{{ entity.estado }}</td>
+                {#<td>{% if entity.fechaRegistro %}{{ entity.fechaRegistro|date('Y-m-d') }}{% endif %}</td>#}
+
+
+                <td>
+
+                            <a href="{{path('alumno_new', { 'usuario':entity.idUi.idUi ,'datosPer':entity.idDp.idDp })  }}" title="Editar"
+                               class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span
+                                        class="glyphicon glyphicon-plus-sign" aria-hidden="true"/> Nuevo </a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+        </div> </div> </div>
+
+        {% endblock %}

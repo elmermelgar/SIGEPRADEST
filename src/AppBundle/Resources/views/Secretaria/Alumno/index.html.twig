@@ -1,0 +1,52 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Cosas</a></li>
+            <li class="active">Mas...</li>
+        </ol>
+        <h2>Bienvenido Alumno</h2>
+    </div>
+{% endblock %}
+
+{#{% extends '::base2.html.twig' %}#}
+
+{#{% block body -%}#}
+    {#<h1>Alumno list</h1>#}
+
+    {#<table class="records_list">#}
+        {#<thead>#}
+            {#<tr>#}
+                {#<th>Idalumno</th>#}
+                {#<th>Actions</th>#}
+            {#</tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+        {#{% for entity in entities %}#}
+            {#<tr>#}
+                {#<td><a href="{{ path('alumno_show', { 'id': entity.idAlumno }) }}">{{ entity.idAlumno }}</a></td>#}
+                {#<td>#}
+                {#<ul>#}
+                    {#<li>#}
+                        {#<a href="{{ path('alumno_show', { 'id': entity.idAlumno }) }}">show</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="{{ path('alumno_edit', { 'id': entity.idAlumno }) }}">edit</a>#}
+                    {#</li>#}
+                {#</ul>#}
+                {#</td>#}
+            {#</tr>#}
+        {#{% endfor %}#}
+        {#</tbody>#}
+    {#</table>#}
+
+        {#<ul>#}
+        {#<li>#}
+            {#<a href="{{ path('alumno_new') }}">#}
+                {#Create a new entry#}
+            {#</a>#}
+        {#</li>#}
+    {#</ul>#}
+    {#{% endblock %}#}

@@ -1,0 +1,45 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+    <h1>Solicitud list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idsolicitud</th>
+                <th>Estado</th>
+                <th>Fecharegistro</th>
+                <th>Rangodisponibilidad</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('solicitud_show', { 'id': entity.idSolicitud }) }}">{{ entity.idSolicitud }}</a></td>
+                <td>{{ entity.estado }}</td>
+                <td>{% if entity.fechaRegistro %}{{ entity.fechaRegistro|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.rangoDisponibilidad }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('solicitud_show', { 'id': entity.idSolicitud }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('solicitud_edit', { 'id': entity.idSolicitud }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('solicitud_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

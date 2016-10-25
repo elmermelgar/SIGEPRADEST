@@ -1,0 +1,77 @@
+{% extends'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('alumnos') }}">Nuevo alumno</a></li>
+            <li class="active">Nuevo alumno Agregado</li>
+        </ol>
+        <h2>Alumno agregado correctamente</h2>
+    </div>
+{% endblock %}
+{% block body -%}
+<div class="row">
+    <div class="col-md-12">
+        <!-- Advanced Tables -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+Edicion de datos
+
+            </div>
+
+
+            {% block javascripts %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+            {% endblock %}
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                {#{{ form(delete_form) }}#}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+
+                                <a href="{{ path('curriculum', { 'id': idAlum }) }}" class="btn btn-primary"
+                                   style="width: 100%">
+                                   Editar curriculum
+                                </a>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                    <a href="{{ path('alumno_edit',{'id': idDatosPerson }) }}" class="btn btn-info" style="width: 100%">
+                                        Editar datos personales
+                                    </a>
+
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endblock %}

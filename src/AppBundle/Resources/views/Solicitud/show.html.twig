@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Solicitud</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idsolicitud</th>
+                <td>{{ entity.idSolicitud }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ entity.estado }}</td>
+            </tr>
+            <tr>
+                <th>Fecharegistro</th>
+                <td>{{ entity.fechaRegistro|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Rangodisponibilidad</th>
+                <td>{{ entity.rangoDisponibilidad }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('solicitud') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('solicitud_edit', { 'id': entity.idSolicitud }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
