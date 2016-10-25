@@ -48,8 +48,8 @@ class DSIController extends Controller
         unlink($_SERVER['DOCUMENT_ROOT']."\\public\\".$nombrePDF);
     }
 
-    protected function updateCurso($id_hc,$id_curso){
-        $sql="update curso set id_hc =:id_hc where id_curso=:id_curso";
+    protected function updateHC($id_hc,$id_curso){
+        $sql="update horario_curso set id_curso =:id_curso where id_hc=:id_hc";
         $em=$this->getDoctrine()->getEntityManager();
         $con=$em->getConnection();
         $st=$con->prepare($sql);
@@ -58,7 +58,7 @@ class DSIController extends Controller
         $st->execute();
     }
 
-    protected function mostrarCursos(){
+    protected function mostrarDoctores(){
         $em=$this->getDoctrine()->getManager();
         $db = $em->getConnection();
         $sql = "SELECT * FROM doctores";
@@ -78,20 +78,15 @@ class DSIController extends Controller
         $st->execute();
     }
 
-    protected function IdCurso($id){
+    protected function IdHCcurso($id){
         //Sacando Id_hc con ayuda del IdCurso
         $em=$this->getDoctrine()->getEntityManager();
         $db = $em->getConnection();
-        $sql = "select id_hc from horario_curso where id_hc = (select id_hc from curso where id_curso=$id) ";
+        $sql = "select id_hc from horario_curso where id_curso = $id";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $idhc = $stmt->fetch();
-
-        //Descomponiendo el array
-        foreach ($idhc as $idhc){
-            $a=$idhc;
-        }
-        return $a;
+        return $idhc;
     }
 
     protected function del_d1($id){
@@ -106,6 +101,16 @@ class DSIController extends Controller
         $em=$this->getDoctrine()->getManager();
         $db = $em->getConnection();
         $sql = "SELECT * FROM d1";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $d1 = $stmt->fetchAll();
+        return $d1;
+    }
+
+    protected function mostrarHC(){
+        $em=$this->getDoctrine()->getManager();
+        $db = $em->getConnection();
+        $sql = "SELECT * FROM horario_curso ORDER BY fecha_inicio DESC";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $d1 = $stmt->fetchAll();

@@ -1,0 +1,191 @@
+{% extends 'base2.html.twig' %}
+{% block active1 %}active-menu{% endblock %}
+
+
+
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+{% endblock %}
+
+
+{% block Header %}
+    <div class="col-md-12">
+
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('verInfo') }}">Informacion</a></li>
+            <li class="active">Editar</li>
+        </ol>
+        <h2>Editar informacion Academica</h2>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    Informacion academica No . solicitud : {{ info.idSolicitud.idSolicitud }} , del usuario :
+
+                    {% for usu_entity in usu  %}
+
+                        {% for soli in sol   %}
+                            {%  if soli.idUi is empty  %}
+
+
+                            {% elseif   info.idSolicitud.idSolicitud == soli.idSolicitud %}
+                                {% if soli.idUi.idUi ==  usu_entity.idUi%}
+                                    {{ usu_entity.nombre }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form role="form" action="{{ path('editInfo', {'id': info.idIfacad}) }}" method="post" >
+                                <fieldset>
+                                <div class="col-md-6">
+                                    <div class="control-group">
+
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <label class="control-label" for="prependedInput">ID Solicitud</label>
+                                                <label for="soli_fk"></label><select id="soli_fk" name="soli_fk" class="form-control">
+
+                                                    {% for usu_entity in usu  %}
+
+                                                        {% for soli in sol   %}
+
+                                                            {%  if soli.idUi is empty %}
+
+
+                                                            {% elseif   usu_entity.idUi == soli.idUi.idUi %}
+
+                                                                {%  if info.idSolicitud.idSolicitud == soli.idSolicitud %}
+                                                                        <option selected value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} , {{ usu_entity.nombre }}</option>
+
+                                                                    {% else %}
+                                                                        <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} , {{ usu_entity.nombre }}</option>
+
+                                                                    {% endif %}
+
+
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+
+                                                    {% for soli in sol   %}
+                                                        {%  if soli.idUi is empty %}
+                                                            <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} </option>
+                                                        {% endif %}
+                                                    {% endfor %}
+
+
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Instituto </label>
+                                        <input id="instituto_txt"  class="form-control" name="instituto_txt" value="{{ info.institucion}}"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label> Titutlo </label>
+                                        <input id="titulo_txt" class="form-control"  name="titulo_txt" value="{{ info.titulo }}"/>
+                                    </div>
+
+                                    <div>
+                                        <label class="control-label" for="prependedInput">Fecha de titulo</label>
+                                        <label for="calendario_cl"></label>
+                                        <input value="{{ info.fechaObtenido.format("Y-m-d") }}" id="calendario_cl" class="form-control" name="calendario_cl" size="16" type="date" required>
+                                    </div>
+
+                                </div>
+
+                                    <div class="col-md-12" style="text-align: center; margin-top: 10px">
+                                        <button onClick="validar()" type="submit" style="width: 30%;" class="btn btn-primary">
+                                            Actualizar Informacion
+                                        </button>
+
+                                        <a href="{{ path('verInfo') }}" onclick="cancelar()" id="cancel"  type="button" class="btn"  name="cancel"  style="width: 15%;"  >
+                                            Cancel
+                                        </a>
+                                    </div>
+
+
+                                    </fieldset>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+
+        /*funciones para validar*/
+        function validar() {
+
+            var titulo1 = document.getElementById('titulo_txt').value;
+            var instituto1 = document.getElementById('instituto_txt').value;
+
+
+            var fechaObtenida1 = document.getElementById('calendario_cl').value;
+            var fechaObtenida2 = moment(fechaObtenida1).format('DD/MM/YYYY');
+            var fechaAhora = moment().format('DD/MM/YYYY');
+
+            console.log(fechaObtenida1 == '' );
+
+
+            if (fechaObtenida1 == '' ||titulo1.length == 0 || instituto1.length == 0) {
+                alertify.error("Complete todos los campos por favor");
+            } else {
+                if (fechaObtenida2 > fechaAhora) {
+                    alertify.error("La fecha de titulo es mayor a a fecha actual");
+                } else {
+                    /*identifica el nombre del formulario*/
+                    //console.log(fechaObtenida1);
+                    document.formulario2.submit();
+                }
+            }
+        }
+
+        /*funcion cancelar*/
+        function cancelar() {
+            document.formulario2.href = " {{ path('verInfo') }}";
+        }
+
+    </script>
+{% endblock %}

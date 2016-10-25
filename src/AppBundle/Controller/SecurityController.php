@@ -59,7 +59,7 @@ class SecurityController extends Controller
             if($rol==3)
                 return $this->redirectToRoute('alumno');
             if($rol==4)
-                return $this->redirectToRoute('interesado');
+                return $this->redirectToRoute('index_interesado');
             if($rol==5)
                 return $this->redirectToRoute('secretaria');
         }
