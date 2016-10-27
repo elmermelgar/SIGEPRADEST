@@ -1,0 +1,120 @@
+{% extends 'base2.html.twig' %}
+{% block active2 %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+    <scrip C:\Users\MEOM\Documents\sigepradest\web\public\js\jquery-1.9.1.min.js></scrip>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('verEntrevista') }}">Horario Entrevista</a></li>
+            <li class="active">Asignar Horario Entrevista</li>
+        </ol>
+        <h2>Asignando Hora de Entrevista a Curso</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <form id="formulario" action="{{ path("createEntrevista") }}" method="post" name="formulario">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Curso</label>
+                                        <select name="curso" class="form-control">
+                                            {% for curso in curso %}
+                                                <option  value="{{ curso.idCurso }}">{{ curso.nombreCurso }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de Entrevista</label>
+                                        <input class="form-control" id="fecha" name="fecha" type="date" required/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Hora de Entrevista</label>
+                                            <input class="form-control" id="hora" name="hora" type="time" required/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Tipo de Horario</label>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="tipoH" id="tipoH" value="Evaluacion" checked />Evaluación
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="tipoH" id="tipoH" value="Cita"/>Cita
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12 col-md-offset-4">
+                                    <button onclick="validar()" type="button" style="width: 30%;" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+
+    function validar() {
+        var fecha = document.getElementById('fecha').value;
+        var hora = document.getElementById('hora').value;
+
+        var fechaAhora = moment().format('YYYY-MM-DD');
+        var fechaAhoraInv = moment().format('DD-MM-YYYY');
+
+        if(fecha=='' && hora==''){
+            alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
+        }else{
+            if(fecha==''){
+                alertify.error("Es Obligatorio Llenar La Fecha de la Entrevista");
+            }else{
+                if(hora==''){
+                    alertify.error("Es Obligatorio Llenar La Hora de la Entrevista");
+                }else{
+                    document.formulario.submit()
+                }
+            }
+
+        }
+    }
+
+</script>
+{% endblock %}
+
+
+

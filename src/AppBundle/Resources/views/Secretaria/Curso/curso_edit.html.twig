@@ -68,7 +68,11 @@
                                     <div class="input-prepend">
                                         <select id="tc" name="tc" class="form-control">
                                             {% for tc in tc %}
-                                                <option  value="{{ tc.idTc }}">{{ tc.nombreTc }}</option>
+                                            {% if datos.idTc.nombreTc == tc.nombreTc %}
+                                                <option selected value="{{ tc.idTc }}">{{ tc.nombreTc }}</option>
+                                            {% else %}
+                                                <option value="{{ tc.idTc }}">{{ tc.nombreTc }}</option>
+                                            {% endif %}
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -285,19 +289,19 @@
                                                                 alertify.error("La fecha de Inicio de Curso debe ser menor que la fecha de Fin de curso");
                                                             }else{
                                                                 if(iniciodocu=='') {
-                                                                    alertify.error("Es Obligatorio Seleccionar Fecha Inicio de Recepci�n de Documentos");
+                                                                    alertify.error("Es Obligatorio Seleccionar Fecha Inicio de Recepción de Documentos");
                                                                 }else{
                                                                     if(iniciodocu<fechaAhora){
-                                                                        alertify.error("La fecha de Inicio de Recepci�n de Documentos debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                        alertify.error("La fecha de Inicio de Recepción de Documentos debe ser igual o mayor a la "+ fechaAhoraInv);
                                                                     }else{
                                                                         if(finaldocu==''){
-                                                                            alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Recepci�n de Documentos");
+                                                                            alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Recepción de Documentos");
                                                                         }else{
                                                                             if(finaldocu<fechaAhora){
-                                                                                alertify.error("La fecha de Fin de Recepci�n de Documentos debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                                alertify.error("La fecha de Fin de Recepción de Documentos debe ser igual o mayor a la "+ fechaAhoraInv);
                                                                             }else{
                                                                                 if(iniciodocu>finaldocu){
-                                                                                    alertify.error("La fecha de Inicio de Recepci�n de Documentos debe ser menor que la fecha de Fin de Recepci�n de Documentos");
+                                                                                    alertify.error("La fecha de Inicio de Recepción de Documentos debe ser menor que la fecha de Fin de Recepción de Documentos");
                                                                                 }else{
                                                                                     if(inicioentre==''){
                                                                                         alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Entrevista");
@@ -315,19 +319,19 @@
                                                                                                         alertify.error("La fecha de Inicio de Entrevista debe ser menor que la fecha de Fin de Entrevista");
                                                                                                     }else{
                                                                                                         if(inicioeva==''){
-                                                                                                            alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Evaluaci�n");
+                                                                                                            alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Evaluación");
                                                                                                         }else{
                                                                                                             if(inicioeva<fechaAhora){
-                                                                                                                alertify.error("La fecha de Inicio de Evaluaci�n debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                                                                alertify.error("La fecha de Inicio de Evaluación debe ser igual o mayor a la "+ fechaAhoraInv);
                                                                                                             }else{
                                                                                                                 if(finaleva==''){
-                                                                                                                    alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Evaluaci�n");
+                                                                                                                    alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Evaluación");
                                                                                                                 }else{
                                                                                                                     if(finaleva<fechaAhora){
-                                                                                                                        alertify.error("La fecha de Fin de Evaluaci�n debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                                                                        alertify.error("La fecha de Fin de Evaluación debe ser igual o mayor a la "+ fechaAhoraInv);
                                                                                                                     }else{
                                                                                                                         if(inicioeva>finaleva){
-                                                                                                                            alertify.error("La fecha de Inicio de Evaluaci�n debe ser menor que la fecha de Fin de Evaluaci�n");
+                                                                                                                            alertify.error("La fecha de Inicio de Evaluación debe ser menor que la fecha de Fin de Evaluación");
                                                                                                                         }else{
                                                                                                                             /*identifica el nombre del formulario*/
                                                                                                                             document.formulario.submit()

@@ -26,7 +26,7 @@ class CursoController extends DSIController
             $cursos=$em->getRepository('AppBundle:Curso')->findAll();
 
             $hc=$this->mostrarHC();
-            $fechaAhora=(new \DateTime('now'))->format("Y-m-d");
+            $fechaAhora=(new \DateTime('now',new \DateTimeZone('America/El_Salvador')))->format("Y-m-d");
 
             for($i=0;$i<count($hc);$i++){
                 if($fechaAhora>$hc[$i]{"fecha_fin"}){
@@ -50,6 +50,7 @@ class CursoController extends DSIController
     }
 
     /**
+     *
      * @Route("/secretaria/curso_create",name="createCurso")
      */
     public function createCursoAction(Request $request)
