@@ -161,10 +161,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
 <script src="{{ asset('public/alertify/alertify.js') }}"></script>
 
 <!-- CUSTOM SCRIPTS -->
-<script src="{{ asset('public/assets/js/custom.js') }}"></script>
 <script src="{{ asset('public/assets/js/morris/morris.js') }}"></script>
 
-{% block javascripts %}
+
 {% for flashMessage in app.session.flashbag.get('error') %}
     <script>
         window.onload = function error(){
@@ -181,7 +180,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
         }
     </script>
 {% endfor %}
-{% endblock %}
 
+{% block javascripts %}{% endblock %}
+
+<script src="{{ asset('public/assets/js/custom.js') }}"></script>
 </body>
 </html>

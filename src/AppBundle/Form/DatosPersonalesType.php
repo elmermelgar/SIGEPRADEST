@@ -17,7 +17,11 @@ class DatosPersonalesType extends AbstractType
         $builder
             ->add('duiAlumno')
             ->add('nitAlumno')
-            ->add('fechaNacimeitno', 'date', array('widget' => 'single_text','format' =>'yyyy-MM-dd'))
+            ->add('fechaNacimiento', 'date', array(
+                'widget' => 'single_text',
+                // do not render as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'format' =>'yyyy-MM-dd'))
             ->add('estadoCivil','choice', array('choices' => array(
                 'Acompañado(a)' => 'Acompañado(a)',
                 'Casado(a)' => 'Casado(a)',

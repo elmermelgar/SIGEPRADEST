@@ -28,8 +28,8 @@
                     </div>
                     <div class="form-group">
                         <label>Fecha de nacimiento</label>
-                        {{ form_widget(form.fechaNacimeitno, {'attr' : {'class' : 'form-control', 'required' : true}}) }}
-                        <span class="text-danger">{{ form_errors(form.fechaNacimeitno) }}</span>
+                        {{ form_widget(form.fechaNacimiento, {'attr' : {'class' : 'form-control', 'name' : 'fnac', 'required' : true}}) }}
+                        <span class="text-danger">{{ form_errors(form.fechaNacimiento) }}</span>
                     </div>
                     <div class="form-group">
                         <label>Estado civil</label>
@@ -67,4 +67,27 @@
         </div>
 
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+
+
+            var fechanac = $('input[name="fnac"]'); //birthday date
+            var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+            var options = {
+                //format: 'mm-dd-yyyy',
+                //format: 'yyyy-mm-dd',
+                format: 'yyyy-mm-dd',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: new Date()
+            };
+            fechanac.datepicker(options);
+
+        });
+    </script>
 {% endblock %}

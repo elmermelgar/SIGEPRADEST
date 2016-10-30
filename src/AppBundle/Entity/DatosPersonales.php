@@ -39,9 +39,9 @@ class DatosPersonales
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_nacimeitno", type="date", nullable=true)
+     * @ORM\Column(name="fecha_nacimiento", type="date", nullable=true)
      */
-    private $fechaNacimeitno;
+    private $fechaNacimiento;
 
     /**
      * @var string
@@ -152,21 +152,21 @@ class DatosPersonales
      * @param \DateTime $fechaNacimeitno
      * @return DatosPersonales
      */
-    public function setFechaNacimeitno($fechaNacimeitno)
+    public function setFechaNacimiento($fechaNacimiento)
     {
-        $this->fechaNacimeitno = $fechaNacimeitno;
+        $this->fechaNacimiento = $fechaNacimiento;
 
         return $this;
     }
 
     /**
-     * Get fechaNacimeitno
+     * Get fechaNacimiento
      *
      * @return \DateTime 
      */
-    public function getFechaNacimeitno()
+    public function getFechaNacimiento()
     {
-        return $this->fechaNacimeitno;
+        return $this->fechaNacimiento;
     }
 
     /**
