@@ -30,6 +30,7 @@
                             <th style="text-align: center">Curso</th>
                             <th style="text-align: center">Tipo de Horario</th>
                             <th style="text-align: center">Ocupado</th>
+                            <th style="text-align: center">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -41,6 +42,11 @@
                                 <td>{{ he.idCurso.nombreCurso }}</td>
                                 <td>{{ he.tipoHorario }}</td>
                                 <td>{% if he.ocupado == 'true' %} <input type="checkbox" checked/> {% else %}  <input type="checkbox" disabled/>{% endif %}</td>
+                                <td style="text-align: center;">
+                                    <a href="{{ asset('/secretaria/HEntrevista_edit') }}/{{ he.idHe }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                    -
+                                    <button onClick="confirmar({{ he.idHe}})" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
+                                </td>
                             </tr>
 
                         {% endfor %}
@@ -75,10 +81,10 @@
 
         function confirmar(id){
             //un confirm
-            alertify.confirm("<p>Esta seguro que desea Desabilitar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+            alertify.confirm("<p>Esta seguro que desea Eliminar el Horario de Entrevista?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
                 if (e) {
-                    location.href="{{ asset('/secretaria/curso_desabilitar') }}/"+id;
-                } else { alertify.error("Has cancelado la operación");
+                    location.href="{{ asset('/secretaria/HEntrevista_del') }}/"+id;
+                } else { alertify.error("Has cancelado la operaciÃ³n");
                 }
             });
             return false

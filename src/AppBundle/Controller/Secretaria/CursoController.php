@@ -27,7 +27,6 @@ class CursoController extends DSIController
 
             $hc=$this->mostrarHC();
             $fechaAhora=(new \DateTime('now',new \DateTimeZone('America/El_Salvador')))->format("Y-m-d");
-
             for($i=0;$i<count($hc);$i++){
                 if($fechaAhora>$hc[$i]{"fecha_fin"}){
                     $id=$em->getRepository('AppBundle:Curso')->find($hc[$i]{"id_curso"});

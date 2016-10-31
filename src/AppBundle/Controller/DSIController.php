@@ -61,7 +61,7 @@ class DSIController extends Controller
     protected function mostrarDoctores(){
         $em=$this->getDoctrine()->getManager();
         $db = $em->getConnection();
-        $sql = "SELECT * FROM doctores";
+        $sql = "SELECT id_doctores, nombre_doc FROM doctores ORDER BY nombre_doc ASC";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $doc = $stmt->fetchAll();

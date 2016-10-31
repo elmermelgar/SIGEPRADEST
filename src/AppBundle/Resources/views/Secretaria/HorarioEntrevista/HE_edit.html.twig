@@ -11,9 +11,9 @@
         <ol class="breadcrumb">
             <li><a href="{{ path('secretaria') }}">Inicio</a></li>
             <li><a href="{{ path('verEntrevista') }}">Horario Entrevista</a></li>
-            <li class="active">Asignar Horario Entrevista</li>
+            <li class="active">Editar Horario Entrevista</li>
         </ol>
-        <h2>Asignando Hora de Entrevista a Curso</h2>
+        <h2>Editar Hora de Entrevista</h2>
     </div>
 {% endblock %}
 {% block body %}
@@ -25,26 +25,30 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                            <form id="formulario" action="{{ path("createEntrevista") }}" method="post" name="formulario">
+                            <form id="formulario" action="{{ path("editEntrevista",{'id': he.idHe}) }}" method="post" name="formulario">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Curso</label>
-                                        <select name="curso" class="form-control">
+                                        <select name="curso" class="form-control" disabled>
                                             {% for curso in curso %}
-                                                <option  value="{{ curso.idCurso }}">{{ curso.nombreCurso }}</option>
+                                                {% if curso.nombreCurso == he.idCurso.nombreCurso %}
+                                            <option selected value="{{ curso.idCurso }}">{{ curso.nombreCurso }}</option>
+                                            {% else %}
+                                                <option value="{{ curso.idCurso }}">{{ curso.nombreCurso }}</option>
+                                            {% endif %}
                                             {% endfor %}
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Fecha de Entrevista</label>
-                                        <input class="form-control" id="fecha" name="fecha" type="date" required/>
+                                        <input value="{{ he.fechaDhe.format("Y-m-d") }}" class="form-control" id="fecha" name="fecha" type="date" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="disabledSelect">Hora de Entrevista</label>
-                                            <input class="form-control" id="hora" name="hora" type="time" required/>
+                                        <input value="{{ he.horaDhe.format("H:i:s") }}" class="form-control" id="hora" name="hora" type="time" required/>
                                     </div>
                                 </div>
 
@@ -52,19 +56,26 @@
                                     <div class="form-group">
                                         <label for="disabledSelect">Tipo de Horario</label>
                                         <div class="radio">
+                                            {% if he.tipoHorario == "Evaluacion" %}
                                             <label>
-                                                <input type="radio" name="tipoH" id="tipoH" value="Evaluacion" checked />Evaluación
+                                                <input type="radio" name="tipoH" id="tipoH" value="Evaluacion" checked/>Evaluación
                                             </label>
                                             <label>
                                                 <input type="radio" name="tipoH" id="tipoH" value="Cita"/>Cita
                                             </label>
+                                            {% else %}
+                                            <label>
+                                                <input type="radio" name="tipoH" id="tipoH" value="Evaluacion"/>Evaluación
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="tipoH" id="tipoH" value="Cita"checked/>Cita
+                                            </label>
+                                            {% endif %}
                                         </div>
                                         <div class="radio">
-
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-12 col-md-offset-4">
                                     <button onclick="validar()" type="button" style="width: 30%;" class="btn btn-primary">Guardar</button>
                                 </div>
@@ -79,40 +90,40 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    function validar() {
-        var fecha = document.getElementById('fecha').value;
-        var hora = document.getElementById('hora').value;
+        function validar() {
+            var fecha = document.getElementById('fecha').value;
+            var hora = document.getElementById('hora').value;
 
-        var fechaAhora = moment().format('YYYY-MM-DD');
-        var fechaAhoraInv = moment().format('DD/MM/YYYY');
+            var fechaAhora = moment().format('YYYY-MM-DD');
+            var fechaAhoraInv = moment().format('DD/MM/YYYY');
 
-        if(fecha=='' && hora==''){
-            alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
-        }else{
-            if(fecha==''){
-                alertify.error("Es Obligatorio Llenar La Fecha de la Entrevista");
+            if(fecha=='' && hora==''){
+                alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
             }else{
-                if(fecha<fechaAhora){
-                    alertify.error("La Fecha de la Entrevista no puede ser menor de "+fechaAhoraInv);
+                if(fecha==''){
+                    alertify.error("Es Obligatorio Llenar La Fecha de la Entrevista");
                 }else{
-                    if(hora==''){
-                        alertify.error("Es Obligatorio Llenar La Hora de la Entrevista");
+                    if(fecha<fechaAhora){
+                        alertify.error("La Fecha de la Entrevista no puede ser menor de "+fechaAhoraInv);
                     }else{
-                        if(hora<"08:00"||hora>"16:00" ){
-                            alertify.error("La Hora de la Entrevista de Programarce en horas Laborales (8 am - 4 pm)");
+                        if(hora==''){
+                            alertify.error("Es Obligatorio Llenar La Hora de la Entrevista");
                         }else{
-                            document.formulario.submit()
+                            if(hora<"08:00"||hora>"16:00" ){
+                                alertify.error("La Hora de la Entrevista de Programarce en horas Laborales (8 am - 4 pm)");
+                            }else{
+                                document.formulario.submit()
+                            }
                         }
                     }
                 }
+
             }
-
         }
-    }
 
-</script>
+    </script>
 {% endblock %}
 
 
