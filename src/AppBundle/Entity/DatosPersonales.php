@@ -79,6 +79,27 @@ class DatosPersonales
     private $telefonoMovil;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono_particular", type="string", length=9, nullable=true)
+     */
+    private $telefonoParticular;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono_trabajo", type="string", length=9, nullable=true)
+     */
+    private $telefonoTrabajo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correo", type="string", length=50, nullable=true)
+     */
+    private $correo;
+
+    /**
      * @var \Usuario
      *
      * @ORM\ManyToOne(targetEntity="Usuario")
@@ -89,11 +110,10 @@ class DatosPersonales
     private $idUi;
 
 
-
     /**
      * Get idDp
      *
-     * @return integer 
+     * @return integer
      */
     public function getIdDp()
     {
@@ -116,7 +136,7 @@ class DatosPersonales
     /**
      * Get duiAlumno
      *
-     * @return string 
+     * @return string
      */
     public function getDuiAlumno()
     {
@@ -139,7 +159,7 @@ class DatosPersonales
     /**
      * Get nitAlumno
      *
-     * @return string 
+     * @return string
      */
     public function getNitAlumno()
     {
@@ -162,7 +182,7 @@ class DatosPersonales
     /**
      * Get fechaNacimiento
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFechaNacimiento()
     {
@@ -185,7 +205,7 @@ class DatosPersonales
     /**
      * Get estadoCivil
      *
-     * @return string 
+     * @return string
      */
     public function getEstadoCivil()
     {
@@ -208,7 +228,7 @@ class DatosPersonales
     /**
      * Get direccionParticular
      *
-     * @return string 
+     * @return string
      */
     public function getDireccionParticular()
     {
@@ -231,7 +251,7 @@ class DatosPersonales
     /**
      * Get lugarTrabajo
      *
-     * @return string 
+     * @return string
      */
     public function getLugarTrabajo()
     {
@@ -254,7 +274,7 @@ class DatosPersonales
     /**
      * Get direccionTrabajo
      *
-     * @return string 
+     * @return string
      */
     public function getDireccionTrabajo()
     {
@@ -277,11 +297,59 @@ class DatosPersonales
     /**
      * Get telefonoMovil
      *
-     * @return string 
+     * @return string
      */
     public function getTelefonoMovil()
     {
         return $this->telefonoMovil;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTelefonoParticular()
+    {
+        return $this->telefonoParticular;
+    }
+
+    /**
+     * @param string $telefonoParticular
+     */
+    public function setTelefonoParticular($telefonoParticular)
+    {
+        $this->telefonoParticular = $telefonoParticular;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTelefonoTrabajo()
+    {
+        return $this->telefonoTrabajo;
+    }
+
+    /**
+     * @param string $telefonoTrabajo
+     */
+    public function setTelefonoTrabajo($telefonoTrabajo)
+    {
+        $this->telefonoTrabajo = $telefonoTrabajo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCorreo()
+    {
+        return $this->correo;
+    }
+
+    /**
+     * @param string $correo
+     */
+    public function setCorreo($correo)
+    {
+        $this->correo = $correo;
     }
 
     /**
@@ -300,7 +368,7 @@ class DatosPersonales
     /**
      * Get idUi
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return \AppBundle\Entity\Usuario
      */
     public function getIdUi()
     {

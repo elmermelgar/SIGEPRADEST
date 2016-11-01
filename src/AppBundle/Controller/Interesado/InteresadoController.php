@@ -16,7 +16,7 @@ use AppBundle\Form\DatosPersonalesType;
 class InteresadoController extends SecurityController
 {
     /**
-     * @Route("/", name="indexi_nteresado")
+     * @Route("/", name="index_interesado")
      */
     public function indexAction(Request $request)
     {

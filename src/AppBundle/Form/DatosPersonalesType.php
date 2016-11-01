@@ -21,22 +21,26 @@ class DatosPersonalesType extends AbstractType
                 'widget' => 'single_text',
                 // do not render as type="date", to avoid HTML5 date pickers
                 'html5' => false,
-                'format' =>'yyyy-MM-dd'))
-            ->add('estadoCivil','choice', array('choices' => array(
+                'format' => 'dd-MM-yyyy'))
+            ->add('estadoCivil', 'choice', array('choices' => array(
                 'Acompañado(a)' => 'Acompañado(a)',
                 'Casado(a)' => 'Casado(a)',
                 'Divorciado(a)' => 'Divorciado(a)',
+                'Separado(a)' => 'Separado(a)',
                 'Soltero(a)' => 'Soltero(a)',
                 'Viudo(a)' => 'Viudo(a)'
-            )))
+                ),
+                'placeholder' => 'Seleccione una opción...'))
             ->add('direccionParticular', 'textarea')
             ->add('lugarTrabajo', 'textarea')
             ->add('direccionTrabajo', 'textarea')
             ->add('telefonoMovil')
-            ->add('guardar', 'submit', array('label' => 'Guardar'))
-        ;
+            ->add('telefonoParticular')
+            ->add('telefonoTrabajo')
+            ->add('correo', 'email')
+            ->add('guardar', 'submit', array('label' => 'Guardar'));
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
