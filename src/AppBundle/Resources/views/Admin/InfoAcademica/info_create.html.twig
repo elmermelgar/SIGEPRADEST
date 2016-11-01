@@ -1,7 +1,6 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 
-
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
@@ -11,8 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
 {% endblock %}
-
-
 
 {% block Header %}
     <div class="col-md-12">
@@ -25,45 +22,34 @@
     </div>
 {% endblock %}
 
-
 {% block body %}
     <div class="row-fluid sortable">
         <form class="form-horizontal" action="{{ path('createInfo') }}" method="POST" enctype="multipart/form-data"
               name="formulario2">
-
             <div class="box span12">
-
                 <div class="box-content">
-
                     <fieldset>
-
                         <br><br>
                         <div class="col-md-6">
                             <div class="control-group">
-                                <label class="control-label" for="prependedInput">ID Solicitud , Nombre del usuario </label>
+                                <label class="control-label" for="prependedInput">ID Solicitud / Nombre del usuario </label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <label for="info"><br></label><select id="soli_fk" name="soli_fk" class="form-control">
-
-
                                             {% for usu_entity in usu  %}
-
                                                 {% for soli in sol   %}
-
                                                     {%  if soli.idUi is empty %}
 
 
                                                     {% elseif   usu_entity.idUi == soli.idUi.idUi %}
                                                         <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} , {{ usu_entity.nombre }}</option>
-
-
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endfor %}
 
                                             {% for soli in sol   %}
                                                 {%  if soli.idUi is empty %}
-                                                    <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} </option>
+                                                    <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} , </option>
                                                 {% endif %}
                                             {% endfor %}
 
@@ -114,7 +100,7 @@
 
                         <div class="col-md-12" style="text-align: center; margin-top: 10px">
                             <a onClick="validar()" type="submit" style="width: 30%;" class="btn btn-primary">
-                                    Guardar Informacion
+                                Guardar Informacion
                             </a>
 
                             <a href="{{ path('verInfo') }}" onclick="cancelar()" id="cancel"  type="button" class="btn"  name="cancel"  style="width: 15%;"  >
@@ -130,12 +116,9 @@
     </div><!--/row-->
 {% endblock %}
 
-
-
 {% block javascripts %}
 
     <script type="text/javascript">
-
 
         /*funciones para validar*/
         function validar() {
@@ -154,25 +137,19 @@
             if (fechaObtenida1 == '' ||titulo1.length == 0 || instituto1.length == 0 ) {
                 alertify.error("Complete todos los campos por favor");
             } else {
-                         if (fechaObtenida2 < fechaAhora) {
-                             /*identifica el nombre del formulario*/
-                             //console.log(fechaObtenida1);
-                             document.formulario2.submit();
-
-                         } else {
-
-                             alertify.error("La fecha de titulo es mayor a a fecha actual");
-
-                    }
+                if (fechaObtenida2 < fechaAhora) {
+                    /*identifica el nombre del formulario*/
+                    //console.log(fechaObtenida1);
+                    document.formulario2.submit();
+                } else {
+                    alertify.error("La fecha de titulo es mayor a a fecha actual");
+                }
             }
         }
-
         /*funcion cancelar*/
         function cancelar() {
-
             alertify.error("Has cancelado la operacion")
             document.formulario2.href = " {{ path('verInfo') }}";
-
         }
 
     </script>

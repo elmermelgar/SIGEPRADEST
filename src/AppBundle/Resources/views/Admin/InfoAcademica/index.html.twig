@@ -11,8 +11,38 @@
     </div>
 {% endblock %}
 
-
 {% block body %}
+
+    <div class="col-md-6">
+
+        <div class="control-group">
+            <label class="control-label" for="prependedInput">Buscar Nombre de Usuario </label>
+            <div class="controls">
+                <div class="input-prepend">
+                    <label for="info"><br></label><select id="select1" name="select1"  class="form-control" onchange="cargarTabla()">
+
+                        <option value="0">Selecciona una opcion </option>
+                        {% for resultado in result %}
+                            <option value="{{ resultado.id_ui }}">{{ resultado.completo }} </option>
+
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <br>
+
+                <div class="input-prepend" >
+                    <select id="select2" name="select2" onchange="seleccionado_select2()" class="form-control" >
+                        <option value="0">Seleccione un filtro</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="col-md-12">
 
         <div class="panel panel-default">
@@ -21,6 +51,11 @@
             <div class="panel-heading">
                 Informacion Disponibles <a href="{{ path('createInfo') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Agregar Nuevo Curso</a>
             </div>
+
+
+
+
+
 
             <div class="panel-body">
                 <div class="table-responsive">
@@ -36,71 +71,122 @@
                         </thead>
                         <tbody>
 
-                        {% for info in infos %}
+
+                        {%  set valor = 2 %}
+
+
+                        {% for info in infos if info.idSolicitud.idUi.idUi == valor %}
                             <tr>
-                                <td>{{ info.idSolicitud.idSolicitud }}, {{   info.idSolicitud.idUi.nombre }}</td>
+                                <td>{{ info.idSolicitud.idSolicitud }},
+
+
+
+                                    {%  if info.idSolicitud.idUi is empty or info.idSolicitud.idUi.nombre is empty%}
+
+                                    {% else %}
+                                        {{info.idSolicitud.idUi.nombre }}
+                                    {% endif %}
+
+
+                                </td>
                                 <td>{{ info.institucion }}</td>
                                 <td>{{ info.titulo }}</td>
                                 <td>{% if info.fechaObtenido %} {{ info.fechaObtenido|date('d-m-Y')}} {% endif %} </td>
                                 <td style="text-align: center;">
                                     <a  href="{{ path('editInfo', {'id': info.idIfacad }) }}"  title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-
-
-                                    <a href="#" data-id="{{ info.idIfacad }}" id = "some-link"> </a>
-
-
-
-                                    <a  onclick="confirmar()" href="{{ path('deleteInfo', {'id': info.idIfacad} ) }}"  title="Eliminar" class="btn btn-danger">
+                                    -
+                                    <a onclick="confirmar({{ info.idIfacad }})" title="Eliminar" class="btn btn-danger">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
-
                                 </td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
 
     </div>
-
-
-
 {% endblock %}
-
-
-
 {% block javascripts %}
-
-        <script type="text/javascript">
-
-
-
-
-            function confirmar(){
-                //un confirm
-                var opcion = false;
-
-                alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
-                    if (e) {
-
-                        var idnolink = document.querySelector('#some-link').dataset.id;
-
-                        opcion = true;
-
-                        alertify.error("Operacion eliminada");
+    <script type="text/javascript">
+        function confirmar(val){
+            alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                if (e) {
+                    location.href = "{{ asset('/admin/informacion/delete/') }}" +val;
+                    alertify.error("Operacion eliminada"  );
+                } else {
+                    alertify.error("Has cancelado la operacion");
+                }
+            });
+            return false
+        }
 
 
-                    } else {
-                        opcion = false;
-                        alertify.error("Has cancelado la operacion");
-                    }
-                });
-                return opcion
+
+
+        $(document).ready(function () {
+            $('#select1').change(function(){
+                var id = $('#select1').val();
+
+                $('#estados').load( cargarSelect2(id) );
+
+
+            });
+        })
+
+        function cargarSelect2(valor){
+            //alert(valor);
+            //var valor1 = document.getElementById('select1').value;
+            if (valor==0){
+                document.getElementById("select2").disabled = true;
+            } else{
+
+                document.getElementById("select2").options.length =0;
+                document.getElementById("select2").options[0] =
+                        new Option("Selecciona una opcion","0");
+
+                {%  for info in infos %}
+                var id_usuariosel = {{ info.idSolicitud.idUi.idUi}};
+                var nombre = "{{ info.idSolicitud.idUi.nombre }}";
+                var id_solicitud = {{ info.idSolicitud.idSolicitud }};
+
+
+                //alert("id academica "+id_ifacad);
+                //alert("id usuario "+ id_usuariosel);
+                //alert("valor " +valor);
+
+                if (valor == id_usuariosel){
+                    //alert("solicitud "+ id_solicitud + "," + nombre);
+                    // añadimos los nuevos elementos
+                    document.getElementById("select2").options[document.getElementById("select2").options.length]
+                            = new Option(id_solicitud + "," + nombre);
+                }
+                {% endfor %}
+
+
+
+                document.getElementById("select2").disable=false;
             }
 
-        </script>
+        }
 
 
+        function cargarTabla(){
+            var idTbabla = $('#select1').val();
+
+            //alert(idTbabla);
+
+            return idTbabla
+        }
+
+
+
+
+
+
+
+    </script>
 {% endblock %}
