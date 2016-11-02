@@ -13,7 +13,7 @@ use AppBundle\Form\TipoCursoType;
 /**
  * TipoCurso controller.
  *
- * @Route("/tipocurso")
+ * @Route("secretaria/tipocurso")
  */
 class TipoCursoController extends Controller
 {

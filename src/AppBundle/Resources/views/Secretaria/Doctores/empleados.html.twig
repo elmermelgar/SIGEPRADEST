@@ -1,16 +1,16 @@
 {% extends 'base2.html.twig' %}
-{% block active %}active-menu{% endblock %}
+{% block active2 %}active-menu{% endblock %}
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('admin') }}">Inicio</a></li>
-            <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('doctores_secre') }}">Doctores</a></li>
             <li class="active">Empleados</li>
         </ol>
-        <h2>Crear Nuevo Usuario</h2>
+        <h2>Crear Nuevo Doctor</h2>
     </div>
 {% endblock %}
 {% block body %}
@@ -23,7 +23,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover" id="dataTables-empleados">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                             <tr>
                                 <th>Id_Empleado</th>
@@ -36,6 +36,7 @@
                             </thead>
                             <tbody>
                             {% for empleados in empleados %}
+                                {% if empleados.tipo_empleado==1 %}
                                 <tr class="odd gradeX">
                                     <td>{{ empleados.id_empleado }}</td>
                                     <td>{{ empleados.dui }}</td>
@@ -43,10 +44,11 @@
                                     <td class="center">{% if empleados.tipo_empleado==1 %}Docente{% else %}Administrativo{% endif %}</td>
                                     <td class="center">{{ empleados.usuario }}</td>
                                     <td class="center"><a
-                                                href="{{ asset('admin/usuario/create') }}/{{ empleados.usuario }}"
+                                                href="{{ asset('secretaria/doctor/create') }}/{{ empleados.usuario }}"
                                                 title="Editar" class="btn btn-default"
                                                 style="background: #0AA5E2;color: #ffffff;">Crear</a></td>
                                 </tr>
+                            {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>
@@ -63,7 +65,7 @@
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $('#dataTables-empleados').dataTable();
+            $('#dataTables-example').dataTable();
         });
     </script>
 {% endblock %}
