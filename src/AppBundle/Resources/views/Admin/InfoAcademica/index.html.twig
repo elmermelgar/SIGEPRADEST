@@ -1,5 +1,9 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+
 
 {% block Header %}
     <div class="col-md-12">
@@ -11,32 +15,25 @@
     </div>
 {% endblock %}
 
+
+
 {% block body %}
+    <form class="form-horizontal" action="{{ path('verInfo') }}" method="POST" enctype="multipart/form-data"
+          name="formulario2">
 
+        <fieldset>
     <div class="col-md-6">
-
-        <div class="control-group">
-            <label class="control-label" for="prependedInput">Buscar Nombre de Usuario </label>
+            <div class="control-group">
+            <label class="control-label" for="prependedInput"> Seleccione un usuario </label>
             <div class="controls">
                 <div class="input-prepend">
-                    <label for="info"><br></label><select id="select1" name="select1"  class="form-control" onchange="cargarTabla()">
-
+                    <label for="info"></label><select id="select1" name="select1"  class="form-control">
                         <option value="0">Selecciona una opcion </option>
                         {% for resultado in result %}
                             <option value="{{ resultado.id_ui }}">{{ resultado.completo }} </option>
-
                         {% endfor %}
                     </select>
                 </div>
-
-                <br>
-
-                <div class="input-prepend" >
-                    <select id="select2" name="select2" onchange="seleccionado_select2()" class="form-control" >
-                        <option value="0">Seleccione un filtro</option>
-                    </select>
-                </div>
-
             </div>
         </div>
     </div>
@@ -44,24 +41,17 @@
 
 
     <div class="col-md-12">
-
+        <br>
         <div class="panel panel-default">
-
-
             <div class="panel-heading">
                 Informacion Disponibles <a href="{{ path('createInfo') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Agregar Nuevo Curso</a>
             </div>
 
-
-
-
-
-
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
                         <thead>
-                        <tr>
+                        <tr class="odd gradeX">
                             <th style="text-align: center">Solicitud</th>
                             <th style="text-align: center">Nombre Institucion</th>
                             <th style="text-align: center">Titulo</th>
@@ -69,39 +59,36 @@
                             <th style="text-align: center">Acciones</th>
                         </tr>
                         </thead>
+
                         <tbody>
+                        {% if seleccion is not null  %}
+                            {% for info in infos  %}
+                                {%  if info.idSolicitud is not null %}
+                                {% if info.idSolicitud.idUi.idUi == seleccion.idUi %}
+                                <tr>
+                                    <td>{{ info.idSolicitud.idSolicitud }}  /
+                                        {%  if info.idSolicitud.idUi is not empty or info.idSolicitud.idUi.nombre is not empty%}
+                                            {{ info.idSolicitud.idUi.nombre  }}
+                                        {% endif %}
 
-
-                        {%  set valor = 2 %}
-
-
-                        {% for info in infos if info.idSolicitud.idUi.idUi == valor %}
-                            <tr>
-                                <td>{{ info.idSolicitud.idSolicitud }},
-
-
-
-                                    {%  if info.idSolicitud.idUi is empty or info.idSolicitud.idUi.nombre is empty%}
-
-                                    {% else %}
-                                        {{info.idSolicitud.idUi.nombre }}
+                                    </td>
+                                    <td class="center">{{ info.institucion }}</td>
+                                    <td class="center">{{ info.titulo }}</td>
+                                    <td class="center">{% if info.fechaObtenido %} {{ info.fechaObtenido|date('d-m-Y')}} {% endif %} </td>
+                                    <td style="text-align: center;">
+                                        <a  href="{{ path('editInfo', {'id': info.idIfacad }) }}"  title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                        -
+                                        <a onclick="confirmar({{ info.idIfacad }})" title="Eliminar" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+                                    </td>
+                                </tr>
+                                    {%  endif %}
                                     {% endif %}
-
-
-                                </td>
-                                <td>{{ info.institucion }}</td>
-                                <td>{{ info.titulo }}</td>
-                                <td>{% if info.fechaObtenido %} {{ info.fechaObtenido|date('d-m-Y')}} {% endif %} </td>
-                                <td style="text-align: center;">
-                                    <a  href="{{ path('editInfo', {'id': info.idIfacad }) }}"  title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;">
-                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                                    -
-                                    <a onclick="confirmar({{ info.idIfacad }})" title="Eliminar" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
-                                </td>
-                            </tr>
-                        {% endfor %}
+                            {% endfor %}
+                        {% endif %}
                         </tbody>
+
                     </table>
                 </div>
 
@@ -109,8 +96,22 @@
         </div>
 
     </div>
+
+    </fieldset>
+    </form>
+
 {% endblock %}
 {% block javascripts %}
+
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example1').dataTable();
+        });
+    </script>
+
     <script type="text/javascript">
         function confirmar(val){
             alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
@@ -124,69 +125,18 @@
             return false
         }
 
-
-
-
         $(document).ready(function () {
             $('#select1').change(function(){
                 var id = $('#select1').val();
-
                 $('#estados').load( cargarSelect2(id) );
-
-
             });
         })
 
         function cargarSelect2(valor){
-            //alert(valor);
-            //var valor1 = document.getElementById('select1').value;
-            if (valor==0){
-                document.getElementById("select2").disabled = true;
-            } else{
-
-                document.getElementById("select2").options.length =0;
-                document.getElementById("select2").options[0] =
-                        new Option("Selecciona una opcion","0");
-
-                {%  for info in infos %}
-                var id_usuariosel = {{ info.idSolicitud.idUi.idUi}};
-                var nombre = "{{ info.idSolicitud.idUi.nombre }}";
-                var id_solicitud = {{ info.idSolicitud.idSolicitud }};
-
-
-                //alert("id academica "+id_ifacad);
-                //alert("id usuario "+ id_usuariosel);
-                //alert("valor " +valor);
-
-                if (valor == id_usuariosel){
-                    //alert("solicitud "+ id_solicitud + "," + nombre);
-                    // añadimos los nuevos elementos
-                    document.getElementById("select2").options[document.getElementById("select2").options.length]
-                            = new Option(id_solicitud + "," + nombre);
-                }
-                {% endfor %}
-
-
-
-                document.getElementById("select2").disable=false;
+            if (valor != 0){
+                location.href = "{{ asset('/admin/info/') }}" +valor;
             }
-
         }
-
-
-        function cargarTabla(){
-            var idTbabla = $('#select1').val();
-
-            //alert(idTbabla);
-
-            return idTbabla
-        }
-
-
-
-
-
-
 
     </script>
 {% endblock %}

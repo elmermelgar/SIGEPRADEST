@@ -28,39 +28,40 @@
               name="formulario2">
             <div class="box span12">
                 <div class="box-content">
-                    <fieldset>
+                        <fieldset>
                         <br><br>
                         <div class="col-md-6">
                             <div class="control-group">
-                                <label class="control-label" for="prependedInput">ID Solicitud / Nombre del usuario </label>
+                                <label class="control-label" for="prependedInput">Buscar Nombre de Usuario / Solicitud </label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <label for="info"><br></label><select id="soli_fk" name="soli_fk" class="form-control">
-                                            {% for usu_entity in usu  %}
-                                                {% for soli in sol   %}
-                                                    {%  if soli.idUi is empty %}
+                                        <label for="info"><br></label><select id="select1" name="select1"  class="form-control" >
 
+                                            <option value="0">Seleccione un usuario </option>
+                                            {% for resultado in result %}
+                                                <option value="{{ resultado.id_ui }}">{{ resultado.completo }} </option>
 
-                                                    {% elseif   usu_entity.idUi == soli.idUi.idUi %}
-                                                        <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} , {{ usu_entity.nombre }}</option>
-                                                    {% endif %}
-                                                {% endfor %}
                                             {% endfor %}
-
-                                            {% for soli in sol   %}
-                                                {%  if soli.idUi is empty %}
-                                                    <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} , </option>
-                                                {% endif %}
-                                            {% endfor %}
-
-
-
                                         </select>
                                     </div>
+
+                                    <br>
+
+                                    <div class="input-prepend" >
+                                        <select id="select2" name="select2" class="form-control" >
+                                            <option value="0">Solicitudes disponibles</option>
+                                        </select>
+                                    </div>
+
                                 </div>
                             </div>
 
 
+                            <br>
+                        </div>
+
+
+                        <div class="col-md-6">
                             <br>
                             <div class="control-group">
                                 <label class="control-label" for="prependedInput">Instituto</label>
@@ -72,13 +73,7 @@
                                 </div>
                             </div>
 
-                            <br>
-                        </div>
-
-
-                        <div class="col-md-6">
                             <div class="control-group">
-                                <br>
                                 <label class="control-label" for="prependedInput">Titulo</label>
                                 <div class="controls">
                                     <div class="input-prepend">
@@ -88,7 +83,6 @@
                                 </div>
                             </div>
 
-                            <br><br>
                             <div>
                                 <label class="control-label" for="prependedInput">Fecha de titulo</label><br>
                                 <label for="calendario_cl"><br></label><input id="calendario_cl" name="calendario_cl" size="16" type="date" required>
@@ -96,9 +90,10 @@
                             </div>
                         </div>
 
-                        <br><br>
+
 
                         <div class="col-md-12" style="text-align: center; margin-top: 10px">
+                            <br>
                             <a onClick="validar()" type="submit" style="width: 30%;" class="btn btn-primary">
                                 Guardar Informacion
                             </a>
@@ -125,25 +120,33 @@
 
             var titulo1 = document.getElementById('titulo_txt').value;
             var instituto1 = document.getElementById('instituto_txt').value;
+            var selection2 = document.getElementById('select2').value;
 
 
             var fechaObtenida1 = document.getElementById('calendario_cl').value;
             var fechaObtenida2 = moment(fechaObtenida1).format('DD/MM/YYYY');
             var fechaAhora = moment().format('DD/MM/YYYY');
 
-            //console.log(fechaObtenida1 == '' ||titulo1.length == 0 || instituto1.length == 0);
+            var dateA = moment(fechaAhora).format('DD/MM/YYYY');
+            var dateO = moment(fechaObtenida1);
+            var dateDays = 0;
 
+            //alert(fechaObtenida2);
+            //alert(fechaAhora);
 
-            if (fechaObtenida1 == '' ||titulo1.length == 0 || instituto1.length == 0 ) {
+            dateDays = dateO.diff(dateA, 'days');
+            //alert(dateDays);
+
+            if (selection2 == null | selection2 == 0 | fechaObtenida1 == '' |titulo1.length == 0 | instituto1.length == 0 ) {
                 alertify.error("Complete todos los campos por favor");
             } else {
-                if (fechaObtenida2 < fechaAhora) {
-                    /*identifica el nombre del formulario*/
-                    //console.log(fechaObtenida1);
-                    document.formulario2.submit();
-                } else {
-                    alertify.error("La fecha de titulo es mayor a a fecha actual");
-                }
+
+                      if (dateDays <= 0) {
+                            alertify.error("Procesando ... guardado");
+                            document.formulario2.submit();
+                      } else {
+                            alertify.error("La fecha de titulo es mayor a a fecha actual");
+                      }
             }
         }
         /*funcion cancelar*/
@@ -151,6 +154,57 @@
             alertify.error("Has cancelado la operacion")
             document.formulario2.href = " {{ path('verInfo') }}";
         }
+
+
+
+
+        $(document).ready(function () {
+            $('#select1').change(function(){
+                var id = $('#select1').val();
+                $('#estados').load( cargarSelect2(id) );
+            });
+        })
+
+        function cargarSelect2(valor){
+
+            var valor1 = document.getElementById('select1').value;
+            if (valor==0){
+                document.getElementById("select2").disabled = true;
+                document.getElementById("select2").options.length =0;
+                document.getElementById("select2").options[0] =
+                        new Option("Solicitudes disponibles","0");
+
+            } else{
+                document.getElementById("select2").disabled = false;
+                document.getElementById("select2").options.length =0;
+                document.getElementById("select2").options[0] =
+                        new Option("Solicitudes disponibles","0");
+
+                {%  for solicitud in sol %}
+                var id_solicitud = {{ solicitud.idSolicitud }};
+                var id_usuario = {{ solicitud.idUi.idUi }};
+
+
+
+                if (valor == id_usuario){
+
+                    // añadimos los nuevos elementos
+                    //document.getElementById("select2").options[document.getElementById("select2").options.length]
+                    //        = new Option(id_solicitud + "," + nombre);
+                    document.getElementById("select2").options[document.getElementById("select2").options.length]
+                            = new Option(id_solicitud);
+                }
+                {% endfor %}
+                document.getElementById("select2").disable=false;
+            }
+        }
+
+        function cargarTabla(){
+            var idTbabla = $('#select1').val();
+            //alert(idTbabla);
+            return idTbabla
+        }
+
 
     </script>
 {% endblock %}
