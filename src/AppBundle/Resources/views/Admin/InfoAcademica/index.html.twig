@@ -1,5 +1,9 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+
 
 {% block Header %}
     <div class="col-md-12">
@@ -12,21 +16,42 @@
 {% endblock %}
 
 
+
 {% block body %}
+    <form class="form-horizontal" action="{{ path('verInfo') }}" method="POST" enctype="multipart/form-data"
+          name="formulario2">
+
+        <fieldset>
+    <div class="col-md-6">
+            <div class="control-group">
+            <label class="control-label" for="prependedInput"> Seleccione un usuario </label>
+            <div class="controls">
+                <div class="input-prepend">
+                    <label for="info"></label><select id="select1" name="select1"  class="form-control">
+                        <option value="0">Selecciona una opcion </option>
+                        {% for resultado in result %}
+                            <option value="{{ resultado.id_ui }}">{{ resultado.completo }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="col-md-12">
-
+        <br>
         <div class="panel panel-default">
-
-
             <div class="panel-heading">
                 Informacion Disponibles <a href="{{ path('createInfo') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Agregar Nuevo Curso</a>
             </div>
 
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
                         <thead>
-                        <tr>
+                        <tr class="odd gradeX">
                             <th style="text-align: center">Solicitud</th>
                             <th style="text-align: center">Nombre Institucion</th>
                             <th style="text-align: center">Titulo</th>
@@ -34,73 +59,84 @@
                             <th style="text-align: center">Acciones</th>
                         </tr>
                         </thead>
+
                         <tbody>
+                        {% if seleccion is not null  %}
+                            {% for info in infos  %}
+                                {%  if info.idSolicitud is not null %}
+                                {% if info.idSolicitud.idUi.idUi == seleccion.idUi %}
+                                <tr>
+                                    <td>{{ info.idSolicitud.idSolicitud }}  /
+                                        {%  if info.idSolicitud.idUi is not empty or info.idSolicitud.idUi.nombre is not empty%}
+                                            {{ info.idSolicitud.idUi.nombre  }}
+                                        {% endif %}
 
-                        {% for info in infos %}
-                            <tr>
-                                <td>{{ info.idSolicitud.idSolicitud }}, {{   info.idSolicitud.idUi.nombre }}</td>
-                                <td>{{ info.institucion }}</td>
-                                <td>{{ info.titulo }}</td>
-                                <td>{% if info.fechaObtenido %} {{ info.fechaObtenido|date('d-m-Y')}} {% endif %} </td>
-                                <td style="text-align: center;">
-                                    <a  href="{{ path('editInfo', {'id': info.idIfacad }) }}"  title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;">
-                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-
-
-                                    <a href="#" data-id="{{ info.idIfacad }}" id = "some-link"> </a>
-
-
-
-                                    <a  onclick="confirmar()" href="{{ path('deleteInfo', {'id': info.idIfacad} ) }}"  title="Eliminar" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
-
-                                </td>
-                            </tr>
-                        {% endfor %}
+                                    </td>
+                                    <td class="center">{{ info.institucion }}</td>
+                                    <td class="center">{{ info.titulo }}</td>
+                                    <td class="center">{% if info.fechaObtenido %} {{ info.fechaObtenido|date('d-m-Y')}} {% endif %} </td>
+                                    <td style="text-align: center;">
+                                        <a  href="{{ path('editInfo', {'id': info.idIfacad }) }}"  title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                        -
+                                        <a onclick="confirmar({{ info.idIfacad }})" title="Eliminar" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+                                    </td>
+                                </tr>
+                                    {%  endif %}
+                                    {% endif %}
+                            {% endfor %}
+                        {% endif %}
                         </tbody>
+
                     </table>
                 </div>
+
             </div>
         </div>
 
     </div>
 
-
+    </fieldset>
+    </form>
 
 {% endblock %}
-
-
-
 {% block javascripts %}
 
-        <script type="text/javascript">
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
 
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example1').dataTable();
+        });
+    </script>
 
+    <script type="text/javascript">
+        function confirmar(val){
+            alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                if (e) {
+                    location.href = "{{ asset('/admin/informacion/delete/') }}" +val;
+                    alertify.error("Operacion eliminada"  );
+                } else {
+                    alertify.error("Has cancelado la operacion");
+                }
+            });
+            return false
+        }
 
+        $(document).ready(function () {
+            $('#select1').change(function(){
+                var id = $('#select1').val();
+                $('#estados').load( cargarSelect2(id) );
+            });
+        })
 
-            function confirmar(){
-                //un confirm
-                var opcion = false;
-
-                alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
-                    if (e) {
-
-                        var idnolink = document.querySelector('#some-link').dataset.id;
-
-                        opcion = true;
-
-                        alertify.error("Operacion eliminada");
-
-
-                    } else {
-                        opcion = false;
-                        alertify.error("Has cancelado la operacion");
-                    }
-                });
-                return opcion
+        function cargarSelect2(valor){
+            if (valor != 0){
+                location.href = "{{ asset('/admin/info/') }}" +valor;
             }
+        }
 
-        </script>
-
-
+    </script>
 {% endblock %}

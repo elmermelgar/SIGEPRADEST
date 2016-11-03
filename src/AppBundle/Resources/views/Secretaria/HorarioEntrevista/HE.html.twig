@@ -1,0 +1,102 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li class="active">Horario Entrevista</li>
+        </ol>
+        <h2>Horarios de Entrevistas Asignados a Cursos</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Horario de Entrevistas <a href="{{ path('createEntrevista') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Asignar Horario de Entrevista</a>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">Hora</th>
+                            <th style="text-align: center">Fecha</th>
+                            <th style="text-align: center">Curso</th>
+                            <th style="text-align: center">Tipo de Horario</th>
+                            <th style="text-align: center">Ocupado</th>
+                            <th style="text-align: center">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for he in he %}
+                            <tr>
+                                <td>{{ he.horaDhe.format("h:i A") }}</td>
+                                <td>{{ he.fechaDhe.format("d/m/Y") }}</td>
+                                <td>{{ he.idCurso.nombreCurso }}</td>
+                                <td>{{ he.tipoHorario }}</td>
+                                <td>{% if he.ocupado == 'true' %} <input type="checkbox" checked/> {% else %}  <input type="checkbox" disabled/>{% endif %}</td>
+                                <td style="text-align: center;">
+                                    <a href="{{ asset('/secretaria/HEntrevista_edit') }}/{{ he.idHe }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                    -
+                                    <button onClick="confirmar({{ he.idHe}})" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End  Kitchen Sink -->
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('exito') %}
+        <script>
+            window.onload = function notificacion(){
+                alertify.success("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
+    <script>
+
+        function confirmar(id){
+            //un confirm
+            alertify.confirm("<p>Esta seguro que desea Eliminar el Horario de Entrevista?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                if (e) {
+                    location.href="{{ asset('/secretaria/HEntrevista_del') }}/"+id;
+                } else { alertify.error("Has cancelado la operación");
+                }
+            });
+            return false
+        }
+    </script>
+
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+
+{% endblock %}

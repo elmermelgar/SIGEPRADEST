@@ -80,12 +80,12 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                             <a href="{{ path('verCurso') }}">Administrar Cursos</a>
                         </li>
                         <li>
-                            <a href="{{ path('doctores') }}">Administrar Doctores</a>
+                            <a href="{{ path('doctores_secre') }}">Administrar Doctores</a>
                         </li>
                     </ul>
                 </li>
                 <li  >
-                    <a  href="#"><i class="fa fa-bar-chart-o fa-3x"></i> Menu 4</a>
+                    <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-eye-open"></i> Horario de Entrevista</a>
                 </li>
                 <li  >
                     <a  href="#"><i class="fa fa-table fa-3x"></i> Menu 5</a>
@@ -161,10 +161,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
 <script src="{{ asset('public/alertify/alertify.js') }}"></script>
 
 <!-- CUSTOM SCRIPTS -->
-<script src="{{ asset('public/assets/js/custom.js') }}"></script>
 <script src="{{ asset('public/assets/js/morris/morris.js') }}"></script>
 
-{% block javascripts %}
+
 {% for flashMessage in app.session.flashbag.get('error') %}
     <script>
         window.onload = function error(){
@@ -181,7 +180,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
         }
     </script>
 {% endfor %}
-{% endblock %}
 
+{% block javascripts %}{% endblock %}
+
+<script src="{{ asset('public/assets/js/custom.js') }}"></script>
 </body>
 </html>

@@ -4,10 +4,10 @@
     <div class="col-md-12">
 
     <ol class="breadcrumb">
-        <li><a href="{{ path('admin') }}">Inicio</a></li>
-        <li><a href="{{ path('doctores') }}">Doctores</a></li>
+        <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+        <li><a href="{{ path('doctores_secre') }}">Doctores</a></li>
         <li><a href="{{ path('empleados_') }}">Empleados</a></li>
-        <li class="active">Nuevo Usuario</li>
+        <li class="active">Nuevo Doctor</li>
     </ol>
     <h2>Creando un nuevo doctor a partir de un empleado</h2>
     </div>
@@ -25,7 +25,7 @@
                         <div class="col-md-12">
                             <h3>Datos Complementarios</h3>
 
-                            <form role="form" action="{{ path('nuevo_doctor', {'id': 'x'}) }}" method="post" >
+                            <form role="form" action="{{ path('new_doctor', {'id': 'x'}) }}" method="post" >
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nombres </label>
@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Especialidad</label>
-                                        <input class="form-control" name="especialidad" />
+                                            <input class="form-control" name="especialidad" />
                                     </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">Turno</label>

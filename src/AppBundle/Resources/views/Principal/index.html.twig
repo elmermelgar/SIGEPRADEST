@@ -26,7 +26,8 @@
     <nav class="clearfix">
         <ul class="clearfix">
             <li><a href="#" class="active">informacion</a></li>
-            <li><a href="#">Otros</a></li>
+
+            <li><a style="float: right" href="{{ path('register') }}">Registrarse</a></li>
         </ul>
     </nav>
     <div class="pullcontainer">
@@ -41,10 +42,10 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <div class="hero-title">
-                            ESCRIBIR AQUI ALGO IMPORTANTE
+                            ESCUELA DE POSGRADO
                         </div>
-                        <p class="hero-content">Espacio para una descripción.</p>
-                        <a href="#" class="hero-btn">CURSOS</a>
+                        <p class="hero-content">El éxito en tus manos.</p>
+                        <a href="#" class="hero-btn">CURSOS DISPONIBLES</a>
                     </div>
                 </div>
             </div>
@@ -54,10 +55,10 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <div class="hero-title">
-                            ESCRIBIR AQUI ALGO IMPORTANTE.
+                            FACULTAD DE ODONTOLOGÍA
                         </div>
-                        <p class="hero-content">Algo mas que sea relevante.</p>
-                        <a href="#" class="hero-btn">CURSOS</a>
+                        <p class="hero-content">Universidad de El Salvador.</p>
+                        <a href="#" class="hero-btn">CURSOS DISPONIBLES</a>
                     </div>
                 </div>
             </div>
@@ -70,98 +71,36 @@
 <div class="container carousel">
     <div class="row">
         <br/>
+        {% if cursos %}
+        {% for cursos in cursos %}
         <div class="col-md-4">
             <div class="ca-hover">
                 <div class="carousel-img">
-                    <img src="{{ asset('principal/img/c01.jpg') }}" alt="Carousel Img">
+                    <img height="300px" src="{{ asset('public') }}/{{ cursos.broshureInformativo }}" alt="Carousel Img">
                 </div>
                 <div class="carousel-content">
-                    <h3>Lorem ipsum dolor sit amet consectetur</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
+                    <h3>{{ cursos.nombreCurso }}</h3>
+                    <p>{{ cursos.textoInformativo }}</p>
                 </div>
                 <div class="overlay"></div>
             </div>
         </div>
-
-        <div class="col-md-4" style="margin-bottom: 15px;">
-            <div class="ca-hover">
-                <div class="carousel-img">
-                    <img src="{{ asset('principal/img/c01.jpg') }}" alt="Carousel Img">
-                </div>
-
-                <div class="carousel-content">
-                    <h3>Lorem ipsum dolor sit amet consectetur</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-                </div>
-                <div class="overlay"></div>
-            </div>
-        </div>
-
-        <div class="col-md-4" style="margin-bottom: 15px;">
-            <div class="ca-hover">
-                <div class="carousel-img">
-                    <img src="{{ asset('principal/img/c01.jpg') }}" alt="Carousel Img">
-                </div>
-                <div class="carousel-content">
-                    <h3>Lorem ipsum dolor sit amet consectetur</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-                </div>
-                <div class="overlay"></div>
-            </div>
-        </div>
-        <br/>
-        <div class="col-md-4" style="margin-bottom: 15px;">
-            <div class="ca-hover">
-                <div class="carousel-img">
-                    <img src="{{ asset('principal/img/c01.jpg') }}" alt="Carousel Img">
-                </div>
-                <div class="carousel-content">
-                    <h3>Lorem ipsum dolor sit amet consectetur</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-                </div>
-                <div class="overlay"></div>
-            </div>
-        </div>
-        <br/>
-        <div class="col-md-4" style="margin-bottom: 15px;">
-            <div class="ca-hover">
-                <div class="carousel-img">
-                    <img src="{{ asset('principal/img/c01.jpg') }}" alt="Carousel Img">
-                </div>
-                <div class="carousel-content">
-                    <h3>Lorem ipsum dolor sit amet consectetur</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-                </div>
-                <div class="overlay"></div>
-            </div>
-        </div>
-        <br/>
-        <div class="col-md-4" style="margin-bottom: 15px;">
-            <div class="ca-hover">
-                <div class="carousel-img">
-                    <img src="{{ asset('principal/img/c01.jpg') }}" alt="Carousel Img">
-                </div>
-                <div class="carousel-content">
-                    <h3>Lorem ipsum dolor sit amet consectetur</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</p>
-                </div>
-                <div class="overlay"></div>
-            </div>
-        </div>
+        {% endfor %}
+        {% else %}
+        <h1>No hay Cursos Disponibles</h1>
+        {% endif %}
     </div>
 </div>
 <div class="text-inter">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio.</p>
-                <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean vitae lectus erat. Duis consequat laoreet velit. Mauris convallis, sapien sit amet scelerisque accumsan, felis urna aliquet nunc, viverra mollis odio tellus a nisl. Nulla lobortis lectus non rutrum viverra. Sed et molestie libero. Sed ut ultrices dui.</p>
+                <h3>Misión.</h3>
+                <p>Unidad académica sin fines de lucro, pluralista, responsable de formar profesionales de la odontología, especializados al más alto nivel, mediante los programas de educación continuada, maestrías, especialidades y doctorados; con alto grado de desarrollo ético, preventivo, científico-técnico y social. A fin de mejorar el nivel de educación superior para contribuir a la solución de los problemas de salud bucal de los salvadoreños.</p>
             </div>
             <div class="col-md-6">
-                <h3>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed.</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa. Nullam condimentum mauris et rhoncus sagittis. Sed eu metus in diam tincidunt egestas non at odio.</p>
-                <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean vitae lectus erat. Duis consequat laoreet velit. Mauris convallis, sapien sit amet scelerisque accumsan, felis urna aliquet nunc, viverra mollis odio tellus a nisl. Nulla lobortis lectus non rutrum viverra. Sed et molestie libero. Sed ut ultrices dui.</p>
+                <h3>Visión.</h3>
+                <p>Ser una institución pública, lider vanguardista en excelencia académica, reconocida internecionalmente por su calidad científica, constante renovacion, capacidad investigativa y nacionalmente por su incidencia de propuesta frente a los problemas del país.</p>
             </div>
         </div>
     </div>
@@ -170,7 +109,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="standard-block">ARTICULOS O FRASES</h2>
+                <h2 class="standard-block">Justificación para su creación</h2>
             </div>
         </div>
     </div>
@@ -181,15 +120,20 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="quote-slideshow">
-                        <figure class="show"><h2>Nam mi enim, auctor non ultricies a, fringilla eu risus. Praesent vitae lorem et elit tincidunt accumsan suscipit eu libero. </h2>
+                    <div class="quote-slideshow" style="text-align: center">
+                        <figure class="show"><h2>Oportunidad de formación de posgrados limitada</h2>
                             <figcaption>
-                                Nam mi enim, auctor non ultricies.
+                                Obligación académica de dar continuidad a la formación permanente.
                             </figcaption>
                         </figure>
-                        <figure><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis suscipit est, ut imperdiet tortor. Proin sed molestie massa.</h2>
+                        <figure><h2>Constituir semillero para futuros docentes en la Facultad</h2>
                             <figcaption>
-                                Nam mi enim, auctor.
+                                Constituir semillero para futuros docentes en la Facultad.
+                            </figcaption>
+                        </figure>
+                        <figure><h2>Mejorar la calidad de su formación.</h2>
+                            <figcaption>
+
                             </figcaption>
                         </figure>
                     </div>
@@ -201,30 +145,28 @@
     </div>
 </div>
 <div class="shadow"></div>
-<footer>
+<div style="background: #1a1a1a; color: #fff;">
     <div class="container" style="height: auto;">
         <div class="row">
             <div class="col-md-2">
                 <h2>SIGEPRADEST</h2>
             </div>
-            <div class="col-md-5">
-                <p>Nam mi enim, auctor non ultricies a, fringilla eu risus. Praesent vitae lorem et elit tincidunt accumsan suscipit eu libero. Maecenas diam est, venenatis vitae dui in, vestibulum mollis arcu. Donec eu nibh tincidunt, dapibus sem eu, aliquam dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum consectetur commodo eros, vitae laoreet lectus aliq</p>
+            <div class="col-md-4">
+                <p>Somos una unidad académica sin fines de lucro, pluralista, responsable de formar profesionales de la odontología, especializados al más alto nivel.</p>
             </div>
             <div class="col-md-3">
-                <p>aliquam dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum consectetur commodo eros, vitae laoreet lectus aliq</p>
+                <p>Call Tel: 22251490 Ext. 108 <br/>Cel: 7615 1601</p>
+                <p>Email: postgrado.foues@ues.edu.sv</p>
             </div>
             <div class="col-md-2">
                 <ul class="footer-links">
-                    <li><a href="#">List One</a></li>
-                    <li><a href="#">Page Two</a></li>
-                    <li><a href="#">Design</a></li>
-                    <li><a href="#">Work</a></li>
-                    <li><a href="#">Contact Me</a></li>
+                    <li><a href="https://www.facebook.com/Escuela-de-Posgrado-FOUES-648107981952317/">Facebook</a></li>
+                    <li><a href="{{ path('login') }}">Mas informacion</a></li>
                 </ul>
             </div>
         </div>
     </div>
-</footer>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="{{ asset('principal/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('principal/js/scripts.js') }}"></script>

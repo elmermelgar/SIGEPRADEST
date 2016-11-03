@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Admin;
+namespace AppBundle\Controller\Secretaria;
 
 use AppBundle\Entity\Doctores;
 use AppBundle\Entity\Usuario;
@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Controller\SecurityController;
 
-class DoctoresController extends SecurityController
+class DoctoresSecreController extends SecurityController
 {
 
     /**
-     * @Route("/admin/empleados_", name="empleados_")
+     * @Route("/secretaria/empleados_sec", name="empleados_doc")
      */
     public function empleadosAction(){
         if($this->getUser()){
@@ -26,7 +26,7 @@ class DoctoresController extends SecurityController
             $stmt->execute();
             $result = $stmt->fetchAll();
 
-            return $this->render('AppBundle:Admin/Doctores:empleados.html.twig', array(
+            return $this->render('AppBundle:Secretaria/Doctores:empleados.html.twig', array(
                 'empleados' => $result));
         }
         else{
@@ -35,7 +35,7 @@ class DoctoresController extends SecurityController
     }
 
     /**
-     * @Route("/admin/doctor/create/{id}", name="nuevo_doctor")
+     * @Route("/secretaria/doctor/create/{id}", name="new_doctor")
      */
     public function nuevoDoctorAction($id, Request $request){
         $em=$this->getDoctrine()->getManager("foues");
@@ -51,9 +51,11 @@ class DoctoresController extends SecurityController
         {
             //Creando un doctor
             $doc = new Doctores();
-            $doc->setEspecialidad($request->get("especialidad"));
             $doc->setNombreDoc($request->get("nombre_doc"));
+            $doc->setEspecialidad($request->get("especialidad"));
+            $doc->setApellidoDoc($request->get("apellido_doc"));
             $doc->setTurno($request->get("turno"));
+            $doc->setDuiDoc($request->get("dui"));
 
             //Persistencia
             $em2->persist($doc);
@@ -63,14 +65,14 @@ class DoctoresController extends SecurityController
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
             $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
-            return $this->redirect($this->generateUrl('doctores', array('doctores'=>$doctores)));
+            return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctores)));
         }
-        return $this->render('AppBundle:Admin/Doctores:nuevo_doctor.html.twig', array(
+        return $this->render('AppBundle:Secretaria/Doctores:nuevo_doctor.html.twig', array(
             'empleado' => $result,'ide' =>$ide));
     }
 
     /**
-     * @Route("/admin/doctor_ext/create", name="nuevo_doctor_ext")
+     * @Route("/secretaria/doctor_ext/create", name="new_doctor_ext")
      */
     public function nuevoDoctorExtAction(Request $request){
         $em2=$this->getDoctrine()->getManager("default");
@@ -92,13 +94,13 @@ class DoctoresController extends SecurityController
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
             $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
-            return $this->redirect($this->generateUrl('doctores', array('doctores'=>$doctores)));
+            return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctores)));
         }
-        return $this->render('AppBundle:Admin/Doctores:nuevo_doctor_ext.html.twig');
+        return $this->render('AppBundle:Secretaria/Doctores:nuevo_doctor_ext.html.twig');
     }
 
     /**
-     * @Route("/admin/doctor/{id}/edit", name="editar_doctor")
+     * @Route("/secretaria/doctor/{id}/edit", name="edit_doctor")
      */
     public function editarDoctorAction($id, Request $request){
         $em2=$this->getDoctrine()->getManager("default");
@@ -119,27 +121,27 @@ class DoctoresController extends SecurityController
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
             $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
-            return $this->redirect($this->generateUrl('doctores', array('doctores'=>$doctores)));
+            return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctores)));
         }
-        return $this->render('AppBundle:Admin/Doctores:editar_doctor.html.twig', array(
+        return $this->render('AppBundle:Secretaria/Doctores:editar_doctor.html.twig', array(
             'doctor' => $doc));
     }
 
     /**
-     * @Route("/admin/doctores/", name="doctores")
+     * @Route("/secretaria/doctores/", name="doctores_secre")
      */
     public function doctoresViewsAction(Request $request){
         if($this->getUser()){
             $em2=$this->getDoctrine()->getManager("default");
             $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
-            return $this->render('AppBundle:Admin/Doctores:doctores_views.html.twig', array('doctores'=>$doctores));
+            return $this->render('AppBundle:Secretaria/Doctores:doctores_views.html.twig', array('doctores'=>$doctores));
         }
         else{
             return $this->redirectToRoute('login');
         }
     }
     /**
-     * @Route("/admin/doctor/delete/{id}", name="eliminar_doctor")
+     * @Route("/secretaria/doctor/delete/{id}", name="delete_doctor")
      */
     public function deleteDoctorAction($id, Request $request)
     {
@@ -154,7 +156,7 @@ class DoctoresController extends SecurityController
 
         $em2=$this->getDoctrine()->getManager("default");
         $doctor=$em2->getRepository('AppBundle:Doctores')->findAll();
-        return $this->redirect($this->generateUrl('doctores', array('doctores'=>$doctor)));
+        return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctor)));
     }
 
 }

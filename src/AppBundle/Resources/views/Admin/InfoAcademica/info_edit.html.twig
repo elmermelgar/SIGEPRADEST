@@ -33,109 +33,88 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading">
-                    Informacion academica No . solicitud : {{ info.idSolicitud.idSolicitud }} , del usuario :
-
-                    {% for usu_entity in usu  %}
-
-                        {% for soli in sol   %}
-                            {%  if soli.idUi is empty  %}
-
-
-                            {% elseif   info.idSolicitud.idSolicitud == soli.idSolicitud %}
-                                {% if soli.idUi.idUi ==  usu_entity.idUi%}
-                                    {{ usu_entity.nombre }}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-
+                    Informacion academica No . solicitud : {{ info.idSolicitud.idSolicitud }} , del usuario : {{ info.idSolicitud.idUi.nombre }}
                 </div>
 
 
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <form role="form" action="{{ path('editInfo', {'id': info.idIfacad}) }}" method="post" >
+                            <form role="form" action="{{ path('editInfo', {'id': info.idIfacad}) }}" method="post" name="formulario2">
                                 <fieldset>
-                                <div class="col-md-6">
-                                    <div class="control-group">
-
-                                        <div class="controls">
-                                            <div class="input-prepend">
-                                                <label class="control-label" for="prependedInput">ID Solicitud</label>
-                                                <label for="soli_fk"></label><select id="soli_fk" name="soli_fk" class="form-control">
-
-                                                    {% for usu_entity in usu  %}
-
-                                                        {% for soli in sol   %}
-
-                                                            {%  if soli.idUi is empty %}
+                                    <div class="col-md-6">
+                                        <div class="control-group">
 
 
-                                                            {% elseif   usu_entity.idUi == soli.idUi.idUi %}
-
-                                                                {%  if info.idSolicitud.idSolicitud == soli.idSolicitud %}
-                                                                        <option selected value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} , {{ usu_entity.nombre }}</option>
-
-                                                                    {% else %}
-                                                                        <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} , {{ usu_entity.nombre }}</option>
-
-                                                                    {% endif %}
+                                            <div class="control-group">
+                                                <label class="control-label" for="prependedInput">Nombre de Usuario / Solicitud a editar: </label>
+                                                <div class="controls">
+                                                    <div class="input-prepend">
 
 
+                                                        <label for="info"></label><select id="select1" name="select1"  class="form-control"  >
+
+                                                            <option value="0">Seleccione un usuario </option>
+
+                                                            {% for resultado in result %}
+
+                                                            {%  if info.idSolicitud.idUi.idUi == resultado.id_ui %}
+                                                                <option selected value="{{ resultado.id_ui }}">{{ resultado.completo }} </option>
+                                                            {% else %}
+                                                                <option value="{{ resultado.id_ui }}">{{ resultado.completo }} </option>
                                                             {% endif %}
-                                                        {% endfor %}
-                                                    {% endfor %}
 
-                                                    {% for soli in sol   %}
-                                                        {%  if soli.idUi is empty %}
-                                                            <option value="{{ soli.idSolicitud }}" > {{ soli.idSolicitud }} </option>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
 
+                                                    <br>
 
+                                                    <div class="input-prepend" >
+                                                        <select id="select2" name="select2" class="form-control" onfocus="cargarSelect2( cargarTabla() )" >
+                                                            <option value="0">Solicitudes disponibles</option>
+                                                        </select>
+                                                    </div>
 
-                                                </select>
+                                                </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <br>
+
+                                        <div class="form-group">
+                                            <label>Instituto </label>
+                                            <input id="instituto_txt"  class="form-control" name="instituto_txt" value="{{ info.institucion}}"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label> Titutlo </label>
+                                            <input id="titulo_txt" class="form-control"  name="titulo_txt" value="{{ info.titulo }}"/>
+                                        </div>
+
+                                        <div>
+                                            <label class="control-label" for="prependedInput">Fecha de titulo</label>
+                                            <label for="calendario_cl"></label>
+                                            <input value="{{ info.fechaObtenido.format("Y-m-d") }}" id="calendario_cl" class="form-control" name="calendario_cl" size="16" type="date" required>
                                         </div>
 
                                     </div>
 
-
-                                    <div class="form-group">
-                                        <label>Instituto </label>
-                                        <input id="instituto_txt"  class="form-control" name="instituto_txt" value="{{ info.institucion}}"/>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-                                        <label> Titutlo </label>
-                                        <input id="titulo_txt" class="form-control"  name="titulo_txt" value="{{ info.titulo }}"/>
-                                    </div>
-
-                                    <div>
-                                        <label class="control-label" for="prependedInput">Fecha de titulo</label>
-                                        <label for="calendario_cl"></label>
-                                        <input value="{{ info.fechaObtenido.format("Y-m-d") }}" id="calendario_cl" class="form-control" name="calendario_cl" size="16" type="date" required>
-                                    </div>
-
-                                </div>
-
                                     <div class="col-md-12" style="text-align: center; margin-top: 10px">
-                                        <button onClick="validar()" type="submit" style="width: 30%;" class="btn btn-primary">
+                                        <br>
+                                        <a onClick="validar()" type="submit" style="width: 30%;" class="btn btn-primary">
                                             Actualizar Informacion
-                                        </button>
+                                        </a>
 
-                                        <a href="{{ path('verInfo') }}" onclick="cancelar()" id="cancel"  type="button" class="btn"  name="cancel"  style="width: 15%;"  >
+                                        <a  onclick="cancelar()" id="cancel"  type="button" class="btn"  name="cancel"  style="width: 15%;"  >
                                             Cancel
                                         </a>
                                     </div>
 
 
-                                    </fieldset>
+                                </fieldset>
                             </form>
                         </div>
 
@@ -160,32 +139,103 @@
 
             var titulo1 = document.getElementById('titulo_txt').value;
             var instituto1 = document.getElementById('instituto_txt').value;
+            var selection2 = document.getElementById('select2').value;
+
 
 
             var fechaObtenida1 = document.getElementById('calendario_cl').value;
             var fechaObtenida2 = moment(fechaObtenida1).format('DD/MM/YYYY');
             var fechaAhora = moment().format('DD/MM/YYYY');
 
-            console.log(fechaObtenida1 == '' );
+            var dateA = moment(fechaAhora).format('DD/MM/YYYY');
+            var dateO = moment(fechaObtenida1);
+            var dateDays = 0;
+
+            //alert(fechaObtenida2);
+            //alert(fechaAhora);
+
+            dateDays = dateO.diff(dateA, 'days');
+            //alert(dateDays);
 
 
-            if (fechaObtenida1 == '' ||titulo1.length == 0 || instituto1.length == 0) {
-                alertify.error("Complete todos los campos por favor");
+
+
+            if (selection2 = null | selection2 == 0 | fechaObtenida1 == '' | titulo1.length == 0 | instituto1.length == 0) {
+
+                    alertify.error("Complete todos los campos por favor");
             } else {
-                if (fechaObtenida2 > fechaAhora) {
-                    alertify.error("La fecha de titulo es mayor a a fecha actual");
-                } else {
-                    /*identifica el nombre del formulario*/
-                    //console.log(fechaObtenida1);
+
+                if (dateDays <= 0) {
+                    alertify.error("Procesando ... Actualizando datos");
                     document.formulario2.submit();
+                } else {
+                    alertify.error("La fecha de titulo es mayor a a fecha actual");
                 }
             }
+
+
         }
 
         /*funcion cancelar*/
         function cancelar() {
-            document.formulario2.href = " {{ path('verInfo') }}";
+            var id = $('#select1').val();
+            var id2 = {{ info.idSolicitud.idUi.idUi }};
+
+            if (id2 != '' &  id2 != null &  id2 != 0 )
+                location.href = "{{ asset('/admin/info/') }}" + id2;
+
+
         }
+
+
+
+        $(document).ready(function () {
+            $('#select1').change(function(){
+                var id = $('#select1').val();
+                $('#estados').load( cargarSelect2(id) );
+            });
+        })
+
+        function cargarSelect2(valor){
+
+            var valor1 = document.getElementById('select1').value;
+            if (valor==0){
+                document.getElementById("select2").disabled = true;
+                document.getElementById("select2").options.length =0;
+                document.getElementById("select2").options[0] =
+                        new Option("Solicitudes disponibles","0");
+
+            } else{
+                document.getElementById("select2").disabled = false;
+                document.getElementById("select2").options.length =0;
+                document.getElementById("select2").options[0] =
+                        new Option("Solicitudes disponibles","0");
+
+                {%  for solicitud in sol %}
+                var id_solicitud = {{ solicitud.idSolicitud }};
+                var id_usuario = {{ solicitud.idUi.idUi }};
+
+
+
+                if (valor == id_usuario){
+
+                    // añadimos los nuevos elementos
+                    //document.getElementById("select2").options[document.getElementById("select2").options.length]
+                    //        = new Option(id_solicitud + "," + nombre);
+                    document.getElementById("select2").options[document.getElementById("select2").options.length]
+                            = new Option(id_solicitud);
+                }
+                {% endfor %}
+                document.getElementById("select2").disable=false;
+            }
+        }
+
+        function cargarTabla(){
+            var idTbabla = $('#select1').val();
+            //alert(idTbabla);
+            return idTbabla
+        }
+
 
     </script>
 {% endblock %}

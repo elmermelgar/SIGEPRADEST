@@ -15,7 +15,10 @@ class DefaultController extends Controller
      * @Route("/", name="index")
      */
     public function indexAction(){
-        return $this->render('AppBundle:Principal:index.html.twig');
+        $em=$this->getDoctrine()->getEntityManager('default');
+        $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+        return $this->render('AppBundle:Principal:index.html.twig',array(
+            'cursos' => $cursos));
     }
 
     /**

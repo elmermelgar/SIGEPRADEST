@@ -4,12 +4,11 @@
     <div class="col-md-12">
 
     <ol class="breadcrumb">
-        <li><a href="{{ path('admin') }}">Inicio</a></li>
-        <li><a href="{{ path('doctores') }}">Doctores</a></li>
-        <li><a href="{{ path('empleados_') }}">Empleados</a></li>
-        <li class="active">Nuevo Usuario</li>
+        <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+        <li><a href="{{ path('doctores_secre') }}">Doctores</a></li>
+        <li class="active">Nuevo Doctor Externo</li>
     </ol>
-    <h2>Creando un nuevo doctor a partir de un empleado</h2>
+    <h2>Creando un nuevo doctor externo a FOUES</h2>
     </div>
 {% endblock %}
 {% block body %}
@@ -25,17 +24,15 @@
                         <div class="col-md-12">
                             <h3>Datos Complementarios</h3>
 
-                            <form role="form" action="{{ path('nuevo_doctor', {'id': 'x'}) }}" method="post" >
+                            <form role="form" action="{{ path('new_doctor_ext', {'id': 'x'}) }}" method="post" >
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nombres </label>
-                                        {% for empleado in empleado %}
-                                            <input class="form-control" name="nombre_doc" value="{{ empleado.primer_nombre }} {{ empleado.segundo_nombre }} " />
-                                        {% endfor %}
+                                            <input class="form-control" name="nombre_doc"  />
                                     </div>
                                     <div class="form-group">
                                         <label>Especialidad</label>
-                                        <input class="form-control" name="especialidad" />
+                                            <input class="form-control" name="especialidad" />
                                     </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">Turno</label>
@@ -45,15 +42,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Apellidos </label>
-                                        {% for empleado in empleado %}
-                                            <input class="form-control" name="apellido_doc" value="{{ empleado.primer_apellido }} {{ empleado.segundo_apellido }}" />
-                                        {% endfor %}
+                                            <input class="form-control" name="apellido_doc"  />
                                     </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">DUI</label>
-                                        {% for empleado in empleado %}
-                                            <input class="form-control" name="dui" type="text" value="{{ empleado.dui }}" readonly/>
-                                        {% endfor %}
+                                            <input class="form-control" name="dui" type="text"/>
                                     </div>
 
                                 </div>
