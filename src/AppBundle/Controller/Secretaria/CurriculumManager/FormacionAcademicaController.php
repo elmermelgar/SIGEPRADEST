@@ -56,7 +56,6 @@ class FormacionAcademicaController extends Controller
         $entities = $em->getRepository('AppBundle:FormacionAcademica')->findByidCurriculum($cur);
 //        $entitieCurriSeleted = $em->getRepository('AppBundle:Curriculum')->find($cur);
 
-var_dump( $_SESSION["favcolor"]    ."--".   $_SESSION["favanimal"] = "cat" );
         return array(
             'entities' => $entities,
             'curriculum'=>  $cur,
@@ -73,7 +72,6 @@ var_dump( $_SESSION["favcolor"]    ."--".   $_SESSION["favanimal"] = "cat" );
      */
     public function createAction(Request $request)
     {
-        var_dump( $_SESSION["favcolor"]    ."--".   $_SESSION["favanimal"] = "cat" );
         $entity = new FormacionAcademica();
         $cur = $request->get("curriculum");
         var_dump($cur); var_dump("-----------------");
@@ -143,9 +141,7 @@ var_dump( $_SESSION["favcolor"]    ."--".   $_SESSION["favanimal"] = "cat" );
      */
     public function newAction(Request $request)
     {
-        var_dump( $_SESSION["favcolor"]    ."--".   $_SESSION["favanimal"] = "cat" );
         $cur = $request->get("curriculum");
-        var_dump($cur);
         $entity = new FormacionAcademica();
         $form = $this->createCreateForm($entity,$cur);
 
