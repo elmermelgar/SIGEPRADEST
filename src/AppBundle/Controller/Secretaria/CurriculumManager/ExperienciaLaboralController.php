@@ -1,0 +1,252 @@
+<?php
+
+namespace AppBundle\Controller\Secretaria\CurriculumManager;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use AppBundle\Entity\ExperienciaLaboral;
+use AppBundle\Form\ExperienciaLaboralType;
+
+/**
+ * ExperienciaLaboral controller.
+ *
+ * @Route("/secretaria/experiencialaboral")
+ */
+class ExperienciaLaboralController extends Controller
+{
+
+    /**
+     * Lists all ExperienciaLaboral entities.
+     *
+     * @Route("/to/{cur}", name="secretaria_experiencialaboral")
+     * @Method("GET")
+     * @Template("@App/Curriculum/ExperienciaLaboral/index.html.twig")
+     */
+    public function indexAction($cur)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $_SESSION["Curriculum"] = $cur;
+        $entities = $em->getRepository('AppBundle:ExperienciaLaboral')->findByidCurriculum($cur);
+
+        return array(
+            'entities' => $entities,
+            'curriculum'=> $_SESSION["Curriculum"],
+        );
+    }
+    /**
+     * Creates a new ExperienciaLaboral entity.
+     *
+     * @Route("/", name="secretaria_experiencialaboral_create")
+     * @Method("POST")
+     * @Template("@App/Curriculum/ExperienciaLaboral/new.html.twig")
+     */
+    public function createAction(Request $request)
+    {
+        $entity = new ExperienciaLaboral();
+        $form = $this->createCreateForm($entity);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('secretaria_experiencialaboral_show', array('id' => $entity->getIdEl())));
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
+        );
+    }
+
+    /**
+     * Creates a form to create a ExperienciaLaboral entity.
+     *
+     * @param ExperienciaLaboral $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(ExperienciaLaboral $entity)
+    {
+        $form = $this->createForm(new ExperienciaLaboralType(), $entity, array(
+            'action' => $this->generateUrl('secretaria_experiencialaboral_create'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return $form;
+    }
+
+    /**
+     * Displays a form to create a new ExperienciaLaboral entity.
+     *
+     * @Route("/new", name="secretaria_experiencialaboral_new")
+     * @Method("GET")
+     * @Template("@App/Curriculum/ExperienciaLaboral/new.html.twig")
+     */
+    public function newAction()
+    {
+        $entity = new ExperienciaLaboral();
+        $form   = $this->createCreateForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
+        );
+    }
+
+    /**
+     * Finds and displays a ExperienciaLaboral entity.
+     *
+     * @Route("/{id}", name="secretaria_experiencialaboral_show")
+     * @Method("GET")
+     * @Template("@App/Curriculum/ExperienciaLaboral/show.html.twig")
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:ExperienciaLaboral')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find ExperienciaLaboral entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing ExperienciaLaboral entity.
+     *
+     * @Route("/{id}/edit", name="secretaria_experiencialaboral_edit")
+     * @Method("GET")
+     * @Template("@App/Curriculum/ExperienciaLaboral/edit.html.twig")
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:ExperienciaLaboral')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find ExperienciaLaboral entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
+        );
+    }
+
+    /**
+    * Creates a form to edit a ExperienciaLaboral entity.
+    *
+    * @param ExperienciaLaboral $entity The entity
+    *
+    * @return \Symfony\Component\Form\Form The form
+    */
+    private function createEditForm(ExperienciaLaboral $entity)
+    {
+        $form = $this->createForm(new ExperienciaLaboralType(), $entity, array(
+            'action' => $this->generateUrl('secretaria_experiencialaboral_update', array('id' => $entity->getIdEl())),
+            'method' => 'PUT',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Update'));
+
+        return $form;
+    }
+    /**
+     * Edits an existing ExperienciaLaboral entity.
+     *
+     * @Route("/{id}", name="secretaria_experiencialaboral_update")
+     * @Method("PUT")
+     * @Template("@App/Curriculum/ExperienciaLaboral/edit.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:ExperienciaLaboral')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find ExperienciaLaboral entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('secretaria_experiencialaboral_edit', array('id' => $id)));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
+        );
+    }
+    /**
+     * Deletes a ExperienciaLaboral entity.
+     *
+     * @Route("/{id}", name="secretaria_experiencialaboral_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('AppBundle:ExperienciaLaboral')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find ExperienciaLaboral entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('secretaria_experiencialaboral',array('cur' => $_SESSION["Curriculum"])));
+    }
+
+    /**
+     * Creates a form to delete a ExperienciaLaboral entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('secretaria_experiencialaboral_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->getForm()
+        ;
+    }
+}

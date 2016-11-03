@@ -1,0 +1,57 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+    <h1>FormacionAcademica list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idfa</th>
+                <th>Tipofa</th>
+                <th>Institucionfa</th>
+                <th>Fechainiciofa</th>
+                <th>Fechafinfa</th>
+                <th>Formal</th>
+                <th>Imgtitulso</th>
+                <th>Imgtitulo2</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!--recorro la llave y la entidad del arreglo de entidades  -->
+        {% for  entity in entities %}
+            <tr>
+                <td><a href="{{ path('formacionacademica_show', { 'id': entity.idFa }) }}">{{ entity.idFa }}</a></td>
+                <td>{{ entity.tipoFa }}</td>
+                <td>{{ entity.institucionFa }}</td>
+                <td>{% if entity.fechaInicioFa %}{{ entity.fechaInicioFa|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fechaFinFa %}{{ entity.fechaFinFa|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.formal %}{{ "Si" }}{% else%}{{ "No" }}{% endif %}</td>
+                <td><img alt="EmbeddedImage" src="{{ entity.imgTitulo }}" style="width: 100%;" /></td>
+                {#<td><img alt="Embedded Image" src="data:image/png;base64,{{ images[key] }}" /></td>#}
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('formacionacademica_show', { 'id': entity.idFa ,'curriculum': curriculum  }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('formacionacademica_edit', { 'id': entity.idFa,'curriculum': curriculum  }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('formacionacademica_new', { 'curriculum': curriculum }) }}">
+               Agregar nueva formacion academica
+            </a>
+            <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
+                Regresar a Curriculum
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

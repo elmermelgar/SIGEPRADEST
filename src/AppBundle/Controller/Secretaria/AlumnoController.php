@@ -39,6 +39,33 @@ class AlumnoController extends Controller
             'entities' => $entities,
         );
     }
+
+    /**
+     * Lists all Alumno entities.
+     *
+     * @Route("/all", name="alumnosall")
+     * @Method("GET")
+     * @Template("@App/Secretaria/Alumno/index.html.twig")
+     */
+    public function indexallAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        //usamos esta consulta para ver las solicitudes que no contienen usuarios. por lo que mostraremos solo solicitudes que tengan aspirantes
+        $entities = $em->getRepository('AppBundle:Curriculum')->findAll();
+//        $entities = $em->createQuery('Select soli,use from AppBundle:Solicitud soli JOIN soli.idUi use WHERE use.idRol = 4  ')->getResult();
+//var_dump($entities[0]->getIdAlumno()->getIdUi());
+//        $entities = $em->getRepository('AppBundle:Solicitud')->findBy( array('name' => 'someValue'));
+//  var_dump($entities[0]->getIdAlumno());
+//      echo $entities[0];
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+
+
+
+
     /**
      * Creates a new Alumno entity.
      *
@@ -141,7 +168,7 @@ class AlumnoController extends Controller
             $em->flush();
 
 
-            var_dump($entityAlumno->getIdDp());
+//            var_dump($entityAlumno->getIdDp());
         }
 
 
@@ -152,7 +179,7 @@ class AlumnoController extends Controller
             'general'   => "Saludos",
             'idDatosPerson'   => $entityAlumno->getIdDp()->getIdDp(),
             'idAlum'   => $entityAlumno->getIdAlumno(),
-//            'id'   => 1,
+            'curriculum'   => $entityCurruculum->getIdCurriculum(),
         );
     }
 

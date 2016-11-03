@@ -14,6 +14,7 @@
     </div>
 {% endblock %}
 {% block body -%}
+
 <div class="row">
     <div class="col-md-12">
         <!-- Advanced Tables -->
@@ -42,51 +43,49 @@
                 {% endfor %}
             {% endblock %}
             <div class="col-md-12" style=" margin-top:3%; margin-left: 7%">
-                <div class="col-md-5" style="margin-top: auto;">
+                <div class="col-md-3" style="margin-top: auto;">
                     <div class="panel panel-primary">
                         <div class="cabecera">
 
                         </div>
 
-                        <div class="panel-body">
+                        <div class="panel-body" style="text-align: center;"  >
                             <div class="titulo"><b>FORMACIÒN ACADEMICA</b></div>
-                            <div class="col-md-4" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-graduation-cap"></i></div>
-                            <div class="col-md-8" style="padding: 0%">
-                                <row>
-                                    Formaciòn Academica
-                                    <i style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></i>                        </row><br>
-                                <row>
-                                    Habilidad Informatica
-                                    <span style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></span>                        </row><br>
-                                <row>
-                                    Idioma
-                                    <span style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></span>                        </row>
-                            </div>
+                            <br/>    <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-graduation-cap"></i></div>
+
                             <div style="text-align: center;" class="col-md-12">
-                                <a href="http://localhost:8000/FormacionAcademica" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Formaciòn Academica">ADMINISTRAR</a>
+                                <br/>     <a href="{{ path('formacionacademicaCurriculum',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Formaciòn Academica">ADMINISTRAR</a>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div class="col-md-5" style="margin-top: auto;">
+                <div class="col-md-3" style="margin-top: auto;">
                     <div class="panel panel-primary">
                         <div class="cabecera">
 
                         </div>
-                        <div class="panel-body">
-                            <div class="titulo"><b>EXPERIENCIA CIENTÍFICA</b></div>
-                            <div class="col-md-4" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-flask"></i></div>
-                            <div class="col-md-8" style="padding: 0%">
-                                <row>
-                                    Experiencia Cientìfica
-                                    <span style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></span>                        </row><br>
-                                <row>
-                                    Referencia Cientìfica
-                                    <span style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></span>                        </row>
-                            </div>
+                        <div class="panel-body" style="text-align: center;" >
+                            <div class="titulo"><b>EXPERIENCIA LABORAL</b></div>
+                            <br/>   <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-user"></i></div>
+
                             <div style="text-align: center;" class="col-md-12">
-                                <a href="http://localhost:8000/ExperienciaLaboral" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Experiencia">ADMINISTRAR</a>
+                                <br/>   <a href="{{ path('secretaria_experiencialaboral',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Experiencia">ADMINISTRAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-top: auto;">
+                    <div class="panel panel-primary">
+                        <div class="cabecera">
+
+                        </div>
+                        <div class="panel-body" style="text-align: center;" >
+                            <div class="titulo"><b>REFERENCIA LABORAL</b></div>
+                            <br/>  <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-user"></i></div>
+
+                            <div style="text-align: center;" class="col-md-12">
+                                <br/>   <a href="{{ path('secretaria_referencialaboral',{cur: curriculum}) }}" style="height: auto; background: #bfacca;" class="btn btn-primary btn-xs" title="Editar Experiencia">ADMINISTRAR</a>
                             </div>
                         </div>
                     </div>
@@ -95,99 +94,42 @@
  {#fin del recuadro #}
 
             <div class="col-md-12" style="margin-left: 7%">
-                <div class="col-md-5" style="margin-top: auto;">
+
+
+                <div class="col-md-3" style="margin-top: auto;">
                     <div class="panel panel-primary">
                         <div class="cabecera">
-
                         </div>
-                        <div class="panel-body">
-                            <div class="titulo"><b>EXPERIENCIA LABORAL</b></div>
-                            <div class="col-md-4" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-user"></i></div>
-                            <div class="col-md-8" style="padding: 0%">
-                                <row>
-                                    Experiencia Laboral
-                                    <i style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></i>                        </row><br>
-                                <row>
-                                    Referencia laboral
-                                    <span style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></span>                        </row>
-                            </div>
+                        <div class="panel-body" style="text-align: center;" >
+                             <div class="titulo"><b>REFERENCIA LABORAL</b></div>
+                            <br/><div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="glyphicon glyphicon-list-alt glyphicon-4x"></i></div>
+
                             <div style="text-align: center;" class="col-md-12">
-                                <a href="http://localhost:8000/ExperienciaLaboral" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Experiencia">ADMINISTRAR</a>
+                                <br/>       <a href="http://localhost:8000/proyectospublicaciones" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Publicaciòn">ADMINISTRAR</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-5" style="margin-top: auto;">
+                 <div class="col-md-3" style="margin-top: auto;">
                     <div class="panel panel-primary">
                         <div class="cabecera">
                         </div>
-                        <div class="panel-body">
-                            <div class="titulo"><b>PUBLICACIONES</b></div>
-                            <div class="col-md-5" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="glyphicon glyphicon-list-alt glyphicon-4x"></i></div>
-                            <div class="col-md-7" style="padding: 0%">
-                                <row>
-                                    Publicaciones
-                                    <i style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></i>                        </row>
-                            </div>
-                            <div style="text-align: center;" class="col-md-12">
-                                <a href="http://localhost:8000/proyectospublicaciones" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Publicaciòn">ADMINISTRAR</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
- {#fin del recuadro #}
-            <div class="col-md-12" style=" margin-left: 7%">
-                <div class="col-md-5" style="margin-top: auto;">
-                    <div class="panel panel-primary">
-                        <div class="cabecera">
-                        </div>
-                        <div class="panel-body">
+                        <div class="panel-body" style="text-align: center;" >
                             <div class="titulo"><b>ASOCIACIONES</b></div>
-                            <div class="col-md-5" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-group"></i></div>
-                            <div class="col-md-7" style="padding: 0%">
-                                <row>
-                                    Asociaciòn
-                                    <i style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></i>                        </row>
-                            </div>
+                            <br/>  <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-group"></i></div>
+
                             <div style="text-align: center;" class="col-md-12">
-                                <a href="http://localhost:8000/OtraInfCurriculum" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Asociaciòn">ADMINISTRAR</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5" style="margin-top: auto;">
-                    <div class="panel panel-primary">
-                        <div class="cabecera">
-                        </div>
-                        <div class="panel-body">
-                            <div class="titulo"><b>PREMIOS Y DISTINCIONES</b></div>
-                            <div class="col-md-4" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="glyphicon glyphicon-star glyphicon-4x"></i></div>
-                            <div class="col-md-8" style="margin-left: 0%; padding: 0%">
-                                <div class="col-md-6" style="padding: 0%">
-                                    Ponencia
-                                    <i style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></i>                        </div>
-                                <div class="col-md-6" style="padding: 0%">
-                                    Conferencia
-                                    <span style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></span>                        </div>
-                                <div class="col-md-6" style="padding: 0%;">
-                                    Seminario
-                                    <span style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></span>                        </div>
-                                <div class="col-md-6" style="padding: 0%">
-                                    Premio
-                                    <span style="color:rgb(13,224,13);" class="glyphicon glyphicon-ok"></span>                        </div>
-                            </div>
-                            <div style="text-align: center;" class="col-md-12">
-                                <a href="http://localhost:8000/Presentacion" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Premios y distinciones">ADMINISTRAR</a>
+                                <br/>     <a href="http://localhost:8000/OtraInfCurriculum" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Asociaciòn">ADMINISTRAR</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                </div>
+
+
             </div>
-{#fin del recuadro #}
+
 
 
        </div> </div> </div>

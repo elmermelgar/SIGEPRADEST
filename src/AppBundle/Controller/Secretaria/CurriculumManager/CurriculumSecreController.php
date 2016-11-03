@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Secretaria;
+namespace AppBundle\Controller\Secretaria\CurriculumManager;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,11 +19,32 @@ class CurriculumSecreController extends Controller
 {
 
     /**
+ * Lists all Curriculum entities.
+ *
+ * @Route("/to/{id}", name="curriculumTo")
+ * @Method("GET")
+ * @Template("@App/Curriculum/indexPersonal.html.twig")
+ */
+    public function indexToAction(Request $request)
+    {
+         $id=$request->get("id");
+        echo $id;
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('AppBundle:Curriculum')->findAll();
+
+        return array(
+            'entities' => $entities,
+            'curriculum' => $id,
+        );
+    }
+
+    /**
      * Lists all Curriculum entities.
      *
      * @Route("/", name="curriculum")
      * @Method("GET")
-     * @Template("@App/Curriculum/indexPersonal.html.twig")
+     * @Template("@App/Curriculum/index.html.twig")
      */
     public function indexAction()
     {
@@ -35,6 +56,10 @@ class CurriculumSecreController extends Controller
             'entities' => $entities,
         );
     }
+
+
+
+
     /**
      * Creates a new Curriculum entity.
      *
@@ -53,7 +78,7 @@ class CurriculumSecreController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('curriculum_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('curriculum_show', array('id' => $entity->getIdCurriculum())));
         }
 
         return array(
@@ -86,7 +111,7 @@ class CurriculumSecreController extends Controller
      *
      * @Route("/new", name="curriculum_new")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/show.html.twig")
      */
     public function newAction()
     {
@@ -104,7 +129,7 @@ class CurriculumSecreController extends Controller
      *
      * @Route("/{id}", name="curriculum_show")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/show.html.twig")
      */
     public function showAction($id)
     {
@@ -129,7 +154,7 @@ class CurriculumSecreController extends Controller
      *
      * @Route("/{id}/edit", name="curriculum_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/edit.html.twig")
      */
     public function editAction($id)
     {
@@ -161,7 +186,7 @@ class CurriculumSecreController extends Controller
     private function createEditForm(Curriculum $entity)
     {
         $form = $this->createForm(new CurriculumType(), $entity, array(
-            'action' => $this->generateUrl('curriculum_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('curriculum_update', array('id' => $entity->getIdCurriculum())),
             'method' => 'PUT',
         ));
 
