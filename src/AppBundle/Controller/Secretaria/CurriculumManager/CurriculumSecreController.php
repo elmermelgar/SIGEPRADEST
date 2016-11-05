@@ -1,50 +1,75 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Secretaria\CurriculumManager;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Solicitud;
-use AppBundle\Form\SolicitudType;
+use AppBundle\Entity\Curriculum;
+use AppBundle\Form\CurriculumType;
 
 /**
- * Solicitud controller.
+ * Curriculum controller.
  *
- * @Route("/solicitud")
+ * @Route("/secretaria/curriculum")
  */
-class SolicitudController extends Controller
+class CurriculumSecreController extends Controller
 {
 
     /**
-     * Lists all Solicitud entities.
+ * Lists all Curriculum entities.
+ *
+ * @Route("/to/{id}", name="curriculumTo")
+ * @Method("GET")
+ * @Template("@App/Curriculum/indexPersonal.html.twig")
+ */
+    public function indexToAction(Request $request)
+    {
+         $id=$request->get("id");
+        echo $id;
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('AppBundle:Curriculum')->findAll();
+
+        return array(
+            'entities' => $entities,
+            'curriculum' => $id,
+        );
+    }
+
+    /**
+     * Lists all Curriculum entities.
      *
-     * @Route("/", name="solicitud")
+     * @Route("/", name="curriculum")
      * @Method("GET")
-     * @Template("@App/Solicitud/edit.html.twig")
+     * @Template("@App/Curriculum/index.html.twig")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Solicitud')->findAll();
+        $entities = $em->getRepository('AppBundle:Curriculum')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
+
+
+
+
     /**
-     * Creates a new Solicitud entity.
+     * Creates a new Curriculum entity.
      *
-     * @Route("/", name="solicitud_create")
+     * @Route("/", name="curriculum_create")
      * @Method("POST")
-     * @Template("AppBundle:Solicitud:new.html.twig")
+     * @Template("")
      */
     public function createAction(Request $request)
     {
-        $entity = new Solicitud();
+        $entity = new Curriculum();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +78,7 @@ class SolicitudController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('curriculum_show', array('id' => $entity->getIdCurriculum())));
         }
 
         return array(
@@ -63,16 +88,16 @@ class SolicitudController extends Controller
     }
 
     /**
-     * Creates a form to create a Solicitud entity.
+     * Creates a form to create a Curriculum entity.
      *
-     * @param Solicitud $entity The entity
+     * @param Curriculum $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Solicitud $entity)
+    private function createCreateForm(Curriculum $entity)
     {
-        $form = $this->createForm(new SolicitudType(), $entity, array(
-            'action' => $this->generateUrl('solicitud_create'),
+        $form = $this->createForm(new CurriculumType(), $entity, array(
+            'action' => $this->generateUrl('curriculum_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +107,15 @@ class SolicitudController extends Controller
     }
 
     /**
-     * Displays a form to create a new Solicitud entity.
+     * Displays a form to create a new Curriculum entity.
      *
-     * @Route("/new", name="solicitud_new")
+     * @Route("/new", name="curriculum_new")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/show.html.twig")
      */
     public function newAction()
     {
-        $entity = new Solicitud();
+        $entity = new Curriculum();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,20 +125,20 @@ class SolicitudController extends Controller
     }
 
     /**
-     * Finds and displays a Solicitud entity.
+     * Finds and displays a Curriculum entity.
      *
-     * @Route("/{id}", name="solicitud_show")
+     * @Route("/{id}", name="curriculum_show")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/show.html.twig")
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Solicitud')->find($id);
+        $entity = $em->getRepository('AppBundle:Curriculum')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Solicitud entity.');
+            throw $this->createNotFoundException('Unable to find Curriculum entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,20 +150,20 @@ class SolicitudController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Solicitud entity.
+     * Displays a form to edit an existing Curriculum entity.
      *
-     * @Route("/{id}/edit", name="solicitud_edit")
+     * @Route("/{id}/edit", name="curriculum_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/edit.html.twig")
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Solicitud')->find($id);
+        $entity = $em->getRepository('AppBundle:Curriculum')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Solicitud entity.');
+            throw $this->createNotFoundException('Unable to find Curriculum entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +177,16 @@ class SolicitudController extends Controller
     }
 
     /**
-    * Creates a form to edit a Solicitud entity.
+    * Creates a form to edit a Curriculum entity.
     *
-    * @param Solicitud $entity The entity
+    * @param Curriculum $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Solicitud $entity)
+    private function createEditForm(Curriculum $entity)
     {
-        $form = $this->createForm(new SolicitudType(), $entity, array(
-            'action' => $this->generateUrl('solicitud_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new CurriculumType(), $entity, array(
+            'action' => $this->generateUrl('curriculum_update', array('id' => $entity->getIdCurriculum())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +195,20 @@ class SolicitudController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Solicitud entity.
+     * Edits an existing Curriculum entity.
      *
-     * @Route("/{id}", name="solicitud_update")
+     * @Route("/{id}", name="curriculum_update")
      * @Method("PUT")
-     * @Template("AppBundle:Solicitud:edit.html.twig")
+     * @Template("AppBundle:Curriculum:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Solicitud')->find($id);
+        $entity = $em->getRepository('AppBundle:Curriculum')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Solicitud entity.');
+            throw $this->createNotFoundException('Unable to find Curriculum entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +218,7 @@ class SolicitudController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +228,9 @@ class SolicitudController extends Controller
         );
     }
     /**
-     * Deletes a Solicitud entity.
+     * Deletes a Curriculum entity.
      *
-     * @Route("/{id}", name="solicitud_delete")
+     * @Route("/{id}", name="curriculum_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +240,21 @@ class SolicitudController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Solicitud')->find($id);
+            $entity = $em->getRepository('AppBundle:Curriculum')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Solicitud entity.');
+                throw $this->createNotFoundException('Unable to find Curriculum entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('solicitud'));
+        return $this->redirect($this->generateUrl('curriculum'));
     }
 
     /**
-     * Creates a form to delete a Solicitud entity by id.
+     * Creates a form to delete a Curriculum entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +263,7 @@ class SolicitudController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('solicitud_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('curriculum_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

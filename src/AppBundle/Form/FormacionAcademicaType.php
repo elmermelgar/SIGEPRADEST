@@ -6,21 +6,27 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SolicitudType extends AbstractType
+class FormacionAcademicaType extends AbstractType
 {
+
+
+
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
-            ->add('estado')
-            ->add('fechaRegistro')
-            ->add('rangoDisponibilidad')
-            ->add('idUi')
-            ->add('idDp')
-            ->add('idCurso')
+            ->add('tipoFa')
+            ->add('institucionFa')
+            ->add('fechaInicioFa')
+            ->add('fechaFinFa')
+            ->add('formal')
+            ->add('imgTitulo','file')
+            ->add('idCurriculum','entity',array('class'=>'AppBundle\Entity\Curriculum','property' =>'idCurriculum'))
         ;
     }
     
@@ -30,7 +36,7 @@ class SolicitudType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Solicitud'
+            'data_class' => 'AppBundle\Entity\FormacionAcademica'
         ));
     }
 
@@ -39,6 +45,6 @@ class SolicitudType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_solicitud';
+        return 'appbundle_formacionacademica';
     }
 }

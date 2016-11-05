@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>ReferenciaLaboral</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idrf</th>
+                <td>{{ entity.idRf }}</td>
+            </tr>
+            <tr>
+                <th>Descripcionrf</th>
+                <td>{{ entity.descripcionRf }}</td>
+            </tr>
+            <tr>
+                <th>Personarf</th>
+                <td>{{ entity.personaRf }}</td>
+            </tr>
+            <tr>
+                <th>Telefonorf</th>
+                <td>{{ entity.telefonoRf }}</td>
+            </tr>
+            <tr>
+                <th>Puestorf</th>
+                <td>{{ entity.puestoRf }}</td>
+            </tr>
+            <tr>
+                <th>Empresaorigenrf</th>
+                <td>{{ entity.empresaOrigenRf }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('secretaria_referencialaboral',{ 'cur': curriculum }) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('secretaria_referencialaboral_edit', { 'id': entity.idRf }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

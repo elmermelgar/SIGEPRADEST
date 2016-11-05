@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>ExperienciaLaboral</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idel</th>
+                <td>{{ entity.idEl }}</td>
+            </tr>
+            <tr>
+                <th>Institucionel</th>
+                <td>{{ entity.institucionEl }}</td>
+            </tr>
+            <tr>
+                <th>Cargoel</th>
+                <td>{{ entity.cargoEl }}</td>
+            </tr>
+            <tr>
+                <th>Paisel</th>
+                <td>{{ entity.paisEl }}</td>
+            </tr>
+            <tr>
+                <th>Fechainicioel</th>
+                <td>{{ entity.fechaInicioEl|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechafinel</th>
+                <td>{{ entity.fechaFinEl|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Infoadicionalel</th>
+                <td>{{ entity.infoAdicionalEl }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('secretaria_experiencialaboral',{ 'cur': curriculum }) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('secretaria_experiencialaboral_edit', { 'id': entity.idEl }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

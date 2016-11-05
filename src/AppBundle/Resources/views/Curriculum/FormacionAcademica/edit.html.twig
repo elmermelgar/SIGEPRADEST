@@ -1,0 +1,22 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+    <h1>FormacionAcademica edit</h1>
+
+
+    {{ form_start(edit_form, { attr: {novalidate: 'novalidate'} }) }}
+    {#{{ form_widget(edit_form, { attr: {novalidate: 'novalidate'} }) }}#}
+
+    {{form_widget(edit_form.idCurriculum, {attr :{"style":"display:none;"}}) }}
+
+
+    {{ form_end(edit_form) }}
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('formacionacademicaCurriculum' ,{ 'cur': curriculum }) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
