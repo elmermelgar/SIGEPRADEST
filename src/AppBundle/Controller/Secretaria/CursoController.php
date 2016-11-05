@@ -154,6 +154,9 @@ class CursoController extends DSIController
         $datos=$em->getRepository('AppBundle:Curso')->find($id);
         $id_hc=$this->IdHCcurso($id){"id_hc"};
         $hc=$em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
+        $d1=$this->mostrarD1s($id);
+        /*var_dump($d1);
+        die();*/
 
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {
@@ -223,7 +226,7 @@ class CursoController extends DSIController
                 }
             }
         }
-        return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc));
+        return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1));
     }
 
 

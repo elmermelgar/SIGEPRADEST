@@ -2,8 +2,7 @@
 {% block active2 %}active-menu{% endblock %}
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
-    <script src="{{ asset('public/js/moment.js') }}"></script>
+    <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block Header %}
     <div class="col-md-12">
@@ -37,14 +36,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Fecha de Entrevista</label>
-                                        <input class="form-control" id="fecha" name="fecha" type="date" required/>
+                                        <div class='input-group date' >
+                                            <input id="fecha" class="form-control" name="fecha" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="disabledSelect">Hora de Entrevista</label>
-                                            <input class="form-control" id="hora" name="hora" type="time" required/>
+                                        <div class='input-group date' >
+                                            <input id="hora" class="form-control" name="hora" size="16" type="text" placeholder="HH:mm">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -79,14 +84,21 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('public/js/moment.js') }} "></script>
+    <script src="{{ asset('public/js/bootstrap-datetimepicker.min.js') }} "></script>
+
 <script type="text/javascript">
+
+    $(function () {
+        $("#fecha").datetimepicker({format: 'DD-MM-YYYY'});
+        $("#hora").datetimepicker({format: 'HH:mm'});
+    });
 
     function validar() {
         var fecha = document.getElementById('fecha').value;
         var hora = document.getElementById('hora').value;
 
-        var fechaAhora = moment().format('YYYY-MM-DD');
-        var fechaAhoraInv = moment().format('DD/MM/YYYY');
+        var fechaAhora = moment().format('DD-MM-YYYY');
 
         if(fecha=='' && hora==''){
             alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
@@ -95,13 +107,13 @@
                 alertify.error("Es Obligatorio Llenar La Fecha de la Entrevista");
             }else{
                 if(fecha<fechaAhora){
-                    alertify.error("La Fecha de la Entrevista no puede ser menor de "+fechaAhoraInv);
+                    alertify.error("La Fecha de la Entrevista no puede ser menor de "+fechaAhora);
                 }else{
                     if(hora==''){
                         alertify.error("Es Obligatorio Llenar La Hora de la Entrevista");
                     }else{
                         if(hora<"08:00"||hora>"16:00" ){
-                            alertify.error("La Hora de la Entrevista de Programarce en horas Laborales (8 am - 4 pm)");
+                            alertify.error("La Hora de la Entrevista de Programarce en horas Laborales (8:00 - 16:00");
                         }else{
                             document.formulario.submit()
                         }
