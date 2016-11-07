@@ -4,7 +4,6 @@
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
     <script src={{ asset('public/js/moment.js') }}></script>
 {% endblock %}
 
@@ -25,21 +24,21 @@
               name="formulario2">
             <div class="box span12">
                 <div class="box-content">
-                        <fieldset>
+                    <fieldset>
                         <br><br>
                         <div class="col-md-6">
                             <div class="control-group">
-                                <label class="control-label" for="prependedInput">Buscar Nombre de Usuario / Solicitud </label>
+                                <label class="control-label" for="prependedInput">Buscar: Esscriba el Usuario / Enter </label>
+                                <input id="InputSelect1_txt" name= "InputSelect1_txt"  list="lista1_list" placeholder="Escriba el nombre de usuario / enter" class="form-control">
+
                                 <div class="controls">
+
                                     <div class="input-prepend">
-                                        <label for="info"><br></label><select id="select1" name="select1"  class="form-control" >
-
-                                            <option value="0">Seleccione un usuario </option>
+                                        <datalist id="lista1_list" name="lista1_list" >
                                             {% for resultado in result %}
-                                                <option value="{{ resultado.id_ui }}">{{ resultado.completo }} </option>
-
+                                                <option data-value="{{ resultado.id_ui }}">{{resultado.completo}} </option>
                                             {% endfor %}
-                                        </select>
+                                        </datalist>
                                     </div>
 
                                     <br>
@@ -52,11 +51,8 @@
 
                                 </div>
                             </div>
-
-
                             <br>
                         </div>
-
 
                         <div class="col-md-6">
                             <br>
@@ -86,8 +82,6 @@
 
                             </div>
                         </div>
-
-
 
                         <div class="col-md-12" style="text-align: center; margin-top: 10px">
                             <br>
@@ -138,12 +132,12 @@
                 alertify.error("Complete todos los campos por favor");
             } else {
 
-                      if (dateDays <= 0) {
-                            alertify.error("Procesando ... guardado");
-                            document.formulario2.submit();
-                      } else {
-                            alertify.error("La fecha de titulo es mayor a a fecha actual");
-                      }
+                if (dateDays <= 0) {
+                    alertify.error("Procesando ... guardado");
+                    document.formulario2.submit();
+                } else {
+                    alertify.error("La fecha de titulo es mayor a a fecha actual");
+                }
             }
         }
         /*funcion cancelar*/
@@ -152,36 +146,52 @@
             document.formulario2.href = " {{ path('verInfo') }}";
         }
 
-
-
-
         $(document).ready(function () {
-            $('#select1').change(function(){
-                var id = $('#select1').val();
-                $('#estados').load( cargarSelect2(id) );
+
+            $('#InputSelect1_txt').change(function(){
+
+                var dato = $("input[name=InputSelect1_txt]").val();
+                options = document.querySelectorAll('#lista1_list option');
+                var encontrado = 0;
+
+                for(var i = 0; i < options.length; i++) {
+                    var option = options[i];
+                    //var nombreCompletoList = option.innerText;
+                    //alert( dato.localeCompare(nombreCompletoList) );
+
+                    if( option.innerText.trim().valueOf() == dato.trim().valueOf() ){
+                        encontrado = option.getAttribute('data-value');
+                    }
+                }
+
+                if (encontrado != 0){
+                    cargarSelect2(encontrado);
+                }else {
+                    document.getElementById("InputSelect1_txt").value = "";
+                    cargarSelect2(encontrado);
+                }
+
             });
+
         })
 
         function cargarSelect2(valor){
 
-            var valor1 = document.getElementById('select1').value;
             if (valor==0){
                 document.getElementById("select2").disabled = true;
                 document.getElementById("select2").options.length =0;
                 document.getElementById("select2").options[0] =
-                        new Option("Solicitudes disponibles","0");
+                        new Option("No existen solicitudes disponibles","0");
 
             } else{
                 document.getElementById("select2").disabled = false;
                 document.getElementById("select2").options.length =0;
                 document.getElementById("select2").options[0] =
-                        new Option("Solicitudes disponibles","0");
+                        new Option("Existen Solicitudes disponibles","0");
 
                 {%  for solicitud in sol %}
                 var id_solicitud = {{ solicitud.idSolicitud }};
                 var id_usuario = {{ solicitud.idUi.idUi }};
-
-
 
                 if (valor == id_usuario){
 
@@ -195,13 +205,5 @@
                 document.getElementById("select2").disable=false;
             }
         }
-
-        function cargarTabla(){
-            var idTbabla = $('#select1').val();
-            //alert(idTbabla);
-            return idTbabla
-        }
-
-
     </script>
 {% endblock %}
