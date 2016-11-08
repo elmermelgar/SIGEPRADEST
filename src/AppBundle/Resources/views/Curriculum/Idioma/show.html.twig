@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Idioma</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Ididioma</th>
+                <td>{{ entity.idIdioma }}</td>
+            </tr>
+            <tr>
+                <th>Idioma</th>
+                <td>{{ entity.idioma }}</td>
+            </tr>
+            <tr>
+                <th>Comprensionauditiva</th>
+                <td>{{ entity.comprensionAuditiva }}</td>
+            </tr>
+            <tr>
+                <th>Expresionoral</th>
+                <td>{{ entity.expresionOral }}</td>
+            </tr>
+            <tr>
+                <th>Expresionescrita</th>
+                <td>{{ entity.expresionEscrita }}</td>
+            </tr>
+            <tr>
+                <th>Leguamaterna</th>
+                <td>{{ entity.leguaMaterna }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('idioma',{ 'cur': curriculum }) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('idioma_edit', { 'id': entity.idIdioma }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

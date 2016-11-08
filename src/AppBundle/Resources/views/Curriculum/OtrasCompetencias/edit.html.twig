@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>ReferenciaLaboral edit</h1>
+    <h1>OtrasCompetencias edit</h1>
 
     {#{{ form(edit_form) }}#}
 
@@ -10,10 +10,9 @@
     {{form_widget(edit_form.idCurriculum, {attr :{"style":"display:none;"}}) }}
     {{ form_end(edit_form) }}
 
-
-    <ul class="record_actions">
+        <ul class="record_actions">
     <li>
-        <a href="{{ path('secretaria_referencialaboral',{ 'cur': curriculum }) }}">
+        <a href="{{ path('secretaria_otrascompetencias',{ 'cur': curriculum }) }}">
             Back to the list
         </a>
     </li>

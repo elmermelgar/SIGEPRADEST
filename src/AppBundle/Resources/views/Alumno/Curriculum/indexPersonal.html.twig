@@ -6,7 +6,7 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('alumno') }}">Inicio</a></li>
             {#<li><a href="{{ path('alumnos') }}">Nuevo alumno</a></li>#}
             <li class="active">Curriculum</li>
         </ol>
@@ -54,7 +54,7 @@
                             <br/>    <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-graduation-cap"></i></div>
 
                             <div style="text-align: center;" class="col-md-12">
-                                <br/>     <a href="{{ path('formacionacademicaCurriculum',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Formaciòn Academica">ADMINISTRAR</a>
+                                <br/>     <a href="{{ path('alumnoformacionacademicaCurriculum',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Formaciòn Academica">ADMINISTRAR</a>
                             </div>
                         </div>
 
@@ -70,7 +70,7 @@
                             <br/>   <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-user"></i></div>
 
                             <div style="text-align: center;" class="col-md-12">
-                                <br/>   <a href="{{ path('secretaria_experiencialaboral',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Experiencia">ADMINISTRAR</a>
+                                <br/>   <a href="{{ path('alumno_experiencialaboral',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Experiencia">ADMINISTRAR</a>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                             <br/>  <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-group"></i></div>
 
                             <div style="text-align: center;" class="col-md-12">
-                                <br/>     <a href="{{ path('idioma',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Asociaciòn">ADMINISTRAR</a>
+                                <br/>     <a href="{{ path('alumnoidioma',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Asociaciòn">ADMINISTRAR</a>
                             </div>
                         </div>
                     </div>

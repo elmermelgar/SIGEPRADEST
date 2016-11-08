@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Idioma list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Ididioma</th>
+                <th>Idioma</th>
+                <th>Comprensionauditiva</th>
+                <th>Expresionoral</th>
+                <th>Expresionescrita</th>
+                <th>Leguamaterna</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('idioma_show', { 'id': entity.idIdioma }) }}">{{ entity.idIdioma }}</a></td>
+                <td>{{ entity.idioma }}</td>
+                <td>{{ entity.comprensionAuditiva }}</td>
+                <td>{{ entity.expresionOral }}</td>
+                <td>{{ entity.expresionEscrita }}</td>
+                <td>{{ entity.leguaMaterna }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('idioma_show', { 'id': entity.idIdioma }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('idioma_edit', { 'id': entity.idIdioma }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('idioma_new') }}">
+                Create a new entry
+            </a><br/>
+            <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
+                Regresar a Curriculum
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

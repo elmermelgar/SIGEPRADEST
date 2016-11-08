@@ -7,69 +7,45 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Curriculum;
-use AppBundle\Form\CurriculumType;
+use AppBundle\Entity\Idioma;
+use AppBundle\Form\IdiomaType;
 
 /**
- * Curriculum controller.
+ * Idioma controller.
  *
- * @Route("/secretaria/curriculum")
+ * @Route("/secretaria/idiomafromcur")
  */
-class CurriculumSecreController extends Controller
+class IdiomaController extends Controller
 {
 
     /**
- * Lists all Curriculum entities.
- *
- * @Route("/to/{id}", name="curriculumTo")
- * @Method("GET")
- * @Template("@App/Curriculum/indexPersonal.html.twig")
- */
-    public function indexToAction(Request $request)
-    {
-         $id=$request->get("id");
-        //echo $id;
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AppBundle:Curriculum')->findAll();
-
-        return array(
-            'entities' => $entities,
-            'curriculum' => $id,
-        );
-    }
-
-    /**
-     * Lists all Curriculum entities.
+     * Lists all Idioma entities.
      *
-     * @Route("/", name="curriculum")
+     * @Route("/to/{cur}", name="idioma")
      * @Method("GET")
-     * @Template("@App/Curriculum/index.html.twig")
+     * @Template("@App/Curriculum/Idioma/index.html.twig")
      */
-    public function indexAction()
+    public function indexAction($cur)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AppBundle:Curriculum')->findAll();
+        $_SESSION["Curriculum"] = $cur;
+        $entities = $em->getRepository('AppBundle:Idioma')->findByidCurriculum($cur);
 
         return array(
             'entities' => $entities,
+            'curriculum'=> $_SESSION["Curriculum"],
         );
     }
-
-
-
-
     /**
-     * Creates a new Curriculum entity.
+     * Creates a new Idioma entity.
      *
-     * @Route("/", name="curriculum_create")
+     * @Route("/", name="idioma_create")
      * @Method("POST")
-     * @Template("")
+     * @Template("AppBundle:Curriculum/Idioma:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Curriculum();
+        $entity = new Idioma();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -78,26 +54,27 @@ class CurriculumSecreController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('curriculum_show', array('id' => $entity->getIdCurriculum())));
-        }
+            return $this->redirect($this->generateUrl('idioma_show', array('id' => $entity->getIdIdioma())));
+    }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
         );
     }
 
     /**
-     * Creates a form to create a Curriculum entity.
+     * Creates a form to create a Idioma entity.
      *
-     * @param Curriculum $entity The entity
+     * @param Idioma $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Curriculum $entity)
+    private function createCreateForm(Idioma $entity)
     {
-        $form = $this->createForm(new CurriculumType(), $entity, array(
-            'action' => $this->generateUrl('curriculum_create'),
+        $form = $this->createForm(new IdiomaType(), $entity, array(
+            'action' => $this->generateUrl('idioma_create'),
             'method' => 'POST',
         ));
 
@@ -107,38 +84,39 @@ class CurriculumSecreController extends Controller
     }
 
     /**
-     * Displays a form to create a new Curriculum entity.
+     * Displays a form to create a new Idioma entity.
      *
-     * @Route("/new", name="curriculum_new")
+     * @Route("/new", name="idioma_new")
      * @Method("GET")
-     * @Template("@App/Curriculum/show.html.twig")
+     * @Template("@App/Curriculum/Idioma/new.html.twig")
      */
     public function newAction()
     {
-        $entity = new Curriculum();
+        $entity = new Idioma();
         $form   = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
         );
     }
 
     /**
-     * Finds and displays a Curriculum entity.
+     * Finds and displays a Idioma entity.
      *
-     * @Route("/{id}", name="curriculum_show")
+     * @Route("/{id}", name="idioma_show")
      * @Method("GET")
-     * @Template("@App/Curriculum/show.html.twig")
+     * @Template("@App/Curriculum/Idioma/show.html.twig")
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Curriculum')->find($id);
+        $entity = $em->getRepository('AppBundle:Idioma')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Curriculum entity.');
+            throw $this->createNotFoundException('Unable to find Idioma entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -146,24 +124,25 @@ class CurriculumSecreController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
         );
     }
 
     /**
-     * Displays a form to edit an existing Curriculum entity.
+     * Displays a form to edit an existing Idioma entity.
      *
-     * @Route("/{id}/edit", name="curriculum_edit")
+     * @Route("/{id}/edit", name="idioma_edit")
      * @Method("GET")
-     * @Template("@App/Curriculum/edit.html.twig")
+     * @Template("@App/Curriculum/Idioma/edit.html.twig")
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Curriculum')->find($id);
+        $entity = $em->getRepository('AppBundle:Idioma')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Curriculum entity.');
+            throw $this->createNotFoundException('Unable to find Idioma entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -173,20 +152,21 @@ class CurriculumSecreController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
         );
     }
 
     /**
-    * Creates a form to edit a Curriculum entity.
+    * Creates a form to edit a Idioma entity.
     *
-    * @param Curriculum $entity The entity
+    * @param Idioma $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Curriculum $entity)
+    private function createEditForm(Idioma $entity)
     {
-        $form = $this->createForm(new CurriculumType(), $entity, array(
-            'action' => $this->generateUrl('curriculum_update', array('id' => $entity->getIdCurriculum())),
+        $form = $this->createForm(new IdiomaType(), $entity, array(
+            'action' => $this->generateUrl('idioma_update', array('id' => $entity->getIdIdioma())),
             'method' => 'PUT',
         ));
 
@@ -195,20 +175,20 @@ class CurriculumSecreController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Curriculum entity.
+     * Edits an existing Idioma entity.
      *
-     * @Route("/{id}", name="curriculum_update")
+     * @Route("/{id}", name="idioma_update")
      * @Method("PUT")
-     * @Template("AppBundle:Curriculum:edit.html.twig")
+     * @Template("AppBundle:Curriculum/Idioma:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Curriculum')->find($id);
+        $entity = $em->getRepository('AppBundle:Idioma')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Curriculum entity.');
+            throw $this->createNotFoundException('Unable to find Idioma entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -218,19 +198,20 @@ class CurriculumSecreController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('idioma_edit', array('id' => $id)));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'curriculum'=> $_SESSION["Curriculum"],
         );
     }
     /**
-     * Deletes a Curriculum entity.
+     * Deletes a Idioma entity.
      *
-     * @Route("/{id}", name="curriculum_delete")
+     * @Route("/{id}", name="idioma_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -240,21 +221,21 @@ class CurriculumSecreController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Curriculum')->find($id);
+            $entity = $em->getRepository('AppBundle:Idioma')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Curriculum entity.');
+                throw $this->createNotFoundException('Unable to find Idioma entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('curriculum'));
+        return $this->redirect($this->generateUrl('idioma',array('cur' => $_SESSION["Curriculum"])));
     }
 
     /**
-     * Creates a form to delete a Curriculum entity by id.
+     * Creates a form to delete a Idioma entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -263,7 +244,7 @@ class CurriculumSecreController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('curriculum_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('idioma_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

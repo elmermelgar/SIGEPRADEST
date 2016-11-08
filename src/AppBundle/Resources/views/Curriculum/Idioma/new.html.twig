@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Idioma creation</h1>
+
+    {#{{ form(form) }}#}
+    {{ form_start(form) }}
+
+    {{form_widget(form.idCurriculum, {'value': curriculum, "attr":{"style":"display:none;"}}) }}
+    {{ form_end(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('idioma',{ 'cur': curriculum }) }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
