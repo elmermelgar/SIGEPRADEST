@@ -1,0 +1,45 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="active"><a href="{{ path('index_interesado') }}">Inicio</a></li>
+            <li class="active"><a href="{{ path('interesado_solicitud', {'idc' : idc}) }}">Solicitud</a></li>
+            <li class="active">Informaci&oacuten acad&eacutemica</li>
+        </ol>
+
+        {{ form_start(form, {'attr' : {'role' : 'form'}}) }}
+
+        <input type="hidden" name="idc" value="{{ idc }}" />
+
+        <div class="form-group">
+            <label>Universidad de procedencia</label>
+            {{ form_widget(form.institucion, {'attr' : {'class' : 'form-control', 'placeholder' : 'Universidad', 'required' : true}}) }}
+            <span class="text-danger">{{ form_errors(form.institucion) }}</span>
+        </div>
+        <div class="form-group">
+            <label>T&iacutetulo obtenido</label>
+            {{ form_widget(form.titulo, {'attr' : {'class' : 'form-control', 'placeholder' : 'Título', 'required' : true}}) }}
+            <span class="text-danger">{{ form_errors(form.titulo) }}</span>
+        </div>
+        <div class="form-group">
+            <label>A&ntildeo</label>
+
+            <span class="text-danger">{{ form_errors(form.institucion) }}</span>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_widget(form.guardar, {'attr' : {'class' : 'btn btn-primary'}}) }}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-default" href="{{ path('interesado_solicitud',{'idc':idc}) }}">Regresar</a>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
