@@ -256,14 +256,14 @@
         $(".js-example-basic-multiple").select2();
 
         $(function () {
-            $("#fechaini").datetimepicker({format: 'DD-MM-YYYY'});
-            $("#fechainirec").datetimepicker({format: 'DD-MM-YYYY'});
-            $("#fechainientre").datetimepicker({format: 'DD-MM-YYYY'});
-            $("#fechainieva").datetimepicker({format: 'DD-MM-YYYY'});
-            $("#fechafin").datetimepicker({format: 'DD-MM-YYYY'});
-            $("#fechafinrec").datetimepicker({format: 'DD-MM-YYYY'});
-            $("#fechafinentre").datetimepicker({format: 'DD-MM-YYYY'});
-            $("#fechafineva").datetimepicker({format: 'DD-MM-YYYY'});
+            $("#fechaini").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechainirec").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechainientre").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechainieva").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechafin").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechafinrec").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechafinentre").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechafineva").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
         });
 
         /*funciones para validar que las fechas no esten invertidas*/
