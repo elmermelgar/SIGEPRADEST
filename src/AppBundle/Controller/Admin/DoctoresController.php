@@ -59,7 +59,7 @@ class DoctoresController extends SecurityController
             $em2->persist($doc);
             $em2->flush();
             //mensaje de exito
-            $this->MensajeFlash('exito','Doctor creado correctamente!');
+            $this->MensajeFlash('exito','Doctores creado correctamente!');
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
             $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
@@ -88,7 +88,7 @@ class DoctoresController extends SecurityController
             $em2->persist($doc);
             $em2->flush();
             //mensaje de exito
-            $this->MensajeFlash('exito','Doctor creado correctamente!');
+            $this->MensajeFlash('exito','Doctores creado correctamente!');
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
             $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
@@ -115,7 +115,7 @@ class DoctoresController extends SecurityController
             //Actualizando valores
             $em2->flush();
             //mensaje de confirmacion
-            $this->MensajeFlash('exito','Doctor actualizado correctamente!');
+            $this->MensajeFlash('exito','Doctores actualizado correctamente!');
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
             $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
@@ -150,7 +150,7 @@ class DoctoresController extends SecurityController
         }
         $em->remove($doctor);
         $em->flush();
-        $this->MensajeFlash('exito','Doctor eliminado correctamente!');
+        $this->MensajeFlash('exito','Doctores eliminado correctamente!');
 
         $em2=$this->getDoctrine()->getManager("default");
         $doctor=$em2->getRepository('AppBundle:Doctores')->findAll();

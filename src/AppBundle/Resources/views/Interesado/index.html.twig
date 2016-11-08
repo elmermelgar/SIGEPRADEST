@@ -9,13 +9,7 @@
             <li class="active"><a href="{{ path('index_interesado') }}">Inicio</a></li>
 
         </ol>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <a href="{{ path('interesado_perfil') }}">Mi Perfil</a>
-                </div>
-            </div>
-        </div>
+
         <div class="row">
             {% for c in cursos %}
                 <div class="col-md-6">
@@ -37,7 +31,7 @@
                             </div>
                         </div>
                         <div class="panel-footer">
-                            <a href="{{ path('interesado_solicitud') }}">Llenar solicitud</a>
+                            <a href="{{ path('interesado_solicitud',{'idc' : c.idCurso}) }}">Llenar solicitud</a>
                         </div>
                     </div>
                 </div>

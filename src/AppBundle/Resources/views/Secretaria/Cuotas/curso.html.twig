@@ -1,0 +1,72 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li class="active">Cursos</li>
+        </ol>
+        <h2>Cursos</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Cursos Disponibles
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">Nombre</th>
+                            <th style="text-align: center">Descripcion</th>
+                            <th style="text-align: center">Cuotas</th>
+                            <th style="text-align: center">Estado</th>
+                            <th style="text-align: center">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+                            {% for cursos in cursos %}
+                                {% if cursos.estadoCurso=='Registro' %}
+                                        <tr>
+                                            <td>{{ cursos.nombreCurso }}</td>
+                                            <td>{{ cursos.textoInformativo }}</td>
+                                            <td>{{ cursos.numCuotas }}</td>
+                                            <td>{{ cursos.estadoCurso }}</td>
+                                            <td style="text-align: center;">
+                                                <a href="{{ asset('/secretaria/cuotas') }}/{{ cursos.idCurso }}" title="Cuotas" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/>Cuotas</a>
+                                            </td>
+
+                                        </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End  Kitchen Sink -->
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+
+{% endblock %}

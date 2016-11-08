@@ -15,8 +15,6 @@
     </div>
 {% endblock %}
 
-
-
 {% block body %}
     <form class="form-horizontal" action="{{ path('verInfo') }}" method="POST" enctype="multipart/form-data"
           name="formulario2">
@@ -24,17 +22,23 @@
         <fieldset>
     <div class="col-md-6">
             <div class="control-group">
-            <label class="control-label" for="prependedInput"> Seleccione un usuario </label>
+            <label class="control-label" for="prependedInput"> Buscar usuario / enter </label>
+            <input id="InputSelect1_txt" name= "InputSelect1_txt"  list="lista1_list" placeholder="Escriba el nombre de usuario / enter" class="form-control">
+
+
+
             <div class="controls">
                 <div class="input-prepend">
-                    <label for="info"></label><select id="select1" name="select1"  class="form-control">
-                        <option value="0">Selecciona una opcion </option>
-                        {% for resultado in result %}
-                            <option value="{{ resultado.id_ui }}">{{ resultado.completo }} </option>
-                        {% endfor %}
-                    </select>
+
+                        <datalist id="lista1_list" name="lista1_list" >
+                            {% for resultado in result %}
+                                <option data-value="{{ resultado.id_ui }}">{{resultado.completo}} </option>
+                            {% endfor %}
+                        </datalist>
                 </div>
             </div>
+
+
         </div>
     </div>
 
@@ -44,7 +48,9 @@
         <br>
         <div class="panel panel-default">
             <div class="panel-heading">
-                Informacion Disponibles <a href="{{ path('createInfo') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Agregar Nuevo Curso</a>
+                Informacion Academica
+                <a href="{{ path('createInfo') }}" style="float: right; margin-top: -5px;" title="Agregar"
+                   class="btn btn-success">Agregar Nueva Informacion</a>
             </div>
 
             <div class="panel-body">
@@ -102,41 +108,63 @@
 
 {% endblock %}
 {% block javascripts %}
-
+    <script src="{{ asset('public/js/jquery-1.9.1.min.js') }}"></script>
     <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
 
     <script>
         $(document).ready(function () {
             $('#dataTables-example1').dataTable();
-        });
-    </script>
 
-    <script type="text/javascript">
-        function confirmar(val){
-            alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
-                if (e) {
-                    location.href = "{{ asset('/admin/informacion/delete/') }}" +val;
-                    alertify.error("Operacion eliminada"  );
-                } else {
-                    alertify.error("Has cancelado la operacion");
-                }
-            });
-            return false
-        }
-
-        $(document).ready(function () {
             $('#select1').change(function(){
                 var id = $('#select1').val();
                 $('#estados').load( cargarSelect2(id) );
             });
-        })
+
+            $('#InputSelect1_txt').change(function(){
+
+                var dato = $("input[name=InputSelect1_txt]").val();
+                options = document.querySelectorAll('#lista1_list option');
+
+                for(var i = 0; i < options.length; i++) {
+                    var option = options[i];
+                    //var nombreCompletoList = option.innerText;
+                    //alert( dato.localeCompare(nombreCompletoList) );
+
+                    if( option.innerText.trim().valueOf() == dato.trim().valueOf() ){
+                        cargarSelect2(option.getAttribute('data-value'));
+                    }
+               }
+
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        function confirmar(val){
+            alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                if (e) {
+                    //location.href = "{{ asset('/admin/informacion/delete/') }}" +val;
+                    var url = '{{ path("deleteInfo", {'id': 'opcion'}) }}'.replace('opcion',val);
+                    location.href = url;
+
+                    alertify.error("Procesando ... eliminacion"  );
+                } else {
+                    alertify.error("Has cancelado la operacion");
+                }
+            });
+
+        }
 
         function cargarSelect2(valor){
             if (valor != 0){
-                location.href = "{{ asset('/admin/info/') }}" +valor;
+                var url = '{{ path("verInfo", {'seleccion': 'opcion'}) }}'.replace('opcion',valor);
+                location.href = url;
             }
         }
 
     </script>
+
 {% endblock %}

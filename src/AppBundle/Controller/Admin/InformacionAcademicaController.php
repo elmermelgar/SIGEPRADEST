@@ -2,148 +2,184 @@
 
 namespace AppBundle\Controller\Admin;
 
-use AppBundle\AppBundle;
-use AppBundle\Controller\DefaultController;
 use AppBundle\Controller\SecurityController;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\InformacionAcademica;
-use AppBundle\Entity\Solicitud;
-
-
+use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 
-use Symfony\Component\Validator\Constraints\Date;
-
-
-class InformacionAcademicaController extends DefaultController{
+class InformacionAcademicaController extends SecurityController{
 
     /**
-     * @Route("/admin/info/{seleccion}",name="verInfo", defaults={"seleccion" = 0})
+     * @Route("/admin/informacion/{seleccion}", name="verInfo", defaults={"seleccion" = 0} )
+     * @Route("/secretaria/informacion/{seleccion}", name="verInfo2", defaults={"seleccion" = 0} )
+     * @Security("has_role('ROLE_administrador') or has_role('ROLE_secretaria') ")
      */
     public function verInfoAction(Request $request,$seleccion){
         // function Read-Mostrar
-        $em=$this->getDoctrine()->getManager("default");
+
+        try{
+            // validar usuario logueado
+            if ($this->getUser()){
+                $em=$this->getDoctrine()->getManager("default");
+                $usu =$em->getRepository('AppBundle:Usuario')->findAll();
+                $seleccion = $em->getRepository('AppBundle:Usuario')->find($seleccion);
+
+                $solicitud=$em->getRepository("AppBundle:Solicitud")->findAll();
 
 
+                //$info=$em->getRepository('AppBundle:InformacionAcademica')->findAll();
+                $info=$em->getRepository('AppBundle:InformacionAcademica')->findBy( array(), array('idSolicitud' => 'ASC')  );
 
-        $usu =$em->getRepository('AppBundle:Usuario')->findAll();
-        $seleccion = $em->getRepository('AppBundle:Usuario')->find($seleccion);
-        $solicitud=$em->getRepository("AppBundle:Solicitud")->findAll();
+                $sql = "SELECT DISTINCT u.nombre , u.id_ui, u.nombre || ' ' || u.apellido as completo FROM usuario u , solicitud s WHERE  s.id_ui = u.id_ui Order BY completo DESC";
+                $stmt = $em->getConnection()->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
 
+                return $this->render('AppBundle:Admin/InfoAcademica:index.html.twig', array(
+                       'infos'=>$info, 'usu'=>$usu,'sol'=>$solicitud,'result'=>$result, 'seleccion'=>$seleccion));
+            } else{
+                //throw $this->createNotFoundException("no se encontro pagina",null);
+                $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
+                return $this->redirectToRoute('login');
+            }
 
-        //$info=$em->getRepository('AppBundle:InformacionAcademica')->findAll();
-        $info=$em->getRepository('AppBundle:InformacionAcademica')->findBy( array(), array('idSolicitud' => 'ASC')  );
+        }catch (\Exception $e){
+            //echo $e -> getMessage();
+            //throw $this->createNotFoundException("no se encontro pagina" ,null);
+            //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
+            return $this->redirectToRoute('verInfo');
+        }
 
-        $sql = "SELECT DISTINCT u.nombre , u.id_ui, u.nombre || ' ' || u.apellido as completo FROM usuario u , solicitud s WHERE  s.id_ui = u.id_ui Order BY completo DESC";
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        // validar usuario logueado
-        if ($this->getUser()){
-            return $this->render('AppBundle:Admin/InfoAcademica:index.html.twig', array(
-                'infos'=>$info, 'usu'=>$usu,'sol'=>$solicitud,'result'=>$result, 'seleccion'=>$seleccion));
-        } else
-            return $this->redirectToRoute('login');
     }
 
 
     /**
      * @Route("/admin/info_create",name="createInfo")
+     * @Security("has_role('ROLE_administrador') or has_role('ROLE_secretaria') ")
      */
     public function createInfoAction(Request $request)
     {
-        $em=$this->getDoctrine()->getManager("default");
 
-        $solicitud=$em->getRepository("AppBundle:Solicitud")->findAll();
-        $usuario=$em->getRepository("AppBundle:Usuario")->findAll();
-        $info=$em->getRepository('AppBundle:InformacionAcademica')->findBy( array(), array('fechaObtenido' => 'DESC')  );
+        try{
+            // validar usuario logueado
+            if ($this->getUser()){
 
+                $em=$this->getDoctrine()->getManager("default");
 
-        $sql = "SELECT DISTINCT u.nombre , u.id_ui, u.nombre || ' ' || u.apellido as completo FROM usuario u , solicitud s WHERE  s.id_ui = u.id_ui Order BY completo DESC";
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
+                $solicitud=$em->getRepository("AppBundle:Solicitud")->findAll();
+                $usuario=$em->getRepository("AppBundle:Usuario")->findAll();
+                $info=$em->getRepository('AppBundle:InformacionAcademica')->findBy( array(), array('fechaObtenido' => 'DESC')  );
 
-        //Validar peticion POST
-        if($request->isMethod("POST")) {
+                $sql = "SELECT DISTINCT u.nombre , u.id_ui, u.nombre || ' ' || u.apellido as completo FROM usuario u , solicitud s WHERE  s.id_ui = u.id_ui Order BY completo DESC";
+                $stmt = $em->getConnection()->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
 
-            //Proceso de almacenamiento de datos en entidad informacion academica
-            $infoNuevo=new InformacionAcademica();
-            $infoNuevo->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find( $request->get("select2") ));
-            $infoNuevo->setInstitucion($request->get("instituto_txt"));
-            $infoNuevo->setTitulo($request->get("titulo_txt"));
-            $infoNuevo->setFechaObtenido(new \DateTime($request->get("calendario_cl")));
+                //Validar peticion POST
+                if($request->isMethod("POST")) {
 
-            $valor = $infoNuevo->getIdSolicitud()->getIdUi()->getIdUi();
+                //Proceso de almacenamiento de datos en entidad informacion academica
+                $infoNuevo=new InformacionAcademica();
+                $infoNuevo->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find( $request->get("select2") ));
+                $infoNuevo->setInstitucion($request->get("instituto_txt"));
+                $infoNuevo->setTitulo($request->get("titulo_txt"));
+                $infoNuevo->setFechaObtenido(new \DateTime($request->get("calendario_cl")));
 
-            //Persistir
-            $em->persist($infoNuevo);
+                $valor = $infoNuevo->getIdSolicitud()->getIdUi()->getIdUi();
 
-            //Guradar en la BD
-            $em->flush();
-            return $this->redirectToRoute('verInfo',array('seleccion'=>$valor));
+                //Persistir
+                $em->persist($infoNuevo);
+                $this->MensajeFlash('exito','Informacion creada correctamente!');
+
+                //Guradar en la BD
+                $em->flush();
+                return $this->redirectToRoute('verInfo',array('seleccion'=>$valor));
+                }
+
+                return $this->render("AppBundle:Admin/InfoAcademica:info_create.html.twig",
+                    array('infos'=>$info, 'usu' =>$usuario, 'sol'=>$solicitud, 'result'=>$result));
+                } else{
+                    //throw $this->createNotFoundException("no se encontro pagina",null);
+                    $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
+                    return $this->redirectToRoute('login');
+                }
+        }catch (\Exception $e){
+            echo $e -> getMessage();
+            //throw $this->createNotFoundException("no se encontro pagina" ,null);
+            //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
+            return $this->redirectToRoute('verInfo');
         }
-
-        return $this->render("AppBundle:Admin/InfoAcademica:info_create.html.twig",
-            array('infos'=>$info, 'usu' =>$usuario, 'sol'=>$solicitud, 'result'=>$result));
     }
 
 
     /**
-     * @Route("/admin/informacion/{id}/edit", name="editInfo")
+     * @Route("/admin/informacion/{id}/edit", name="editInfo" , defaults={"id" = 0})
+     * @Security("has_role('ROLE_administrador') or has_role('ROLE_secretaria') ")
      */
 
     public function editarUsuarioAction($id, Request $request)
     {
-        $em=$this->getDoctrine()->getManager("default");
+       try{
+            // validar usuario logueado
+            if ($this->getUser()){
+                $em=$this->getDoctrine()->getManager("default");
 
-        //Seleccionando un solo usuario";
-        $datos=$this->getDoctrine()->getRepository('AppBundle:InformacionAcademica')->find($id);
+                //Seleccionando un solo usuario";
+                $datos=$this->getDoctrine()->getRepository('AppBundle:InformacionAcademica')->find($id);
 
-        $solicitud=$em->getRepository("AppBundle:Solicitud")->findAll();
-        $usuario=$em->getRepository("AppBundle:Usuario")->findAll();
+                $solicitud=$em->getRepository("AppBundle:Solicitud")->findAll();
+                $usuario=$em->getRepository("AppBundle:Usuario")->findAll();
 
-        $sql = "SELECT DISTINCT u.nombre , u.id_ui, u.nombre || ' ' || u.apellido as completo FROM usuario u , solicitud s WHERE  s.id_ui = u.id_ui Order BY completo DESC";
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
+                $sql = "SELECT DISTINCT u.nombre , u.id_ui, u.nombre || ' ' || u.apellido as completo FROM usuario u , solicitud s WHERE  s.id_ui = u.id_ui Order BY completo DESC";
+                $stmt = $em->getConnection()->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
 
 
 
-        if($request->isMethod("POST"))
-        {
-            //Almacenar la nueva info academica validada
+                if($request->isMethod("POST")){
+                    //Almacenar la nueva info academica validada
+                    $datos->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find($request->get("select2")));
+                    $datos->setInstitucion($request->get("instituto_txt"));
+                    $datos->setTitulo($request->get("titulo_txt"));
+                    $datos->setFechaObtenido(new \DateTime($request->get("calendario_cl")));
 
-            $datos->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find($request->get("select2")));
-            $datos->setInstitucion($request->get("instituto_txt"));
-            $datos->setTitulo($request->get("titulo_txt"));
-            $datos->setFechaObtenido(new \DateTime($request->get("calendario_cl")));
-
-            // guardar cambios
-            $em->flush();
+                    // guardar cambios
+                    $em->flush();
             
-            //redireccionamiento
-            $em2=$this->getDoctrine()->getManager("default");
-            $info=$em2->getRepository('AppBundle:InformacionAcademica')->findAll();
-            $valor = $datos->getIdSolicitud()->getIdUi()->getIdUi();
+                    //redireccionamiento
+                    $this->MensajeFlash('exito','Informacion actualizada correctamente!');
+                    $em2=$this->getDoctrine()->getManager("default");
+                    $info=$em2->getRepository('AppBundle:InformacionAcademica')->findAll();
+                    $valor = $datos->getIdSolicitud()->getIdUi()->getIdUi();
 
+                    //return $this->render('AppBundle:Admin/InfoAcademica:index.html.twig', array('infos'=>$info));
+                    //return $this->redirect($this->generateUrl('verInfo', array('info'=>$info)));
+                    return $this->redirectToRoute('verInfo',array('seleccion'=>$valor));
+                }
+                    return $this->render('AppBundle:Admin/InfoAcademica:info_edit.html.twig', array(
+                    'info' => $datos ,'sol' => $solicitud, 'usu'=>$usuario, 'result'=>$result));
+            } else{
+                //throw $this->createNotFoundException("no se encontro pagina",null);
+                $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
+                return $this->redirectToRoute('login');
+            }
+       }catch (\Exception $e){
+           echo $e -> getMessage();
+           //throw $this->createNotFoundException("no se encontro pagina" ,null);
+           //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
+           return $this->redirectToRoute('verInfo');
+       }
 
-            //return $this->render('AppBundle:Admin/InfoAcademica:index.html.twig', array('infos'=>$info));
-            //return $this->redirect($this->generateUrl('verInfo', array('info'=>$info)));
-            return $this->redirectToRoute('verInfo',array('seleccion'=>$valor));
-        }
-        return $this->render('AppBundle:Admin/InfoAcademica:info_edit.html.twig', array(
-            'info' => $datos ,'sol' => $solicitud, 'usu'=>$usuario, 'result'=>$result
-        ));
     }
 
     /**
-     * @Route("/admin/informacion/delete/{id}", name="deleteInfo")
+     * @Route("/informacion/delete/{id}", name="deleteInfo" , defaults={"id" = 0})
+     * @Security("has_role('ROLE_administrador') or has_role('ROLE_secretaria') ")
      */
     public function deleteInformacionAction($id, Request $request)
     {
@@ -158,10 +194,14 @@ class InformacionAcademicaController extends DefaultController{
 
             $valor=$info->getIdSolicitud()->getIdUi()->getIdUi();
 
-            if ($flush = null){
-                echo "Borrado correctamente";
+
+            //var_dump( ($flush == null) );
+            //die();
+
+            if ($flush == null){
+                $this->MensajeFlash('exito','Informacion eliminada correctamente!');
             }else{
-                echo "el post no se ha borrado";
+                $this->MensajeFlash('Error','No se puede eliminar!');
             }
         }
 

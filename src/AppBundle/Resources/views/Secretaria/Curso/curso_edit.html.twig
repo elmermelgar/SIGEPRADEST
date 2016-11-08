@@ -3,14 +3,7 @@
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
-    <script src="http://momentjs.com/downloads/moment.js"></script>
-    <scrip C:\Users\MEOM\Documents\sigepradest\web\public\js\jquery-1.9.1.min.js></scrip>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+    <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block Header %}
     <div class="col-md-12">
@@ -78,7 +71,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="col-md-6">
@@ -117,7 +109,15 @@
                                     <div class="input-prepend">
                                         <select class="js-example-basic-multiple" class="form-control" style="width: 100%"  multiple="multiple"  name="doc[]">
                                             {% for doc in doc %}
-                                                <option value="{{ doc.id_doctores}}">{{ doc.nombre_doc }}</option>
+                                                {% if d1 == NULL %}
+                                                    <option value="{{ doc.id_doctores }}">{{ doc.nombre_doc }}</option>
+                                                {% else %}
+                                                    {% for d1 in d1 %}
+                                                        {% if doc.id_doctores == d1.id_doctores %}
+                                                            <option selected value="{{ doc.id_doctores }}">{{ doc.nombre_doc }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -133,7 +133,10 @@
                                 <label class="control-label" for="prependedInput">Fecha Inicio Curso</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input value="{{ hc.fechaInicio.format("Y-m-d")}}" id="fechaini" class="form-control" name="fechaini" size="16" type="date" >
+                                        <div class='input-group date' >
+                                            <input value="{{ hc.fechaInicio.format("d-m-Y")}}" id="fechaini" class="form-control" name="fechaini" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +146,10 @@
                                 <label class="control-label" for="prependedInput">Inicio Recepción Documentos</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input value="{{ hc.inicioRecepDoc.format("Y-m-d") }}" id="fechainirec" class="form-control" name="fechainirec" size="16" type="date" >
+                                        <div class='input-group date' >
+                                            <input value="{{ hc.inicioRecepDoc.format("d-m-Y") }}" id="fechainirec" class="form-control" name="fechainirec" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +159,10 @@
                                 <label class="control-label" for="prependedInput">Inicio de Entrevista</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input value="{{ hc.defechaEntrevista.format("Y-m-d") }}" id="fechainientre" class="form-control" name="fechainientre" size="16" type="date" >
+                                        <div class='input-group date' >
+                                            <input value="{{ hc.defechaEntrevista.format("d-m-Y") }}" id="fechainientre" class="form-control" name="fechainientre" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +172,10 @@
                                 <label class="control-label" for="prependedInput">Inicio de Evaluación</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input value="{{ hc.defechaEvaluacion.format("Y-m-d") }}" id="fechainieva" class="form-control" name="fechainieva" size="16" type="date" >
+                                        <div class='input-group date' >
+                                            <input value="{{ hc.defechaEvaluacion.format("d-m-Y") }}" id="fechainieva" class="form-control" name="fechainieva" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +186,10 @@
                                 <label class="control-label" for="prependedInput">Fecha Fin Curso</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input value="{{ hc.fechaFin.format("Y-m-d") }}" id="fechafin" class="form-control" name="fechafin" size="16" type="date" >
+                                        <div class='input-group date' >
+                                            <input value="{{ hc.fechaFin.format("d-m-Y") }}" id="fechafin" class="form-control" name="fechafin" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +199,10 @@
                                 <label class="control-label" for="prependedInput">Fin Recepción Documentos</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input value="{{ hc.finRecepDoc.format("Y-m-d") }}" id="fechafinrec" class="form-control" name="fechafinrec" size="16" type="date" >
+                                        <div class='input-group date' >
+                                            <input value="{{ hc.finRecepDoc.format("d-m-Y") }}" id="fechafinrec" class="form-control" name="fechafinrec" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +212,10 @@
                                 <label class="control-label" for="prependedInput">Fin de Entrevista</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input value="{{ hc.afechaEntrevista.format("Y-m-d") }}" id="fechafinentre" class="form-control" name="fechafinentre" size="16" type="date" >
+                                        <div class='input-group date' >
+                                            <input value="{{ hc.afechaEntrevista.format("d-m-Y") }}" id="fechafinentre" class="form-control" name="fechafinentre" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +225,10 @@
                                 <label class="control-label" for="prependedInput">Fin de Evaluación</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input value="{{ hc.afechaEvaluacion.format("Y-m-d") }}" id="fechafineva" class="form-control" name="fechafineva" size="16" type="date" >
+                                        <div class='input-group date' >
+                                            <input value="{{ hc.afechaEvaluacion.format("d-m-Y") }}" id="fechafineva" class="form-control" name="fechafineva" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -223,12 +247,24 @@
     </div><!--/row-->
 {% endblock %}
 {% block javascripts %}
-
+    <script src="{{ asset('public/js/moment.js') }} "></script>
     <script src="{{ asset('public/assets/js/select2.min.js') }}"></script>
+    <script src="{{ asset('public/js/bootstrap-datetimepicker.min.js') }} "></script>
 
     <script type="text/javascript">
 
         $(".js-example-basic-multiple").select2();
+
+        $(function () {
+            $("#fechaini").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechainirec").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechainientre").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechainieva").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechafin").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechafinrec").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechafinentre").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+            $("#fechafineva").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+        });
 
         /*funciones para validar que las fechas no esten invertidas*/
         function validar() {
@@ -246,8 +282,7 @@
             var inicioeva  = document.getElementById('fechainieva').value;
             var finaleva  = document.getElementById('fechafineva').value;
 
-            var fechaAhora = moment().format('YYYY-MM-DD');
-            var fechaAhoraInv = moment().format('DD/MM/YYYY');
+            var fechaAhora = moment().format('DD-MM-YYYY');
 
             if(nombre==''&&cantidad==''&&numero==''&&img==''&&pdf==''&&iniciocurso==''&&finalcurso==''&&iniciodocu==''&&finaldocu==''&&inicioentre==''&&finalentre==''&&inicioeva==''&&finaleva==''){
                 alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
@@ -277,13 +312,13 @@
                                                 alertify.error("Es Obligatorio Seleccionar Fecha Inicio del Curso");
                                             }else{
                                                 if(iniciocurso<fechaAhora) {
-                                                    alertify.error("La fecha de Inicio de Curso debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                    alertify.error("La fecha de Inicio de Curso debe ser igual o mayor a la "+ fechaAhora);
                                                 }else{
                                                     if(finalcurso==''){
                                                         alertify.error("Es Obligatorio Seleccionar Fecha Fin del Curso");
                                                     }else{
                                                         if(finalcurso<fechaAhora) {
-                                                            alertify.error("La fecha de Fin de Curso debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                            alertify.error("La fecha de Fin de Curso debe ser igual o mayor a la "+ fechaAhora);
                                                         }else{
                                                             if(iniciocurso>finalcurso) {
                                                                 alertify.error("La fecha de Inicio de Curso debe ser menor que la fecha de Fin de curso");
@@ -292,13 +327,13 @@
                                                                     alertify.error("Es Obligatorio Seleccionar Fecha Inicio de Recepción de Documentos");
                                                                 }else{
                                                                     if(iniciodocu<fechaAhora){
-                                                                        alertify.error("La fecha de Inicio de Recepción de Documentos debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                        alertify.error("La fecha de Inicio de Recepción de Documentos debe ser igual o mayor a la "+ fechaAhora);
                                                                     }else{
                                                                         if(finaldocu==''){
                                                                             alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Recepción de Documentos");
                                                                         }else{
                                                                             if(finaldocu<fechaAhora){
-                                                                                alertify.error("La fecha de Fin de Recepción de Documentos debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                                alertify.error("La fecha de Fin de Recepción de Documentos debe ser igual o mayor a la "+ fechaAhora);
                                                                             }else{
                                                                                 if(iniciodocu>finaldocu){
                                                                                     alertify.error("La fecha de Inicio de Recepción de Documentos debe ser menor que la fecha de Fin de Recepción de Documentos");
@@ -307,13 +342,13 @@
                                                                                         alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Entrevista");
                                                                                     }else{
                                                                                         if(inicioentre<fechaAhora){
-                                                                                            alertify.error("La fecha de Inicio de Entrevista debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                                            alertify.error("La fecha de Inicio de Entrevista debe ser igual o mayor a la "+ fechaAhora);
                                                                                         }else{
                                                                                             if(finalentre==''){
                                                                                                 alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Entrevista");
                                                                                             }else{
                                                                                                 if(finalentre<fechaAhora){
-                                                                                                    alertify.error("La fecha de Fin de Entrevista debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                                                    alertify.error("La fecha de Fin de Entrevista debe ser igual o mayor a la "+ fechaAhora);
                                                                                                 }else{
                                                                                                     if(inicioentre>finalentre){
                                                                                                         alertify.error("La fecha de Inicio de Entrevista debe ser menor que la fecha de Fin de Entrevista");
@@ -322,13 +357,13 @@
                                                                                                             alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Evaluación");
                                                                                                         }else{
                                                                                                             if(inicioeva<fechaAhora){
-                                                                                                                alertify.error("La fecha de Inicio de Evaluación debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                                                                alertify.error("La fecha de Inicio de Evaluación debe ser igual o mayor a la "+ fechaAhora);
                                                                                                             }else{
                                                                                                                 if(finaleva==''){
                                                                                                                     alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Evaluación");
                                                                                                                 }else{
                                                                                                                     if(finaleva<fechaAhora){
-                                                                                                                        alertify.error("La fecha de Fin de Evaluación debe ser igual o mayor a la "+ fechaAhoraInv);
+                                                                                                                        alertify.error("La fecha de Fin de Evaluación debe ser igual o mayor a la "+ fechaAhora);
                                                                                                                     }else{
                                                                                                                         if(inicioeva>finaleva){
                                                                                                                             alertify.error("La fecha de Inicio de Evaluación debe ser menor que la fecha de Fin de Evaluación");

@@ -107,10 +107,20 @@ class DSIController extends Controller
         return $d1;
     }
 
+    protected function mostrarD1s($id){
+        $em=$this->getDoctrine()->getManager();
+        $db = $em->getConnection();
+        $sql = "SELECT id_doctores FROM d1 WHERE id_curso=$id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $d1 = $stmt->fetchAll();
+        return $d1;
+    }
+
     protected function mostrarHC(){
         $em=$this->getDoctrine()->getManager();
         $db = $em->getConnection();
-        $sql = "SELECT * FROM horario_curso ORDER BY fecha_inicio DESC";
+        $sql = "SELECT id_curso,to_char(fecha_inicio,'DD/MM/YYYY')as fecha_inicio,fecha_fin FROM horario_curso ORDER BY fecha_inicio DESC";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $d1 = $stmt->fetchAll();
