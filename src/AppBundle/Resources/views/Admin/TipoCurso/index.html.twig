@@ -1,9 +1,27 @@
-{% extends '::base2.html.twig' %}
-
-{% block body -%}
-    <h1>TipoCurso list</h1>
-
-    <table class="records_list">
+{% extends 'base2.html.twig' %}
+{% block active1 %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li class="active">Tipo Curso</li>
+        </ol>
+        <h2>Tipos de curso</h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="col-md-12">
+    <!--   Kitchen Sink -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            ipos de curso del Sistema <a href="{{ path('tipocurso_new') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar nuevo tipo de curso</a>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
             <tr>
                 <th>Idtc</th>
@@ -17,25 +35,19 @@
                 <td><a href="{{ path('tipocurso_show', { 'id': entity.idTc }) }}">{{ entity.idTc }}</a></td>
                 <td>{{ entity.nombreTc }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('tipocurso_show', { 'id': entity.idTc }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('tipocurso_edit', { 'id': entity.idTc }) }}">edit</a>
-                    </li>
-                </ul>
+
+
+                        <a href="{{ path('tipocurso_show', { 'id': entity.idTc }) }}">Mostrar</a>
+<br/>
+
+                        <a href="{{ path('tipocurso_edit', { 'id': entity.idTc }) }}">Editar</a>
+
+
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('tipocurso_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+            </div> </div> </div> </div> </div>
     {% endblock %}

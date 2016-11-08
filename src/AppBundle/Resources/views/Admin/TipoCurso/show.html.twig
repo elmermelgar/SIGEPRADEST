@@ -1,32 +1,56 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active1 %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
 
-{% block body -%}
-    <h1>TipoCurso</h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('tipocurso') }}">Tipos de Cursos</a></li>
+            <li class="active">Tipo de curso</li>
+        </ol>
+        <h2>Tipo de curso</h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
 
-    <table class="record_properties">
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <tbody>
-            <tr>
-                <th>Idtc</th>
-                <td>{{ entity.idTc }}</td>
+            <tr >
+                <th style="width: 30%;" >Id correlativo</th>
+                <td  >{{ entity.idTc }} </td>
             </tr>
             <tr>
-                <th>Nombretc</th>
+                <th>Nombre del tipo de curso</th>
                 <td>{{ entity.nombreTc }}</td>
             </tr>
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('tipocurso') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('tipocurso_edit', { 'id': entity.idTc }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <a href="{{ path('tipocurso_edit', { 'id': entity.idTc }) }}" class="btn btn-primary"
+                       style="width: 100%">
+                        Editar
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <a href="{{ path('tipocurso') }}" class="btn btn-info" style="width: 100%">
+                        Regresar
+                    </a>
+
+
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+{{ form(delete_form) }}</div>
+</div></div></div>
+
 {% endblock %}
