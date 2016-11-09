@@ -24,10 +24,11 @@ body {
 }
 #page-inner {
     width:100%;
-    margin:10px 20px 10px 0px;
+    margin:10px 0px 10px 0px;
     background-color:#fff!important;
     padding:10px;
     min-height:800px;
+    display: block;
     border-radius: 10px;
 }
 
@@ -356,7 +357,7 @@ line-height: 1.428571429;
                margin: 0 0 0 260px;
         padding: 1px 10px;
         min-height: 800px;
-		
+		display: flex;
     }
 	
 	

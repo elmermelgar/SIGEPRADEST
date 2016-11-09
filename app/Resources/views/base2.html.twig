@@ -85,11 +85,13 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                     </ul>
                 </li>
                 <li  >
-                    <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-eye-open"></i> Horario de Entrevista</a>
+                    <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-calendar"></i> Horario de Entrevista</a>
                 </li>
+
                 <li  >
                     <a  href="#"><i class="fa fa-edit fa-3x"></i> Solicitud de Entrvista</a>
                 </li>
+                    <!-- /. NAV SIDE
                 <li  >
                     <a  href="#"><i class="fa fa-edit fa-3x"></i> Menu 6 </a>
                 </li>
@@ -127,6 +129,7 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                 <li  >
                     <a  href="#"><i class="fa fa-square-o fa-3x"></i> Blank Page</a>
                 </li>
+                    -->
                 {% endif %}
             </ul>
 
@@ -143,6 +146,7 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
             </div>
             <!-- /. ROW  -->
             <hr />
+            <br/>
             {% block body %}{% endblock %}
         </div>
         <!-- /. PAGE INNER  -->

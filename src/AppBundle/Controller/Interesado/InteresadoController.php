@@ -82,6 +82,7 @@ class InteresadoController extends SecurityController
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $perfil->setIdUi($this->getUser());
             $em->persist($perfil);
             $em->flush();
             $this->MensajeFlash('exito', 'Se ha creado el perfil personal.');

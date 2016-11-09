@@ -11,53 +11,19 @@ use AppBundle\Controller\SecurityController;
 
 class Usuarios2Controller extends SecurityController
 {
-    /**
-     * @Route("/secretaria/empleados", name="empleados2")
-     */
-    public function empleadosAction(){
-        if($this->getUser()){
-            $em=$this->getDoctrine()->getManager("foues");
-            $db = $em->getConnection();
-            //$sql = "SELECT * FROM empleados";
-            $sql = "SELECT * FROM empleados";
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-
-            return $this->render('AppBundle:Secretaria/Usuarios2:empleados.html.twig', array(
-                'empleados' => $result));
-        }
-        else{
-            return $this->redirectToRoute('login');
-        }
-    }
 
     /**
-     * @Route("/secretaria/usuario/create/{id}", name="nuevo_usuario2")
+     * @Route("/secretaria/usuario/create", name="nuevo_usuario2")
      */
-    public function nuevoUsuarioAction($id, Request $request){
-        $em=$this->getDoctrine()->getManager("foues");
+    public function nuevoUsuarioAction(Request $request){
         $em2=$this->getDoctrine()->getManager("default");
-        $db = $em->getConnection();
-        //$sql = "SELECT * FROM empleados";
-        $sql = "SELECT * FROM empleados WHERE usuario='$id'";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        $ide=$id;
-        $existe=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $id));
-        if($existe){
-            $this->MensajeFlash('error','El usuario ya existe!');
-            $em2=$this->getDoctrine()->getManager("default");
-            $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
-            return $this->redirect($this->generateUrl('usuarios2', array('usuarios'=>$usuarios)));
-        }
+
         if($request->isMethod("POST"))
         {
-            $existe=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $id));
-            var_dump($existe);
-            if($existe){
-                $this->MensajeFlash('error','El usuario ya existe!');
+            $existe=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $request->get("username")));
+            $email=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('correo' => $request->get("email")));
+            if($existe or $email){
+                $this->MensajeFlash('error','El nombre de usuario o correo ya existe!');
                 $em2=$this->getDoctrine()->getManager("default");
                 $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
                 return $this->redirect($this->generateUrl('usuarios2', array('usuarios'=>$usuarios)));
@@ -67,7 +33,7 @@ class Usuarios2Controller extends SecurityController
                 $u = new Usuario();
                 $u->setNomusuario($request->get("username"));
                 $u->setNombre($request->get("nombre"));
-                $u->setIdRol($em2->getRepository('AppBundle:Roles')->find($request->get('rol')));
+                $u->setIdRol($em2->getRepository('AppBundle:Roles')->find(2));
                 $u->setCorreo($request->get("email"));
                 $u->setApellido($request->get("apellido"));
                 $u->setTelefono($request->get("tel"));
@@ -90,8 +56,7 @@ class Usuarios2Controller extends SecurityController
             }
 
         }
-        return $this->render('AppBundle:Secretaria/Usuarios2:nuevo_usuario.html.twig', array(
-            'empleado' => $result,'ide' =>$ide));
+        return $this->render('AppBundle:Secretaria/Usuarios2:nuevo_usuario.html.twig');
     }
 
     /**
@@ -103,21 +68,20 @@ class Usuarios2Controller extends SecurityController
         $datos=$this->getDoctrine()->getRepository('AppBundle:Usuario')->find($id);
         if($request->isMethod("POST"))
         {
-
             //$u->setNomusuario($request->get("username"));
             $datos->setNombre($request->get("nombre"));
-            $datos->setIdRol($em2->getRepository('AppBundle:Roles')->find($request->get('rol')));
+            $datos->setIdRol($em2->getRepository('AppBundle:Roles')->find(2));
             $datos->setCorreo($request->get("email"));
             $datos->setApellido($request->get("apellido"));
             $datos->setTelefono($request->get("tel"));
-
+            $datos->setIdEmpleado($request->get("id_emp"));
             $em2->flush();
             //redireccionamiento
             $this->MensajeFlash('exito','Usuario actualizado correctamente!');
 
             $em2=$this->getDoctrine()->getManager("default");
             $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
-            return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
+            return $this->redirect($this->generateUrl('usuarios2', array('usuarios'=>$usuarios)));
         }
         return $this->render('AppBundle:Secretaria/Usuarios2:editar_usuario.html.twig', array(
             'usuario' => $datos));
