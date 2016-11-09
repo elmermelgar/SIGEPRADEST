@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>ExperienciaLaboral list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idel</th>
+                <th>Institucionel</th>
+                <th>Cargoel</th>
+                <th>Paisel</th>
+                <th>Fechainicioel</th>
+                <th>Fechafinel</th>
+                <th>Infoadicionalel</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('alumno_experiencialaboral_show', { 'id': entity.idEl }) }}">{{ entity.idEl }}</a></td>
+                <td>{{ entity.institucionEl }}</td>
+                <td>{{ entity.cargoEl }}</td>
+                <td>{{ entity.paisEl }}</td>
+                <td>{% if entity.fechaInicioEl %}{{ entity.fechaInicioEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fechaFinEl %}{{ entity.fechaFinEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.infoAdicionalEl }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('alumno_experiencialaboral_show', { 'id': entity.idEl }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('alumno_experiencialaboral_edit', { 'id': entity.idEl }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('alumno_experiencialaboral_new') }}">
+                Create a new entry
+            </a><br/>
+            <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
+                Regresar a Curriculum
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

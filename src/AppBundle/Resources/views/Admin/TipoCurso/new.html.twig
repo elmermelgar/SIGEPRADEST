@@ -1,15 +1,50 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active1 %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
 
-{% block body -%}
-    <h1>TipoCurso creation</h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('tipocurso') }}">Tipos de Cursos</a></li>
+            <li class="active">Agregar un Tipo de curso</li>
+        </ol>
+        <h2>Agregar un Tipo de curso</h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- Form Elements -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Agregar un Tipo de curso
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Agregar un Tipo de curso</h3>
 
-    {{ form(form) }}
+                        {#{{ form(form) }}#}
+                        {{ form_start(form, {"attr":{"style":"form-control"}}) }}
+                        <div class="form-group">
+                            <br/>
+                        {{ form_label(form.nombreTc, 'Nombre del tipo de curso', {'label_attr': {'class': 'foo'}}) }}
+                        {{form_widget(form.nombreTc, {"attr":{"class":"form-control", "style":"width: 30%;","required":"required"}}) }}
+</div>
+                        <div class="col-md-12 col-md-offset-4">
+                        {{form_widget(form.submit, {"attr":{"class":"btn btn-primary", "style":"width: 30%;"}}) }}
+</div>
+                        {{ form_end(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('tipocurso') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- End Form Elements -->
+    </div>
+</div>
+
 {% endblock %}

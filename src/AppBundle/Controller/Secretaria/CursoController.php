@@ -152,7 +152,7 @@ class CursoController extends DSIController
         $doc=$this->mostrarDoctores();
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
         $datos=$em->getRepository('AppBundle:Curso')->find($id);
-        $id_hc=$this->IdHCcurso($id){"id_hc"};
+//        $id_hc=$this->IdHCcurso($id){"id_hc"};
         $hc=$em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
         $d1=$this->mostrarD1s($id);
         /*var_dump($d1);

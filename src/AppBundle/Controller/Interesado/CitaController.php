@@ -40,7 +40,8 @@ class CitaController extends DSIController
 //         if ($rol == 1)
 //            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use  ')->getResult();
 //        else
-            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = true and use.nomusuario = \'' . $user . '\'    ')->getResult();
+            $entities = $em->createQuery('Select cita from AppBundle:Cita cita ')->getResult();
+//            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = true and use.nomusuario = \'' . $user . '\'    ')->getResult();
 
 
 
@@ -120,7 +121,8 @@ class CitaController extends DSIController
         $rol = $this->getUser()->getIdrol()->getIdrol();
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = true and use.nomusuario = \'' . $user . '\'    ')->getResult();
+        $entities = $em->createQuery('Select cita from AppBundle:Cita cita ')->getResult();
+//        $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = true and use.nomusuario = \'' . $user . '\'    ')->getResult();
        if (count($entities)==0){
 
 

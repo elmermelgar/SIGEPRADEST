@@ -1,22 +1,28 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
-{% block body %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Cosas</a></li>
-            <li class="active">Mas...</li>
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li class="active">Alumnos </li>
         </ol>
-        <h2>Bienvenido Alumno</h2>
+        <h2>Alumnos </h2>
     </div>
-    {#{% endblock %}#}
+{% endblock %}
+{% block body %}
+<div class="col-md-12">
+    <!--   Kitchen Sink -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Alumnos inscritos en el sistema
+        </div>
 
-    {#{% extends '::base2.html.twig' %}#}
-
-    {#{% block body -%}#}
-    <h1>Alumno list</h1>
-
-    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
         <tr>
             <th>Usuario</th>
@@ -24,9 +30,9 @@
             <th>Apellidos</th>
             <th>correo</th>
 
-            <th>telefono</th>
+            <th>teléfono</th>
             <th>activo</th>
-            <th>Id Empleado</th>
+            <th>Acciones</th>
 
         </tr>
         </thead>
@@ -39,7 +45,7 @@
                 <td>{{ entity.idAlumno.idUi.correo }}</td>
                 <td>{{ entity.idAlumno.idUi.telefono }}</td>
                 <td>{% if entity.idAlumno.idUi.isactive %}{{ "Si" }}{% else %}{{ "No" }}{% endif %}</td>
-                <td>{% if entity.idAlumno.idUi.idEmpleado == null or entity.idUi.idEmpleado == "" %}{{ " - " }}{% else %}{{ entity.idUi.idEmpleado }}{% endif %}</td>
+                {#<td>{% if entity.idAlumno.idUi.idEmpleado == null or entity.idUi.idEmpleado == "" %}{{ " - " }}{% else %}{{ entity.idUi.idEmpleado }}{% endif %}</td>#}
                 {#<td>{{ entity.idCurso.nombreCurso }}</td>#}
                 {#<td>{{ entity.estado }}</td>#}
                 <td>

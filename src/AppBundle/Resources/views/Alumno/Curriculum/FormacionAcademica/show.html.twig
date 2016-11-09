@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>FormacionAcademica</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idfa</th>
+                <td>{{ entity.idFa }}</td>
+            </tr>
+            <tr>
+                <th>Tipofa</th>
+                <td>{{ entity.tipoFa }}</td>
+            </tr>
+            <tr>
+                <th>Institucionfa</th>
+                <td>{{ entity.institucionFa }}</td>
+            </tr>
+            <tr>
+                <th>Fechainiciofa</th>
+                <td>{{ entity.fechaInicioFa|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechafinfa</th>
+                <td>{{ entity.fechaFinFa|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Formal</th>
+                <td>{{ entity.formal }}</td>
+            </tr>
+            <tr>
+                <th>Imgtitulo</th>
+                {#<td>{{ entity.imgTitulo }}</td>#}
+                <td><img alt="EmbeddedImage" src="{{ entity.imgTitulo }}"/></td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('alumnoformacionacademicaCurriculum' ,{ 'cur': curriculum }) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('alumnoformacionacademica_edit', { 'id': entity.idFa,'curriculum': curriculum  }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

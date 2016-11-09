@@ -1,0 +1,36 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+    <h1>OtrasCompetencias</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idoc</th>
+                <td>{{ entity.idOc }}</td>
+            </tr>
+            <tr>
+                <th>Competencia</th>
+                <td>{{ entity.competencia }}</td>
+            </tr>
+            <tr>
+                <th>Descripcioncomp</th>
+                <td>{{ entity.descripcionComp }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('secretaria_otrascompetencias',{ 'cur': curriculum }) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('secretaria_otrascompetencias_edit', { 'id': entity.idOc }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -15,8 +15,6 @@ class InformacionAcademicaController extends SecurityController{
 
     /**
      * @Route("/admin/informacion/{seleccion}", name="verInfo", defaults={"seleccion" = 0} )
-     * @Route("/secretaria/informacion/{seleccion}", name="verInfo2", defaults={"seleccion" = 0} )
-     * @Security("has_role('ROLE_administrador') or has_role('ROLE_secretaria') ")
      */
     public function verInfoAction(Request $request,$seleccion){
         // function Read-Mostrar
@@ -42,9 +40,7 @@ class InformacionAcademicaController extends SecurityController{
                 return $this->render('AppBundle:Admin/InfoAcademica:index.html.twig', array(
                        'infos'=>$info, 'usu'=>$usu,'sol'=>$solicitud,'result'=>$result, 'seleccion'=>$seleccion));
             } else{
-                //throw $this->createNotFoundException("no se encontro pagina",null);
-                $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
-                return $this->redirectToRoute('login');
+                     return $this->redirectToRoute('login');
             }
 
         }catch (\Exception $e){
@@ -59,7 +55,6 @@ class InformacionAcademicaController extends SecurityController{
 
     /**
      * @Route("/admin/info_create",name="createInfo")
-     * @Security("has_role('ROLE_administrador') or has_role('ROLE_secretaria') ")
      */
     public function createInfoAction(Request $request)
     {
@@ -118,7 +113,6 @@ class InformacionAcademicaController extends SecurityController{
 
     /**
      * @Route("/admin/informacion/{id}/edit", name="editInfo" , defaults={"id" = 0})
-     * @Security("has_role('ROLE_administrador') or has_role('ROLE_secretaria') ")
      */
 
     public function editarUsuarioAction($id, Request $request)
@@ -169,7 +163,7 @@ class InformacionAcademicaController extends SecurityController{
                 return $this->redirectToRoute('login');
             }
        }catch (\Exception $e){
-           echo $e -> getMessage();
+           //echo $e -> getMessage();
            //throw $this->createNotFoundException("no se encontro pagina" ,null);
            //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
            return $this->redirectToRoute('verInfo');
@@ -179,37 +173,42 @@ class InformacionAcademicaController extends SecurityController{
 
     /**
      * @Route("/informacion/delete/{id}", name="deleteInfo" , defaults={"id" = 0})
-     * @Security("has_role('ROLE_administrador') or has_role('ROLE_secretaria') ")
      */
     public function deleteInformacionAction($id, Request $request)
     {
-        $em=$this->getDoctrine()->getManager();
-        $info=$em->getRepository('AppBundle:InformacionAcademica')->find($id);
 
-        if(!$info){
-            throw $this->createNotFoundException('No existe el informacion con la ID'.$id);
-        } else {
-            $em->remove($info);
-            $flush = $em->flush();
+        try {
+            // validar usuario logueado
+            if ($this->getUser()) {
 
-            $valor=$info->getIdSolicitud()->getIdUi()->getIdUi();
+                $em = $this->getDoctrine()->getManager();
+                $info = $em->getRepository('AppBundle:InformacionAcademica')->find($id);
 
+                if (!$info) {
+                    throw $this->createNotFoundException('No existe el informacion con la ID' . $id);
+                } else {
+                    $em->remove($info);
+                    $flush = $em->flush();
 
-            //var_dump( ($flush == null) );
-            //die();
+                    $valor = $info->getIdSolicitud()->getIdUi()->getIdUi();
 
-            if ($flush == null){
-                $this->MensajeFlash('exito','Informacion eliminada correctamente!');
-            }else{
-                $this->MensajeFlash('Error','No se puede eliminar!');
+                    if ($flush == null) {
+                        $this->MensajeFlash('exito', 'Informacion eliminada correctamente!');
+                    } else {
+                        $this->MensajeFlash('Error', 'No se puede eliminar!');
+                    }
+                }
+                return $this->redirectToRoute("verInfo", array('seleccion' => $valor));
+            } else {
+                //throw $this->createNotFoundException("no se encontro pagina",null);
+                $this->MensajeFlash('Error', 'No se puede mostrar la pagina, no esta logueado!');
+                return $this->redirectToRoute('login');
             }
+        } catch (\Exception $e) {
+            //echo $e -> getMessage();
+            //throw $this->createNotFoundException("no se encontro pagina" ,null);
+            //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
+            return $this->redirectToRoute('verInfo');
         }
-
-
-
-        return $this->redirectToRoute("verInfo",array('seleccion'=>$valor));
     }
-
-
-
-}
+} // fin de Informacion Controller

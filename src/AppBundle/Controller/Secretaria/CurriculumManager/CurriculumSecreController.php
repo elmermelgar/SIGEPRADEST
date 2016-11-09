@@ -28,7 +28,7 @@ class CurriculumSecreController extends Controller
     public function indexToAction(Request $request)
     {
          $id=$request->get("id");
-        echo $id;
+        //echo $id;
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('AppBundle:Curriculum')->findAll();

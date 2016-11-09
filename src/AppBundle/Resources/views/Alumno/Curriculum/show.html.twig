@@ -1,0 +1,28 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+    <h1>Curriculum</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Idcurriculum</th>
+                {#<td>{{ entity.idCurriculum }}</td>#}
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        {#<a href="{{ path('curriculum') }}">#}
+            {#Back to the list#}
+        {#</a>#}
+    </li>
+    <li>
+        {#<a href="{{ path('curriculum_edit', { 'id': entity.idCurriculum }) }}">#}
+            {#Edit#}
+        {#</a>#}
+    </li>
+    {#<li>{{ form(delete_form) }}</li>#}
+</ul>
+{% endblock %}

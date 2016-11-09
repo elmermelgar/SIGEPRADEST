@@ -13,7 +13,7 @@ use AppBundle\Form\TipoCursoType;
 /**
  * TipoCurso controller.
  *
- * @Route("secretaria/tipocurso")
+ * @Route("admin/tipocurso")
  */
 class TipoCursoController extends Controller
 {
@@ -165,7 +165,7 @@ class TipoCursoController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar'));
 
         return $form;
     }
@@ -193,7 +193,7 @@ class TipoCursoController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('tipocurso_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('tipocurso_show', array('id' => $id)));
         }
 
         return array(
@@ -240,7 +240,8 @@ class TipoCursoController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('tipocurso_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'btn btn-danger',
+                'style' => "width: 100%;")))
             ->getForm()
             ;
     }

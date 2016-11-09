@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Sigepradest{% endblock %}</title>
+    <!-- BOOTSTRAP STYLES-->
+    <link href="{{ asset('public/assets/css/bootstrap.css') }}" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="{{ asset('public/assets/css/font-awesome.css') }}" rel="stylesheet" />
+    <!-- ALERTYFY -->
+    <link href="{{ asset('public/alertify/alertify.core.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('public/alertify/alertify.default.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <!-- CUSTOM STYLES-->
+    <link href="{{ asset('public/assets/css/custom.css') }}" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script></script>
+    {% block styles %}{% endblock %}
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Navegacion</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Sigepradest</a>
+        </div>
+        <div style="color: white;
+padding: 15px 50px 5px 50px;
+float: right;
+font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ path('logout') }}" class="btn btn-primary square-btn-adjust">Logout</a> </div>
+    </nav>
+    {% for flashMessage in app.session.flashbag.get('mensaje') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+
+    {% endfor %}
+    <!-- /. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li class="text-center">
+                    <img src="{{ asset('public/assets/img/find_user.png') }}" class="user-image img-responsive"/>
+                </li>
+
+                {% if app.user.idrol.nombrerol== 'administrador' %}
+                    <li>
+                        <a class="{% block active1 %}{% endblock %}"  href="{{ path('usuarios') }}"><i class="fa fa-users"></i> Usuarios</a>
+                    </li>
+                    <li>
+                        <a class="{% block active2 %}{% endblock %}" href="#"><i class="fa fa-graduation-cap"></i> Cursos<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('verCurso') }}">Administrar Cursos</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('doctores') }}">Administrar Doctores</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Citas<span ></span></a>
+
+                    </li>
+                {% endif %}
+                {% if app.user.idrol.nombrerol== 'secretaria' %}
+                    <li>
+                        <a class="" href="#"><i class="fa fa-graduation-cap"></i> Cursos<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('verCurso') }}">Administrar Cursos</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('doctores_secre') }}">Administrar Doctores</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li  >
+                        <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-eye-open"></i> Horario de Entrevista</a>
+                    </li>
+                    <!-- anidado de Alumnos  -->
+                    <li>
+                        <a class="" href="#"><i class="fa fa-graduation-cap"></i> Gestion de Alumnos<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li  >
+                                <a  href="{{ path('alumnos') }}"><i class="glyphicon glyphicon-eye-open"></i> Crear Alumno</a>
+                            </li>
+
+                            <li  >
+                                <a  href="{{ path('alumnosall') }}"><i class="glyphicon glyphicon-eye-open"></i> Ver Alumnos</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--   fin de anidamiento -->
+                    <li  >
+                        <a  href="#"><i class="fa fa-edit fa-3x"></i> Solicitud de Entrvista</a>
+                    </li>
+                    <li  >
+                        <a  href="#"><i class="fa fa-edit fa-3x"></i> Menu 6 </a>
+                    </li>
+                    <li  >
+                        <a   href="#"><i class="fa fa-bolt fa-3x"></i> Menu 7</a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap fa-3x"></i> Sub Menu<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Sub Menu 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Sub Menu 2</a>
+                            </li>
+                            <li>
+                                <a href="#">Sub Menu 3<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#">Sub Menu 31</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Sub Menu 32</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Sub Menu 33</a>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+                        </ul>
+                    </li>
+                    <li  >
+                        <a  href="#"><i class="fa fa-square-o fa-3x"></i> Blank Page</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+        </div>
+
+    </nav>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                {% block Header %}
+                {% endblock %}
+
+            </div>
+            <!-- /. ROW  -->
+            <hr />
+            {% block body %}{% endblock %}
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+<!-- JQUERY SCRIPTS -->
+<script src="{{ asset('public/assets/js/jquery-1.10.2.js') }}"></script>
+<!-- BOOTSTRAP SCRIPTS -->
+<script src="{{ asset('public/assets/js/bootstrap.min.js') }}"></script>
+<!-- METISMENU SCRIPTS -->
+<script src="{{ asset('public/assets/js/jquery.metisMenu.js') }}"></script>
+<!-- ALERTIFY SCRIPTS -->
+<script src="{{ asset('public/alertify/alertify.js') }}"></script>
+
+<!-- CUSTOM SCRIPTS -->
+<script src="{{ asset('public/assets/js/morris/morris.js') }}"></script>
+
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <script>
+        window.onload = function error(){
+            alertify.error("{{ flashMessage }}.");
+            return false;
+        }
+    </script>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('exito') %}
+    <script>
+        window.onload = function notificacion(){
+            alertify.success("{{ flashMessage }}.");
+            return false;
+        }
+    </script>
+{% endfor %}
+
+{% block javascripts %}{% endblock %}
+
+<script src="{{ asset('public/assets/js/custom.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>ReferenciaLaboral list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idrf</th>
+                <th>Descripcionrf</th>
+                <th>Personarf</th>
+                <th>Telefonorf</th>
+                <th>Puestorf</th>
+                <th>Empresaorigenrf</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('secretaria_referencialaboral_show', { 'id': entity.idRf }) }}">{{ entity.idRf }}</a></td>
+                <td>{{ entity.descripcionRf }}</td>
+                <td>{{ entity.personaRf }}</td>
+                <td>{{ entity.telefonoRf }}</td>
+                <td>{{ entity.puestoRf }}</td>
+                <td>{{ entity.empresaOrigenRf }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('secretaria_referencialaboral_show', { 'id': entity.idRf }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('secretaria_referencialaboral_edit', { 'id': entity.idRf }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('secretaria_referencialaboral_new') }}">
+                Create a new entry
+            </a><br/>
+            <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
+                Regresar a Curriculum
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

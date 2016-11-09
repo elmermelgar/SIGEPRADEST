@@ -1,0 +1,46 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+    <h1>OtrasCompetencias list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idoc</th>
+                <th>Competencia</th>
+                <th>Descripcioncomp</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('secretaria_otrascompetencias_show', { 'id': entity.idOc }) }}">{{ entity.idOc }}</a></td>
+                <td>{{ entity.competencia }}</td>
+                <td>{{ entity.descripcionComp }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('secretaria_otrascompetencias_show', { 'id': entity.idOc }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('secretaria_otrascompetencias_edit', { 'id': entity.idOc }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('secretaria_otrascompetencias_new') }}">
+                Create a new entry
+            </a><br/>
+            <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
+                Regresar a Curriculum
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

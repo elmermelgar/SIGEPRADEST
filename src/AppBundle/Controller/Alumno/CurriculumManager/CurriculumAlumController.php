@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Alumno;
+namespace AppBundle\Controller\Alumno\CurriculumManager;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,30 +15,43 @@ use AppBundle\Form\CurriculumType;
  *
  * @Route("/alumno/curriculum")
  */
-class CurriculumController extends Controller
+class CurriculumAlumController extends Controller
 {
 
     /**
-     * Lists all Curriculum entities.
-     *
-     * @Route("/", name="curriculum")
-     * @Method("GET")
-     * @Template("@App/Curriculum/index.html.twig")
-     */
-    public function indexAction()
+ * Lists all Curriculum entities.
+ *
+ * @Route("/", name="curriculumAlumTo")
+ * @Method("GET")
+ * @Template("@App/Alumno/Curriculum/indexPersonal.html.twig")
+ */
+    public function indexToAction()
     {
+//         $id=$request->get("id");
+//       var_dump(  $rol=$this->getUser()->getIdUi());
+        $curicuFromLogUser=$this->getUser()->getIdUi();
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Curriculum')->findAll();
+        //optener el curriculum del usuario logueado       --JOIN cur.id------ JOIN cita.idUiuse WHERE hor.ocupado=true
+        $id = $em->createQuery('Select cur from AppBundle:Curriculum cur JOIN cur.idAlumno  alum JOIN alum.idUi  use WHERE use = '.$curicuFromLogUser )->getResult();
+
+            var_dump( count($id));
+            var_dump($id[0]->getIdCurriculum());
+        $cur=  $id[0]->getIdCurriculum();
+        $_SESSION["Curriculum"] = $cur;
+//        $entities = $em->getRepository('AppBundle:Curriculum')->findBy();
 
         return array(
-            'entities' => $entities,
+//            'entities' => $entities,
+            'curriculum' => $cur,
         );
     }
+
+
     /**
      * Creates a new Curriculum entity.
      *
-     * @Route("/", name="curriculum_create")
+     * @Route("/", name="curriculumAlum_create")
      * @Method("POST")
      * @Template("")
      */
@@ -53,7 +66,7 @@ class CurriculumController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('curriculum_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('curriculum_show', array('id' => $entity->getIdCurriculum())));
         }
 
         return array(
@@ -84,9 +97,9 @@ class CurriculumController extends Controller
     /**
      * Displays a form to create a new Curriculum entity.
      *
-     * @Route("/new", name="curriculum_new")
+     * @Route("/new", name="curriculumAlum_new")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/show.html.twig")
      */
     public function newAction()
     {
@@ -102,9 +115,9 @@ class CurriculumController extends Controller
     /**
      * Finds and displays a Curriculum entity.
      *
-     * @Route("/{id}", name="curriculum_show")
+     * @Route("/{id}", name="curriculumAlum_show")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/show.html.twig")
      */
     public function showAction($id)
     {
@@ -127,9 +140,9 @@ class CurriculumController extends Controller
     /**
      * Displays a form to edit an existing Curriculum entity.
      *
-     * @Route("/{id}/edit", name="curriculum_edit")
+     * @Route("/{id}/edit", name="curriculumAlum_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("@App/Curriculum/edit.html.twig")
      */
     public function editAction($id)
     {
@@ -161,7 +174,7 @@ class CurriculumController extends Controller
     private function createEditForm(Curriculum $entity)
     {
         $form = $this->createForm(new CurriculumType(), $entity, array(
-            'action' => $this->generateUrl('curriculum_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('curriculum_update', array('id' => $entity->getIdCurriculum())),
             'method' => 'PUT',
         ));
 
@@ -172,7 +185,7 @@ class CurriculumController extends Controller
     /**
      * Edits an existing Curriculum entity.
      *
-     * @Route("/{id}", name="curriculum_update")
+     * @Route("/{id}", name="curriculumAlum_update")
      * @Method("PUT")
      * @Template("AppBundle:Curriculum:edit.html.twig")
      */
@@ -205,7 +218,7 @@ class CurriculumController extends Controller
     /**
      * Deletes a Curriculum entity.
      *
-     * @Route("/{id}", name="curriculum_delete")
+     * @Route("/{id}", name="curriculumAlum_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

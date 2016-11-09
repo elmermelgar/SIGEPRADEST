@@ -4,17 +4,17 @@
     <h1>FormacionAcademica creation</h1>
     {{ form_start(form) }}
     {#{{ form(form) }}#}
-    {{form_widget(form.tipoFa,{"attr":{"style":"background-color:white;"}})}}
-    {{form_widget(form.institucionFa,{"attr":{"style":"background-color:white;"} })}}
-    {{form_widget(form.fechaInicioFa,{"attr":{"style":"background-color:white;"} })}}
-    {{form_widget(form.fechaFinFa,{"attr":{"style":"background-color:white;"} })}}
-    {{form_widget(form.formal,{"attr":{"style":"background-color:white;"} })}}
-    {{form_widget(form.imgTitulo,{"attr":{"style":"background-color:white;"} })}}
-    {{form_widget(form.idCurriculum, {'value': curriculum, "attr":{"style":"display:none;"}}) }}
+    {#{{form_widget(form.tipoFa,{"attr":{"style":"background-color:white;"}})}}#}
+    {#{{form_widget(form.institucionFa,{"attr":{"style":"background-color:white;"} })}}#}
+    {#{{form_widget(form.fechaInicioFa,{"attr":{"style":"background-color:white;"} })}}#}
+    {#{{form_widget(form.fechaFinFa,{"attr":{"style":"background-color:white;"} })}}#}
+    {#{{form_widget(form.formal,{"attr":{"style":"background-color:white;"} })}}#}
+    {#{{form_widget(form.imgTitulo,{"attr":{"style":"background-color:white;"} })}}#}
+    {{form_widget(form.idCurriculum, {'value': curriculum, "attr":{"style":"display:nosne;"}}) }}
     {{ form_end(form) }}
         <ul class="record_actions">
     <li>
-        <a href="{{ path('formacionacademicaCurriculum' ,{ 'cur': curriculum }) }}">
+        <a href="{{ path('alumnoformacionacademicaCurriculum' ,{ 'cur': curriculum }) }}">
             Back to the list
         </a>
     </li>

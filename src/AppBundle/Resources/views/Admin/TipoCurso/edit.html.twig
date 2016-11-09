@@ -1,16 +1,55 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active1 %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
 
-{% block body -%}
-    <h1>TipoCurso edit</h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('tipocurso') }}">Tipos de Cursos</a></li>
+            <li class="active">Editar un Tipo de curso</li>
+        </ol>
+        <h2>Editar un Tipo de curso</h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- Form Elements -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Editar un Tipo de curso
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Editar un Tipo de curso</h3>
+    {#{{ form(edit_form) }}#}
+                        {{ form_start(edit_form, {"attr":{"style":"form-control"}}) }}
+                        <div class="form-group">
+                            <br/>
+                            {{ form_label(edit_form.nombreTc, 'Nombre del tipo de curso', {'label_attr': {'class': 'foo'}}) }}
+                            {{form_widget(edit_form.nombreTc, {"attr":{"class":"form-control", "style":"width: 30%;","required":"required"}}) }}
+                        </div>
+                        <div class="col-md-12 col-md-offset-4">
+                            {{form_widget(edit_form.submit, {"attr":{"class":"btn btn-primary", "style":"width: 30%;"}}) }}
+                        </div>
+                        {{ form_end(edit_form) }}
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a href="{{ path('tipocurso') }}" class="btn btn-info" style="width: 100%">
+                                    Regresar
+                                </a>
 
-    {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('tipocurso') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+                            </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- End Form Elements -->
+    </div>
+</div>
+
 {% endblock %}
