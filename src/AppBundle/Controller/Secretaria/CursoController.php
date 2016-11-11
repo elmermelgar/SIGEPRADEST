@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Secretaria;
 use AppBundle\Controller\DSIController;
 use AppBundle\Entity\Curso;
 use AppBundle\Entity\HorarioCurso;
+use AppBundle\Entity\Modulos;
 use AppBundle\Entity\TipoCurso;
 use AppBundle\Tests\Controller\DetalleCursoControllerTest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,21 +25,18 @@ class CursoController extends DSIController
         if($this->getUser()){
             $em=$this->getDoctrine()->getManager("default");
             $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+            $hc=$em->createQuery('select curso from AppBundle:HorarioCurso curso ORDER BY curso.fechaInicio DESC ')->getResult();
 
-            $hc=$this->mostrarHC();
             $fechaAhora=(new \DateTime('now',new \DateTimeZone('America/El_Salvador')))->format("Y-m-d");
             for($i=0;$i<count($hc);$i++){
-                if($fechaAhora>$hc[$i]{"fecha_fin"}){
-                    $id=$em->getRepository('AppBundle:Curso')->find($hc[$i]{"id_curso"});
+                if($fechaAhora>($hc[$i]->getFechaFin()->format("Y-m-d"))){
+                    $id=$em->getRepository('AppBundle:Curso')->find($hc[$i]->getIdCurso());
                     $id->setEstadoCurso("Desabilitado");
-
-                    //Guradar en la BD
+                    //Guardar en la BD
                     $em->flush();
                 }
             }
-
             $doctores=$em->getRepository('AppBundle:Doctores')->findAll();
-
             $d1=$this->mostrarD1();
 
             return $this->render('AppBundle:Secretaria/Curso:curso.html.twig', array('cursos'=>$cursos,'doctores'=>$doctores,'d1'=>$d1, 'hc'=>$hc));
@@ -56,7 +54,7 @@ class CursoController extends DSIController
     {
         $em=$this->getDoctrine()->getManager();
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
-        $doc = $this->mostrarDoctores();
+        $doc = $em->getRepository("AppBundle:Doctores")->findBy(array(),array('nombreDoc'=>'ASC'));
 
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {
@@ -71,7 +69,8 @@ class CursoController extends DSIController
                             $nomCurso=$request->get('nombrecurso');
                             if($em->getRepository('AppBundle:Curso')->findOneBy(array('nombreCurso'=>$nomCurso)))
                             {
-                                return new Response("Error el Curso ya ha sido registrado!");
+                                $this->MensajeFlash('error','Error el Curso ya ha sido registrado!');
+                                return $this->render("AppBundle:Secretaria/Curso:curso_create.html.twig",array("tc"=>$tc,"doc"=>$doc));
                             }
                             else {
                                 $nombreImagen=$nomCurso.$this->infoTipoImagen('imagen')[1];
@@ -98,9 +97,11 @@ class CursoController extends DSIController
 
                                 //Persistir
                                 $em->persist($curso);
+                                $idcurso=$curso->getIdCurso();
 
                                 //Proceso de almacenamiento de datos de entidad Horario Curso
                                 $horario=new HorarioCurso();
+                                $horario->setIdCurso($em->getRepository("AppBundle:Curso")->find($idcurso));
                                 $horario->setFechaInicio(new \DateTime($request->get("fechaini")));
                                 $horario->setFechaFin(new \DateTime($request->get("fechafin")));
                                 $horario->setInicioRecepDoc(new \DateTime($request->get("fechainirec")));
@@ -111,8 +112,12 @@ class CursoController extends DSIController
                                 $horario->setAfechaEvaluacion(new \DateTime($request->get("fechafineva")));
 
                                 //Persistir
-                                $em->persist($horario);
 
+                                $modulo= new Modulos();
+                                $modulo->setIdCurso($em->getRepository("AppBundle:Curso")->find($idcurso));
+                                $modulo->setNombreModulo('Modulo 1-'.$curso->getNombreCurso());
+                                $em->persist($modulo);
+                                $em->persist($horario);
                                 //Guradar en la BD
                                 $em->flush();
 
@@ -121,7 +126,7 @@ class CursoController extends DSIController
                                 //Subiendo el PDF
                                 $this->subirPDF('archivo',$nombrePDF);
 
-                                $idcurso=$curso->getIdCurso();
+                                //$idcurso=$curso->getIdCurso();
 
                                 //Manejando relacion de muchos a muchos
                                 for ($i = 0; $i < count($array_doc); $i++) {
@@ -132,11 +137,14 @@ class CursoController extends DSIController
                                 $this->MensajeFlash('exito','Curso creado correctamente!');
                                 return $this->redirectToRoute("verCurso");
                             }
-                        }else
-                            return new Response('El Archivo no es un archivo PDF');
+                        }else{
+                            $this->MensajeFlash('error','El archivo no es un PDF!');
+                            return $this->render("AppBundle:Secretaria/Curso:curso_create.html.twig",array("tc"=>$tc,"doc"=>$doc));
+                        }
+                    }else{
+                        $this->MensajeFlash('error','El archivo no es una imagen!');
+                        return $this->render("AppBundle:Secretaria/Curso:curso_create.html.twig",array("tc"=>$tc,"doc"=>$doc));
                     }
-                    else
-                        return new Response('El Archivo no es una imagen');
                 }
             }
         }
@@ -149,14 +157,16 @@ class CursoController extends DSIController
     public function editCursoAction($id, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
-        $doc=$this->mostrarDoctores();
+        $doc = $em->getRepository("AppBundle:Doctores")->findBy(array(),array('nombreDoc'=>'ASC'));
+
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
         $datos=$em->getRepository('AppBundle:Curso')->find($id);
-//        $id_hc=$this->IdHCcurso($id){"id_hc"};
+        $hc=$em->getRepository('AppBundle:HorarioCurso')->findOneBy(array('idCurso'=> $id));
+        $id_hc=$hc->getIdHc();
+      //  $id_hc=$this->IdHCcurso($id);
         $hc=$em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
         $d1=$this->mostrarD1s($id);
-        /*var_dump($d1);
-        die();*/
+
 
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {
@@ -185,9 +195,14 @@ class CursoController extends DSIController
                             $datos->setNombreCurso($nom_cur);
                             $datos->setCantAlumnosLimit($can_alum);
                             $datos->setTextoInformativo($des_info);
-                            $datos->setBroshureInformativo("img/brochure/".$nombreImagen);
+                            if($nombreImagen!=NULL){
+                                $datos->setBroshureInformativo("img/brochure/".$nombreImagen);
+                            }
+                            if($nombrePDF!=NULL){
+                                $datos->setRutaPdf("img/pdf/".$nombrePDF);
+                            }
                             $datos->setNumCuotas($nun_cuo);
-                            $datos->setRutaPdf("img/pdf/".$nombrePDF);
+
                             $datos->setEstadoCurso("Registro");
 
                             //Proceso de almacenamiento de datos de entidad Horario Curso
