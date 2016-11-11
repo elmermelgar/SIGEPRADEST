@@ -65,6 +65,18 @@ class Doctores
     private $idCurso;
 
     /**
+     * @var \Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_ui", referencedColumnName="id_ui")
+     * })
+     */
+    private $idUi;
+
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -229,5 +241,27 @@ class Doctores
     public function getIdCurso()
     {
         return $this->idCurso;
+    }
+    /**
+     * Set idUi
+     *
+     * @param \AppBundle\Entity\Usuario $idUi
+     * @return Doctores
+     */
+    public function setIdUi(\AppBundle\Entity\Usuario $idUi = null)
+    {
+        $this->idUi = $idUi;
+
+        return $this;
+    }
+
+    /**
+     * Get idUi
+     *
+     * @return \AppBundle\Entity\Usuario
+     */
+    public function getIdUi()
+    {
+        return $this->idUi;
     }
 }

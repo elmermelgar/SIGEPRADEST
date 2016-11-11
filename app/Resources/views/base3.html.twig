@@ -53,9 +53,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                 </li>
 
                 {% if app.user.idrol.nombrerol== 'administrador' %}
-                <li>
-                    <a class="{% block active1 %}{% endblock %}"  href="{{ path('usuarios') }}"><i class="fa fa-users"></i> Usuarios</a>
-                </li>
+                    <li>
+                        <a class="{% block active1 %}{% endblock %}"  href="{{ path('usuarios') }}"><i class="fa fa-users"></i> Usuarios</a>
+                    </li>
                     <li>
                         <a class="{% block active2 %}{% endblock %}" href="#"><i class="fa fa-graduation-cap"></i> Cursos<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -73,83 +73,75 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                     </li>
                 {% endif %}
                 {% if app.user.idrol.nombrerol== 'secretaria' %}
-                <li>
-                    <a class="" href="#"><i class="fa fa-graduation-cap"></i> Cursos<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="{{ path('verCurso') }}">Administrar Cursos</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('doctores_secre') }}">Tutores Disponibles</a>
-                        </li>
-                    </ul>
-                </li>
-                <li  >
-                    <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-calendar"></i> Horario de Entrevista</a>
-                </li>
+                    <li>
+                        <a class="" href="#"><i class="fa fa-graduation-cap"></i> Cursos<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ path('verCurso') }}">Administrar Cursos</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('doctores_secre') }}">Administrar Doctores</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li  >
+                        <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-eye-open"></i> Horario de Entrevista</a>
+                    </li>
                     <!-- anidado de Alumnos  -->
                     <li>
                         <a class="" href="#"><i class="fa fa-graduation-cap"></i> Gestion de Alumnos<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
+                        <ul class="nav nav-second-level">
+                            <li  >
+                                <a  href="{{ path('alumnos') }}"><i class="glyphicon glyphicon-eye-open"></i> Crear Alumno</a>
+                            </li>
+
+                            <li  >
+                                <a  href="{{ path('alumnosall') }}"><i class="glyphicon glyphicon-eye-open"></i> Ver Alumnos</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--   fin de anidamiento -->
                     <li  >
-                        <a  href="{{ path('alumnos') }}"><i class="glyphicon glyphicon-eye-open"></i> Crear Alumno</a>
+                        <a  href="#"><i class="fa fa-edit fa-3x"></i> Solicitud de Entrvista</a>
+                    </li>
+                    <li  >
+                        <a  href="#"><i class="fa fa-edit fa-3x"></i> Menu 6 </a>
+                    </li>
+                    <li  >
+                        <a   href="#"><i class="fa fa-bolt fa-3x"></i> Menu 7</a>
                     </li>
 
-                    <li  >
-                        <a  href="{{ path('alumnosall') }}"><i class="glyphicon glyphicon-eye-open"></i> Ver Alumnos</a>
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap fa-3x"></i> Sub Menu<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Sub Menu 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Sub Menu 2</a>
+                            </li>
+                            <li>
+                                <a href="#">Sub Menu 3<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#">Sub Menu 31</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Sub Menu 32</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Sub Menu 33</a>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+                        </ul>
                     </li>
-                </ul>
-                </li>
-             <!--   fin de anidamiento -->
-                <li  >
-                    <a  href="#"><i class="fa fa-edit fa-3x"></i> Solicitud de Entrvista</a>
-                </li>
+                    <li  >
+                        <a  href="#"><i class="fa fa-square-o fa-3x"></i> Blank Page</a>
+                    </li>
                 {% endif %}
-                {% if app.user.idrol.nombrerol== 'director' %}
-                    <li  >
-                        <a  href="{{ path('usuarios2') }}"><i class="glyphicon glyphicon-user"></i> Usuarios Tutores</a>
-                    </li>
-                {% endif %}
-                <!-- /. NAV SIDE
-                <li  >
-                    <a  href="#"><i class="fa fa-edit fa-3x"></i> Menu 6 </a>
-                </li>
-                <li  >
-                    <a   href="#"><i class="fa fa-bolt fa-3x"></i> Menu 7</a>
-                </li>
-
-                <li>
-                    <a href="#"><i class="fa fa-sitemap fa-3x"></i> Sub Menu<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="#">Sub Menu 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Sub Menu 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Sub Menu 3<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="#">Sub Menu 31</a>
-                                </li>
-                                <li>
-                                    <a href="#">Sub Menu 32</a>
-                                </li>
-                                <li>
-                                    <a href="#">Sub Menu 33</a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-                    </ul>
-                </li>
-                <li  >
-                    <a  href="#"><i class="fa fa-square-o fa-3x"></i> Blank Page</a>
-                </li>
-                    -->
-
             </ul>
 
         </div>
@@ -165,7 +157,6 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
             </div>
             <!-- /. ROW  -->
             <hr />
-            <br/>
             {% block body %}{% endblock %}
         </div>
         <!-- /. PAGE INNER  -->
@@ -183,6 +174,8 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
 <!-- ALERTIFY SCRIPTS -->
 <script src="{{ asset('public/alertify/alertify.js') }}"></script>
 
+<!-- CUSTOM SCRIPTS -->
+<script src="{{ asset('public/assets/js/morris/morris.js') }}"></script>
 
 
 {% for flashMessage in app.session.flashbag.get('error') %}

@@ -4,8 +4,8 @@
     <div class="col-md-12">
 
     <ol class="breadcrumb">
-        <li><a href="{{ path('admin') }}">Inicio</a></li>
-        <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
+        <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+        <li><a href="{{ path('usuarios2') }}">Usuarios</a></li>
         <li class="active">Editar Usuario</li>
     </ol>
     <h2>Editando un usuario</h2>
@@ -24,7 +24,7 @@
                         <div class="col-md-12">
                             <h3>Editar Datos Complementarios</h3>
 
-                            <form role="form" action="{{ path('editar_usuario', {'id': usuario.idUi}) }}" method="post" >
+                            <form role="form" action="{{ path('editar_usuario2', {'id': usuario.idUi}) }}" method="post" >
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nombres </label>
@@ -36,12 +36,6 @@
                                             <input class="form-control" name="apellido" value="{{ usuario.apellido}}"/>
 
                                     </div>
-                                    <div class="form-group">
-                                        <label>Correo </label>
-
-                                        <input class="form-control" type="email" name="email" value="{{ usuario.correo }}" required/>
-
-                                    </div>
 
                                     <div class="form-group">
                                         <label>Telefono </label>
@@ -49,33 +43,25 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+
                                     <div class="form-group">
                                         <label for="disabledSelect">Usuario</label>
                                             <input class="form-control" name="username" value="{{ usuario.nomusuario }}" readonly/>
-
                                     </div>
                                     <div class="form-group">
-                                        <label for="disabledSelect">Password</label>
-                                            <input class="form-control" name="pass" type="password" value="{{ usuario.password }}" readonly/>
-
+                                        <label>Correo </label>
+                                        <input class="form-control" type="email" name="email" value="{{ usuario.correo }}" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="disabledSelect">Id Empleado</label>
-                                            <input class="form-control" name="id_emp" type="text" value="{{ usuario.idEmpleado }}" readonly/>
+                                        <label for="disabledSelect">DUI</label>
+                                            <input class="form-control" name="id_emp" type="text" value="{{ usuario.idEmpleado }}"/>
+                                    </div>
 
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tipo de Usuario</label>
-                                        <select class="form-control" name="rol">
-                                            <option value="1">Administrador</option>
-                                            <option value="2">Docente</option>
-                                        </select>
-                                    </div>
                                 </div>
-                                <div class="col-md-12 col-md-offset-4">
-                                    <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar Usuario</button>
+                                <div class="col-md-12">
+                                    <button type="reset" style="width: 20%;margin-top: 10px;float: left" class="btn btn-default">Restaurar</button>
+                                    <button type="submit" style="width: 20%;margin-top: 10px;float: right" class="btn btn-primary">Actualizar Usuario</button>
                                 </div>
-
                             </form>
                         </div>
 

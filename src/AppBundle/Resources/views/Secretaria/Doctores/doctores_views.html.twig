@@ -7,9 +7,9 @@
 <div class="col-md-12">
     <ol class="breadcrumb">
         <li><a href="{{ path('secretaria') }}">Inicio</a></li>
-        <li class="active">Doctores</li>
+        <li class="active">Tutores Disponibles</li>
     </ol>
-    <h2>Doctores</h2><a href="{{ path('new_doctor_ext') }}" style="float: right; margin-top: -35px;" title="Agregar" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Doctor Externo</a>
+    <h2>Tutores</h2>{#<a href="{{ path('new_doctor_ext') }}" style="float: right; margin-top: -35px;" title="Agregar" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Doctor Externo</a>#}
 </div>
 {% endblock %}
 {% block body %}
@@ -17,7 +17,7 @@
         <!--   Kitchen Sink -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                Doctores de Posgrado <a href="{{ path('empleados_doc') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Doctor</a>
+                Tutores de Posgrado {#<a href="{{ path('empleados_doc') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Doctor</a>#}
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -41,8 +41,8 @@
                             <td>{{ doctores.turno }}</td>
                             <td style="text-align: center;">
                                 <a href="{{ path('edit_doctor', {'id': doctores.idDoctores }) }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                                -
-                                <button onClick="confirmar({{ doctores.idDoctores }})" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
+                                {#-#}
+                                {#<button onClick="confirmar({{ doctores.idDoctores }})" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>#}
                             </td>
                         </tr>
                             {% endfor %}
@@ -55,22 +55,22 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    {% for doctores in doctores %}
-        <script>
+    {#{% for doctores in doctores %}#}
+        {#<script>#}
 
-            function confirmar(id){
-                //un confirm
-                alertify.confirm("<p>Esta seguro que desea eliminar el Doctores?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
-                    if (e) {
-                        location.href="{{ asset('/secretaria/doctor/delete') }}/"+id;
-                    } else { alertify.error("Has cancelado la operacion");
-                    }
-                });
-                return false
-            }
+            {#function confirmar(id){#}
+                {#//un confirm#}
+                {#alertify.confirm("<p>Esta seguro que desea eliminar el Doctores?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {#}
+                    {#if (e) {#}
+                        {#location.href="{{ asset('/secretaria/doctor/delete') }}/"+id;#}
+                    {#} else { alertify.error("Has cancelado la operacion");#}
+                    {#}#}
+                {#});#}
+                {#return false#}
+            {#}#}
 
-        </script>
-    {% endfor %}
+        {#</script>#}
+    {#{% endfor %}#}
     <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
     <script>

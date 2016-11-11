@@ -22,9 +22,14 @@
         <fieldset>
     <div class="col-md-6">
             <div class="control-group">
-            <label class="control-label" for="prependedInput"> Buscar usuario / enter </label>
-            <input id="InputSelect1_txt" name= "InputSelect1_txt"  list="lista1_list" placeholder="Escriba el nombre de usuario / enter" class="form-control">
 
+
+            <label class="control-label" for="prependedInput"> Buscar usuario / enviar </label>
+                    <div class="input-group">
+            <input id="InputSelect1_txt" name= "InputSelect1_txt"  list="lista1_list" placeholder="Escriba el nombre de usuario / enter" class="form-control">
+                        <span class="input-group-addon">  </span>
+            <input type="button" id = "desplegar_btn" name="desplegar_btn" onclick="cargarSelect()" class="form-control" value="Enviar">
+                    </div>
 
 
             <div class="controls">
@@ -122,20 +127,7 @@
             });
 
             $('#InputSelect1_txt').change(function(){
-
-                var dato = $("input[name=InputSelect1_txt]").val();
-                options = document.querySelectorAll('#lista1_list option');
-
-                for(var i = 0; i < options.length; i++) {
-                    var option = options[i];
-                    //var nombreCompletoList = option.innerText;
-                    //alert( dato.localeCompare(nombreCompletoList) );
-
-                    if( option.innerText.trim().valueOf() == dato.trim().valueOf() ){
-                        cargarSelect2(option.getAttribute('data-value'));
-                    }
-               }
-
+                cargarSelect();
             });
 
         });
@@ -156,6 +148,22 @@
                 }
             });
 
+        }
+
+
+        function cargarSelect( ){
+            var dato = $("input[name=InputSelect1_txt]").val();
+            options = document.querySelectorAll('#lista1_list option');
+
+            for(var i = 0; i < options.length; i++) {
+                var option = options[i];
+                //var nombreCompletoList = option.innerText;
+                //alert( dato.localeCompare(nombreCompletoList) );
+
+                if( option.innerText.trim().valueOf() == dato.trim().valueOf() ){
+                    cargarSelect2(option.getAttribute('data-value'));
+                }
+            }
         }
 
         function cargarSelect2(valor){

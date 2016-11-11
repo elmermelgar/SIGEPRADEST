@@ -98,23 +98,6 @@
 <!-- ALERTIFY SCRIPTS -->
 <script src="{{ asset('public/alertify/alertify.js') }}"></script>
 
-{% for flashMessage in app.session.flashbag.get('error') %}
-    <script>
-        window.onload = function error(){
-            alertify.error("{{ flashMessage }}.");
-            return false;
-        }
-    </script>
-{% endfor %}
-{% for flashMessage in app.session.flashbag.get('exito') %}
-    <script>
-        window.onload = function notificacion(){
-            alertify.success("{{ flashMessage }}.");
-            return false;
-        }
-    </script>
-{% endfor %}
-
 <script>
     var password = document.getElementById("password")
             , confirm_password = document.getElementById("confirm_password");

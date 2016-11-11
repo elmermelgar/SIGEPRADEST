@@ -1,0 +1,107 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+        <li><a href="{{ path('usuarios2') }}">Usuarios</a></li>
+        <li class="active">Nuevo Usuario</li>
+    </ol>
+    <h2>Creando un nuevo usuario</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Datos Personales
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Datos Complementarios</h3>
+
+                            <form role="form" action="{{ path('nuevo_usuario2') }}" method="post" >
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nombres </label>
+                                            <input class="form-control" name="nombre"  required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Apellidos </label>
+                                            <input class="form-control" name="apellido" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Correo </label>
+                                        <input class="form-control" type="email" name="email" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">DUI</label>
+                                        <input class="form-control" name="id_emp" type="text" max="10" placeholder="00000000-0"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="form-control">Especialidad</label>
+                                        <input class="form-control" name="especialidad" max="50" type="text" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Usuario</label>
+                                            <input class="form-control" name="username" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Password</label>
+                                            <input id="password" class="form-control" name="pass" type="password" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Confirmar Password</label>
+                                        <input id="confirm_password" class="form-control" type="password"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Telefono </label>
+                                        <input class="form-control" type="text" name="tel" max="9" placeholder="9999-9999"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Turno </label>
+                                        <input class="form-control" type="text" name="turno" max="50" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="reset" style="width: 20%;margin-top: 10px;float: left" class="btn btn-default">Limpiar</button>
+                                    <button type="submit" style="width: 20%;margin-top: 10px;float: right" class="btn btn-primary">Guardar Usuario</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var password = document.getElementById("password")
+                , confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords no coinciden!");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
+{% endblock %}

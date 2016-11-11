@@ -14,10 +14,10 @@
 {% endblock %}
 {% block body %}
     <div class="col-md-12">
-        <!--   Kitchen Sink -->
+
         <div class="panel panel-default">
             <div class="panel-heading">
-                Usuarios del Sistema <a href="{{ path('empleados2') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Usuario</a>
+                Usuarios del Sistema <a href="{{ path('nuevo_usuario2') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Usuario</a>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -29,21 +29,19 @@
                             <th style="text-align: center">ID Empleado</th>
                             <th style="text-align: center">Correo</th>
                             <th style="text-align: center">Usuario</th>
-                            <th style="text-align: center">Rol</th>
                             <th style="text-align: center">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         {% for usuarios in usuarios %}
-                            {% if usuarios.idRol.nombreRol=='doctor' or  usuarios.idRol.nombreRol=='secretaria'%}
+                            {% if usuarios.idRol.nombreRol=='tutor' and usuarios.isactive == 1 %}
                         <tr>
                             <td>{{ usuarios.nombre }}</td>
                             <td>{{ usuarios.apellido }}</td>
                             <td>{{ usuarios.idEmpleado }}</td>
                             <td>{{ usuarios.correo }}</td>
                             <td>{{ usuarios.nomusuario }}</td>
-                            <td>{{ usuarios.idRol.nombreRol }}</td>
                             <td style="text-align: center;">
                                 <a href="{{ path('editar_usuario2', {'id': usuarios.idUi}) }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                 -
@@ -69,7 +67,7 @@
                 //un confirm
                 alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
                     if (e) {
-                        location.href="{{ asset('/secretaria/usuario/delete') }}/"+id;
+                        location.href="{{ asset('/director/usuario/delete') }}/"+id;
                     } else { alertify.error("Has cancelado la operacion");
                     }
                 });
