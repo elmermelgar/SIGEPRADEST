@@ -130,4 +130,28 @@ class Usuarios2Controller extends SecurityController
         return $this->redirectToRoute("usuarios2");
     }
 
+    //Metodo para cambiar el password del director
+    /**
+     * @Route("/director/cambiarpass/{id}", name="cambiar_pass_director")
+     */
+    public function cambiarPassAction($id, Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $datos=$this->getDoctrine()->getRepository('AppBundle:Usuario')->find($id);
+        if($request->isMethod("POST"))
+        {
+
+            //Cifra el password
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($datos);
+            $password = $encoder->encodePassword($request->get("pass"), $datos->getSalt());
+            $datos->setPassword($password);
+            $em->flush();
+            //redireccionamiento
+            $this->MensajeFlash('exito','Se actualizo la contraseña correctamente!');
+            return $this->redirect($this->generateUrl('director'));
+        }
+        return $this->render('AppBundle:Director/Usuarios2:cambiar_password_director.html.twig');
+    }
+
 }

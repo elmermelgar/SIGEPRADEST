@@ -17,7 +17,7 @@
         <!--   Kitchen Sink -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                Usuarios del Sistema <a href="{{ path('empleados') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Usuario</a>
+                Usuarios del Sistema <a href="{{ path('nuevo_usuario') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Usuario</a>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -26,7 +26,7 @@
                         <tr>
                             <th style="text-align: center">Nombre</th>
                             <th style="text-align: center">Apellido</th>
-                            <th style="text-align: center">ID Empleado</th>
+                            <th style="text-align: center">Tipo Usuario</th>
                             <th style="text-align: center">Correo</th>
                             <th style="text-align: center">Usuario</th>
                             <th style="text-align: center">Acciones</th>
@@ -35,18 +35,22 @@
                         <tbody>
 
                         {% for usuarios in usuarios %}
+                            {% if usuarios.isactive == 1 %}
                         <tr>
                             <td>{{ usuarios.nombre }}</td>
                             <td>{{ usuarios.apellido }}</td>
-                            <td>{{ usuarios.idEmpleado }}</td>
+                            <td>{{ usuarios.idRol.nombreRol }}</td>
                             <td>{{ usuarios.correo }}</td>
                             <td>{{ usuarios.nomusuario }}</td>
                             <td style="text-align: center;">
                                 <a href="{{ path('editar_usuario', {'id': usuarios.idUi}) }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                 -
                                 <button onClick="confirmar({{ usuarios.idUi }})" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
+                                -
+                                <a href="{{ path('cambiar_pass', {'id': usuarios.idUi}) }}" title="Cambiar Password" class="btn btn-warning" ><span class="glyphicon glyphicon-lock" aria-hidden="true"/></a>
                             </td>
                         </tr>
+                        {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>

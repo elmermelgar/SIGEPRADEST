@@ -60,7 +60,7 @@
 
             function confirmar(id){
                 //un confirm
-                alertify.confirm("<p>Esta seguro que desea eliminar el Doctores?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                alertify.confirm("<p>Esta seguro que desea eliminar el Tutor?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
                     if (e) {
                         location.href="{{ asset('/secretaria/doctor/delete') }}/"+id;
                     } else { alertify.error("Has cancelado la operacion");

@@ -6,7 +6,6 @@
     <ol class="breadcrumb">
         <li><a href="{{ path('admin') }}">Inicio</a></li>
         <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
-        <li><a href="{{ path('empleados') }}">Empleados</a></li>
         <li class="active">Nuevo Usuario</li>
     </ol>
     <h2>Creando un nuevo usuario a partir de un empleado</h2>
@@ -25,25 +24,19 @@
                         <div class="col-md-12">
                             <h3>Datos Complementarios</h3>
 
-                            <form role="form" action="{{ path('nuevo_usuario', {'id': 'x'}) }}" method="post" >
+                            <form role="form" action="{{ path('nuevo_usuario') }}" method="post" >
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nombres </label>
-                                        {% for empleado in empleado %}
-                                            <input class="form-control" name="nombre" value="{{ empleado.primer_nombre }} {{ empleado.segundo_nombre }}" />
-                                        {% endfor %}
+                                            <input class="form-control" name="nombre" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Apellidos </label>
-                                        {% for empleado in empleado %}
-                                            <input class="form-control" name="apellido" value="{{ empleado.primer_apellido }} {{ empleado.segundo_apellido }}"/>
-                                        {% endfor %}
+                                            <input class="form-control" name="apellido" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Correo </label>
-                                        {% for empleado in empleado %}
                                         <input class="form-control" type="email" name="email" required/>
-                                        {% endfor %}
                                     </div>
 
                                     <div class="form-group">
@@ -54,32 +47,29 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="disabledSelect">Usuario</label>
-                                        {% for empleado in empleado %}
-                                            <input class="form-control" name="username" value="{{ empleado.usuario }}" readonly/>
-                                        {% endfor %}
+                                            <input class="form-control" name="username" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">Password</label>
-                                        {% for empleado in empleado %}
-                                            <input class="form-control" name="pass" type="password" value="{{ empleado.password }}" readonly/>
-                                        {% endfor %}
+                                            <input class="form-control" name="pass" type="password" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="disabledSelect">Id Empleado</label>
-                                        {% for empleado in empleado %}
-                                            <input class="form-control" name="id_emp" type="text" value="{{ empleado.id_empleado }}" readonly/>
-                                        {% endfor %}
+                                        <label for="disabledSelect">DUI</label>
+                                            <input class="form-control" name="id_emp" type="text" max="10" placeholder="00000000-0"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Tipo de Usuario</label>
                                         <select class="form-control" name="rol">
-                                            <option value="2">Docente</option>
+                                            <option value="1">Administrador</option>
+                                            <option value="2">Tutor</option>
                                             <option value="5">Secretaria</option>
+                                            <option value="2">Director</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-md-offset-4">
-                                    <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar Usuario</button>
+                                <div class="col-md-12">
+                                    <button type="reset" style="width: 20%;margin-top: 10px;float: left" class="btn btn-default">Limpiar</button>
+                                    <button type="submit" style="width: 20%;margin-top: 10px;float: right" class="btn btn-primary">Guardar Usuario</button>
                                 </div>
 
                             </form>
