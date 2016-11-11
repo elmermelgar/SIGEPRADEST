@@ -1,7 +1,8 @@
 <?php
 
-namespace AppBundle\Controller\Secretaria;
+namespace AppBundle\Controller\Director;
 
+use AppBundle\Entity\Doctores;
 use AppBundle\Entity\Usuario;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,7 +14,7 @@ class Usuarios2Controller extends SecurityController
 {
 
     /**
-     * @Route("/secretaria/usuario/create", name="nuevo_usuario2")
+     * @Route("/director/usuario/create", name="nuevo_usuario2")
      */
     public function nuevoUsuarioAction(Request $request){
         $em2=$this->getDoctrine()->getManager("default");
@@ -33,6 +34,7 @@ class Usuarios2Controller extends SecurityController
                 $u = new Usuario();
                 $u->setNomusuario($request->get("username"));
                 $u->setNombre($request->get("nombre"));
+                $usuario=$request->get("username");
                 $u->setIdRol($em2->getRepository('AppBundle:Roles')->find(2));
                 $u->setCorreo($request->get("email"));
                 $u->setApellido($request->get("apellido"));
@@ -47,6 +49,18 @@ class Usuarios2Controller extends SecurityController
                 //Persistencia
                 $em2->persist($u);
                 $em2->flush();
+                //Creando un tutor a partir de un Usuario de tipo tutor
+                $tutor=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $usuario));
+                $doc = new Doctores();
+                $doc->setNombreDoc($request->get("nombre"));
+                $doc->setApellidoDoc($request->get("apellido"));
+                $doc->setDuiDoc($request->get("id_emp"));
+                $doc->setEspecialidad($request->get("especialidad"));
+                $doc->setTurno($request->get("turno"));
+                $usu=$em2->getRepository('AppBundle:Usuario')->find($tutor->getIdUi());
+                $doc->setIdUi($usu);
+                $em2->persist($doc);
+                $em2->flush();
                 //redireccionamiento
                 $this->MensajeFlash('exito','Usuario creado correctamente!');
 
@@ -56,11 +70,11 @@ class Usuarios2Controller extends SecurityController
             }
 
         }
-        return $this->render('AppBundle:Secretaria/Usuarios2:nuevo_usuario.html.twig');
+        return $this->render('AppBundle:Director/Usuarios2:nuevo_usuario.html.twig');
     }
 
     /**
-     * @Route("/secretaria/usuario/{id}/edit", name="editar_usuario2")
+     * @Route("/director/usuario/{id}/edit", name="editar_usuario2")
      */
     public function editarUsuarioAction($id, Request $request){
         $em2=$this->getDoctrine()->getManager("default");
@@ -83,25 +97,25 @@ class Usuarios2Controller extends SecurityController
             $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
             return $this->redirect($this->generateUrl('usuarios2', array('usuarios'=>$usuarios)));
         }
-        return $this->render('AppBundle:Secretaria/Usuarios2:editar_usuario.html.twig', array(
+        return $this->render('AppBundle:Director/Usuarios2:editar_usuario.html.twig', array(
             'usuario' => $datos));
     }
 
     /**
-     * @Route("/secretaria/usuarios/", name="usuarios2")
+     * @Route("/director/usuarios/", name="usuarios2")
      */
     public function usuariosViewsAction(Request $request){
         if($this->getUser()){
             $em=$this->getDoctrine()->getManager();
             $usuarios=$em->getRepository('AppBundle:Usuario')->findAll();
-            return $this->render('AppBundle:Secretaria/Usuarios2:usuarios_views.html.twig', array('usuarios'=>$usuarios));
+            return $this->render('AppBundle:Director/Usuarios2:usuarios_views.html.twig', array('usuarios'=>$usuarios));
         }
         else{
             return $this->redirectToRoute('login');
         }
     }
     /**
-     * @Route("/secretaria/usuario/delete/{id}", name="eliminar_usuario2")
+     * @Route("/director/usuario/delete/{id}", name="eliminar_usuario2")
      */
     public function deleteUsuarioAction($id, Request $request)
     {
@@ -110,9 +124,9 @@ class Usuarios2Controller extends SecurityController
         if(!$usuario){
             throw $this->createNotFoundException('No existe el usuario con el ID'.$id);
         }
-        $em->remove($usuario);
+        $usuario->setIsactive(0);
         $em->flush();
-        $this->MensajeFlash('exito','Usuario eliminado correctamente!');
+        $this->MensajeFlash('exito','Usuario desactivado correctamente!');
         return $this->redirectToRoute("usuarios2");
     }
 

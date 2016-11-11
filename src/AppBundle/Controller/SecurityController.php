@@ -55,13 +55,15 @@ class SecurityController extends Controller
             if($rol==1)
                 return $this->redirectToRoute('admin');
             if($rol==2)
-                return $this->redirectToRoute('doctor');
+                return $this->redirectToRoute('tutor');
             if($rol==3)
                 return $this->redirectToRoute('alumno');
             if($rol==4)
                 return $this->redirectToRoute('index_interesado');
             if($rol==5)
                 return $this->redirectToRoute('secretaria');
+            if($rol==6)
+                return $this->redirectToRoute('director');
         }
         else{
             return $this->redirectToRoute('login');
@@ -83,11 +85,11 @@ class SecurityController extends Controller
         return $this->render('AppBundle:Interesado:index.html.twig');
     }
     /**
-     * @Route("/doctor/", name="doctor")
+     * @Route("/tutor/", name="tutor")
      */
-    public function doctorAction()
+    public function tutorAction()
     {
-        return $this->render('AppBundle:Doctor:index.html.twig');
+        return $this->render('AppBundle:Tutor:index.html.twig');
     }
     /**
      * @Route("/alumno/", name="alumno")
@@ -95,6 +97,14 @@ class SecurityController extends Controller
     public function alumnoAction()
     {
         return $this->render('AppBundle:Alumno:index.html.twig');
+    }
+
+    /**
+     * @Route("/director/", name="director")
+     */
+    public function directorAction()
+    {
+        return $this->render('AppBundle:Director:index.html.twig');
     }
 
     /**

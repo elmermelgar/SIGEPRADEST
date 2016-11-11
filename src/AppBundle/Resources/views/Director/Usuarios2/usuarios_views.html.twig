@@ -35,7 +35,7 @@
                         <tbody>
 
                         {% for usuarios in usuarios %}
-                            {% if usuarios.idRol.nombreRol=='doctor' %}
+                            {% if usuarios.idRol.nombreRol=='tutor' and usuarios.isactive == 1 %}
                         <tr>
                             <td>{{ usuarios.nombre }}</td>
                             <td>{{ usuarios.apellido }}</td>
@@ -67,7 +67,7 @@
                 //un confirm
                 alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
                     if (e) {
-                        location.href="{{ asset('/secretaria/usuario/delete') }}/"+id;
+                        location.href="{{ asset('/director/usuario/delete') }}/"+id;
                     } else { alertify.error("Has cancelado la operacion");
                     }
                 });

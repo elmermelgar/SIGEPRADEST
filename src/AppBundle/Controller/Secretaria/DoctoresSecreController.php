@@ -13,26 +13,26 @@ use AppBundle\Controller\SecurityController;
 class DoctoresSecreController extends SecurityController
 {
 
-    /**
-     * @Route("/secretaria/empleados_sec", name="empleados_doc")
-     */
-    public function empleadosAction(){
-        if($this->getUser()){
-            $em=$this->getDoctrine()->getManager("foues");
-            $db = $em->getConnection();
-            //$sql = "SELECT * FROM empleados";
-            $sql = "SELECT * FROM empleados";
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-
-            return $this->render('AppBundle:Secretaria/Doctores:empleados.html.twig', array(
-                'empleados' => $result));
-        }
-        else{
-            return $this->redirectToRoute('login');
-        }
-    }
+//    /**
+//     * @Route("/secretaria/empleados_sec", name="empleados_doc")
+//     */
+//    public function empleadosAction(){
+//        if($this->getUser()){
+//            $em=$this->getDoctrine()->getManager("foues");
+//            $db = $em->getConnection();
+//            //$sql = "SELECT * FROM empleados";
+//            $sql = "SELECT * FROM empleados";
+//            $stmt = $db->prepare($sql);
+//            $stmt->execute();
+//            $result = $stmt->fetchAll();
+//
+//            return $this->render('AppBundle:Secretaria/Doctores:empleados.html.twig', array(
+//                'empleados' => $result));
+//        }
+//        else{
+//            return $this->redirectToRoute('login');
+//        }
+//    }
 
     /**
      * @Route("/secretaria/doctor/create/{id}", name="new_doctor")
@@ -128,9 +128,9 @@ class DoctoresSecreController extends SecurityController
     }
 
     /**
-     * @Route("/secretaria/doctores/", name="doctores_secre")
+     * @Route("/secretaria/tutores/", name="doctores_secre")
      */
-    public function doctoresViewsAction(Request $request){
+    public function tutoresViewsAction(Request $request){
         if($this->getUser()){
             $em2=$this->getDoctrine()->getManager("default");
             $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
@@ -140,23 +140,23 @@ class DoctoresSecreController extends SecurityController
             return $this->redirectToRoute('login');
         }
     }
-    /**
-     * @Route("/secretaria/doctor/delete/{id}", name="delete_doctor")
-     */
-    public function deleteDoctorAction($id, Request $request)
-    {
-        $em=$this->getDoctrine()->getManager();
-        $doctor=$em->getRepository('AppBundle:Doctores')->find($id);
-        if(!$doctor){
-            throw $this->createNotFoundException('No existe el usuario con el ID'.$id);
-        }
-        $em->remove($doctor);
-        $em->flush();
-        $this->MensajeFlash('exito','Doctores eliminado correctamente!');
-
-        $em2=$this->getDoctrine()->getManager("default");
-        $doctor=$em2->getRepository('AppBundle:Doctores')->findAll();
-        return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctor)));
-    }
+//    /**
+//     * @Route("/secretaria/doctor/delete/{id}", name="delete_doctor")
+//     */
+//    public function deleteDoctorAction($id, Request $request)
+//    {
+//        $em=$this->getDoctrine()->getManager();
+//        $doctor=$em->getRepository('AppBundle:Doctores')->find($id);
+//        if(!$doctor){
+//            throw $this->createNotFoundException('No existe el usuario con el ID'.$id);
+//        }
+//        $em->remove($doctor);
+//        $em->flush();
+//        $this->MensajeFlash('exito','Doctores eliminado correctamente!');
+//
+//        $em2=$this->getDoctrine()->getManager("default");
+//        $doctor=$em2->getRepository('AppBundle:Doctores')->findAll();
+//        return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctor)));
+//    }
 
 }
