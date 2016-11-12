@@ -58,6 +58,7 @@ class InteresadoController extends SecurityController
             //Crear nuevo perfil
             $perfil = new DatosPersonales();
             $perfil->setIdUi($usuario);
+            $perfil->setCorreo($usuario->getCorreo());
             $form = $this->createCreateForm($perfil);
             return $this->render('AppBundle:Interesado/Perfil:miperfil.html.twig', array('form' => $form->createView()));
         }
