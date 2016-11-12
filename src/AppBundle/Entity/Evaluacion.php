@@ -32,9 +32,19 @@ class Evaluacion
     /**
      * @var string
      *
-     * @ORM\Column(name="porcentaje", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="porcentaje", type="integer", nullable=true)
      */
     private $porcentaje;
+
+    /**
+     * @var \Modulos
+     *
+     * @ORM\ManyToOne(targetEntity="Modulos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_modulo", referencedColumnName="id_modulo")
+     * })
+     */
+    private $idModulo;
 
 
 
@@ -92,5 +102,28 @@ class Evaluacion
     public function getPorcentaje()
     {
         return $this->porcentaje;
+    }
+
+    /**
+     * Set idModulo
+     *
+     * @param \AppBundle\Entity\Modulos $idModulo
+     * @return Nota
+     */
+    public function setIdModulo(\AppBundle\Entity\Modulos $idModulo = null)
+    {
+        $this->idModulo = $idModulo;
+
+        return $this;
+    }
+
+    /**
+     * Get idModulo
+     *
+     * @return \AppBundle\Entity\Modulos
+     */
+    public function getIdModulo()
+    {
+        return $this->idModulo;
     }
 }

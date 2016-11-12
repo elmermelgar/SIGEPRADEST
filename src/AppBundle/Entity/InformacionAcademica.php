@@ -37,11 +37,11 @@ class InformacionAcademica
     private $titulo;
 
     /**
-     * @var \DateTime
+     * @var \integer
      *
-     * @ORM\Column(name="fecha_obtenido", type="date", nullable=true)
+     * @ORM\Column(name="anio", type="integer", nullable=true)
      */
-    private $fechaObtenido;
+    private $anio;
 
     /**
      * @var \Solicitud
@@ -111,28 +111,6 @@ class InformacionAcademica
         return $this->titulo;
     }
 
-    /**
-     * Set fechaObtenido
-     *
-     * @param \DateTime $fechaObtenido
-     * @return InformacionAcademica
-     */
-    public function setFechaObtenido($fechaObtenido)
-    {
-        $this->fechaObtenido = $fechaObtenido;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaObtenido
-     *
-     * @return \DateTime 
-     */
-    public function getFechaObtenido()
-    {
-        return $this->fechaObtenido;
-    }
 
     /**
      * Set idSolicitud
@@ -155,5 +133,20 @@ class InformacionAcademica
     public function getIdSolicitud()
     {
         return $this->idSolicitud;
+    }
+    /**
+     * @return int
+     */
+    public function getAnio()
+    {
+        return $this->anio;
+    }
+
+    /**
+     * @param int $anio
+     */
+    public function setAnio($anio)
+    {
+        $this->anio = $anio;
     }
 }

@@ -30,7 +30,7 @@ security:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/admin, roles: ROLE_administrador }
-         - { path: ^/interesado, roles: ROLE_interesado}
+         - { path: ^/interesado, roles: [ROLE_interesado, ROLE_alumno]}
          - { path: ^/tutor, roles: ROLE_tutor }
          - { path: ^/alumno, roles: ROLE_alumno }
          - { path: ^/secretaria, roles: ROLE_secretaria }

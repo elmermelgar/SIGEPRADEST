@@ -76,22 +76,6 @@
 
         </script>
 
-    {% for flashMessage in app.session.flashbag.get('error') %}
-        <script>
-            window.onload = function error(){
-                alertify.error("{{ flashMessage }}.");
-                return false;
-            }
-        </script>
-    {% endfor %}
-    {% for flashMessage in app.session.flashbag.get('exito') %}
-        <script>
-            window.onload = function notificacion(){
-                alertify.success("{{ flashMessage }}.");
-                return false;
-            }
-        </script>
-    {% endfor %}
     <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
     <script>

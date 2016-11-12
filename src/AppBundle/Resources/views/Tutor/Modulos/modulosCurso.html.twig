@@ -1,0 +1,33 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('tutor') }}">Inicio</a></li>
+            <li><a href="{{ path('cursos_asignados') }}">Cursos Asignados</a></li>
+            <li class="active">Modulos</li>
+        </ol>
+        <h2>Modulos - "{{ curso.nombreCurso }}"</h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="row">
+    {% for modulos in modulos %}
+    <div class="col-md-4 col-sm-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Modulo
+            </div>
+            <div class="panel-body">
+                <p>{{ modulos.nombreModulo }}</p>
+                <hr/>
+                <a href="{{ path('alumnos_curso', {'id': curso.idCurso, 'id2': modulos.idModulo}) }}" title="Llenar Notas" class="btn btn-primary" ><span class="glyphicon glyphicon-bookmark" aria-hidden="true"/> Asignar Notas</a>
+            </div>
+            <div class="panel-footer">
+                Panel Footer
+            </div>
+        </div>
+    </div>
+        {% endfor %}
+</div>
+{% endblock %}

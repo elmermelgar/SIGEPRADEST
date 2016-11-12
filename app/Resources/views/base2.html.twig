@@ -109,7 +109,7 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                         <a  href="{{ path('cambiar_pass_director', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
                     </li>
                 {% endif %}
-                {% if app.user.idrol.nombrerol== 'interesado' or app.user.idrol.nombrerol=='alumno' %}
+                {% if app.user.idrol.nombrerol== 'interesado'%}
                     <li>
                         <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Citas<span ></span></a>
                     </li>
@@ -117,7 +117,21 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                         <a  href="{{ path('cambiar_pass_alumno', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
                     </li>
                 {% endif %}
+                {% if app.user.idrol.nombrerol=='alumno' %}
+                    <li>
+                        <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Citas<span ></span></a>
+                    </li>
+                    <li>
+                        <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Prueba<span ></span></a>
+                    </li>
+                    <li  >
+                        <a  href="{{ path('cambiar_pass_alumno', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
+                    </li>
+                {% endif %}
                 {% if app.user.idrol.nombrerol== 'tutor' %}
+                    <li  >
+                        <a  href="{{ path('cursos_asignados') }}"><i class="glyphicon glyphicon-book"></i> Cursos Asignados</a>
+                    </li>
                     <li  >
                         <a  href="{{ path('cambiar_pass_tutor', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
                     </li>
