@@ -4,11 +4,11 @@
     <div class="col-md-12">
 
     <ol class="breadcrumb">
-        <li><a href="{{ path('admin') }}">Inicio</a></li>
-        <li><a href="{{ path('usuarios') }}">Usuarios</a></li>
+        <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+        <li><a href="{{ path('usuarios2') }}">Usuarios</a></li>
         <li class="active">Nuevo Usuario</li>
     </ol>
-    <h2>Creando un nuevo usuario a partir de un empleado</h2>
+    <h2>Creando un nuevo usuario</h2>
     </div>
 {% endblock %}
 {% block body %}
@@ -24,11 +24,11 @@
                         <div class="col-md-12">
                             <h3>Datos Complementarios</h3>
 
-                            <form role="form" action="{{ path('nuevo_usuario') }}" method="post" >
+                            <form role="form" action="{{ path('nuevo_usuario2') }}" method="post" >
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nombres </label>
-                                            <input class="form-control" name="nombre" required/>
+                                            <input class="form-control" name="nombre"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Apellidos </label>
@@ -38,33 +38,36 @@
                                         <label>Correo </label>
                                         <input class="form-control" type="email" name="email" required/>
                                     </div>
-
                                     <div class="form-group">
-                                        <label>Telefono </label>
-                                        <input class="form-control" type="text" name="tel" required max="9" placeholder="9999-9999"/>
+                                        <label for="disabledSelect">DUI</label>
+                                        <input class="form-control" name="id_emp" type="text" max="10" placeholder="00000000-0"/>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="form-control">Especialidad</label>
+                                        <input class="form-control" name="especialidad" max="50" type="text" />
+                                    </div>
+
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="disabledSelect">Usuario</label>
-                                            <input class="form-control" name="username" required/>
+                                            <input class="form-control" name="username" required />
                                     </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">Password</label>
-                                            <input class="form-control" name="pass" type="password" required/>
+                                            <input id="password" class="form-control" name="pass" type="password" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="disabledSelect">DUI</label>
-                                            <input class="form-control" name="id_emp" type="text" max="10" placeholder="00000000-0"/>
+                                        <label for="disabledSelect">Confirmar Password</label>
+                                        <input id="confirm_password" class="form-control" type="password"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>Tipo de Usuario</label>
-                                        <select class="form-control" name="rol">
-                                            <option value="1">Administrador</option>
-                                            <option value="2">Tutor</option>
-                                            <option value="5">Secretaria</option>
-                                            <option value="2">Director</option>
-                                        </select>
+                                        <label>Telefono </label>
+                                        <input class="form-control" type="text" name="tel" max="9" placeholder="9999-9999"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Turno </label>
+                                        <input class="form-control" type="text" name="turno" max="50" />
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -83,4 +86,22 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var password = document.getElementById("password")
+                , confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords no coinciden!");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
 {% endblock %}

@@ -24,10 +24,11 @@ body {
 }
 #page-inner {
     width:100%;
-    margin:10px 20px 10px 0px;
+    margin:10px 0px 10px 0px;
     background-color:#fff!important;
     padding:10px;
     min-height:800px;
+    display: block;
     border-radius: 10px;
 }
 
@@ -38,7 +39,7 @@ body {
     border:1px solid #f3f3f3;
 }
 h2 {
-    color: #2EA7EB;
+    color: #8C64A3;
 }
 h4 {
     padding-top:10px;
@@ -138,7 +139,7 @@ font-size: 40px;
       -webkit-border-radius: 0px;
 -moz-border-radius: 0px;
 border-radius: 0px;
-background-color:#2EA7EB;
+background-color:#8C64A3;
 color:#fff;
 }
     .back-dash p {
@@ -211,7 +212,7 @@ font-size: 30px;
 font-weight: 700;
 }
 .active-menu {
-    background-color:#2EA7EB!important;
+    background-color:#8C64A3!important;
 }
 
 .arrow {
@@ -272,7 +273,7 @@ font-weight: 700;
 	left:20px;
 	width:15px;
 	height:1px;
-	background:#2EA7EB;
+	background:#8C64A3;
 	top:20px;
 }
 .nav-second-level > li > a:after,
@@ -283,7 +284,7 @@ font-weight: 700;
 	left:20px;
 	width:1px;
 	height:100%;
-	background:#2EA7EB;
+	background:#8C64A3;
 	top:0px;
 	z-index:10;
 }
@@ -307,7 +308,7 @@ font-weight: 700;
 }
 .navbar-cls-top .navbar-brand:hover {
 
-background: #2EA7EB;
+background: #8C64A3;
 color:#fff;
 
 }
@@ -317,10 +318,10 @@ border:0px solid black;
      
 }
 .navbar-header {
-    background: #A70303;
+    background: #4D4D4D;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-background-color: #B40101;
+background-color: #8C64a3;
 }
 .navbar-default .navbar-toggle {
 border-color: #fff;
@@ -353,17 +354,17 @@ line-height: 1.428571429;
  
  @media(min-width:768px) {
      #page-wrapper{
-               margin: 0 0 0 260px;
+               margin: 0 0 0 210px;
         padding: 1px 10px;
         min-height: 800px;
-		
+		display: flex;
     }
 	
 	
     .navbar-side {
         z-index: 1;
         position: absolute;
-        width: 260px;
+        width: 210px;
     }
 
    .navbar {

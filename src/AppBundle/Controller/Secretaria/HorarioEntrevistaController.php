@@ -31,7 +31,7 @@ class HorarioEntrevistaController extends DSIController
     /**
      * @Route("/secretaria/HEntrevista_create",name="createEntrevista")
      */
-    public function createEntrevista(Request $request)
+    public function createEntrevistaAction(Request $request)
     {
         $em=$this->getDoctrine()->getManager("default");
         $curso=$em->getRepository('AppBundle:Curso')->findBy(array("estadoCurso"=>"Registro"));
@@ -62,7 +62,7 @@ class HorarioEntrevistaController extends DSIController
     /**
      * @Route("/secretaria/HEntrevista_edit/{id}",name="editEntrevista")
      */
-    public function editEntrevista($id, Request $request)
+    public function editEntrevistaAction($id, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
         $he=$em->getRepository('AppBundle:HorarioEntrevista')->find($id);
@@ -91,7 +91,7 @@ class HorarioEntrevistaController extends DSIController
     /**
      * @Route("/secretaria/HEntrevista_del/{id}",name="delEntrevista")
      */
-    public function delEntrevista($id, Request $request)
+    public function delEntrevistaAction($id, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
         $he=$em->getRepository('AppBundle:HorarioEntrevista')->find($id);

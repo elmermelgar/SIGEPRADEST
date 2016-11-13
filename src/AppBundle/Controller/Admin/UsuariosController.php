@@ -33,18 +33,10 @@ class UsuariosController extends SecurityController
     }
 
     /**
-     * @Route("/admin/usuario/create/{id}", name="nuevo_usuario")
+     * @Route("/admin/usuario/create/", name="nuevo_usuario")
      */
-    public function nuevoUsuarioAction($id, Request $request){
-        $em=$this->getDoctrine()->getManager("foues");
+    public function nuevoUsuarioAction(Request $request){
         $em2=$this->getDoctrine()->getManager("default");
-        $db = $em->getConnection();
-        //$sql = "SELECT * FROM empleados";
-        $sql = "SELECT * FROM empleados WHERE usuario='$id'";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        $ide=$id;
         if($request->isMethod("POST"))
         {
             //Creando usuario
@@ -72,8 +64,7 @@ class UsuariosController extends SecurityController
             $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
             return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
         }
-        return $this->render('AppBundle:Admin/Usuarios:nuevo_usuario.html.twig', array(
-            'empleado' => $result,'ide' =>$ide));
+        return $this->render('AppBundle:Admin/Usuarios:nuevo_usuario.html.twig');
     }
 
     /**
@@ -92,6 +83,7 @@ class UsuariosController extends SecurityController
             $datos->setCorreo($request->get("email"));
             $datos->setApellido($request->get("apellido"));
             $datos->setTelefono($request->get("tel"));
+            $datos->setIdEmpleado($request->get("id_emp"));
 
             $em2->flush();
             //redireccionamiento
@@ -128,10 +120,38 @@ class UsuariosController extends SecurityController
         if(!$usuario){
             throw $this->createNotFoundException('No existe el usuario con el ID'.$id);
         }
-        $em->remove($usuario);
+        $usuario->setIsactive(0);
         $em->flush();
         $this->MensajeFlash('exito','Usuario eliminado correctamente!');
         return $this->redirectToRoute("usuarios");
+    }
+
+    /**
+     * @Route("/admin/usuario/cambiarpass/{id}", name="cambiar_pass")
+     */
+    public function cambiarPassAction($id, Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $datos=$this->getDoctrine()->getRepository('AppBundle:Usuario')->find($id);
+        if($request->isMethod("POST"))
+        {
+
+            //Cifra la contrase?a
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($datos);
+            $password = $encoder->encodePassword($request->get("pass"), $datos->getSalt());
+            $datos->setPassword($password);
+
+            $em->flush();
+            //redireccionamiento
+            $this->MensajeFlash('exito','Se actualizo la contraseña correctamente!');
+
+            $em=$this->getDoctrine()->getManager("default");
+            $usuarios=$em->getRepository('AppBundle:Usuario')->findAll();
+            return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
+        }
+        return $this->render('AppBundle:Admin/Usuarios:cambiar_password.html.twig', array(
+            'usuario' => $datos));
     }
 
 }

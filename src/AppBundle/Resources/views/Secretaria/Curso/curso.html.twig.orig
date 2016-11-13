@@ -22,7 +22,11 @@
 
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+<<<<<<< HEAD
+                    <table class="table table-striped table-bordered table-hover"  id="dataTables-example">
+=======
+                    <table class="table table-striped table-bordered table-hover" order="desc" id="dataTables-example">
+>>>>>>> cb27d317d7d7fd261a7dfde4f174c7ca14b77f61
                         <thead>
                         <tr>
                             <th style="text-align: center" >Fecha</th>
@@ -37,6 +41,14 @@
                         </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
+                        <script>
+
+
+
+                        </script>
+=======
+<script>
 
     $('#dataTables-example').DataTable( {
         ordering: false
@@ -44,12 +56,17 @@
 
 
     </script>
+>>>>>>> cb27d317d7d7fd261a7dfde4f174c7ca14b77f61
                         {% for hc in hc %}
                             {% for cursos in cursos %}
                                 {% if cursos.estadoCurso=='Registro' %}
                                     {% if cursos.idCurso == hc.idCurso.idCurso %}
                                         <tr>
-                                            <td>{{ hc.fecha_inicio}}</td>
+<<<<<<< HEAD
+                                            <td >{{ hc.FechaInicio.format("d/m/Y")}}</td>
+=======
+                                            <td  class="sorting_desc" aria-sort="descending">{{ hc.FechaInicio.format("d/m/Y")}}</td>
+>>>>>>> cb27d317d7d7fd261a7dfde4f174c7ca14b77f61
                                             <td><a href="" onclick="window.open('{{ asset('public') }}/{{ cursos.broshureInformativo}}');"><img src="{{ asset('public') }}/{{ cursos.broshureInformativo }}" alt="img1" style="width: 100px; height: 70px;"></td>
                                             <td>{{ cursos.nombreCurso }}</td>
                                             <td>
@@ -104,6 +121,23 @@
     {% endfor %}
     <script>
 
+<<<<<<< HEAD
+        function confirmar(id){
+            //un confirm
+            alertify.confirm("<p>Esta seguro que desea Desabilitar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                if (e) {
+                    location.href="{{ asset('/secretaria/curso_desabilitar') }}/"+id;
+                } else { alertify.error("Has cancelado la operación");
+                }
+            });
+            return false
+        }
+    </script>
+
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script>
+=======
             function confirmar(id){
                 //un confirm
                 alertify.confirm("<p>Esta seguro que desea Desabilitar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
@@ -121,6 +155,7 @@
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
 
         <script>
+>>>>>>> cb27d317d7d7fd261a7dfde4f174c7ca14b77f61
         $(document).ready(function() {
 
             $('#example').DataTable( {

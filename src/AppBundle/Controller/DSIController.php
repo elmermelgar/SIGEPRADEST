@@ -58,16 +58,6 @@ class DSIController extends Controller
         $st->execute();
     }
 
-    protected function mostrarDoctores(){
-        $em=$this->getDoctrine()->getManager();
-        $db = $em->getConnection();
-        $sql = "SELECT id_doctores, nombre_doc FROM doctores ORDER BY nombre_doc ASC";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $doc = $stmt->fetchAll();
-        return $doc;
-    }
-
     protected function manytomany($idcurso,$id_doc){
         $sql="INSERT INTO d1 (id_curso,id_doctores) values (:id_curso,:id_doctores)";
         $em=$this->getDoctrine()->getEntityManager();
@@ -76,17 +66,6 @@ class DSIController extends Controller
         $st->bindValue("id_curso",$idcurso);
         $st->bindValue("id_doctores",$id_doc);
         $st->execute();
-    }
-
-    protected function IdHCcurso($id){
-        //Sacando Id_hc con ayuda del IdCurso
-        $em=$this->getDoctrine()->getEntityManager();
-        $db = $em->getConnection();
-        $sql = "select id_hc from horario_curso where id_curso = $id";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $idhc = $stmt->fetch();
-        return $idhc;
     }
 
     protected function del_d1($id){
@@ -111,16 +90,6 @@ class DSIController extends Controller
         $em=$this->getDoctrine()->getManager();
         $db = $em->getConnection();
         $sql = "SELECT id_doctores FROM d1 WHERE id_curso=$id";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $d1 = $stmt->fetchAll();
-        return $d1;
-    }
-
-    protected function mostrarHC(){
-        $em=$this->getDoctrine()->getManager();
-        $db = $em->getConnection();
-        $sql = "SELECT id_curso,to_char(fecha_inicio,'DD/MM/YYYY')as fecha_inicio,fecha_fin FROM horario_curso ORDER BY fecha_inicio DESC";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $d1 = $stmt->fetchAll();

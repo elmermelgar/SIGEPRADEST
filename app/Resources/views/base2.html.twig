@@ -62,15 +62,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                             <li>
                                 <a href="{{ path('verCurso') }}">Administrar Cursos</a>
                             </li>
-                            <li>
-                                <a href="{{ path('doctores') }}">Administrar Doctores</a>
-                            </li>
                         </ul>
                     </li>
-                    <li>
-                        <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Citas<span ></span></a>
 
-                    </li>
                 {% endif %}
                 {% if app.user.idrol.nombrerol== 'secretaria' %}
                 <li>
@@ -80,12 +74,12 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                             <a href="{{ path('verCurso') }}">Administrar Cursos</a>
                         </li>
                         <li>
-                            <a href="{{ path('doctores_secre') }}">Administrar Doctores</a>
+                            <a href="{{ path('doctores_secre') }}">Tutores Disponibles</a>
                         </li>
                     </ul>
                 </li>
                 <li  >
-                    <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-eye-open"></i> Horario de Entrevista</a>
+                    <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-calendar"></i> Horario de Entrevista</a>
                 </li>
                     <!-- anidado de Alumnos  -->
                     <li>
@@ -100,10 +94,55 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                     </li>
                 </ul>
                 </li>
-             <!--   fin de anidamiento -->
                 <li  >
                     <a  href="#"><i class="fa fa-edit fa-3x"></i> Solicitud de Entrvista</a>
                 </li>
+                    <li  >
+                        <a  href="{{ path('cambiar_pass_secre', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
+                    </li>
+                {% endif %}
+                {% if app.user.idrol.nombrerol== 'director' %}
+                    <li  >
+                        <a  href="{{ path('usuarios2') }}"><i class="glyphicon glyphicon-user"></i> Usuarios Tutores</a>
+                    </li>
+                    <li  >
+                        <a  href="{{ path('cambiar_pass_director', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
+                    </li>
+                {% endif %}
+                {% if app.user.idrol.nombrerol== 'interesado'%}
+                    <li>
+                        <a href="{{ path('interesado_perfil') }}"><i class="glyphicon glyphicon-user"></i>Mi perfil</a>
+                    </li>
+                    <li>
+                        <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Citas<span ></span></a>
+                    </li>
+                {% endif %}
+                {% if app.user.idrol.nombrerol=='alumno' %}
+                    <li>
+                        <a href="{{ path('index_interesado') }}"><i class="glyphicon glyphicon-user"></i>Cursos</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('interesado_perfil') }}"><i class="glyphicon glyphicon-user"></i>Mi perfil</a>
+                    </li>
+                    <li>
+                        <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Citas<span ></span></a>
+                    </li>
+                    <li>
+                        <a  href="{{ path('cita') }}" ><i class="glyphicon glyphicon-import"></i> Prueba<span ></span></a>
+                    </li>
+                    <li  >
+                        <a  href="{{ path('cambiar_pass_alumno', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
+                    </li>
+                {% endif %}
+                {% if app.user.idrol.nombrerol== 'tutor' %}
+                    <li  >
+                        <a  href="{{ path('cursos_asignados') }}"><i class="glyphicon glyphicon-book"></i> Cursos Asignados</a>
+                    </li>
+                    <li  >
+                        <a  href="{{ path('cambiar_pass_tutor', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
+                    </li>
+                {% endif %}
+                <!-- /. NAV SIDE
                 <li  >
                     <a  href="#"><i class="fa fa-edit fa-3x"></i> Menu 6 </a>
                 </li>
@@ -141,7 +180,8 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                 <li  >
                     <a  href="#"><i class="fa fa-square-o fa-3x"></i> Blank Page</a>
                 </li>
-                {% endif %}
+                    -->
+
             </ul>
 
         </div>
@@ -157,6 +197,7 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
             </div>
             <!-- /. ROW  -->
             <hr />
+            <br/>
             {% block body %}{% endblock %}
         </div>
         <!-- /. PAGE INNER  -->
@@ -174,8 +215,6 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
 <!-- ALERTIFY SCRIPTS -->
 <script src="{{ asset('public/alertify/alertify.js') }}"></script>
 
-<!-- CUSTOM SCRIPTS -->
-<script src="{{ asset('public/assets/js/morris/morris.js') }}"></script>
 
 
 {% for flashMessage in app.session.flashbag.get('error') %}

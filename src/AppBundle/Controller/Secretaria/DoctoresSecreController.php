@@ -13,26 +13,26 @@ use AppBundle\Controller\SecurityController;
 class DoctoresSecreController extends SecurityController
 {
 
-    /**
-     * @Route("/secretaria/empleados_sec", name="empleados_doc")
-     */
-    public function empleadosAction(){
-        if($this->getUser()){
-            $em=$this->getDoctrine()->getManager("foues");
-            $db = $em->getConnection();
-            //$sql = "SELECT * FROM empleados";
-            $sql = "SELECT * FROM empleados";
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-
-            return $this->render('AppBundle:Secretaria/Doctores:empleados.html.twig', array(
-                'empleados' => $result));
-        }
-        else{
-            return $this->redirectToRoute('login');
-        }
-    }
+//    /**
+//     * @Route("/secretaria/empleados_sec", name="empleados_doc")
+//     */
+//    public function empleadosAction(){
+//        if($this->getUser()){
+//            $em=$this->getDoctrine()->getManager("foues");
+//            $db = $em->getConnection();
+//            //$sql = "SELECT * FROM empleados";
+//            $sql = "SELECT * FROM empleados";
+//            $stmt = $db->prepare($sql);
+//            $stmt->execute();
+//            $result = $stmt->fetchAll();
+//
+//            return $this->render('AppBundle:Secretaria/Tutor:empleados.html.twig', array(
+//                'empleados' => $result));
+//        }
+//        else{
+//            return $this->redirectToRoute('login');
+//        }
+//    }
 
     /**
      * @Route("/secretaria/doctor/create/{id}", name="new_doctor")
@@ -61,10 +61,10 @@ class DoctoresSecreController extends SecurityController
             $em2->persist($doc);
             $em2->flush();
             //mensaje de exito
-            $this->MensajeFlash('exito','Doctores creado correctamente!');
+            $this->MensajeFlash('exito','Tutor creado correctamente!');
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
-            $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
+            $doctores=$em2->getRepository('AppBundle:Tutor')->findAll();
             return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctores)));
         }
         return $this->render('AppBundle:Secretaria/Doctores:nuevo_doctor.html.twig', array(
@@ -90,10 +90,10 @@ class DoctoresSecreController extends SecurityController
             $em2->persist($doc);
             $em2->flush();
             //mensaje de exito
-            $this->MensajeFlash('exito','Doctores creado correctamente!');
+            $this->MensajeFlash('exito','Tutor creado correctamente!');
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
-            $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
+            $doctores=$em2->getRepository('AppBundle:Tutor')->findAll();
             return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctores)));
         }
         return $this->render('AppBundle:Secretaria/Doctores:nuevo_doctor_ext.html.twig');
@@ -117,10 +117,10 @@ class DoctoresSecreController extends SecurityController
             //Actualizando valores
             $em2->flush();
             //mensaje de confirmacion
-            $this->MensajeFlash('exito','Doctores actualizado correctamente!');
+            $this->MensajeFlash('exito','Tutor actualizado correctamente!');
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
-            $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
+            $doctores=$em2->getRepository('AppBundle:Tutor')->findAll();
             return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctores)));
         }
         return $this->render('AppBundle:Secretaria/Doctores:editar_doctor.html.twig', array(
@@ -128,35 +128,59 @@ class DoctoresSecreController extends SecurityController
     }
 
     /**
-     * @Route("/secretaria/doctores/", name="doctores_secre")
+     * @Route("/secretaria/tutores/", name="doctores_secre")
      */
-    public function doctoresViewsAction(Request $request){
+    public function tutoresViewsAction(Request $request){
         if($this->getUser()){
             $em2=$this->getDoctrine()->getManager("default");
-            $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
+            $doctores=$em2->getRepository('AppBundle:Tutor')->findAll();
             return $this->render('AppBundle:Secretaria/Doctores:doctores_views.html.twig', array('doctores'=>$doctores));
         }
         else{
             return $this->redirectToRoute('login');
         }
     }
+
+    //Metodo para cambiar el password de la secretaria
     /**
-     * @Route("/secretaria/doctor/delete/{id}", name="delete_doctor")
+     * @Route("/secretaria/cambiarpass/{id}", name="cambiar_pass_secre")
      */
-    public function deleteDoctorAction($id, Request $request)
+    public function cambiarPassAction($id, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
-        $doctor=$em->getRepository('AppBundle:Doctores')->find($id);
-        if(!$doctor){
-            throw $this->createNotFoundException('No existe el usuario con el ID'.$id);
-        }
-        $em->remove($doctor);
-        $em->flush();
-        $this->MensajeFlash('exito','Doctores eliminado correctamente!');
+        $datos=$this->getDoctrine()->getRepository('AppBundle:Usuario')->find($id);
+        if($request->isMethod("POST"))
+        {
 
-        $em2=$this->getDoctrine()->getManager("default");
-        $doctor=$em2->getRepository('AppBundle:Doctores')->findAll();
-        return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctor)));
+            //Cifra el password
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($datos);
+            $password = $encoder->encodePassword($request->get("pass"), $datos->getSalt());
+            $datos->setPassword($password);
+            $em->flush();
+            //redireccionamiento
+            $this->MensajeFlash('exito','Se actualizo la contraseña correctamente!');
+            return $this->redirect($this->generateUrl('secretaria'));
+        }
+        return $this->render('AppBundle:Secretaria/Doctores:cambiar_password_secre.html.twig');
     }
+//    /**
+//     * @Route("/secretaria/doctor/delete/{id}", name="delete_doctor")
+//     */
+//    public function deleteDoctorAction($id, Request $request)
+//    {
+//        $em=$this->getDoctrine()->getManager();
+//        $doctor=$em->getRepository('AppBundle:Tutor')->find($id);
+//        if(!$doctor){
+//            throw $this->createNotFoundException('No existe el usuario con el ID'.$id);
+//        }
+//        $em->remove($doctor);
+//        $em->flush();
+//        $this->MensajeFlash('exito','Tutor eliminado correctamente!');
+//
+//        $em2=$this->getDoctrine()->getManager("default");
+//        $doctor=$em2->getRepository('AppBundle:Tutor')->findAll();
+//        return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctor)));
+//    }
 
 }

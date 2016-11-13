@@ -27,11 +27,23 @@
                     <fieldset>
                         <br><br>
                         <div class="col-md-6">
-                            <div class="control-group">
-                                <label class="control-label" for="prependedInput">Buscar: Esscriba el Usuario / Enter </label>
-                                <input id="InputSelect1_txt" name= "InputSelect1_txt"  list="lista1_list" placeholder="Escriba el nombre de usuario / enter" class="form-control">
 
-                                <div class="controls">
+                            <div class="control-group">
+
+
+                                <label class="control-label" for="prependedInput"> Buscar usuario / enviar </label>
+                                <div class="input-group">
+                                    <input id="InputSelect1_txt" name= "InputSelect1_txt"  list="lista1_list" placeholder="Escriba el nombre de usuario / enter" class="form-control">
+                                    <span class="input-group-addon">  </span>
+                                    <input type="button" id = "desplegar_btn" name="desplegar_btn" onclick="cargarSelect()" class="form-control" value="Enviar">
+                                </div>
+                                </div>
+
+
+
+
+                            <div class="control-group">
+                               <div class="controls">
 
                                     <div class="input-prepend">
                                         <datalist id="lista1_list" name="lista1_list" >
@@ -174,6 +186,34 @@
             });
 
         })
+
+
+
+
+        function cargarSelect( ){
+
+            var dato = $("input[name=InputSelect1_txt]").val();
+            options = document.querySelectorAll('#lista1_list option');
+            var encontrado = 0;
+
+            for(var i = 0; i < options.length; i++) {
+                var option = options[i];
+                //var nombreCompletoList = option.innerText;
+                //alert( dato.localeCompare(nombreCompletoList) );
+
+                if( option.innerText.trim().valueOf() == dato.trim().valueOf() ){
+                    encontrado = option.getAttribute('data-value');
+                }
+            }
+
+            if (encontrado != 0){
+                cargarSelect2(encontrado);
+            }else {
+                document.getElementById("InputSelect1_txt").value = "";
+                cargarSelect2(encontrado);
+            }
+        }
+
 
         function cargarSelect2(valor){
 
