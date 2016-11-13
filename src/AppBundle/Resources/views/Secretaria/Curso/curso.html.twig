@@ -22,10 +22,10 @@
 
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover"  id="dataTables-example">
                         <thead>
                         <tr>
-                            <th style="text-align: center">Fecha</th>
+                            <th style="text-align: center" >Fecha</th>
                             <th style="text-align: center">Broshure</th>
                             <th style="text-align: center">Nombre</th>
                             <th style="text-align: center">Doctores</th>
@@ -38,13 +38,17 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <script>
 
+
+
+                        </script>
                         {% for hc in hc %}
                             {% for cursos in cursos %}
                                 {% if cursos.estadoCurso=='Registro' %}
-                                    {% if cursos.idCurso == hc.id_curso %}
+                                    {% if cursos.idCurso == hc.idCurso.idCurso %}
                                         <tr>
-                                            <td>{{ hc.fecha_inicio}}</td>
+                                            <td >{{ hc.FechaInicio.format("d/m/Y")}}</td>
                                             <td><a href="" onclick="window.open('{{ asset('public') }}/{{ cursos.broshureInformativo}}');"><img src="{{ asset('public') }}/{{ cursos.broshureInformativo }}" alt="img1" style="width: 100px; height: 70px;"></td>
                                             <td>{{ cursos.nombreCurso }}</td>
                                             <td>
@@ -98,26 +102,29 @@
             }
         </script>
     {% endfor %}
-        <script>
+    <script>
 
-            function confirmar(id){
-                //un confirm
-                alertify.confirm("<p>Esta seguro que desea Desabilitar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
-                    if (e) {
-                        location.href="{{ asset('/secretaria/curso_desabilitar') }}/"+id;
-                    } else { alertify.error("Has cancelado la operación");
-                    }
-                });
-                return false
-            }
-        </script>
+        function confirmar(id){
+            //un confirm
+            alertify.confirm("<p>Esta seguro que desea Desabilitar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                if (e) {
+                    location.href="{{ asset('/secretaria/curso_desabilitar') }}/"+id;
+                } else { alertify.error("Has cancelado la operación");
+                }
+            });
+            return false
+        }
+    </script>
 
     <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
     <script>
-        $(document).ready(function () {
-            $('#dataTables-example').dataTable();
-        });
+        $(document).ready(function() {
+
+            $('#example').DataTable( {
+                "order": [[ 3, "desc" ]]
+            } );
+        } );
     </script>
 
 {% endblock %}
