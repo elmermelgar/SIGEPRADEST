@@ -1,0 +1,42 @@
+{% extends 'base3.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('tutor') }}">Inicio</a></li>
+            <li class="active">Ayuda </li>
+        </ol>
+        <h2>Ayuda al usuario tuto / docente </h2>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form class="form-horizontal"  enctype="multipart/form-data" name="formulario">
+
+        <fieldset>
+            <div class="col-md-6">
+                <div class="control-group">
+
+
+
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <br>
+                <div class="panel panel-default">
+
+
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+{%endblock %}

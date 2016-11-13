@@ -44,9 +44,6 @@ class InformacionAcademicaController extends SecurityController{
             }
 
         }catch (\Exception $e){
-            //echo $e -> getMessage();
-            //throw $this->createNotFoundException("no se encontro pagina" ,null);
-            //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
             return $this->redirectToRoute('verInfo');
         }
 
@@ -67,7 +64,8 @@ class InformacionAcademicaController extends SecurityController{
 
                 $solicitud=$em->getRepository("AppBundle:Solicitud")->findAll();
                 $usuario=$em->getRepository("AppBundle:Usuario")->findAll();
-                $info=$em->getRepository('AppBundle:InformacionAcademica')->findBy( array(), array('fechaObtenido' => 'DESC')  );
+                
+                $info=$em->getRepository('AppBundle:InformacionAcademica')->findAll();
 
                 $sql = "SELECT DISTINCT u.nombre , u.id_ui, u.nombre || ' ' || u.apellido as completo FROM usuario u , solicitud s WHERE  s.id_ui = u.id_ui Order BY completo DESC";
                 $stmt = $em->getConnection()->prepare($sql);
@@ -82,7 +80,8 @@ class InformacionAcademicaController extends SecurityController{
                 $infoNuevo->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find( $request->get("select2") ));
                 $infoNuevo->setInstitucion($request->get("instituto_txt"));
                 $infoNuevo->setTitulo($request->get("titulo_txt"));
-                $infoNuevo->setFechaObtenido(new \DateTime($request->get("calendario_cl")));
+                $infoNuevo->setAnio($request->get("calendario_cl"));
+                
 
                 $valor = $infoNuevo->getIdSolicitud()->getIdUi()->getIdUi();
 
@@ -98,14 +97,11 @@ class InformacionAcademicaController extends SecurityController{
                 return $this->render("AppBundle:Admin/InfoAcademica:info_create.html.twig",
                     array('infos'=>$info, 'usu' =>$usuario, 'sol'=>$solicitud, 'result'=>$result));
                 } else{
-                    //throw $this->createNotFoundException("no se encontro pagina",null);
+                    
                     $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
                     return $this->redirectToRoute('login');
                 }
         }catch (\Exception $e){
-            echo $e -> getMessage();
-            //throw $this->createNotFoundException("no se encontro pagina" ,null);
-            //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
             return $this->redirectToRoute('verInfo');
         }
     }
@@ -140,7 +136,7 @@ class InformacionAcademicaController extends SecurityController{
                     $datos->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find($request->get("select2")));
                     $datos->setInstitucion($request->get("instituto_txt"));
                     $datos->setTitulo($request->get("titulo_txt"));
-                    $datos->setFechaObtenido(new \DateTime($request->get("calendario_cl")));
+                    $datos->setAnio($request->get("calendario_cl"));
 
                     // guardar cambios
                     $em->flush();
@@ -158,21 +154,19 @@ class InformacionAcademicaController extends SecurityController{
                     return $this->render('AppBundle:Admin/InfoAcademica:info_edit.html.twig', array(
                     'info' => $datos ,'sol' => $solicitud, 'usu'=>$usuario, 'result'=>$result));
             } else{
-                //throw $this->createNotFoundException("no se encontro pagina",null);
+           
                 $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
                 return $this->redirectToRoute('login');
             }
        }catch (\Exception $e){
-           //echo $e -> getMessage();
-           //throw $this->createNotFoundException("no se encontro pagina" ,null);
-           //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
+           
            return $this->redirectToRoute('verInfo');
        }
 
     }
 
     /**
-     * @Route("/informacion/delete/{id}", name="deleteInfo" , defaults={"id" = 0})
+     * @Route("/admin/informacion/delete/{id}", name="deleteInfo" , defaults={"id" = 0})
      */
     public function deleteInformacionAction($id, Request $request)
     {
@@ -205,10 +199,7 @@ class InformacionAcademicaController extends SecurityController{
                 return $this->redirectToRoute('login');
             }
         } catch (\Exception $e) {
-            //echo $e -> getMessage();
-            //throw $this->createNotFoundException("no se encontro pagina" ,null);
-            //$this->MensajeFlash('Error','No se puede mostrar la pagina, entrada de dato invalido!');
-            return $this->redirectToRoute('verInfo');
+                return $this->redirectToRoute('verInfo');
         }
     }
 } // fin de Informacion Controller

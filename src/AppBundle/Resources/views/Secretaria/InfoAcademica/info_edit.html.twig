@@ -11,8 +11,8 @@
     <div class="col-md-12">
 
         <ol class="breadcrumb">
-            <li><a href="{{ path('admin') }}">Inicio</a></li>
-            <li><a href="{{ path('verInfo' , {'seleccion': info.idSolicitud.idUi.idUi} ) }}">Informacion Academica</a></li>
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('verInfoSecre' , {'seleccion': info.idSolicitud.idUi.idUi} ) }}">Informacion Academica</a></li>
             <li class="active">Editar</li>
         </ol>
         <h2>Editar informacion Academica</h2>
@@ -33,7 +33,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <form role="form" action="{{ path('editInfo', {'id': info.idIfacad}) }}" method="post" name="formulario2"  id="formulario2">
+                            <form role="form" action="{{ path('editinfoSecre', {'id': info.idIfacad}) }}" method="post" name="formulario2"  id="formulario2">
                                 <fieldset>
                                     <div class="col-md-6">
                                         <div class="control-group">
@@ -57,11 +57,11 @@
                                                             <datalist id="lista1_list" name="lista1_list" >
                                                                 {% for resultado in result %}
 
-                                                                {%  if info.idSolicitud.idUi.idUi == resultado.id_ui %}
-                                                                    <option selected data-value="{{ resultado.id_ui }}">{{resultado.completo}} </option>
-                                                                {% else %}
-                                                                    <option data-value="{{ resultado.id_ui }}">{{resultado.completo}} </option>
-                                                                {% endif %}
+                                                                    {%  if info.idSolicitud.idUi.idUi == resultado.id_ui %}
+                                                                        <option selected data-value="{{ resultado.id_ui }}">{{resultado.completo}} </option>
+                                                                    {% else %}
+                                                                        <option data-value="{{ resultado.id_ui }}">{{resultado.completo}} </option>
+                                                                    {% endif %}
 
                                                                 {% endfor %}
                                                             </datalist>
@@ -177,7 +177,7 @@
             var id2 = {{ info.idSolicitud.idUi.idUi }};
 
             if (id2 != '' &  id2 != null &  id2 != 0 ){
-                var url = '{{ path("verInfo", {'seleccion': 'opcion'}) }}'.replace('opcion',id2);
+                var url = '{{ path("verInfoSecre", {'seleccion': 'opcion'}) }}'.replace('opcion',id2);
                 location.href = url;
             }
 
@@ -215,7 +215,7 @@
             {% endfor %}
 
 
-        $('#InputSelect1_txt').change(function(){
+            $('#InputSelect1_txt').change(function(){
                 cargarSelect();
             });
 
