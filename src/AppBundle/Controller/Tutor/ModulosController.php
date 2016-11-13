@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller\Tutor;
 
+use AppBundle\Entity\Evaluacion;
+use AppBundle\Entity\Nota;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,7 +62,6 @@ class ModulosController extends SecurityController
      */
     public function modulosCursoAction($id, Request $request)
     {
-        $em=$this->getDoctrine()->getManager();
         $modulos=$this->getDoctrine()->getRepository('AppBundle:Modulos')->findBy(array('idCurso'=>$id));
         $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($id);
         $count=0;
@@ -73,7 +74,6 @@ class ModulosController extends SecurityController
      */
     public function alumnosCursoAction($id, $id2, Request $request)
     {
-        $em=$this->getDoctrine()->getManager();
         $alumnos=$this->getDoctrine()->getRepository('AppBundle:InscripcionCurso')->findBy(array('idCurso'=>$id));
         $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($id);
         $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulos')->findOneBy(array('idModulo'=>$id2));
@@ -91,15 +91,141 @@ class ModulosController extends SecurityController
         $alumnos=$this->getDoctrine()->getRepository('AppBundle:InscripcionCurso')->findOneBy(array('idDc'=>$id2));
         $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulos')->findOneBy(array('idModulo'=>$id1));
         $notas=$this->getDoctrine()->getRepository('AppBundle:Nota')->findBy(array('idDc'=>$id2,'idModulo'=>$id1));
+        $eva=$this->getDoctrine()->getRepository('AppBundle:Evaluacion')->findAll();
         $por=0;
         $promedio=0;
+        $db = $em->getConnection();
+        $sql = "select e.* from evaluacion as e left join nota as n on e.id_evaluacion=n.id_evaluacion where n.id_evaluacion is null and e.id_modulo=$id1";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $disp = $stmt->fetchAll();
         foreach($notas as $n){
             $por=$por+$n->getIdEvaluacion()->getPorcentaje();
         }
         foreach($notas as $n){
             $promedio=$promedio+($n->getNota()*($n->getIdEvaluacion()->getPorcentaje()));
         }
-        return $this->render('AppBundle:Tutor/Modulos:notas_alumno.html.twig', array('alumnos'=>$alumnos,'modulo'=>$modulo,'notas'=>$notas,'por'=>$por,'promedio'=>$promedio));
+        if($request->isMethod("POST")) {
+            $nota=$this->getDoctrine()->getRepository('AppBundle:Nota')->find($request->get("evaluacion"));
+
+            if($nota){
+                $this->MensajeFlash('error','Ya ha sido asignada una nota para esta evaluacion');
+                return $this->redirectToRoute('notas_alumno', array('id1'=>$id1,'id2'=>$id2));
+            }
+            else{
+                $not=new Nota();
+                $not->setNota($request->get('nota'));
+                $not->setIdEvaluacion($this->getDoctrine()->getRepository('AppBundle:Evaluacion')->find($request->get("evaluacion")));
+                $not->setIdModulo($modulo);
+                $not->setIdDc($alumnos);
+                $em->persist($not);
+                $em->flush();
+
+                $this->MensajeFlash('exito','Nota registrada con exito');
+                return $this->redirectToRoute('notas_alumno', array('id1'=>$id1,'id2'=>$id2));
+            }
+        }
+        return $this->render('AppBundle:Tutor/Modulos:notas_alumno.html.twig', array('alumnos'=>$alumnos,'modulo'=>$modulo,'notas'=>$notas,'por'=>$por,'promedio'=>$promedio,'eva'=>$disp));
+    }
+
+    //Metodo para ver y agregar evaluaciones
+    /**
+     * @Route("/tutor/evaluaciones/{id}", name="evaluaciones")
+     */
+    public function evaluacionesAction($id, Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulos')->findOneBy(array('idModulo'=>$id));
+        $modu=$this->getDoctrine()->getRepository('AppBundle:Modulos')->find($id);
+        $mod=$modulo->getNombreModulo();
+        $idmod=$modulo->getIdModulo();
+        $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($modulo->getIdCurso());
+        $eva=$modulo=$this->getDoctrine()->getRepository('AppBundle:Evaluacion')->findBy(array('idModulo'=>$id));
+        $por=0;
+        foreach($eva as $ev){
+            $por=$por+$ev->getPorcentaje();
+        }
+        if($request->isMethod("POST")) {
+            $actual=$por+$request->get("por");
+            if($actual<=100){
+            $evaluacion=new Evaluacion();
+            $evaluacion->setNombreEvaluacion($request->get("eva"));
+            $evaluacion->setPorcentaje($request->get("por"));
+            $evaluacion->setIdModulo($modu);
+            $em->persist($evaluacion);
+            $em->flush();
+                $this->MensajeFlash('exito','Evaluacion creada correctamente');
+            return $this->redirectToRoute('evaluaciones', array('id'=>$idmod));
+            }
+            else{
+                $this->MensajeFlash('error','No puede exceder el limite de 100% en la suma de los porcentajes de las evaluaciones');
+                return $this->redirectToRoute('evaluaciones', array('id'=>$idmod));
+            }
+        }
+        return $this->render('AppBundle:Tutor/Modulos:evaluaciones.html.twig', array('curso'=>$curso,'modulo'=>$mod,'evaluacion'=>$eva,'por'=>$por,'idmod'=>$idmod));
+    }
+
+    //Metodo para editar evaluaciones
+    /**
+     * @Route("/tutor/evaluaciones/{id}/edit/{id2}", name="evaluacion_edit")
+     */
+    public function evaluacionesEditAction($id,$id2, Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulos')->findOneBy(array('idModulo'=>$id));
+        $modu=$this->getDoctrine()->getRepository('AppBundle:Modulos')->find($id);
+        $mod=$modulo->getNombreModulo();
+        $idmod=$modulo->getIdModulo();
+        $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($modulo->getIdCurso());
+        $evaluacion=$modulo=$this->getDoctrine()->getRepository('AppBundle:Evaluacion')->find($id2);
+        $eva=$modulo=$this->getDoctrine()->getRepository('AppBundle:Evaluacion')->findBy(array('idModulo'=>$id));
+        $por=0;
+        foreach($eva as $ev){
+            $por=$por+$ev->getPorcentaje();
+        }
+        if($request->isMethod("POST")) {
+            $actual=$por-$evaluacion->getPorcentaje()+$request->get("por");
+            if($actual<=100){
+                $evaluacion->setNombreEvaluacion($request->get("eva"));
+                $evaluacion->setPorcentaje($request->get("por"));
+                $evaluacion->setIdModulo($modu);
+                $em->persist($evaluacion);
+                $em->flush();
+                $this->MensajeFlash('exito','Actualizado correctamente');
+                return $this->redirectToRoute('evaluaciones', array('id'=>$idmod));
+            }
+            else{
+                $this->MensajeFlash('error','No puede exceder el limite de 100% en la suma de los porcentajes de las evaluaciones !');
+                return $this->redirectToRoute('evaluaciones', array('id'=>$idmod));
+            }
+        }
+        return $this->render('AppBundle:Tutor/Modulos:evaluacion_edit.html.twig', array('curso'=>$curso,'modulo'=>$mod,'evaluacion'=>$evaluacion,'idmod'=>$idmod));
+    }
+    //Metodo para eliminar evaluaciones
+    /**
+     * @Route("/tutor/evaluaciones/{id}/delete{id2}", name="evaluacion_delete")
+     */
+    public function deleteUsuarioAction($id,$id2, Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $evaluacion=$modulo=$this->getDoctrine()->getRepository('AppBundle:Evaluacion')->find($id2);
+        $nota=$modulo=$this->getDoctrine()->getRepository('AppBundle:Nota')->findBy(array('idEvaluacion'=>$id2));
+        $modu=$this->getDoctrine()->getRepository('AppBundle:Modulos')->find($id);
+        $idmod=$modu->getIdModulo();
+        if(!$evaluacion){
+            throw $this->createNotFoundException('No existe el usuario con el ID'.$id2);
+        }
+        if($nota){
+            $this->MensajeFlash('error','No tiene permiso de eliminar el registro porque existe una Nota asociada');
+            return $this->redirectToRoute('evaluaciones', array('id'=>$idmod));
+        }
+        else{
+            $em->remove($evaluacion);
+            $em->flush();
+            $this->MensajeFlash('exito','Evaluacion eliminada correctamente!');
+            return $this->redirectToRoute('evaluaciones', array('id'=>$idmod));
+        }
+
     }
 
 }

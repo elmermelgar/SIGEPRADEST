@@ -10,51 +10,51 @@
     </div>
 {% endblock %}
 {% block body %}
-<div class="row">
-    {% for d1 in d1 %}
-        {% if d1.id_doctores == doc.idDoctores %}
-            {% for cursos in cursos %}
-                {% if cursos.idCurso== d1.id_curso %}
-                    {#{% if cursos.estadoCurso=='ejecucion' %}#}
-    <div class="col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                {{ cursos.estadoCurso }}
+    <div class="row">
+        {% for d1 in d1 %}
+            {% if d1.id_doctores == doc.idDoctores %}
+                {% for cursos in cursos %}
+                    {% if cursos.idCurso== d1.id_curso %}
+                        {#{% if cursos.estadoCurso=='ejecucion' %}#}
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    {{ cursos.estadoCurso }}
+                                </div>
 
-            </div>
+                                <div class="panel-body">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="panel panel-back noti-box">
+                                                <span class="icon-box bg-color-blue" style="border-radius: 10px 10px 0px">
+                                                    <i class="fa fa-book"></i>
+                                                </span>
 
-            <div class="panel-body">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel panel-back noti-box">
-                <span class="icon-box bg-color-blue" style="border-radius: 10px 10px 0px">
-                    <i class="fa fa-book"></i>
-                </span>
-                        <div class="text-box">
-                            <p class="main-text">{{ cursos.nombreCurso }} </p>
-                            <p class="text-muted">Tipo: {{ cursos.idTc.nombreTc }}</p>
-                            <p class="text-muted">
-                                <a href="{{ path('modulos_curso', {'id': cursos.idCurso }) }}" title="Modulos" class="btn btn-success"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"/> Modulos del Curso</a>
-                            </p>
-                            <hr>
-                            <p class="text-muted" style="margin-top: -25px">
-                          <span class="text-muted color-bottom-txt"><i class="fa fa-edit"></i>
-                               {{ cursos.textoInformativo }}
-                               </span>
-                            </p>
+                                            <div class="text-box">
+                                                <p class="main-text">{{ cursos.nombreCurso }} </p>
+
+                                                <p class="text-muted" >Tipo: {{ cursos.idTc.nombreTc }}</p>
+
+                                                <p class="text-muted" style="text-align: center;">
+                                                    <a href="{{ path('modulos_curso', {'id': cursos.idCurso }) }}" style="height: 45px;font-family: Arial, Helvetica, sans-serif; font-size: 20px"
+                                                       title="Modulos" class="btn btn-success"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"/> Modulos del Curso</a>
+                                                </p>
+                                                <hr>
+                                                <p class="text-muted" style="margin-top: -25px">
+                                                    <span class="text-muted color-bottom-txt"><i class="fa fa-edit"></i>
+                                                        {{ cursos.textoInformativo }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-footer">
-                Panel Footer
-            </div>
-        </div>
-    </div>
                         {#{% endif %}#}
                     {% endif %}
                 {% endfor %}
-        {% endif %}
-    {% endfor %}
+            {% endif %}
+        {% endfor %}
 
-</div>
+    </div>
 {% endblock %}

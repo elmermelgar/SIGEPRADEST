@@ -18,13 +18,12 @@
             <div class="panel-heading">
                 Modulo
             </div>
-            <div class="panel-body">
+            <div class="panel-body" style="text-align: center">
                 <p>{{ modulos.nombreModulo }}</p>
                 <hr/>
-                <a href="{{ path('alumnos_curso', {'id': curso.idCurso, 'id2': modulos.idModulo}) }}" title="Llenar Notas" class="btn btn-primary" ><span class="glyphicon glyphicon-bookmark" aria-hidden="true"/> Asignar Notas</a>
-            </div>
-            <div class="panel-footer">
-                Panel Footer
+                <a href="{{ path('alumnos_curso', {'id': curso.idCurso, 'id2': modulos.idModulo}) }}" style="font-size: 20px;font-family: Arial;height: 45px;" title="Llenar Notas" class="btn btn-primary" ><span class="glyphicon glyphicon-bookmark" aria-hidden="true"/> Asignar Notas</a>
+                <hr/>
+                <a href="{{ path('evaluaciones', {'id': modulos.idModulo }) }}" style="font-size: 20px;font-family: Arial;height: 45px;" title="Llenar Notas" class="btn btn-info" ><span class="glyphicon glyphicon-list-alt" aria-hidden="true"/> Administrar Evaluaciones</a>
             </div>
         </div>
     </div>

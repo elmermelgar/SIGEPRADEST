@@ -1,0 +1,75 @@
+{% extends 'base2.html.twig' %}
+{% block active1 %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('director') }}">Inicio</a></li>
+        <li><a href="{{ path('tutor') }}">Inicio</a></li>
+        <li><a href="{{ path('cursos_asignados') }}">Cursos Asignados</a></li>
+        <li><a href="{{ path('modulos_curso', {'id': curso.idCurso}) }}">Modulos</a></li>
+        <li class="active">Evaluaciones</li>
+    </ol>
+    <h2>Editar Evaluación</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Editar Evaluación
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Complete para actualizar</h3>
+
+                            <form role="form" action="{{ path('evaluacion_edit', {'id2': evaluacion.idEvaluacion, 'id': idmod}) }}" method="post" >
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Evaluación</label>
+                                        <input class="form-control" name="eva" value="{{ evaluacion.nombreEvaluacion }}" type="text" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Porcentaje</label>
+                                        <input class="form-control" type="number" value="{{ evaluacion.porcentaje }}" name="por" max="100" min="0" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-md-offset-3">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" style="width: 30%;" class="btn btn-primary">Actualizar</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var password = document.getElementById("password")
+                , confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords no coinciden!");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
+{% endblock %}
