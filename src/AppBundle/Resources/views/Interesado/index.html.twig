@@ -1,20 +1,23 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block Header %}
-    <span style="color:royalblue;margin-left: 20px;font-size: 14px;">Bienvenido!</span>
-{% endblock %}
-{% block body %}
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li class="active"><a href="{{ path('index_interesado') }}">Inicio</a></li>
 
         </ol>
-
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
         <div class="row">
+            {% if not cursos %}
+                <span>No hay cursos disponibles.</span>
+            {% endif %}
             {% for c in cursos %}
                 <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" style="background-color: #8C64a3">
                             {{ c.nombreCurso }}
                         </div>
 
