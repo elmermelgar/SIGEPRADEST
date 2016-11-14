@@ -1,0 +1,64 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('alumno') }}">Inicio</a></li>
+            <li class="active">Cursos Inscritos</li>
+        </ol>
+        <h2>Cursos donde ha sido inscrito</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        {% if inscrip %}
+        {% for inscrip in inscrip %}
+            {% if inscrip.idAlumno.idAlumno == alumno.idAlumno %}
+                {% for cursos in cursos %}
+                    {% if cursos.idCurso == inscrip.idCurso.idCurso %}
+                        {#{% if cursos.estadoCurso=='ejecucion' %}#}
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    {{ cursos.estadoCurso }}
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="panel panel-back noti-box">
+                                                <span class="icon-box bg-color-blue" style="border-radius: 10px 10px 0px">
+                                                    <i class="fa fa-book"></i>
+                                                </span>
+
+                                            <div class="text-box">
+                                                <p class="main-text">{{ cursos.nombreCurso }} </p>
+
+                                                <p class="text-muted" >Tipo: {{ cursos.idTc.nombreTc }}</p>
+
+                                                <p class="text-muted" style="text-align: center;">
+                                                    <a href="{{ path('modulos_curso_alumno', {'id': cursos.idCurso,'id2': inscrip.idDc }) }}" style="height: 45px;font-family: Arial, Helvetica, sans-serif; font-size: 20px"
+                                                       title="Modulos" class="btn btn-success"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"/> Modulos del Curso</a>
+                                                </p>
+                                                <hr>
+                                                <p class="text-muted" style="margin-top: -25px">
+                                                    <span class="text-muted color-bottom-txt"><i class="fa fa-edit"></i>
+                                                        {{ cursos.textoInformativo }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {#{% endif %}#}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+            {% else %}
+            <h2 class="col-md-6" style="margin-left: 50px; color: #880000;">No posee aun cursos Inscritos</h2>
+                {% endif %}
+
+    </div>
+{% endblock %}
