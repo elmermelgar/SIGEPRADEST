@@ -31,7 +31,7 @@ class CursoController extends DSIController
             for($i=0;$i<count($hc);$i++){
                 if($fechaAhora>($hc[$i]->getFechaFin()->format("Y-m-d"))){
                     $id=$em->getRepository('AppBundle:Curso')->find($hc[$i]->getIdCurso());
-                    $id->setEstadoCurso("Desabilitado");
+                    $id->setEstadoCurso("finanlizado");
                     //Guardar en la BD
                     $em->flush();
                 }

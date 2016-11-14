@@ -81,9 +81,12 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                 <li  >
                     <a  href="{{ path('verEntrevista') }}"><i class="glyphicon glyphicon-calendar"></i> Horario de Entrevista</a>
                 </li>
+                    <li>
+                        <a  href="{{ path('verSol(sec)') }}"><i class="fa fa-edit fa-3x"></i>Solicitud de Entrevistas</a>
+                    </li>
                     <!-- anidado de Alumnos  -->
                     <li>
-                        <a class="" href="#"><i class="fa fa-graduation-cap"></i> Gestion de Alumnos<span class="fa arrow"></span></a>
+                        <a class="" href="#"><i class="fa fa-graduation-cap"></i> Gestión de Alumnos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li  >
                         <a  href="{{ path('alumnos') }}"><i class="glyphicon glyphicon-eye-open"></i> Crear Alumno</a>
@@ -94,14 +97,17 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                     </li>
                 </ul>
                 </li>
-                <li  >
-                    <a  href="#"><i class="fa fa-edit fa-3x"></i> Solicitud de Entrvista</a>
-                </li>
+                    <li  >
+                        <a  href="{{ path('verCursoDisp') }}"><i class="glyphicon glyphicon-plus-sign"></i> Inscribir a Curso</a>
+                    </li>
                     <li  >
                         <a  href="{{ path('cambiar_pass_secre', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
                     </li>
                 {% endif %}
                 {% if app.user.idrol.nombrerol== 'director' %}
+                    <li>
+                        <a  href="{{ path('verSol(dir))') }}"><i class="fa fa-edit fa-3x"></i>Solicitud de Entrevistas</a>
+                    </li>
                     <li  >
                         <a  href="{{ path('usuarios2') }}"><i class="glyphicon glyphicon-user"></i> Usuarios Tutores</a>
                     </li>

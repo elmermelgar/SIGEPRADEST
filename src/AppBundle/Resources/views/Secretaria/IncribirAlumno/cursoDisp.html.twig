@@ -7,18 +7,15 @@
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="{{ path('secretaria') }}">Inicio</a></li>
-            <li class="active">Cursos</li>
+            <li class="active">Cursos Disponibles</li>
         </ol>
-        <h2>Cursos</h2>
+        <h2>Cursos Disponibles Para Inscribir Alumnos</h2>
     </div>
 {% endblock %}
 {% block body %}
     <div class="col-md-12">
         <!--   Kitchen Sink -->
         <div class="panel panel-default">
-            <div class="panel-heading">
-                Cursos Disponibles <a href="{{ path('createCurso') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Agregar Nuevo Curso</a>
-            </div>
 
             <div class="panel-body">
                 <div class="table-responsive">
@@ -26,33 +23,27 @@
                         <thead>
                         <tr>
                             <th style="text-align: center">Fecha</th>
-                            <th style="text-align: center">Broshure</th>
                             <th style="text-align: center">Nombre</th>
                             <th style="text-align: center">Doctores</th>
                             <th style="text-align: center">Alumnos</th>
                             <th style="text-align: center">Cuotas</th>
-                            <th style="text-align: center">PDF</th>
                             <th style="text-align: center">Estado</th>
                             <th style="text-align: center">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
-<script>
+                        <script>
+                            $('#dataTables-example').DataTable({
+                                ordering: false
+                            });
+                        </script>
 
-    $('#dataTables-example').DataTable( {
-        ordering: false
-    } );
-
-
-    </script>
                         {% for hc in hc %}
                             {% for cursos in cursos %}
-                                {#cambaiar esto luego a cursos disponible#}
-                                {% if cursos.estadoCurso=='registro' %}
+                                {#{% if cursos.estadoCurso=='registro' %}#}
                                     {% if cursos.idCurso == hc.idCurso.idCurso %}
                                         <tr>
                                             <td  class="sorting_desc" aria-sort="descending">{{ hc.FechaInicio.format("d/m/Y")}}</td>
-                                            <td><a href="" onclick="window.open('{{ asset('public') }}/{{ cursos.broshureInformativo}}');"><img src="{{ asset('public') }}/{{ cursos.broshureInformativo }}" alt="img1" style="width: 100px; height: 70px;"></td>
                                             <td>{{ cursos.nombreCurso }}</td>
                                             <td>
                                                 {% for d1 in d1 %}
@@ -63,19 +54,14 @@
                                             </td>
                                             <td>{{ cursos.cantAlumnosLimit }}</td>
                                             <td>{{ cursos.numCuotas }}</td>
-                                            <td><a href="{{ asset('public') }}/{{ cursos.rutaPdf}}">Ver</a></td>
                                             <td>{{ cursos.estadoCurso }}</td>
                                             <td style="text-align: center;">
-                                                <a href="{{ asset('/secretaria/curso_edit') }}/{{ cursos.idCurso }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                                                -
-                                                <button onClick="confirmar({{ cursos.idCurso }})" title="Desabilitar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
+                                                <a href="{{ asset('/secretaria/alumno_ver') }}/{{ cursos.idCurso }}" title="Seleccionar Curso" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-share" aria-hidden="true"/> Seleccionar</a>
                                             </td>
-
                                         </tr>
                                     {% endif %}
-                                {% endif %}
+                                {#{% endif %}#}
                             {% endfor %}
-
                         {% endfor %}
                         </tbody>
                     </table>
