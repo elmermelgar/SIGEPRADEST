@@ -1,0 +1,179 @@
+{% extends 'base3.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li class="active">Informacion Academica </li>
+        </ol>
+        <h2>Informacion Academica</h2>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form class="form-horizontal" action="{{ path('verInfoSecre') }}" method="POST" enctype="multipart/form-data"
+          name="formulario2">
+
+        <fieldset>
+            <div class="col-md-6">
+                <div class="control-group">
+
+
+                    <label class="control-label" for="prependedInput"> Buscar usuario / enviar </label>
+                    <div class="input-group">
+                        <input id="InputSelect1_txt" name= "InputSelect1_txt"  list="lista1_list" placeholder="Escriba el nombre de usuario / enter" class="form-control">
+                        <span class="input-group-addon">  </span>
+                        <input type="button" id = "desplegar_btn" name="desplegar_btn" onclick="cargarSelect()" class="form-control" value="Enviar">
+                    </div>
+
+
+                    <div class="controls">
+                        <div class="input-prepend">
+
+                            <datalist id="lista1_list" name="lista1_list" >
+                                {% for resultado in result %}
+                                    <option data-value="{{ resultado.id_ui }}">{{resultado.completo}} </option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <br>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Informacion Academica
+                        <a href="{{ path('createInfoSecre') }}" style="float: right; margin-top: -5px;" title="Agregar"
+                           class="btn btn-success">Agregar Nueva Informacion</a>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
+                                <thead>
+                                <tr class="odd gradeX">
+                                    <th style="text-align: center">Solicitud</th>
+                                    <th style="text-align: center">Nombre Institucion</th>
+                                    <th style="text-align: center">Titulo</th>
+                                    <th style="text-align: center">Año</th>
+                                    <th style="text-align: center">Acciones</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% if seleccion is not null  %}
+                                    {% for info in infos  %}
+                                        {%  if info.idSolicitud is not null %}
+                                            {% if info.idSolicitud.idUi.idUi == seleccion.idUi %}
+                                                <tr>
+                                                    <td>{{ info.idSolicitud.idSolicitud }}  /
+                                                        {%  if info.idSolicitud.idUi is not empty or info.idSolicitud.idUi.nombre is not empty%}
+                                                            {{ info.idSolicitud.idUi.nombre  }}
+                                                        {% endif %}
+
+                                                    </td>
+                                                    <td class="center">{{ info.institucion }}</td>
+                                                    <td class="center">{{ info.titulo }}</td>
+                                                    <td class="center">{{ info.anio}}  </td>
+                                                    <td style="text-align: center;">
+                                                        <a  href="{{ path('editinfoSecre', {'id': info.idIfacad }) }}"  title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;">
+                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                                        -
+                                                        <a onclick="confirmar({{ info.idIfacad }})" title="Eliminar" class="btn btn-danger">
+                                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
+                                                    </td>
+                                                </tr>
+                                            {%  endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </fieldset>
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('public/js/jquery-1.9.1.min.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example1').dataTable();
+
+            $('#select1').change(function(){
+                var id = $('#select1').val();
+                $('#estados').load( cargarSelect2(id) );
+            });
+
+            $('#InputSelect1_txt').change(function(){
+                cargarSelect();
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        function confirmar(val){
+            alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                if (e) {
+
+                    var url = '{{ path("deleteInfoSecre", {'id': 'opcion'}) }}'.replace('opcion',val);
+                    location.href = url;
+
+                    alertify.error("Procesando ... eliminacion"  );
+                } else {
+                    alertify.error("Has cancelado la operacion");
+                }
+            });
+
+        }
+
+
+        function cargarSelect( ){
+            var dato = $("input[name=InputSelect1_txt]").val();
+            options = document.querySelectorAll('#lista1_list option');
+
+            for(var i = 0; i < options.length; i++) {
+                var option = options[i];
+                //var nombreCompletoList = option.innerText;
+                //alert( dato.localeCompare(nombreCompletoList) );
+
+                if( option.innerText.trim().valueOf() == dato.trim().valueOf() ){
+                    cargarSelect2(option.getAttribute('data-value'));
+                }
+            }
+        }
+
+        function cargarSelect2(valor){
+            if (valor != 0){
+                var url = '{{ path("verInfoSecre", {'seleccion': 'opcion'}) }}'.replace('opcion',valor);
+                location.href = url;
+            }
+        }
+
+    </script>
+
+{% endblock %}
