@@ -17,6 +17,7 @@ class InformacionAcademicaType extends AbstractType
         $builder
             ->add('institucion')
             ->add('titulo')
+            ->add('anio')
             ->add('guardar','submit',array('label' => 'Guardar'))
         ;
     }

@@ -1,24 +1,27 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block Header %}
-    <span style="color:royalblue;margin-left: 20px;font-size: 14px;">Mi perfil</span>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="active"><a href="{{ path('index_interesado') }}">Inicio</a></li>
+            <li class="active">Perfil</li>
+        </ol>
+    </div>
 {% endblock %}
 {% block styles %}
     <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block body %}
-    <div class="col-md-12">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('index_interesado') }}">Inicio</a></li>
-            <li class="active">Perfil</li>
-        </ol>
 
-        <div class="panel panel-default">
-
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background-color: #8C64a3">
+            Perfil Personal
+        </div>
+        <div class="panel-body">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>Nombre:</label><br>
-                    <label>{{ app.user.nombre }} {{ app.user.apellido }}</label>
+                    <label>Nombre completo: </label>
+                    <label><span style="font-size: 18px">{{ app.user.nombre }} {{ app.user.apellido }}</span></label>
                 </div>
             </div>
             {{ form_start(form, {'attr' : {'role' : 'form'}}) }}
@@ -89,10 +92,9 @@
                 </div>
             </div>
             {{ form_end(form) }}
-
         </div>
-
     </div>
+
 {% endblock %}
 
 {% block javascripts %}

@@ -147,9 +147,9 @@ class InteresadoController extends SecurityController
     }
 
     /**
-     * @Route("/solicitud", name="interesado_solicitud")
+     * @Route("/solicitud/{idc}", name="interesado_solicitud")
      */
-    public function solicitudAction(Request $request)
+    public function solicitudAction($idc, Request $request)
     {
         //getting user
         $usuario = $this->getUser();
@@ -160,10 +160,11 @@ class InteresadoController extends SecurityController
         );
         if ($perfil) {
             $reposol = $this->getDoctrine()->getRepository('AppBundle:Solicitud');
-            $idc = $request->get('idc');
-            $solicitud = $reposol->findOneBy(
-                array('idCurso' => $idc)
-            );
+            ///$idc = $request->get('idc');
+            $solicitud = $reposol->findOneBy(array(
+                'idCurso' => $idc,
+                'estado' => 'creada'
+            ));
             if ($solicitud) {
                 //Mostrar la solicitud
                 //$this->MensajeFlash('exito','This feature is not supported yet!');
@@ -223,13 +224,13 @@ class InteresadoController extends SecurityController
 
 
     /**
-     * @Route("/infoacademica", name="interesado_infoacademica")
+     * @Route("/infoacademica/{idc}", name="interesado_infoacademica")
      */
-    public function newInfoAcademicaAction(Request $request)
+    public function newInfoAcademicaAction($idc, Request $request)
     {
         //Crear nueva info academica
         $info = new InformacionAcademica();
-        $form = $this->createInfoAcademicaForm($info, $request->get('idc'));
+        $form = $this->createInfoAcademicaForm($info, $idc);
         return $this->render('AppBundle:Interesado/InfoAcademica:new.hmtl.twig', array('idc' => $request->get('idc'), 'form' => $form->createView()));
     }
 
@@ -243,12 +244,12 @@ class InteresadoController extends SecurityController
     }
 
     /**
-     * @Route("/infoacademica/create", name="interesado_infoacademica_create")
+     * @Route("/infoacademica/create/{idc}", name="interesado_infoacademica_create")
      */
-    public function createInfoAcademicaAction(Request $request)
+    public function createInfoAcademicaAction($idc, Request $request)
     {
         $info = new InformacionAcademica();
-        $idc = $request->get('idc');
+        //$idc = $request->get('idc');
         $form = $this->createInfoAcademicaForm($info, $idc);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -269,38 +270,41 @@ class InteresadoController extends SecurityController
     }
 
     /**
-     * @Route("/infoacademica/edit", name="interesado_infoacademica_edit")
+     * @Route("/infoacademica/edit/{idc}/{idia}", name="interesado_infoacademica_edit")
      */
-    public function editInfoAcademicaAction(Request $request)
+    public function editInfoAcademicaAction($idc, $idia, Request $request)
     {
         //Editar info academica
-        $idc = $request->get('idc');
-        $idia = $request->get('idia');
+        //$idc = $request->get('idc');
+        //$idia = $request->get('idia');
         $repoinfo = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica');
         $info = $repoinfo->findOneBy(
             array('idIfacad' => $idia)
         );
-        $form = $this->createEditInfoAcademicaForm($info, $idc);
+        $form = $this->createEditInfoAcademicaForm($info, $idc, $idia);
         return $this->render('AppBundle:Interesado/InfoAcademica:edit.html.twig', array('idc' => $idc, 'form' => $form->createView()));
     }
 
-    private function createEditInfoAcademicaForm(InformacionAcademica $entity, $idc)
+    private function createEditInfoAcademicaForm(InformacionAcademica $entity, $idc, $idia)
     {
         $form = $this->createForm(new InformacionAcademicaType(), $entity, array(
-            'action' => $this->generateUrl('interesado_infoacademica_update', array('idc' => $idc)),
+            'action' => $this->generateUrl('interesado_infoacademica_update', array('idc' => $idc, 'idia' => $idia)),
             'method' => 'POST'
         ));
         return $form;
     }
 
     /**
-     * @Route("/infoacademica/update", name="interesado_infoacademica_update")
+     * @Route("/infoacademica/update/{idc}/{idia}", name="interesado_infoacademica_update")
      */
-    public function createEditInfoAcademicaAction(Request $request)
+    public function createEditInfoAcademicaAction($idc, $idia, Request $request)
     {
-        $info = new InformacionAcademica();
-        $idc = $request->get('idc');
-        $form = $this->createEditInfoAcademicaForm($info, $idc);
+        $repoinfo = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica');
+        $info = $repoinfo->findOneBy(
+            array('idIfacad' => $idia)
+        );
+        //$idc = $request->get('idc');
+        $form = $this->createEditInfoAcademicaForm($info, $idc, $idia);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -311,7 +315,7 @@ class InteresadoController extends SecurityController
             );
             $info->setIdSolicitud($solicitud);
 
-            $em->persist($info);
+            //$em->persist($info);
             $em->flush();
             $this->MensajeFlash('exito', 'Se ha actualizado el registro de información académica');
             return $this->redirectToRoute('interesado_solicitud', array('idc' => $idc));
@@ -324,17 +328,63 @@ class InteresadoController extends SecurityController
      * @Route("/infoacademica/delete/{idia}/{idc}", name="interesado_infoacademica_delete")
      *
      */
-    public function deleteInfoAcademicaAction($idia,$idc,Request $request)
+    public function deleteInfoAcademicaAction($idia, $idc, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $info = $em->getRepository('AppBundle:InformacionAcademica')->find($idia);
-        if(!$info){
-            throw $this->createNotFoundException('No existe registro con el ID '.$idia);
+        $info = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica')->find($idia);
+        if (!$info) {
+            throw $this->createNotFoundException('No existe registro con el ID ' . $idia);
         }
         $em->remove($info);
         $em->flush();
-        $this->MensajeFlash('exito','Registro eliminado correctamente!');
+        $this->MensajeFlash('exito', 'Registro eliminado correctamente!');
         return $this->redirectToRoute('interesado_solicitud', array('idc' => $idc));
+    }
+
+    /**
+     * @Route("/solicitud/enviar/{ids}", name="interesado_solicitud_enviar")
+     *
+     */
+    public function enviarSolicitudAction(Request $request, $ids)
+    {
+        $res = 'ERROR';
+        $em = $this->getDoctrine()->getManager();
+        $repoSol = $em->getRepository('AppBundle:Solicitud');
+        $sol = $repoSol->findOneBy(array(
+            'idSolicitud' => $ids
+        ));
+        //Debe tener solicitud creada
+        if ($sol) {
+            $info = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica')->findBy(
+                array('idSolicitud' => $sol->getIdSolicitud())
+            );
+            //Debe tener por los menos un registro en informacion academica
+            if ($info) {
+                //enviar solicitud de ingreso
+                $sol->setEstado('enviada');
+                $em->flush();
+                $res = 'OK';
+            }else{
+                $this->MensajeFlash('error','Debe ingresar información académica');
+            }
+        }
+        if ($res == 'OK') {
+            $this->MensajeFlash('exito','Su solicitud de ingreso ha sido enviada');
+            return $this->redirectToRoute('index_interesado');
+        }else{
+            //Getting Informacion academica
+            $repoia = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica');
+            $infoacademica = $repoia->findBy(
+                array('idSolicitud' => $ids)
+            );
+
+            return $this->render('AppBundle:Interesado/Solicitud:solicitud.html.twig', array(
+                'perfil' => $sol->getIdDp(),
+                'solicitud' => $sol,
+                'estudios' => $infoacademica,
+                'curso' => $sol->getIdCurso()
+            ));
+        }
     }
 
 }
