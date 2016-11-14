@@ -27,9 +27,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Horario de Entrevista</label>
-                                        <select name="he" class="form-control">
+                                        <select name="he" class="form-control" required>
                                             {% for he in he %}
-                                                <option  value="{{ he.idHe }}">{{ he.fechaDhe.format('d/m/Y') }} --- {{ he.horaDhe.format('H:i A') }}</option>
+                                                <option  value="{{ he.idHe }}">{{ he.fechaDhe.format('d/m/Y') }} --- {{ he.horaDhe.format('H:i A') }} </option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -38,7 +38,7 @@
                                     <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="disabledSelect">Comentario</label>
-                                            <input id="comen" class="form-control" name="comen" size="16" type="text">
+                                            <input id="comen" class="form-control" name="comen" size="16" type="text" required>
                                     </div>
 
                                 </div>

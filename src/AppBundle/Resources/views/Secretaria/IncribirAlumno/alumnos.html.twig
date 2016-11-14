@@ -37,7 +37,7 @@
                                         <td>{{ usu.nombre }}</td>
                                         <td>{{ usu.apellido }}</td>
                                         <td style="text-align: center;">
-                                            <a href="#" title="Inscribir Alumno" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Inscribir</a>
+                                            <a href="{{ path('inscribir', {'idalumno': alum.idAlumno, 'idcurso': cur.idCurso}) }}" title="Inscribir Alumno" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Inscribir</a>
                                         </td>
                                     </tr>
                                 {% endif %}

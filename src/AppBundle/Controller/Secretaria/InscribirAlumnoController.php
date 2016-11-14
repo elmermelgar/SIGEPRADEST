@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Secretaria;
 use AppBundle\Controller\DSIController;
 use AppBundle\Entity\Curso;
 use AppBundle\Entity\HorarioCurso;
+use AppBundle\Entity\InscripcionCurso;
 use AppBundle\Entity\Modulos;
 use AppBundle\Entity\TipoCurso;
 use AppBundle\Tests\Controller\DetalleCursoControllerTest;
@@ -53,4 +54,29 @@ class InscribirAlumnoController extends DSIController
         }
     }
 
+    /**
+     * @Route("/secretaria/inscribir/{idcurso}/{idalumno}",name="inscribir")
+     */
+    public function inscAlumnoAction($idcurso,$idalumno)
+    {
+        $em=$this->getDoctrine()->getManager("default");
+        $insc= new InscripcionCurso();
+        $insc->setIdCurso($em->getRepository('AppBundle:Curso')->find($idcurso));
+        $insc->setIdAlumno($em->getRepository('AppBundle:Alumno')->find($idalumno));
+
+        //Persistir
+        $em->persist($insc);
+
+        //Guradar en la BD
+        $em->flush();
+
+        $alum=$em->getRepository('AppBundle:Alumno')->findBy(array('estadoAlumno'=>'activo'));
+        $usu=$em->getRepository('AppBundle:Usuario')->findAll();
+        $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
+        $cur=$em->getRepository('AppBundle:Curso')->find($idcurso);
+
+        $this->MensajeFlash('exito','Alumno inscrito correctamente en el Curso!');
+
+        return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('cur'=>$cur,'alum'=>$alum,'usu'=>$usu,'dp'=>$dp));
+    }
 }

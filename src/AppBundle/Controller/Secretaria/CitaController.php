@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Secretaria;
 
 use AppBundle\Controller\DSIController;
 use AppBundle\Entity\Cita;
+use AppBundle\Entity\EvaluacionPrevia;
 use AppBundle\Tests\Controller\DetalleCursoControllerTest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,9 +31,17 @@ class CitaController extends DSIController
                 $cita->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find($id));
                 $cita->setComentarioCita($request->get('comen'));
 
+                $eva = new EvaluacionPrevia();
+                $eva->setIdHe($em->getRepository("AppBundle:HorarioEntrevista")->find($request->get("he")));
+                $eva->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find($id));
+                $eva->setComentarioEvaluacion($request->get('comen'));
+
                 //Persistir
                 $em->persist($cita);
+                $em->persist($eva);
 
+                $he2=$em->getRepository('AppBundle:HorarioEntrevista')->find($request->get('he'));
+                $he2->setOcupado(true);
                 $sol->setEstado('evaluacion');
 
                 //Guradar en la BD
