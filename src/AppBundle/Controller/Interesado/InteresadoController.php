@@ -224,40 +224,42 @@ class InteresadoController extends SecurityController
 
 
     /**
-     * @Route("/infoacademica/{idc}", name="interesado_infoacademica")
+     * @Route("/infoacademica/{idc}/{ids}", name="interesado_infoacademica")
      */
-    public function newInfoAcademicaAction($idc, Request $request)
+    public function newInfoAcademicaAction($idc, $ids, Request $request)
     {
         //Crear nueva info academica
         $info = new InformacionAcademica();
-        $form = $this->createInfoAcademicaForm($info, $idc);
-        return $this->render('AppBundle:Interesado/InfoAcademica:new.hmtl.twig', array('idc' => $request->get('idc'), 'form' => $form->createView()));
+        $form = $this->createInfoAcademicaForm($info, $idc, $ids);
+        return $this->render('AppBundle:Interesado/InfoAcademica:new.hmtl.twig', array(
+            'ids' => $ids, 'idc' => $idc, 'form' => $form->createView()
+        ));
     }
 
-    private function createInfoAcademicaForm(InformacionAcademica $entity, $idc)
+    private function createInfoAcademicaForm(InformacionAcademica $entity, $idc, $ids)
     {
         $form = $this->createForm(new InformacionAcademicaType(), $entity, array(
-            'action' => $this->generateUrl('interesado_infoacademica_create', array('idc' => $idc)),
+            'action' => $this->generateUrl('interesado_infoacademica_create', array('idc' => $idc, 'ids' => $ids)),
             'method' => 'POST'
         ));
         return $form;
     }
 
     /**
-     * @Route("/infoacademica/create/{idc}", name="interesado_infoacademica_create")
+     * @Route("/infoacademica/create/{idc}/{ids}", name="interesado_infoacademica_create")
      */
-    public function createInfoAcademicaAction($idc, Request $request)
+    public function createInfoAcademicaAction($idc, $ids, Request $request)
     {
         $info = new InformacionAcademica();
         //$idc = $request->get('idc');
-        $form = $this->createInfoAcademicaForm($info, $idc);
+        $form = $this->createInfoAcademicaForm($info, $idc, $ids);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             //Get solicitud
             $reposol = $this->getDoctrine()->getRepository('AppBundle:Solicitud');
             $solicitud = $reposol->findOneBy(
-                array('idCurso' => $idc)
+                array('idSolicitud' => $ids)
             );
             $info->setIdSolicitud($solicitud);
 
@@ -266,7 +268,8 @@ class InteresadoController extends SecurityController
             //$this->MensajeFlash('exito', 'Se ha creado un nuevo registro de informacion academica');
             return $this->redirectToRoute('interesado_solicitud', array('idc' => $idc));
         }
-        return $this->render('AppBundle:Interesado/InfoAcademica:new.hmtl.twig', array('idc' => $idc, 'form' => $form->createView()));
+        return $this->render('AppBundle:Interesado/InfoAcademica:new.hmtl.twig', array(
+            'idc' => $idc, 'ids' => $ids, 'form' => $form->createView()));
     }
 
     /**
@@ -308,16 +311,8 @@ class InteresadoController extends SecurityController
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            //Get solicitud
-            $reposol = $this->getDoctrine()->getRepository('AppBundle:Solicitud');
-            $solicitud = $reposol->findOneBy(
-                array('idCurso' => $idc)
-            );
-            $info->setIdSolicitud($solicitud);
-
-            //$em->persist($info);
             $em->flush();
-            $this->MensajeFlash('exito', 'Se ha actualizado el registro de información académica');
+            //$this->MensajeFlash('exito', 'Se ha actualizado el registro de información académica');
             return $this->redirectToRoute('interesado_solicitud', array('idc' => $idc));
         }
         $this->MensajeFlash('error', 'Verifque la información ingresada');
@@ -353,6 +348,9 @@ class InteresadoController extends SecurityController
         $sol = $repoSol->findOneBy(array(
             'idSolicitud' => $ids
         ));
+        //Save disponibilidad
+        $sol->setRangoDisponibilidad($request->get("dispo"));
+        $em->flush();
         //Debe tener solicitud creada
         if ($sol) {
             $info = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica')->findBy(
@@ -364,25 +362,22 @@ class InteresadoController extends SecurityController
                 $sol->setEstado('enviada');
                 $em->flush();
                 $res = 'OK';
-            }else{
-                $this->MensajeFlash('error','Debe ingresar información académica');
+            } else {
+                $this->MensajeFlash('error', 'Debe ingresar información académica');
             }
         }
         if ($res == 'OK') {
-            $this->MensajeFlash('exito','Su solicitud de ingreso ha sido enviada');
+            $this->MensajeFlash('exito', 'Su solicitud de ingreso ha sido enviada');
             return $this->redirectToRoute('index_interesado');
-        }else{
+        } else {
             //Getting Informacion academica
             $repoia = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica');
             $infoacademica = $repoia->findBy(
                 array('idSolicitud' => $ids)
             );
 
-            return $this->render('AppBundle:Interesado/Solicitud:solicitud.html.twig', array(
-                'perfil' => $sol->getIdDp(),
-                'solicitud' => $sol,
-                'estudios' => $infoacademica,
-                'curso' => $sol->getIdCurso()
+            return $this->redirectToRoute('interesado_solicitud', array(
+                'idc' => $sol->getIdCurso()->getIdCurso()
             ));
         }
     }

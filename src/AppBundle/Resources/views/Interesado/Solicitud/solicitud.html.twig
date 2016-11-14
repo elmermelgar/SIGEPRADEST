@@ -108,7 +108,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span style="font-size: 14px; font-weight: bold;">Estudios realizados</span>
-                    <a href="{{ path('interesado_infoacademica',{'idc' : curso.idCurso}) }}"
+                    <a href="{{ path('interesado_infoacademica',{'idc' : curso.idCurso, 'ids' : solicitud.idSolicitud}) }}"
                        style="float: right; margin-top: -8px;"
                        title="Agregar"
                        class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
@@ -150,10 +150,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <form>
-                <div style="margin-bottom: 30px;">
-                    <a href="{{ path('interesado_solicitud_enviar',{'ids' : solicitud.idSolicitud}) }}" onclick="form.submit();" class="btn btn-success">Enviar Solicitud</a>
+        <div class="col-md-8">
+            <form role="form" action="{{ path('interesado_solicitud_enviar', {'ids': solicitud.idSolicitud}) }}"
+                  method="post">
+                <div class="form-group">
+                    <label>Disponibilidad: (Su tiempo disponible para asistir a entrevista)</label>
+                    <textarea name="dispo" rows="2" maxlength="100" class="form-control"
+                              required>{{ solicitud.rangoDisponibilidad }}</textarea>
+                </div>
+                <div style="margin: 30px 30px;">
+                    <button type="submit" class="btn btn-success">Enviar Solicitud</button>
                 </div>
             </form>
         </div>
