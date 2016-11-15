@@ -40,7 +40,6 @@
 
                         {% for hc in hc %}
                             {% for cursos in cursos %}
-                                {#{% if cursos.estadoCurso=='registro' %}#}
                                     {% if cursos.idCurso == hc.idCurso.idCurso %}
                                         <tr>
                                             <td  class="sorting_desc" aria-sort="descending">{{ hc.FechaInicio.format("d/m/Y")}}</td>
@@ -60,7 +59,6 @@
                                             </td>
                                         </tr>
                                     {% endif %}
-                                {#{% endif %}#}
                             {% endfor %}
                         {% endfor %}
                         </tbody>

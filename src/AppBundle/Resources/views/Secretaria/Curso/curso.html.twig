@@ -28,7 +28,7 @@
                             <th style="text-align: center">Fecha</th>
                             <th style="text-align: center">Broshure</th>
                             <th style="text-align: center">Nombre</th>
-                            <th style="text-align: center">Doctores</th>
+                            <th style="text-align: center">Tutores</th>
                             <th style="text-align: center">Alumnos</th>
                             <th style="text-align: center">Cuotas</th>
                             <th style="text-align: center">PDF</th>
@@ -37,14 +37,12 @@
                         </tr>
                         </thead>
                         <tbody>
-<script>
+                        <script>
 
-    $('#dataTables-example').DataTable( {
-        ordering: false
-    } );
-
-
-    </script>
+                            $('#dataTables-example').DataTable({
+                                ordering: false
+                            });
+                        </script>
                         {% for hc in hc %}
                             {% for cursos in cursos %}
                                 {#cambaiar esto luego a cursos disponible#}
@@ -63,19 +61,17 @@
                                             </td>
                                             <td>{{ cursos.cantAlumnosLimit }}</td>
                                             <td>{{ cursos.numCuotas }}</td>
-                                            <td><a href="{{ asset('public') }}/{{ cursos.rutaPdf}}">Ver</a></td>
+                                            <td><a href="" onclick="window.open('{{ asset('public') }}/{{ cursos.rutaPdf}}');">Ver</a></td>
                                             <td>{{ cursos.estadoCurso }}</td>
                                             <td style="text-align: center;">
                                                 <a href="{{ asset('/secretaria/curso_edit') }}/{{ cursos.idCurso }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                                 -
                                                 <button onClick="confirmar({{ cursos.idCurso }})" title="Desabilitar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
                                             </td>
-
                                         </tr>
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
-
                         {% endfor %}
                         </tbody>
                     </table>

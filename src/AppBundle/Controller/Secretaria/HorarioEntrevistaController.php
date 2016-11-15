@@ -34,7 +34,7 @@ class HorarioEntrevistaController extends DSIController
     public function createEntrevistaAction(Request $request)
     {
         $em=$this->getDoctrine()->getManager("default");
-        $curso=$em->getRepository('AppBundle:Curso')->findBy(array("estadoCurso"=>"registro"));
+        $curso=$em->getRepository('AppBundle:Curso')->findBy(array("estadoCurso"=>"disponible"));
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {
             //Recuperar y seteando valores enviados

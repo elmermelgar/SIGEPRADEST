@@ -106,7 +106,7 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                 {% endif %}
                 {% if app.user.idrol.nombrerol== 'director' %}
                     <li>
-                        <a  href="{{ path('verSol(dir))') }}"><i class="fa fa-edit fa-3x"></i>Solicitud de Entrevistas</a>
+                        <a  href="{{ path('verSol(dir)') }}"><i class="fa fa-edit fa-3x"></i>Solicitud de Entrevistas</a>
                     </li>
                     <li  >
                         <a  href="{{ path('usuarios2') }}"><i class="glyphicon glyphicon-user"></i> Usuarios Tutores</a>
