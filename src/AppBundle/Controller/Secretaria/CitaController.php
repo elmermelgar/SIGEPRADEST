@@ -30,6 +30,7 @@ class CitaController extends DSIController
                 $cita->setIdHe($em->getRepository("AppBundle:HorarioEntrevista")->find($request->get("he")));
                 $cita->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find($id));
                 $cita->setComentarioCita($request->get('comen'));
+                $cita->setEstadoCita('programada');
 
                 $eva = new EvaluacionPrevia();
                 $eva->setIdHe($em->getRepository("AppBundle:HorarioEntrevista")->find($request->get("he")));
@@ -47,13 +48,13 @@ class CitaController extends DSIController
                 //Guradar en la BD
                 $em->flush();
 
-                $this->MensajeFlash('exito','Cita creado correctamente!');
+                $this->MensajeFlash('exito','Cita creada correctamente!');
                 return $this->redirectToRoute("verSol(sec)");
             }
             return $this->render("AppBundle:Secretaria/Cita:cita_create.html.twig", array("sol"=>$sol,'he'=>$he, 'idsol'=>$id));
         }else{
             $this->MensajeFlash('error','Debe crear primero Horarios de Entrevista para este Curso');
-            return $this->redirectToRoute("verSol(sec)");
+            return $this->redirectToRoute("verEntrevista");
         }
 
 

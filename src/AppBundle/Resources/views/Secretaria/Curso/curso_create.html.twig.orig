@@ -75,7 +75,7 @@
                                 <label class="control-label" for="prependedInput">Numero de Cuotas</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input id="nun_cuo" class="form-control" name="nun_cuo" size="16" type="number" min="1" placeholder="Numero: Matricula + Pre-Inscripción o Inscripción" >
+                                        <input id="nun_cuo" class="form-control" name="nun_cuo" size="16" type="number" min="1" placeholder="Numero" >
                                     </div>
                                 </div>
                             </div>
@@ -101,12 +101,12 @@
 
                             <br>
                             <div class="control-group" >
-                                <label class="control-label" for="prependedInput">Asignar Tutores al Curso</label>
+                                <label class="control-label" for="prependedInput">Asignar Doctores al Curso</label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <select class="js-example-basic-multiple" class="form-control" style="width: 100%"  multiple="multiple"  name="doc[]">
                                             {% for doc in doc %}
-                                                <option value="{{ doc.idDoctores}}">{{ doc.nombreDoc }} {{ doc.apellidoDoc }}</option>
+                                                <option value="{{ doc.idDoctores}}">{{ doc.nombreDoc }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -262,6 +262,16 @@
             var numero = document.getElementById('nun_cuo').value;
             var img = document.getElementById('imagen').value;
             var pdf = document.getElementById('archivo').value;
+<<<<<<< HEAD
+            var iniciocurso = (new Date (document.getElementById('fechaini').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+            var finalcurso  =( new Date (document.getElementById('fechafin').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+            var iniciodocu = (new Date ( document.getElementById('fechainirec').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+            var finaldocu  = (new Date (document.getElementById('fechafinrec').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+            var inicioentre  =(new Date ( document.getElementById('fechainientre').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+            var finalentre  = (new Date (document.getElementById('fechafinentre').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+            var inicioeva  = ( new Date ( document.getElementById('fechainieva').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+            var finaleva  = ( new Date (document.getElementById('fechafineva').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+=======
 
             var iniciocurso = (new Date (document.getElementById('fechaini').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
             var finalcurso  =(new Date (document.getElementById('fechafin').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
@@ -271,6 +281,7 @@
             var finalentre  = (new Date (document.getElementById('fechafinentre').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
             var inicioeva  = (new Date (document.getElementById('fechainieva').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
             var finaleva  = (new Date (document.getElementById('fechafineva').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+>>>>>>> cb27d317d7d7fd261a7dfde4f174c7ca14b77f61
 
             var fechaAhora = moment().format('DD-MM-YYYY');
 

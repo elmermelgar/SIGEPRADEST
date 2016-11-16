@@ -1,0 +1,83 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+    <h1>Expediente list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Idexp</th>
+                <th>Nombreexp</th>
+                <th>Datoscarrera</th>
+                <th>Genero</th>
+                <th>Paisnacimiento</th>
+                <th>Nacionalidad</th>
+                <th>Fechanaci</th>
+                <th>Duiexp</th>
+                <th>Nitexp</th>
+                <th>Estadocivilexp</th>
+                <th>Situacionlaboral</th>
+                <th>Tipoestudiante</th>
+                <th>Direccionexp</th>
+                <th>Deptorecidencia</th>
+                <th>Municipiorecidencia</th>
+                <th>Telefono</th>
+                <th>Emailexp</th>
+                <th>Fechatitulacion</th>
+                <th>Fechaexptitulo</th>
+                <th>Institucionexp</th>
+                <th>Bachillerato</th>
+                <th>Cambioscarreraaprob</th>
+                <th>Fecharegistro</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('secretaria_expediente_show', { 'id': entity.idExp }) }}">{{ entity.idExp }}</a></td>
+                <td>{{ entity.nombreExp }}</td>
+                <td>{{ entity.datosCarrera }}</td>
+                <td>{{ entity.genero }}</td>
+                <td>{{ entity.paisNacimiento }}</td>
+                <td>{{ entity.nacionalidad }}</td>
+                <td>{% if entity.fechaNaci %}{{ entity.fechaNaci|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.duiExp }}</td>
+                <td>{{ entity.nitExp }}</td>
+                <td>{{ entity.estadoCivilExp }}</td>
+                <td>{{ entity.situacionLaboral }}</td>
+                <td>{{ entity.tipoEstudiante }}</td>
+                <td>{{ entity.direccionExp }}</td>
+                <td>{{ entity.deptoRecidencia }}</td>
+                <td>{{ entity.municipioRecidencia }}</td>
+                <td>{{ entity.telefono }}</td>
+                <td>{{ entity.emailExp }}</td>
+                <td>{% if entity.fechaTitulacion %}{{ entity.fechaTitulacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fechaExpTitulo %}{{ entity.fechaExpTitulo|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.institucionExp }}</td>
+                <td>{{ entity.bachillerato }}</td>
+                <td>{{ entity.cambiosCarreraAprob }}</td>
+                <td>{% if entity.fechaRegistro %}{{ entity.fechaRegistro|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('secretaria_expediente_show', { 'id': entity.idExp }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('secretaria_expediente_edit', { 'id': entity.idExp }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('secretaria_expediente_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

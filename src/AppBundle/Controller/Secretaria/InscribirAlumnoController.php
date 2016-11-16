@@ -25,7 +25,7 @@ class InscribirAlumnoController extends DSIController
         if($this->getUser()){
             $em=$this->getDoctrine()->getManager("default");
             $cursos=$em->getRepository('AppBundle:Curso')->findBy(array('estadoCurso'=>'disponible'));
-            $hc=$em->createQuery('select curso from AppBundle:HorarioCurso curso ORDER BY curso.fechaInicio DESC ')->getResult();
+            $hc=$em->createQuery('select curso from AppBundle:HorarioCurso curso ORDER BY curso.fechaInicio DESC')->getResult();
 
             $doctores=$em->getRepository('AppBundle:Doctores')->findAll();
             $d1=$this->mostrarD1();
@@ -47,8 +47,9 @@ class InscribirAlumnoController extends DSIController
             $usu=$em->getRepository('AppBundle:Usuario')->findAll();
             $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
             $cur=$em->getRepository('AppBundle:Curso')->find($id);
+            $ins=$em->getRepository('AppBundle:InscripcionCurso')->findAll();
 
-            return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('cur'=>$cur,'alum'=>$alum,'usu'=>$usu,'dp'=>$dp));
+            return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('cur'=>$cur,'alum'=>$alum,'usu'=>$usu,'dp'=>$dp,'ins'=>$ins));
         }else{
             return $this->redirectToRoute('login');
         }
@@ -74,9 +75,10 @@ class InscribirAlumnoController extends DSIController
         $usu=$em->getRepository('AppBundle:Usuario')->findAll();
         $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
         $cur=$em->getRepository('AppBundle:Curso')->find($idcurso);
+        $ins=$em->getRepository('AppBundle:InscripcionCurso')->findAll();
 
         $this->MensajeFlash('exito','Alumno inscrito correctamente en el Curso!');
 
-        return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('cur'=>$cur,'alum'=>$alum,'usu'=>$usu,'dp'=>$dp));
+        return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('cur'=>$cur,'alum'=>$alum,'usu'=>$usu,'dp'=>$dp,'ins'=>$ins));
     }
 }

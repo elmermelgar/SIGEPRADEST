@@ -64,7 +64,7 @@ class DoctoresSecreController extends SecurityController
             $this->MensajeFlash('exito','Tutor creado correctamente!');
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
-            $doctores=$em2->getRepository('AppBundle:Tutor')->findAll();
+            $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
             return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctores)));
         }
         return $this->render('AppBundle:Secretaria/Doctores:nuevo_doctor.html.twig', array(
@@ -120,7 +120,7 @@ class DoctoresSecreController extends SecurityController
             $this->MensajeFlash('exito','Tutor actualizado correctamente!');
             //redireccionamiento
             $em2=$this->getDoctrine()->getManager("default");
-            $doctores=$em2->getRepository('AppBundle:Tutor')->findAll();
+            $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
             return $this->redirect($this->generateUrl('doctores_secre', array('doctores'=>$doctores)));
         }
         return $this->render('AppBundle:Secretaria/Doctores:editar_doctor.html.twig', array(
@@ -133,7 +133,7 @@ class DoctoresSecreController extends SecurityController
     public function tutoresViewsAction(Request $request){
         if($this->getUser()){
             $em2=$this->getDoctrine()->getManager("default");
-            $doctores=$em2->getRepository('AppBundle:Tutor')->findAll();
+            $doctores=$em2->getRepository('AppBundle:Doctores')->findAll();
             return $this->render('AppBundle:Secretaria/Doctores:doctores_views.html.twig', array('doctores'=>$doctores));
         }
         else{

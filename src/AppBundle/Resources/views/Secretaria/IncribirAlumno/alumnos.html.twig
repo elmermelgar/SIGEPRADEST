@@ -29,19 +29,26 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         {% for alum in alum %}
-                            {% for usu in usu %}
-                                {% if alum.idUi.idUI == usu.idUi %}
-                                    <tr>
-                                        <td>{{ usu.nombre }}</td>
-                                        <td>{{ usu.apellido }}</td>
-                                        <td style="text-align: center;">
-                                            <a href="{{ path('inscribir', {'idalumno': alum.idAlumno, 'idcurso': cur.idCurso}) }}" title="Inscribir Alumno" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Inscribir</a>
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% endfor %}
+                            {#{% for ins in ins %}#}
+                                {#{% if alum.idAlumno!=ins.idAlumno.idAlumno %}#}
+                                    {% for usu in usu %}
+                                        {% if alum.idUi.idUI == usu.idUi %}
+                                            <tr>
+                                                <td>{{ usu.nombre }}</td>
+                                                <td>{{ usu.apellido }}</td>
+                                                <td style="text-align: center;">
+                                                    <a href="{{ path('inscribir', {'idalumno': alum.idAlumno, 'idcurso': cur.idCurso}) }}"
+                                                       title="Inscribir Alumno" class="btn btn-default"
+                                                       style="background: #0AA5E2;color: #ffffff;"><span
+                                                                class="glyphicon glyphicon-plus" aria-hidden="true"/>
+                                                        Inscribir</a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {#{% endif %}#}
+                            {#{% endfor %}#}
                         {% endfor %}
                         </tbody>
                     </table>

@@ -1,0 +1,271 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    {#<link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>#}
+
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            {#<li><a href="{{ path(' secretaria_expediente') }}">Expedientes </a></li>#}
+            <li class="active">Crear</li>
+        </ol>
+        <h2>Crear Nuevo Expediente</h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+
+    {#<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">#}
+
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    {#<script src="https://code.jquery.com/jquery-1.12.4.js"></script>#}
+
+    <script src="{{ asset('public/js/jquery-ui-1.10.0.custom.min.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+    </script>
+
+
+
+    <p>Date: <input type="text" id="datepicker" data-provide=datepicker></p>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-content ">
+                {{ form_start(form) }}
+                <fieldset>
+                    <div class="col-md-6">
+
+
+
+
+                        <div class="control-group">
+                            {{form_label(form.nombreExp, 'Nombre del Expediente', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.nombreExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.genero, 'Nombre del genero', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.genero, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.nacionalidad, 'Nombre del nacionalidad', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.nacionalidad, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.duiExp, 'Nombre del duiExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.duiExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.estadoCivilExp, 'Nombre del estadoCivilExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.estadoCivilExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.tipoEstudiante, 'Nombre del tipoEstudiante', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.tipoEstudiante, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            {{form_label(form.deptoRecidencia, 'Nombre del deptoRecidencia', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.deptoRecidencia, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.telefono, 'Nombre del telefono', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.telefono, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.fechaTitulacion, 'Nombre del fechaTitulacion', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.fechaTitulacion, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.institucionExp, 'Nombre del institucionExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.institucionExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.cambiosCarreraAprob, 'Nombre del cambiosCarreraAprob', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.cambiosCarreraAprob, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.idAlumno, 'Nombre del idAlumno', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.idAlumno, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-md-6">
+
+
+
+
+                        <div class="control-group">
+                            {{form_label(form.datosCarrera, 'Nombre del datosCarrera', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.datosCarrera,{"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.paisNacimiento, 'Nombre del paisNacimiento', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.paisNacimiento,{"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group ">
+                            {{form_label(form.fechaNaci, 'Nombre del fechaNaci', {'label_attr': {'class': 'control-label'}}) }}
+                              <div class="controls">
+                                <div class="input-prepend">
+                                    <div class='input-group date' >
+                                        {{form_widget(form.fechaNaci, {"attr":{"style":" width: 80%;",'class': 'form-control ',"placeholder":"dd/mm/aaaa"} }) }}
+
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+
+                        <div class="control-group">
+                            {{form_label(form.nitExp, 'Nombre del nitExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.nitExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.situacionLaboral, 'Nombre del situacionLaboral', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.situacionLaboral, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.direccionExp, 'Nombre del direccionExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.direccionExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+
+
+                        <div class="control-group">
+                            {{form_label(form.municipioRecidencia, 'Nombre del municipioRecidencia', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.municipioRecidencia,{"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.emailExp, 'Nombre del emailExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.emailExp,{"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.fechaExpTitulo, 'Nombre del fechaExpTitulo', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.fechaExpTitulo, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.bachillerato, 'Nombre del bachillerato', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.bachillerato, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+                        <div class="control-group">
+                            {{form_label(form.fechaRegistro, 'Nombre del fechaRegistro', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(form.fechaRegistro, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/>
+
+
+
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    {#{{ form(form) }}#}
+    {{ form_start(form) }}
+
+    {#{{form_widget(form.idCurriculum, {'value': curriculum, "attr":{"style":"display:none;"}}) }}#}
+    {#{{ form_label(edit_form.nombreTc, 'Nombre del tipo de curso', {'label_attr': {'class': 'foo'}}) }}#}
+
+    {#{{form_label(form.nombreExp, 'Nombre del Expediente', {'label_attr': {'class': 'foo'}}) }}#}
+    {#{{form_widget(form.nombreExp, {"attr":{"style":"background-color:red:"}}) }}#}
+
+
+
+
+
+
+
+    {{ form_end(form) }}
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('secretaria_expediente') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
+{% block javascripts %}
+    {#<script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>#}
+
+{% endblock %}
