@@ -1,0 +1,86 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('director') }}">Inicio</a></li>
+            <li class="active">Solicitudes Enviadas</li>
+        </ol>
+        <h2>Aprobar o Denegar Solicitudes de Entrevistas</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">Registro</th>
+                            <th style="text-align: center">Solicitante</th>
+                            <th style="text-align: center">Curso</th>
+                            <th style="text-align: center">Disponibilidad</th>
+                            <th style="text-align: center">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for sol in sol %}
+                            {% for cur in cur %}
+                                {% if sol.idCurso.idCurso==cur.idCurso %}
+                                    <tr>
+                                        <td style="text-align: center;">{{ sol.fechaRegistro.format('d/m/Y') }}</td>
+                                        <td style="text-align: center;">{{ sol.idDp.idUi.nombre }} {{ sol.idDp.idUi.apellido }}</td>
+                                        <td style="text-align: center;">{{ cur.nombreCurso }}</td>
+                                        <td style="text-align: center;">{{ sol.rangoDisponibilidad }}</td>
+                                        <td style="text-align: center;">
+                                            <a href="{{ asset('/director/sol_aprobar') }}/{{ sol.idSolicitud }}" title="Aprobar Solicitud" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-ok" aria-hidden="true"/> Aprobar</a>
+                                            -
+                                            <a href="{{ asset('/director/sol_denegar') }}/{{ sol.idSolicitud }}" title="Denegar Solicitud" class="btn btn-default" style="background: #2CA964;color: #ffffff;"><span class="glyphicon glyphicon-remove" aria-hidden="true"/> Denegar</a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End  Kitchen Sink -->
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('exito') %}
+        <script>
+            window.onload = function notificacion(){
+                alertify.success("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
+
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+
+{% endblock %}

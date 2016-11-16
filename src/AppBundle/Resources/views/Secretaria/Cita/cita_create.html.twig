@@ -1,0 +1,58 @@
+{% extends 'base2.html.twig' %}
+{% block active2 %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('verSol(sec)') }}">Solicitud de Entrevistas</a></li>
+            <li class="active">Crear Cita</li>
+        </ol>
+        <h2>Crear Cita</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="formulario" action="" method="post" name="formulario" action="{{ path("createCita",{'id': idsol}) }}">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Horario de Entrevista</label>
+                                        <select name="he" class="form-control" required>
+                                            {% for he in he %}
+                                                <option  value="{{ he.idHe }}">{{ he.fechaDhe.format('d/m/Y') }} --- {{ he.horaDhe.format('H:i A') }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Comentario</label>
+                                            <input id="comen" class="form-control" name="comen" size="16" type="text" required>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12 col-md-offset-4">
+                                    <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+{% endblock %}
+

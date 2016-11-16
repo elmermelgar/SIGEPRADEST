@@ -3,18 +3,19 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('tutor') }}">Inicio</a></li>
-            <li class="active">Cursos Asignados</li>
+            <li><a href="{{ path('alumno') }}">Inicio</a></li>
+            <li class="active">Cursos Inscritos</li>
         </ol>
-        <h2>Cursos donde ha sido asignado</h2>
+        <h2>Cursos donde ha sido inscrito</h2>
     </div>
 {% endblock %}
 {% block body %}
     <div class="row">
-        {% for d1 in d1 %}
-            {% if d1.id_doctores == doc.idDoctores %}
+        {% if inscrip %}
+        {% for inscrip in inscrip %}
+            {% if inscrip.idAlumno.idAlumno == alumno.idAlumno %}
                 {% for cursos in cursos %}
-                    {% if cursos.idCurso== d1.id_curso %}
+                    {% if cursos.idCurso == inscrip.idCurso.idCurso %}
                         {#{% if cursos.estadoCurso=='ejecucion' %}#}
                         <div class="col-md-6">
                             <div class="panel panel-primary">
@@ -35,7 +36,7 @@
                                                 <p class="text-muted" >Tipo: {{ cursos.idTc.nombreTc }}</p>
 
                                                 <p class="text-muted" style="text-align: center;">
-                                                    <a href="{{ path('modulos_curso', {'id': cursos.idCurso }) }}" style="height: 45px;font-family: Arial, Helvetica, sans-serif; font-size: 20px"
+                                                    <a href="{{ path('modulos_curso_alumno', {'id': cursos.idCurso,'id2': inscrip.idDc }) }}" style="height: 45px;font-family: Arial, Helvetica, sans-serif; font-size: 20px"
                                                        title="Modulos" class="btn btn-success"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"/> Modulos del Curso</a>
                                                 </p>
                                                 <hr>
@@ -55,6 +56,9 @@
                 {% endfor %}
             {% endif %}
         {% endfor %}
+            {% else %}
+            <h2 class="col-md-6" style="margin-left: 50px; color: #880000;">No posee aun cursos Inscritos</h2>
+                {% endif %}
 
     </div>
 {% endblock %}

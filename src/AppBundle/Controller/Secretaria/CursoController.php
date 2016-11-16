@@ -31,7 +31,7 @@ class CursoController extends DSIController
             for($i=0;$i<count($hc);$i++){
                 if($fechaAhora>($hc[$i]->getFechaFin()->format("Y-m-d"))){
                     $id=$em->getRepository('AppBundle:Curso')->find($hc[$i]->getIdCurso());
-                    $id->setEstadoCurso("Desabilitado");
+                    $id->setEstadoCurso("finanlizado");
                     //Guardar en la BD
                     $em->flush();
                 }
@@ -93,7 +93,7 @@ class CursoController extends DSIController
                                 $curso->setBroshureInformativo("img/brochure/".$nombreImagen);
                                 $curso->setNumCuotas($nun_cuo);
                                 $curso->setRutaPdf("img/pdf/".$nombrePDF);
-                                $curso->setEstadoCurso("Registro");
+                                $curso->setEstadoCurso("registro");
 
                                 //Persistir
                                 $em->persist($curso);
@@ -256,7 +256,7 @@ class CursoController extends DSIController
             throw $this->createNotFoundException('No existe el usuario con el ID'.$idcurso);
         }
 
-        $curso->setEstadoCurso("Desabilitado");
+        $curso->setEstadoCurso("desabilitado");
 
         //Guradar en la BD
         $em->flush();

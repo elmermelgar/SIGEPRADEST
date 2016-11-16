@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Admin;
+namespace AppBundle\Controller\Secretaria;
 
 use AppBundle\Controller\SecurityController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -10,13 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-
-class InformacionAcademicaController extends SecurityController{
+class InformacionAcademicaSecreController extends SecurityController{
 
     /**
-     * @Route("/admin/informacion/{seleccion}", name="verInfo", defaults={"seleccion" = 0} )
+     * @Route("/secretaria/informacion/{seleccion}", name="verInfoSecre", defaults={"seleccion" = 0} )
      */
-    public function verInfoAction(Request $request,$seleccion){
+    public function verInfoSecreAction(Request $request,$seleccion){
         // function Read-Mostrar
 
         try{
@@ -37,21 +36,21 @@ class InformacionAcademicaController extends SecurityController{
                 $stmt->execute();
                 $result = $stmt->fetchAll();
 
-                return $this->render('AppBundle:Admin/InfoAcademica:index.html.twig', array(
-                       'infos'=>$info, 'usu'=>$usu,'sol'=>$solicitud,'result'=>$result, 'seleccion'=>$seleccion));
+                return $this->render('AppBundle:Secretaria/InfoAcademica:index.html.twig', array(
+                    'infos'=>$info, 'usu'=>$usu,'sol'=>$solicitud,'result'=>$result, 'seleccion'=>$seleccion));
             } else{
-                     return $this->redirectToRoute('login');
+                return $this->redirectToRoute('login');
             }
 
         }catch (\Exception $e){
-            return $this->redirectToRoute('verInfo');
+            return $this->redirectToRoute('verInfoSecre');
         }
 
     }
 
 
     /**
-     * @Route("/admin/info_create",name="createInfo")
+     * @Route("/secretaria/info_create",name="createInfoSecre")
      */
     public function createInfoAction(Request $request)
     {
@@ -64,7 +63,7 @@ class InformacionAcademicaController extends SecurityController{
 
                 $solicitud=$em->getRepository("AppBundle:Solicitud")->findAll();
                 $usuario=$em->getRepository("AppBundle:Usuario")->findAll();
-                
+
                 $info=$em->getRepository('AppBundle:InformacionAcademica')->findAll();
 
                 $sql = "SELECT DISTINCT u.nombre , u.id_ui, u.nombre || ' ' || u.apellido as completo FROM usuario u , solicitud s WHERE  s.id_ui = u.id_ui Order BY completo DESC";
@@ -75,45 +74,44 @@ class InformacionAcademicaController extends SecurityController{
                 //Validar peticion POST
                 if($request->isMethod("POST")) {
 
-                //Proceso de almacenamiento de datos en entidad informacion academica
-                $infoNuevo=new InformacionAcademica();
-                $infoNuevo->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find( $request->get("select2") ));
-                $infoNuevo->setInstitucion($request->get("instituto_txt"));
-                $infoNuevo->setTitulo($request->get("titulo_txt"));
-                $infoNuevo->setAnio($request->get("calendario_cl"));
-                
+                    //Proceso de almacenamiento de datos en entidad informacion academica
+                    $infoNuevo=new InformacionAcademica();
+                    $infoNuevo->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find( $request->get("select2") ));
+                    $infoNuevo->setInstitucion($request->get("instituto_txt"));
+                    $infoNuevo->setTitulo($request->get("titulo_txt"));
+                    $infoNuevo->setAnio($request->get("calendario_cl"));
 
-                $valor = $infoNuevo->getIdSolicitud()->getIdUi()->getIdUi();
+                    $valor = $infoNuevo->getIdSolicitud()->getIdUi()->getIdUi();
 
-                //Persistir
-                $em->persist($infoNuevo);
-                $this->MensajeFlash('exito','Informacion creada correctamente!');
+                    //Persistir
+                    $em->persist($infoNuevo);
+                    $this->MensajeFlash('exito','Informacion creada correctamente!');
 
-                //Guradar en la BD
-                $em->flush();
-                return $this->redirectToRoute('verInfo',array('seleccion'=>$valor));
+                    //Guradar en la BD
+                    $em->flush();
+                    return $this->redirectToRoute('verInfoSecre',array('seleccion'=>$valor));
                 }
 
-                return $this->render("AppBundle:Admin/InfoAcademica:info_create.html.twig",
+                return $this->render("AppBundle:Secretaria/InfoAcademica:info_create.html.twig",
                     array('infos'=>$info, 'usu' =>$usuario, 'sol'=>$solicitud, 'result'=>$result));
-                } else{
-                    
-                    $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
-                    return $this->redirectToRoute('login');
-                }
+            } else{
+                //throw $this->createNotFoundException("no se encontro pagina",null);
+                $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
+                return $this->redirectToRoute('login');
+            }
         }catch (\Exception $e){
-            return $this->redirectToRoute('verInfo');
+            return $this->redirectToRoute('verInfoSecre');
         }
     }
 
 
     /**
-     * @Route("/admin/informacion/{id}/edit", name="editInfo" , defaults={"id" = 0})
+     * @Route("/secretaria/informacion/{id}/edit", name="editinfoSecre" , defaults={"id" = 0})
      */
 
     public function editarUsuarioAction($id, Request $request)
     {
-       try{
+        try{
             // validar usuario logueado
             if ($this->getUser()){
                 $em=$this->getDoctrine()->getManager("default");
@@ -140,33 +138,32 @@ class InformacionAcademicaController extends SecurityController{
 
                     // guardar cambios
                     $em->flush();
-            
+
                     //redireccionamiento
                     $this->MensajeFlash('exito','Informacion actualizada correctamente!');
                     $em2=$this->getDoctrine()->getManager("default");
                     $info=$em2->getRepository('AppBundle:InformacionAcademica')->findAll();
                     $valor = $datos->getIdSolicitud()->getIdUi()->getIdUi();
 
-                    //return $this->render('AppBundle:Admin/InfoAcademica:index.html.twig', array('infos'=>$info));
-                    //return $this->redirect($this->generateUrl('verInfo', array('info'=>$info)));
-                    return $this->redirectToRoute('verInfo',array('seleccion'=>$valor));
+
+                    return $this->redirectToRoute('verInfoSecre',array('seleccion'=>$valor));
                 }
-                    return $this->render('AppBundle:Admin/InfoAcademica:info_edit.html.twig', array(
+                return $this->render('AppBundle:Secretaria/InfoAcademica:info_edit.html.twig', array(
                     'info' => $datos ,'sol' => $solicitud, 'usu'=>$usuario, 'result'=>$result));
             } else{
-           
+
                 $this->MensajeFlash('Error','No se puede mostrar la pagina, no esta logueado!');
                 return $this->redirectToRoute('login');
             }
-       }catch (\Exception $e){
-           
-           return $this->redirectToRoute('verInfo');
-       }
+        }catch (\Exception $e){
+
+            return $this->redirectToRoute('verInfoSecre');
+        }
 
     }
 
     /**
-     * @Route("/admin/informacion/delete/{id}", name="deleteInfo" , defaults={"id" = 0})
+     * @Route("/secretaria/informacion/delete/{id}", name="deleteInfoSecre" , defaults={"id" = 0})
      */
     public function deleteInformacionAction($id, Request $request)
     {
@@ -192,14 +189,17 @@ class InformacionAcademicaController extends SecurityController{
                         $this->MensajeFlash('Error', 'No se puede eliminar!');
                     }
                 }
-                return $this->redirectToRoute("verInfo", array('seleccion' => $valor));
+                return $this->redirectToRoute("verInfoSecre", array('seleccion' => $valor));
             } else {
                 //throw $this->createNotFoundException("no se encontro pagina",null);
                 $this->MensajeFlash('Error', 'No se puede mostrar la pagina, no esta logueado!');
                 return $this->redirectToRoute('login');
             }
         } catch (\Exception $e) {
-                return $this->redirectToRoute('verInfo');
+            return $this->redirectToRoute('verInfoSecre');
         }
     }
 } // fin de Informacion Controller
+
+
+

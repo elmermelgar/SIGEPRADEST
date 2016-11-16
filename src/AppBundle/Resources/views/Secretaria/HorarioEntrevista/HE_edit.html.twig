@@ -123,8 +123,8 @@
                         if(hora==''){
                             alertify.error("Es Obligatorio Llenar La Hora de la Entrevista");
                         }else{
-                            if(hora<"08:00"||hora>"16:00" ){
-                                alertify.error("La Hora de la Entrevista de Programarce en horas Laborales (8:00 - 16:00");
+                            if(hora<"08:00"||hora>"14:30" ){
+                                alertify.error("La Hora de la Entrevista de Programarse en horas Laborales (8:00 - 14:30)");
                             }else{
                                 document.formulario.submit()
                             }

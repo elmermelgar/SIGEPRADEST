@@ -75,7 +75,7 @@
                                 <label class="control-label" for="prependedInput">Numero de Cuotas</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input id="nun_cuo" class="form-control" name="nun_cuo" size="16" type="number" min="1" placeholder="Numero" >
+                                        <input id="nun_cuo" class="form-control" name="nun_cuo" size="16" type="number" min="1" placeholder="Numero: Matricula + Pre-Inscripción o Inscripción" >
                                     </div>
                                 </div>
                             </div>
@@ -101,12 +101,12 @@
 
                             <br>
                             <div class="control-group" >
-                                <label class="control-label" for="prependedInput">Asignar Doctores al Curso</label>
+                                <label class="control-label" for="prependedInput">Asignar Tutores al Curso</label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <select class="js-example-basic-multiple" class="form-control" style="width: 100%"  multiple="multiple"  name="doc[]">
                                             {% for doc in doc %}
-                                                <option value="{{ doc.idDoctores}}">{{ doc.nombreDoc }}</option>
+                                                <option value="{{ doc.idDoctores}}">{{ doc.nombreDoc }} {{ doc.apellidoDoc }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

@@ -1,0 +1,158 @@
+{% extends 'base3.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('interesado') }}">Inicio</a></li>
+            <li class="active">Ayuda</li>
+        </ol>
+        <h2>Ayuda al interesado</h2>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <form class="form-horizontal"  enctype="multipart/form-data" name="formulario">
+        <fieldset>
+            <div class="col-md-12">
+                <div align="center" style="border:4px solid mediumpurple; padding: 15px" id="mensajePrincipal" >
+                    <strong>¿Necesitas ayuda acerca de ?</strong>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="control-group">
+                    <div class='section' id='apartado-menu1'>
+
+                        <p><strong>Pregunta 1 :
+                                <br>¿Como puedo solicitar una cita de un curso que me interesa ?
+                                <br>¿Que debo de hacer para inscribirme a un curso, <br> anunciados en la pagina de Escuela de Postgrado ?
+                            </strong><br>(<a href="#" id="alternar-respuesta-ej1">ver respuesta</a>)
+                        <div id="respuesta-ej1" style="display:none">
+                            <dl>
+                                <ol>
+                                    <li value="1"> Llenar la ficha de perfil con nuestros datos</li>
+                                    <li> Ingresar al panel citas - ver y seleccionar un horario disponible para ese curso activo </li>
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 2 :
+                                <br> ¿Donde esta esa ficha de perfil ?
+                                <br> ¿Como puedo llenar la ficha de perfil?
+                                <br> ¿Que es lo que me pide esa ficha de perfil ?
+                            </strong><br>(<a href="#" id="alternar-respuesta-ej2">ver respuesta</a>)
+                        <div id="respuesta-ej2" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>La ficha esta en el Panel Interesado se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel Interesado / clic en el boton:  Mi Perfil</li>
+                                    <li> En la ventana: Mi Perfil se llenar lo datos que se solicita y se guardar:</li>
+                                    <ul> Se pide los siguientes datos del interesado:
+                                        <ol>
+                                            <li type="circle"> DUI, NIT, Fecha de Nacimiento,Estado Civil,email </li>
+                                            <li type="circle"> No. telefono movil y particular si tiene,Direccion de residencia</li>
+                                            <li type="circle"> Lugar de trabajo, No. Telefono de trabajo, Direccion de trabajo.</li>
+                                        </ol>
+                                    </ul>
+                                    <li> Al finalizar dar clic en el boton: Guardar ,
+                                        <br> para almacenar los datos y despues procedemos a solicitar una cita.
+                                    </li>
+                                </ol>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-md-6">
+                <div class="control-group">
+                    <div class='section' id='apartado-menu2'>
+
+                        <p><strong>Pregunta 3 :
+                                <br> ¿Quiero solicitar una cita pero el sistema no me deja?
+                                <br> ¿Por que no puedo solicitar directamente?
+                            </strong><br>(<a href="#" id="alternar-respuesta-ej3">ver respuesta</a>)
+                        <div id="respuesta-ej3" style="display:none">
+                            <dl>
+                                <ol>
+                                    <li type="circle" > El sistema no procesa la solicitud, cuando no existen citas disponibles, esto por que a la fecha y hora solicitada estan completadas por otros interesados</li>
+                                    <li type="circle" > El sistema no permite solicitar cita directamente, sino se ha completa el perfil, es un requisito importante que se solicita</li>
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 4 :
+                                <br> ¿Ya eh llenado el perfil con mis datos, como se puede solicitar una cita?
+                                <br> ¿Como agregar una nueva cita?
+                            </strong><br>(<a href="#" id="alternar-respuesta-ej4">ver respuesta</a>)
+                        <div id="respuesta-ej4" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>La cita esta en el Panel Interesado se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel Interesado / clic en el boton:  Citas</li>
+                                    <li> En la ventana: lista de Citas / clic en Agregar Nueva cita:</li>
+
+                                    PENDIENTE DE PROCESAR
+
+
+                                    <li> Al finalizar dar clic en el boton: Guardar ,
+                                        <br> para almacenar los datos y despues procedemos a solicitar una cita.
+                                    </li>
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 5 :
+                                <br> ¿Cuales son los pasos a seguir para inscribirme?
+                            </strong><br>(<a href="#" id="alternar-respuesta-ej5">ver respuesta</a>)
+                        <div id="respuesta-ej5" style="display:none">
+                            <dl>
+
+                            </dl>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+{%endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('#alternar-respuesta-ej1').on('click',function(){
+                $('#respuesta-ej1').toggle('800');
+            });
+
+            $('#alternar-respuesta-ej2').on('click',function(){
+                $('#respuesta-ej2').toggle('900');
+            });
+
+            $('#alternar-respuesta-ej3').on('click',function(){
+                $('#respuesta-ej3').toggle('700');
+            });
+
+            $('#alternar-respuesta-ej4').on('click',function(){
+                $('#respuesta-ej4').toggle('700');
+            });
+
+            $('#alternar-respuesta-ej5').on('click',function(){
+                $('#respuesta-ej5').toggle('700');
+            });
+
+        });
+    </script>
+
+
+{% endblock %}

@@ -10,8 +10,8 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('admin') }}">Inicio</a></li>
-            <li><a href="{{ path('verInfo') }}">Informacion Academica</a></li>
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('verInfoSecre') }}">Informacion Academica</a></li>
             <li class="active">Crear</li>
         </ol>
         <h2>Crear Nueva Información</h2>
@@ -20,7 +20,7 @@
 
 {% block body %}
     <div class="row-fluid sortable">
-        <form class="form-horizontal" action="{{ path('createInfo') }}" method="POST" enctype="multipart/form-data"
+        <form class="form-horizontal" action="{{ path('createInfoSecre') }}" method="POST" enctype="multipart/form-data"
               name="formulario2">
             <div class="box span12">
                 <div class="box-content">
@@ -37,13 +37,13 @@
                                     <span class="input-group-addon">  </span>
                                     <input type="button" id = "desplegar_btn" name="desplegar_btn" onclick="cargarSelect()" class="form-control" value="Mostrar">
                                 </div>
-                                </div>
+                            </div>
 
 
 
 
                             <div class="control-group">
-                               <div class="controls">
+                                <div class="controls">
 
                                     <div class="input-prepend">
                                         <datalist id="lista1_list" name="lista1_list" >
@@ -107,7 +107,7 @@
                                 Guardar Informacion
                             </a>
 
-                            <a href="{{ path('verInfo') }}" onclick="cancelar()" id="cancel"  type="button" class="btn"  name="cancel"  style="width: 15%;"  >
+                            <a href="{{ path('verInfoSecre') }}" onclick="cancelar()" id="cancel"  type="button" class="btn"  name="cancel"  style="width: 15%;"  >
                                 Cancel
                             </a>
                         </div>
@@ -131,7 +131,7 @@
         $(document).ready(function () {
 
 
-             $('#InputSelect1_txt').change(function(){
+            $('#InputSelect1_txt').change(function(){
 
                 var dato = $("input[name=InputSelect1_txt]").val();
                 options = document.querySelectorAll('#lista1_list option');
@@ -196,7 +196,7 @@
         /*funcion cancelar*/
         function cancelar() {
             alertify.error("Has cancelado la operacion")
-            document.formulario2.href = " {{ path('verInfo') }}";
+            document.formulario2.href = " {{ path('verInfoSecre') }}";
         }
 
 

@@ -4,118 +4,96 @@
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block Header %}
-    <span style="color:royalblue;margin-left: 20px;font-size: 14px;">Solicitud</span>
-{% endblock %}
-{% block body %}
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="{{ path('index_interesado') }}">Inicio</a></li>
             <li class="active">Solicitud</li>
         </ol>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
 
-        <h3>SOLICITUD DE INGRESO</h3>
+        <h3>NUEVA SOLICITUD DE INGRESO</h3>
         <h2>I. DATOS PERSONALES</h2>
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Apellidos</label><br>
-                    <input class="form-control" name="apellido" value="{{ app.user.apellido }}" readonly></input>
-                </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Apellidos</label><br>
+                <input class="form-control" name="apellido" value="{{ app.user.apellido }}" readonly/>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Nombres</label><br>
-                    <input class="form-control" name="nombre" value="{{ app.user.nombre }}" readonly></input>
-                </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Nombres</label><br>
+                <input class="form-control" name="nombre" value="{{ app.user.nombre }}" readonly/>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>DUI</label>
+                <input class="form-control" name="dui" value="{{ perfil.duiAlumno }}" readonly/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>NIT</label>
+                <input class="form-control" name="dui" value="{{ perfil.nitAlumno }}" readonly/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Fecha de nacimiento</label>
+                <input class="form-control" name="fechanac" value="{{ perfil.fechaNacimiento|date("d-m-Y") }}"
+                       readonly/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Estado civil</label>
+                <input class="form-control" name="estadocivil" value="{{ perfil.estadoCivil }}" readonly/>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Dirección particular</label>
+                <textarea class="form-control" name="dirparticular" rows="3"
+                          readonly>{{ perfil.direccionParticular }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Lugar de trabajo</label>
+                <textarea class="form-control" name="lugartrabajo" rows="2"
+                          readonly>{{ perfil.lugarTrabajo }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Dirección de trabajo</label>
+                <textarea class="form-control" name="dirtrabajo" rows="3"
+                          readonly>{{ perfil.direccionTrabajo }}</textarea>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Teléfono particular</label>
+                <input class="form-control" name="telparticular" value="{{ perfil.telefonoParticular }}" readonly/>
+            </div>
+            <div class="form-group">
+                <label>Teléfono trabajo</label>
+                <input class="form-control" name="teltrabajo" value="{{ perfil.telefonoTrabajo }}" readonly/>
+            </div>
+            <div class="form-group">
+                <label>Teléfono móvil personal</label>
+                <input class="form-control" name="telmovil" value="{{ perfil.telefonoMovil }}" readonly/>
+            </div>
+            <div class="form-group">
+                <label>Correo electrónico</label>
+                <input class="form-control" name="correo" value="{{ perfil.direccionTrabajo }}" readonly/>
             </div>
         </div>
 
         <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>DUI</label>
-                    <input class="form-control" name="dui" value="{{ perfil.duiAlumno }}" readonly/>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>NIT</label>
-                    <input class="form-control" name="dui" value="{{ perfil.nitAlumno }}" readonly/>
-                </div>
-            </div>
+            <h2>II. INFORMACION ACADEMICA</h2>
         </div>
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Fecha de nacimiento</label>
-                    <input class="form-control" name="fechanac" value="{{ perfil.fechaNacimiento|date("d-m-Y") }}"
-                           readonly/>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Estado civil</label>
-                    <input class="form-control" name="estadocivil" value="{{ perfil.estadoCivil }}" readonly/>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label>Dirección particular</label>
-                    <textarea class="form-control" name="dirparticular" rows="3"
-                              readonly>{{ perfil.direccionParticular }}</textarea>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Teléfono particular</label>
-                    <input class="form-control" name="telparticular" value="{{ perfil.telefonoParticular }}" readonly/>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label>Lugar de trabajo</label>
-                    <textarea class="form-control" name="lugartrabajo" rows="2"
-                              readonly>{{ perfil.lugarTrabajo }}</textarea>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Teléfono trabajo</label>
-                    <input class="form-control" name="teltrabajo" value="{{ perfil.telefonoTrabajo }}" readonly/>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label>Dirección de trabajo</label>
-                    <textarea class="form-control" name="dirtrabajo" rows="3"
-                              readonly>{{ perfil.direccionTrabajo }}</textarea>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Correo electrónico</label>
-                    <input class="form-control" name="correo" value="{{ perfil.direccionTrabajo }}" readonly/>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Teléfono móvil</label>
-                    <input class="form-control" name="telmovil" value="{{ perfil.telefonoMovil }}" readonly/>
-                </div>
-            </div>
-        </div>
-
-        <h2>II. INFORMACION ACADEMICA</h2>
 
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -130,7 +108,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span style="font-size: 14px; font-weight: bold;">Estudios realizados</span>
-                    <a href="{{ path('interesado_infoacademica',{'idc' : curso.idCurso}) }}"
+                    <a href="{{ path('interesado_infoacademica',{'idc' : curso.idCurso, 'ids' : solicitud.idSolicitud}) }}"
                        style="float: right; margin-top: -8px;"
                        title="Agregar"
                        class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
@@ -152,14 +130,15 @@
                                 <tr>
                                     <td>{{ e.institucion }}</td>
                                     <td>{{ e.titulo }}</td>
-                                    <td>Not coded yet!</td>
+                                    <td>{{ e.anio }}</td>
                                     <td>
                                         <a href="{{ path('interesado_infoacademica_edit', {'idia': e.idIfacad, 'idc' : curso.idCurso}) }}"
                                            title="Editar"
                                            class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span
                                                     class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                         -
-                                        <button onClick="confirmar({{ e.idIfacad }},{{ curso.idCurso }})" title="Eliminar" class="btn btn-danger">
+                                        <button onClick="confirmar({{ e.idIfacad }},{{ curso.idCurso }})"
+                                                title="Eliminar" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"/>
                                         </button>
                                     </td>
@@ -170,9 +149,19 @@
                     </div>
                 </div>
             </div>
-            <div style="margin-bottom: 30px;">
-                <input class="btn btn-success" type="submit" value="Enviar Solicitud" disabled />
-            </div>
+        </div>
+        <div class="col-md-8">
+            <form role="form" action="{{ path('interesado_solicitud_enviar', {'ids': solicitud.idSolicitud}) }}"
+                  method="post">
+                <div class="form-group">
+                    <label>Disponibilidad: (Su tiempo disponible para asistir a entrevista)</label>
+                    <textarea name="dispo" rows="2" maxlength="100" class="form-control"
+                              required>{{ solicitud.rangoDisponibilidad }}</textarea>
+                </div>
+                <div style="margin: 30px 30px;">
+                    <button type="submit" class="btn btn-success">Enviar Solicitud</button>
+                </div>
+            </form>
         </div>
 
     </div>
@@ -181,11 +170,11 @@
 {% block javascripts %}
     <script>
 
-        function confirmar(idia,idc) {
+        function confirmar(idia, idc) {
             //un confirm
             alertify.confirm("<p>Esta seguro que desea eliminar el Usuario?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
                 if (e) {
-                    location.href="{{ asset('/interesado/infoacademica/delete') }}/"+idia+"/"+idc;
+                    location.href = "{{ asset('/interesado/infoacademica/delete') }}/" + idia + "/" + idc;
                 } else {
                     alertify.error("Has cancelado la operacion");
                 }
