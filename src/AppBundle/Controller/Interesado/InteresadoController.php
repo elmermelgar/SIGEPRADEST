@@ -382,4 +382,19 @@ class InteresadoController extends SecurityController
         }
     }
 
+    /**
+     * @Route("/solicitud/vertodas", name="interesado_solicitud_vertodas")
+     *
+     */
+    public function verSolicitudesAction(Request $request)
+    {
+        $usuario = $this->getUser();
+        $reposol = $this->getDoctrine()->getRepository('AppBundle:Solicitud');
+        /*$solicitudes = $reposol->findBy(
+            array('idUi' => $usuario)
+        );*/
+        $solicitudes=new Solicitud();
+        return $this->render('AppBundle:Interesado/Solicitud:verSolicitudes.html.twig',array('solicitudes' => $solicitudes));
+    }
+
 }
