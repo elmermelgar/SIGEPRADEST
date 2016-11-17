@@ -1,4 +1,4 @@
-{% extends 'base3.html.twig' %}
+{% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
@@ -11,7 +11,7 @@
             <li><a href="{{ path('director') }}">Inicio</a></li>
             <li class="active">Ayuda </li>
         </ol>
-        <h2>Ayuda al usuario administrativo</h2>
+        <h2>Ayuda director</h2>
     </div>
 {% endblock %}
 
@@ -121,7 +121,7 @@
                                     <dt>Desde el Panel del Director se debe realizar los siguientes pasos:</dt><br>
                                     <li value="1"> Panel Director / clic en el boton:   Cambiar Contraseña</li>
                                     <li> En la ventana: Cambiar Contraseña, se debe de hacer:
-                                    <ul type="circle" > Introducir el nuevo password en <br>los cuadros de Password y confirmar Password</ul>
+                                        <ul type="circle" > Introducir el nuevo password en <br>los cuadros de Password y confirmar Password</ul>
                                     </li>
                                     <li> Al finalizar dar clic en el boton: Guardar Cambio, para realizar los cambios</li>
 

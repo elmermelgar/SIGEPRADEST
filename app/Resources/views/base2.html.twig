@@ -33,7 +33,22 @@
         <div style="color: white;
 padding: 15px 50px 5px 50px;
 float: right;
-font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ path('logout') }}" class="btn btn-primary square-btn-adjust">Logout</a> </div>
+font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ path('logout') }}" class="btn btn-primary square-btn-adjust">Logout</a>
+            <a id="ayudabtn" name="ayudabtn" class="btn bg-danger bg-color-green square-btn-adjust" style="background-color: #3c763d"
+
+                    {% if app.user.idrol.nombrerol== 'administrador' %}
+                        href="{{ path('adminAyuda') }}"
+                    {% elseif app.user.idrol.nombrerol== 'secretaria'%}
+                        href="{{ path('secretariaAyuda') }}"
+                    {% elseif app.user.idrol.nombrerol== 'director'%}
+                        href="{{ path('directorAyuda') }}"
+                    {% elseif app.user.idrol.nombrerol== 'interesado'%}
+                        href="{{ path('interesadoAyuda') }}"
+                    {% elseif app.user.idrol.nombrerol== 'tutor'%}
+                        href="{{ path('tutorAyuda') }}"
+                    {% endif %}
+            >ayuda  <span class="glyphicon glyphicon-question-sign green"></span></a>
+        </div>
     </nav>
     {% for flashMessage in app.session.flashbag.get('mensaje') %}
         <script>
