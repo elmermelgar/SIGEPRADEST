@@ -9,6 +9,7 @@ use AppBundle\Entity\InscripcionCurso;
 use AppBundle\Entity\Modulos;
 use AppBundle\Entity\TipoCurso;
 use AppBundle\Tests\Controller\DetalleCursoControllerTest;
+use Proxies\__CG__\AppBundle\Entity\Alumno;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,42 +44,41 @@ class InscribirAlumnoController extends DSIController
     {
         if($this->getUser()){
             $em=$this->getDoctrine()->getManager("default");
-            $alum=$em->getRepository('AppBundle:Alumno')->findBy(array('estadoAlumno'=>'activo'));
             $usu=$em->getRepository('AppBundle:Usuario')->findAll();
             $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
             $cur=$em->getRepository('AppBundle:Curso')->find($id);
-            $ins=$em->getRepository('AppBundle:InscripcionCurso')->findAll();
+            $alum=$em->createQuery("Select alum from AppBundle:Alumno as alum , AppBundle:InscripcionCurso as inscri WHERE alum.estadoAlumno = 'activo' AND alum.idAlumno != inscri.idAlumno")->getResult();
 
-            return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('cur'=>$cur,'alum'=>$alum,'usu'=>$usu,'dp'=>$dp,'ins'=>$ins));
+            return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('alum'=>$alum,'cur'=>$cur,'usu'=>$usu,'dp'=>$dp));
         }else{
             return $this->redirectToRoute('login');
         }
     }
 
     /**
-     * @Route("/secretaria/inscribir/{idcurso}/{idalumno}",name="inscribir")
+     * @Route("/secretaria/inscribir/{idcurso}",name="inscribir")
      */
-    public function inscAlumnoAction($idcurso,$idalumno)
+    public function inscAlumnoAction($idcurso, Request $request)
     {
         $em=$this->getDoctrine()->getManager("default");
-        $insc= new InscripcionCurso();
-        $insc->setIdCurso($em->getRepository('AppBundle:Curso')->find($idcurso));
-        $insc->setIdAlumno($em->getRepository('AppBundle:Alumno')->find($idalumno));
+        //Verificando que hay una peticion POST
+        if($request->isMethod("POST")) {
+            //Recuperar y seteando valores enviados
+            $array_alum = $request->get("alum");
+            for ($i = 0; $i < count($array_alum); $i++) {
+                $insc= new InscripcionCurso();
+                $insc->setIdCurso($em->getRepository('AppBundle:Curso')->find($idcurso));
+                $insc->setIdAlumno($em->getRepository('AppBundle:Alumno')->find($array_alum[$i]));
 
-        //Persistir
-        $em->persist($insc);
+                //Persistir
+                $em->persist($insc);
 
-        //Guradar en la BD
-        $em->flush();
+                //Guradar en la BD
+                $em->flush();
+            }
 
-        $alum=$em->getRepository('AppBundle:Alumno')->findBy(array('estadoAlumno'=>'activo'));
-        $usu=$em->getRepository('AppBundle:Usuario')->findAll();
-        $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
-        $cur=$em->getRepository('AppBundle:Curso')->find($idcurso);
-        $ins=$em->getRepository('AppBundle:InscripcionCurso')->findAll();
-
-        $this->MensajeFlash('exito','Alumno inscrito correctamente en el Curso!');
-
-        return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('cur'=>$cur,'alum'=>$alum,'usu'=>$usu,'dp'=>$dp,'ins'=>$ins));
+            $this->MensajeFlash('exito','Alumnos Inscritos Correctamente en el Curso!');
+            return $this->redirectToRoute("verCursoDisp");
+        }
     }
 }

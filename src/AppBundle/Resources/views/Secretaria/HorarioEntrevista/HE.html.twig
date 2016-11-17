@@ -28,8 +28,8 @@
                             <th style="text-align: center">Hora</th>
                             <th style="text-align: center">Fecha</th>
                             <th style="text-align: center">Curso</th>
-                            <th style="text-align: center">Tipo de Horario</th>
-                            <th style="text-align: center">Ocupado</th>
+                            {#<th style="text-align: center">Tipo de Horario</th>#}
+                            {#<th style="text-align: center">Ocupado</th>#}
                             <th style="text-align: center">Acciones</th>
                         </tr>
                         </thead>
@@ -37,11 +37,11 @@
 
                         {% for he in he %}
                             <tr>
-                                <td>{{ he.horaDhe.format("h:i A") }}</td>
-                                <td>{{ he.fechaDhe.format("d/m/Y") }}</td>
-                                <td>{{ he.idCurso.nombreCurso }}</td>
-                                <td>{{ he.tipoHorario }}</td>
-                                <td>{% if he.ocupado == 'true' %} <input type="checkbox" checked/> {% else %}  <input type="checkbox" disabled/>{% endif %}</td>
+                                <td style="text-align: center">{{ he.horaDhe.format("h:i A") }}</td>
+                                <td style="text-align: center">{{ he.fechaDhe.format("d/m/Y") }}</td>
+                                <td style="text-align: center">{{ he.idCurso.nombreCurso }}</td>
+                                {#<td style="text-align: center">{{ he.tipoHorario }}</td>#}
+                                {#<td style="text-align: center">{% if he.ocupado == 'true' %} <input type="checkbox" checked/> {% else %}  <input type="checkbox" disabled/>{% endif %}</td>#}
                                 <td style="text-align: center;">
                                     <a href="{{ asset('/secretaria/HEntrevista_edit') }}/{{ he.idHe }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                     -

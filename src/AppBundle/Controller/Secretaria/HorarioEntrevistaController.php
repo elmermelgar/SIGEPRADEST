@@ -20,7 +20,7 @@ class HorarioEntrevistaController extends DSIController
     {
         if($this->getUser()){
             $em=$this->getDoctrine()->getManager("default");
-            $he=$em->getRepository('AppBundle:HorarioEntrevista')->findAll();
+            $he=$em->getRepository('AppBundle:HorarioEntrevista')->findBy(array('ocupado'=>false));
 
             return $this->render('AppBundle:Secretaria/HorarioEntrevista:HE.html.twig', array('he'=>$he));
         }else{
