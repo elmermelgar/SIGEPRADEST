@@ -1,4 +1,4 @@
-{% extends 'base3.html.twig' %}
+{% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
@@ -11,7 +11,7 @@
             <li><a href="{{ path('alumno') }}">Inicio</a></li>
             <li class="active">Ayuda </li>
         </ol>
-        <h2>Ayuda al usuario administrativo</h2>
+        <h2>Ayuda al usuario alumno</h2>
     </div>
 {% endblock %}
 
@@ -28,68 +28,36 @@
                 <div class="control-group">
                     <div class='section' id='apartado-menu1'>
 
-                        <p><strong>Pregunta 1 : ¿Como agregar un usuario ?</strong><br>(<a href="#" id="alternar-respuesta-ej1">ver respuesta</a>)
+                        <p><strong>Pregunta 1 : ¿Como se hace para ver los Cursos ?</strong><br>(<a href="#" id="alternar-respuesta-ej1">ver respuesta</a>)
                         <div id="respuesta-ej1" style="display:none">
                             <dl>
                                 <ol>
-                                    <dt>Desde el Panel del Administrador se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel del Adminitrador / clic en el boton:   Usuarios</li>
-                                    <li> En la ventana: Usuarios / clic en el boton:   +Agregar Nuevo Usuario</li>
-                                    <li> En la ventana: Nuevo Usuario:</li>
-                                    <ul> a) Agregar los datos correpodientes en datos personales</ul>
-                                    <ul> b) Agregar el nombre de usuario y su password para este usuario nuevo</ul>
-                                    <ul> c) Seleccionar un tipo de usuario realizar lo siguiente:
-                                        <ol>
-                                            <li type="circle"> Administrador </li>
-                                            <li type="circle"> Tutor</li>
-                                            <li type="circle"> Secretaria</li>
-                                            <li type="circle"> Director</li>
-                                        </ol>
-                                    </ul>
-                                    <li> Al finalizar dar clic en el boton: Guardar Usuario</li>
+                                    <dt>Desde el Panel del Alumno se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel Alumno / clic en el boton:   Cursos</li>
+
                                 </ol>
                             </dl>
                         </div>
 
                         <p><strong>Pregunta 2 :
-                                <br> ¿Quiero cambiar un dato personales de un usuario en especifico?
-                                <br> ¿Como se hace para editar un usuario ?
-                                <br> Esto es diferente a editar el paswoord y nombre de usuario
+                                <br> ¿Quiero cambiar o agregar un dato en especifico de mi perfil?
+                                <br> ¿Como se hace para editar o llenar mi perfil ?
+                                <br> El sistema por defecto no permite cambiar el nombre o nombre usuario con el que ingresa al sistema
                             </strong><br>(<a href="#" id="alternar-respuesta-ej2">ver respuesta</a>)
                         <div id="respuesta-ej2" style="display:none">
                             <dl>
                                 <ol>
-                                    <dt>Desde el Panel del Administrador se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel Adminitrador / clic en el boton:   Usuarios</li>
-                                    <li> En la ventana: Usuarios
-                                        <ol> Si en la tabla existe muchos usuarios:
-                                            <ol>
-                                                <li type="circle"> Existe un cuadro de texto llamado: Buscar:
-                                                    <br> ( esta posicionado en la tabla - superior derecha )
-                                                </li>
-                                                <li type="circle"> digite una palabra significativa para localizarlo</li>
-                                            </ol>
-                                        </ol>
-                                    </li>
-                                    <li> Siempre en la ventana: Usuarios
+                                    <dt>Desde el Panel del Alumno se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel Alumno / clic en el boton:   Mi perfil</li>
+                                    <li> En la ventana: Mi perfil se puede realizar:</li>
+                                    <ul>  Editar los siguientes datos :
                                         <ol>
-                                            - Una vez localizado el usuario, clic en el boton: Editar
-                                            <br> ( Es una figura de un lapiz dentro de un cuadro azul )
-                                            <br> localizado en el cuadro de acciones a la posicion derecha final del registro.
-                                        </ol>
-                                    </li>
-                                    <li> En la ventana: Editar Usuario se puede realizar:</li>
-                                    <ul> a) Editar los datos correpodientes en datos personales y</ul>
-                                    <ul> b) Seleccionar un tipo de nuevo de usuario:
-                                        <ol>
-                                            <li type="circle"> Administrador </li>
-                                            <li type="circle"> Tutor</li>
-                                            <li type="circle"> Secretaria</li>
-                                            <li type="circle"> Director</li>
+                                            <li type="circle"> DUI, NIT, Fecha de nacimiento, Estado Civil, correo, Telefono movil y particular, Direccion </li>
+                                            <li type="circle"> Lugar, Telefono, Lugar y Direccion  de Trabajo</li>
+                                            <ul >Nota: para los numero de telefono utilizar el formato de 8 digitos mas un separador "-", ej. ####-####</ul>
                                         </ol>
                                     </ul>
-
-                                    <li> Al finalizar dar clic en el boton: Guardar Usuario , para actualizar los datos</li>
+                                    <li> Al finalizar dar clic en el boton: Guardar, para actualizar los datos</li>
                                 </ol>
                             </dl>
                         </div>
@@ -102,70 +70,34 @@
 
             <div class="col-md-6">
                 <div class="control-group">
-                    <div class='section' id='apartado-menu2'>
+                    <div class='section' id='apartado-citas'>
 
                         <p><strong>Pregunta 3 :
-                                <br> ¿Quiero cambiar el passwoord de un usuario en especifico?
+                                <br> ¿Como puedo Agregar una cita a mi lista de citas?
+                                <br> ¿Solicitar un cita para inscribirme a un Curso que me intersa?
                             </strong><br>(<a href="#" id="alternar-respuesta-ej3">ver respuesta</a>)
                         <div id="respuesta-ej3" style="display:none">
                             <dl>
                                 <ol>
-                                    <dt>Desde el Panel del Administrador se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel Adminitrador / clic en el boton:   Usuarios</li>
-                                    <li> En la ventana: Usuarios
-                                        <ol> Si en la tabla existe muchos usuarios:
-                                            <ol>
-                                                <li type="circle"> Existe un cuadro de texto llamado: Buscar:
-                                                    <br> ( esta posicionado en la tabla - superior derecha )
-                                                </li>
-                                                <li type="circle"> digite una palabra significativa para localizarlo</li>
-                                            </ol>
-                                        </ol>
-                                    </li>
-                                    <li> Siempre en la ventana: Usuarios
-                                        <ol>
-                                            - Una vez localizado el usuario, clic en el boton: Cambiar Paswoord
-                                            <br> ( Es una figura de un maletin dentro de un cuadro naranja )
-                                            <br> localizado en el cuadro de acciones a la posicion derecha final del registro.
-                                        </ol>
-                                    </li>
-                                    <li> En la ventana: Cambiar Contraseña se puede realizar:</li>
-                                    <ul>  Editar el password del usuario seleccionado</ul>
-
-                                    <li> Al finalizar dar clic en el boton: Guardar Cambio , para actualizar los datos</li>
-                                    <li> Para cancelar clic en el boton: Usuarios , o retrocer o atras con el navegador </li>
+                                    <dt>Desde el Panel Alumno se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel Alumno / clic en el boton:   Citas</li>
+                                    <li> En la ventana: Lista de citas / clic en el boton: Agregar Nueva Cita</li>
+                                    PENDIENTE
                                 </ol>
                             </dl>
                         </div>
 
                         <p><strong>Pregunta 4 :
-                                <br> ¿Quiero eliminar un usuario en especifico?
+                                <br> ¿Puedo ver los cursos activos que estoy incrito actualmente?
+                                <br> ¿Cuales cursos inscritos tengo actualmente?
                             </strong><br>(<a href="#" id="alternar-respuesta-ej4">ver respuesta</a>)
                         <div id="respuesta-ej4" style="display:none">
                             <dl>
                                 <ol>
-                                    <dt>Desde el Panel del Administrador se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel Adminitrador / clic en el boton:   Usuarios</li>
-                                    <li> En la ventana: Usuarios
-                                        <ol> Si en la tabla existe muchos usuarios:
-                                            <ol>
-                                                <li type="circle"> Existe un cuadro de texto llamado: Buscar:
-                                                    <br> ( esta posicionado en la tabla - superior derecha )
-                                                </li>
-                                                <li type="circle"> digite una palabra significativa para localizarlo</li>
-                                            </ol>
-                                        </ol>
-                                    </li>
-                                    <li> Siempre en la ventana: Usuarios
-                                        <ol>
-                                            - Una vez localizado el usuario, clic en el boton: Eliminar
-                                            <br> ( Es una figura de un basurero dentro de un cuadro rojo )
-                                            <br> localizado en el cuadro de acciones a la posicion derecha final del registro.
-                                        </ol>
-                                    </li>
-                                    <li> Aqui a seleccion debe escoger
-                                        <br> Aceptar o Enter para eliminar / Cancelar o Esc para suspender la eliminacion
-                                    </li>
+                                    <dt>Desde el Panel del Alumno se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel Alumno / clic en el boton:  Cursos Inscritos</li>
+                                    <li> En la ventana:</li>
+
                                 </ol>
                             </dl>
                         </div>
