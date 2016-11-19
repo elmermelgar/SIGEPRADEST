@@ -57,30 +57,30 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="disabledSelect">Tipo de Horario</label>
-                                        <div class="radio">
-                                            {% if he.tipoHorario == "Evaluacion" %}
-                                            <label>
-                                                <input type="radio" name="tipoH" id="tipoH" value="Evaluacion" checked/>Evaluación
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="tipoH" id="tipoH" value="Cita"/>Cita
-                                            </label>
-                                            {% else %}
-                                            <label>
-                                                <input type="radio" name="tipoH" id="tipoH" value="Evaluacion"/>Evaluación
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="tipoH" id="tipoH" value="Cita"checked/>Cita
-                                            </label>
-                                            {% endif %}
-                                        </div>
-                                        <div class="radio">
-                                        </div>
-                                    </div>
-                                </div>
+                                {#<div class="col-md-6">#}
+                                    {#<div class="form-group">#}
+                                        {#<label for="disabledSelect">Tipo de Horario</label>#}
+                                        {#<div class="radio">#}
+                                            {#{% if he.tipoHorario == "Evaluacion" %}#}
+                                            {#<label>#}
+                                                {#<input type="radio" name="tipoH" id="tipoH" value="Evaluacion" checked/>Evaluación#}
+                                            {#</label>#}
+                                            {#<label>#}
+                                                {#<input type="radio" name="tipoH" id="tipoH" value="Cita"/>Cita#}
+                                            {#</label>#}
+                                            {#{% else %}#}
+                                            {#<label>#}
+                                                {#<input type="radio" name="tipoH" id="tipoH" value="Evaluacion"/>Evaluación#}
+                                            {#</label>#}
+                                            {#<label>#}
+                                                {#<input type="radio" name="tipoH" id="tipoH" value="Cita"checked/>Cita#}
+                                            {#</label>#}
+                                            {#{% endif %}#}
+                                        {#</div>#}
+                                        {#<div class="radio">#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</div>#}
                                 <div class="col-md-12 col-md-offset-4">
                                     <button onclick="validar()" type="button" style="width: 30%;" class="btn btn-primary">Guardar</button>
                                 </div>
