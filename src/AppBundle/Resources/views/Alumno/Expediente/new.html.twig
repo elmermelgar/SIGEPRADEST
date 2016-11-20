@@ -9,8 +9,8 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
-            {#<li><a href="{{ path(' secretaria_expediente') }}">Expedientes </a></li>#}
+            <li><a href="{{ path('alumno') }}">Inicio</a></li>
+            {#<li><a href="{{ path(' alumno_expediente') }}">Expedientes </a></li>#}
             <li class="active">Crear</li>
         </ol>
         <h2>Crear Nuevo Expediente</h2>
@@ -259,7 +259,7 @@
     {{ form_end(form) }}
         <ul class="record_actions">
     <li>
-        <a href="{{ path('secretaria_expediente') }}">
+        <a href="{{ path('alumno_expediente') }}">
             Back to the list
         </a>
     </li>
