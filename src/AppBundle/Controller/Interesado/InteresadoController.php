@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\DatosPersonalesType;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @Route("/interesado")
@@ -49,10 +50,6 @@ class InteresadoController extends SecurityController
         );
         if ($perfil) {
             //Mostrar perfil
-            /*
-            $form = $this->createEditForm($perfil);
-            return $this->render('AppBundle:Interesado/Perfil:edit.html.twig', array('form' => $form->createView()));
-            */
             return $this->redirectToRoute('perfil_edit');
         } else {
             //Crear nuevo perfil
@@ -358,6 +355,8 @@ class InteresadoController extends SecurityController
             );
             //Debe tener por los menos un registro en informacion academica
             if ($info) {
+                //$sol->setFechaRegistro((new \DateTime('now',new \DateTimeZone('America/El_Salvador')))->format("Y-m-d"));
+                $sol->setFechaRegistro(new \DateTime('now',new \DateTimeZone('America/El_Salvador')));
                 //enviar solicitud de ingreso
                 $sol->setEstado('enviada');
                 $em->flush();
@@ -383,18 +382,19 @@ class InteresadoController extends SecurityController
     }
 
     /**
-     * @Route("/solicitud/vertodas", name="interesado_solicitud_vertodas")
+     * @Route("/solicitudes/ver", name="interesado_sol_vertodas")
      *
      */
-    public function verSolicitudesAction(Request $request)
+    public function verSolicitudesAction()
     {
         $usuario = $this->getUser();
-        $reposol = $this->getDoctrine()->getRepository('AppBundle:Solicitud');
-        /*$solicitudes = $reposol->findBy(
-            array('idUi' => $usuario)
-        );*/
-        $solicitudes=new Solicitud();
-        return $this->render('AppBundle:Interesado/Solicitud:verSolicitudes.html.twig',array('solicitudes' => $solicitudes));
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = $em->createQuery("SELECT s FROM AppBundle\Entity\Solicitud s WHERE s.idUi = :usuario AND s.estado NOT IN ('creada') ORDER BY s.fechaRegistro DESC");
+        $sql->setParameter('usuario',$usuario);
+        $solicitudes = $sql->getResult();
+
+        return $this->render('AppBundle:Interesado/Solicitud:verSolicitudes.html.twig', array('solicitudes' => $solicitudes));
     }
 
 }
