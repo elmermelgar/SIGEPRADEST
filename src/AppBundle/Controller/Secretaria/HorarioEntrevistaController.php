@@ -75,7 +75,7 @@ class HorarioEntrevistaController extends DSIController
             $he->setFechaDhe(new \DateTime($request->get("fecha")));
             $hora=(new \DateTime($request->get("hora")));
             $he->setHoraDhe($hora);
-            $he->setTipoHorario($request->get("tipoH"));
+//            $he->setTipoHorario($request->get("tipoH"));
 
             //Guardar en la BD
             $em->flush();

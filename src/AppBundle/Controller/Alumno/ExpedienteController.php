@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Secretaria;
+namespace AppBundle\Controller\Alumno;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,7 +13,7 @@ use AppBundle\Form\ExpedienteType;
 /**
  * Expediente controller.
  *
- * @Route("/secretaria/expediente")
+ * @Route("/alumno/expediente")
  */
 class ExpedienteController extends Controller
 {
@@ -21,9 +21,9 @@ class ExpedienteController extends Controller
     /**
      * Lists all Expediente entities.
      *
-     * @Route("/", name="secretaria_expediente")
+     * @Route("/", name="alumno_expediente")
      * @Method("GET")
-     * @Template("AppBundle:Secretaria/Expediente:index.html.twig")
+     * @Template("AppBundle:Alumno/Expediente:index.html.twig")
      */
     public function indexAction()
     {
@@ -38,9 +38,9 @@ class ExpedienteController extends Controller
     /**
      * Creates a new Expediente entity.
      *
-     * @Route("/", name="secretaria_expediente_create")
+     * @Route("/", name="alumno_expediente_create")
      * @Method("POST")
-     * @Template("AppBundle:Secretaria/Expediente:new.html.twig")
+     * @Template("AppBundle:Alumno/Expediente:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -53,7 +53,7 @@ class ExpedienteController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('secretaria_expediente_show', array('id' => $entity->getIdExp())));
+            return $this->redirect($this->generateUrl('alumno_expediente_show', array('id' => $entity->getIdExp())));
         }
 
         return array(
@@ -72,7 +72,7 @@ class ExpedienteController extends Controller
     private function createCreateForm(Expediente $entity)
     {
         $form = $this->createForm(new ExpedienteType(), $entity, array(
-            'action' => $this->generateUrl('secretaria_expediente_create'),
+            'action' => $this->generateUrl('alumno_expediente_create'),
             'method' => 'POST',
         ));
 
@@ -84,9 +84,9 @@ class ExpedienteController extends Controller
     /**
      * Displays a form to create a new Expediente entity.
      *
-     * @Route("/new", name="secretaria_expediente_new")
+     * @Route("/new", name="alumno_expediente_new")
      * @Method("GET")
-     * @Template("AppBundle:Secretaria/Expediente:new.html.twig")
+     * @Template("AppBundle:Alumno/Expediente:new.html.twig")
      */
     public function newAction()
     {
@@ -102,9 +102,9 @@ class ExpedienteController extends Controller
     /**
      * Finds and displays a Expediente entity.
      *
-     * @Route("/{id}", name="secretaria_expediente_show")
+     * @Route("/{id}", name="alumno_expediente_show")
      * @Method("GET")
-     * @Template("AppBundle:Secretaria/Expediente:show.html.twig")
+     * @Template("AppBundle:Alumno/Expediente:show.html.twig")
      */
     public function showAction($id)
     {
@@ -127,9 +127,9 @@ class ExpedienteController extends Controller
     /**
      * Displays a form to edit an existing Expediente entity.
      *
-     * @Route("/{id}/edit", name="secretaria_expediente_edit")
+     * @Route("/{id}/edit", name="alumno_expediente_edit")
      * @Method("GET")
-     * @Template("@App/Secretaria/Expediente/edit.html.twig")
+     * @Template("@App/Alumno/Expediente/edit.html.twig")
      */
     public function editAction($id)
     {
@@ -161,7 +161,7 @@ class ExpedienteController extends Controller
     private function createEditForm(Expediente $entity)
     {
         $form = $this->createForm(new ExpedienteType(), $entity, array(
-            'action' => $this->generateUrl('secretaria_expediente_update', array('id' => $entity->getIdExp())),
+            'action' => $this->generateUrl('alumno_expediente_update', array('id' => $entity->getIdExp())),
             'method' => 'PUT',
         ));
 
@@ -172,7 +172,7 @@ class ExpedienteController extends Controller
     /**
      * Edits an existing Expediente entity.
      *
-     * @Route("/{id}", name="secretaria_expediente_update")
+     * @Route("/{id}", name="alumno_expediente_update")
      * @Method("PUT")
      * @Template("AppBundle:Expediente:edit.html.twig")
      */
@@ -193,7 +193,7 @@ class ExpedienteController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('secretaria_expediente_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('alumno_expediente_edit', array('id' => $id)));
         }
 
         return array(
@@ -205,7 +205,7 @@ class ExpedienteController extends Controller
     /**
      * Deletes a Expediente entity.
      *
-     * @Route("/{id}", name="secretaria_expediente_delete")
+     * @Route("/{id}", name="alumno_expediente_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -225,7 +225,7 @@ class ExpedienteController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('secretaria_expediente'));
+        return $this->redirect($this->generateUrl('alumno_expediente'));
     }
 
     /**
@@ -238,7 +238,7 @@ class ExpedienteController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('secretaria_expediente_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('alumno_expediente_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

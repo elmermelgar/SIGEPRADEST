@@ -36,15 +36,31 @@ class CursoController extends DSIController
                     $em->flush();
                 }
             }
-            $doctores=$em->getRepository('AppBundle:Doctores')->findAll();
-            $d1=$this->mostrarD1();
-
-            return $this->render('AppBundle:Secretaria/Curso:curso.html.twig', array('cursos'=>$cursos,'doctores'=>$doctores,'d1'=>$d1, 'hc'=>$hc));
+            return $this->render('AppBundle:Secretaria/Curso:curso.html.twig', array('cursos'=>$cursos,'hc'=>$hc));
         }else{
             return $this->redirectToRoute('login');
         }
 
     }
+
+    /**
+     * @Route("/secretaria/curso_ver/{id}",name="detallesCurso")
+     */
+    public function detallesAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $doc = $em->getRepository("AppBundle:Doctores")->findBy(array(),array('nombreDoc'=>'ASC'));
+        $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
+        $datos=$em->getRepository('AppBundle:Curso')->find($id);
+        $hc=$em->getRepository('AppBundle:HorarioCurso')->findOneBy(array('idCurso'=> $id));
+        $id_hc=$hc->getIdHc();
+        $hc=$em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
+        $d1=$this->mostrarD1s($id);
+        $cuota=$em->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=> $id));
+
+        return $this->render("AppBundle:Secretaria/Curso:curso_ver.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1, 'cuota'=>$cuota));
+    }
+
 
     /**
      *
@@ -111,13 +127,14 @@ class CursoController extends DSIController
                                 $horario->setDefechaEvaluacion(new \DateTime($request->get("fechainieva")));
                                 $horario->setAfechaEvaluacion(new \DateTime($request->get("fechafineva")));
 
-                                //Persistir
-
                                 $modulo= new Modulos();
                                 $modulo->setIdCurso($em->getRepository("AppBundle:Curso")->find($idcurso));
                                 $modulo->setNombreModulo('Modulo 1-'.$curso->getNombreCurso());
+
+                                //Persistir
                                 $em->persist($modulo);
                                 $em->persist($horario);
+
                                 //Guradar en la BD
                                 $em->flush();
 
@@ -125,9 +142,6 @@ class CursoController extends DSIController
                                 $this->subirImagen('imagen',$nombreImagen);
                                 //Subiendo el PDF
                                 $this->subirPDF('archivo',$nombrePDF);
-
-                                //$idcurso=$curso->getIdCurso();
-
                                 //Manejando relacion de muchos a muchos
                                 for ($i = 0; $i < count($array_doc); $i++) {
 
@@ -163,10 +177,8 @@ class CursoController extends DSIController
         $datos=$em->getRepository('AppBundle:Curso')->find($id);
         $hc=$em->getRepository('AppBundle:HorarioCurso')->findOneBy(array('idCurso'=> $id));
         $id_hc=$hc->getIdHc();
-      //  $id_hc=$this->IdHCcurso($id);
         $hc=$em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
         $d1=$this->mostrarD1s($id);
-
 
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {
@@ -244,6 +256,26 @@ class CursoController extends DSIController
         return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1));
     }
 
+    /**
+     * @Route("/secretaria/curso_disponible/{idcurso}",name="disCurso")
+     */
+    public function disponibleAction($idcurso)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $curso=$em->getRepository('AppBundle:Curso')->find($idcurso);
+        if(!$curso){
+            throw $this->createNotFoundException('No existe el curso con el ID'.$idcurso);
+        }
+
+        $curso->setEstadoCurso("disponible");
+
+        //Guradar en la BD
+        $em->flush();
+
+        $this->MensajeFlash('exito','Curso se ha puesto en estado Disponible correctamente');
+
+        return $this->redirectToRoute("verCurso");
+    }
 
     /**
      * @Route("/secretaria/curso_desabilitar/{idcurso}",name="desCurso")
@@ -253,7 +285,7 @@ class CursoController extends DSIController
         $em=$this->getDoctrine()->getManager();
         $curso=$em->getRepository('AppBundle:Curso')->find($idcurso);
         if(!$curso){
-            throw $this->createNotFoundException('No existe el usuario con el ID'.$idcurso);
+            throw $this->createNotFoundException('No existe el el curso con el ID'.$idcurso);
         }
 
         $curso->setEstadoCurso("desabilitado");
@@ -261,7 +293,7 @@ class CursoController extends DSIController
         //Guradar en la BD
         $em->flush();
 
-        $this->MensajeFlash('exito','Curso se ha Desabilitado correctamente');
+        $this->MensajeFlash('exito','Curso se ha Deshabilitado correctamente');
 
         return $this->redirectToRoute("verCurso");
     }

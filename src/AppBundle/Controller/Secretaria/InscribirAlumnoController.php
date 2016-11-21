@@ -9,7 +9,7 @@ use AppBundle\Entity\InscripcionCurso;
 use AppBundle\Entity\Modulos;
 use AppBundle\Entity\TipoCurso;
 use AppBundle\Tests\Controller\DetalleCursoControllerTest;
-use Proxies\__CG__\AppBundle\Entity\Alumno;
+use AppBundle\Entity\Alumno;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,9 +47,29 @@ class InscribirAlumnoController extends DSIController
             $usu=$em->getRepository('AppBundle:Usuario')->findAll();
             $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
             $cur=$em->getRepository('AppBundle:Curso')->find($id);
-            $alum=$em->createQuery("Select alum from AppBundle:Alumno as alum , AppBundle:InscripcionCurso as inscri WHERE alum.estadoAlumno = 'activo' AND alum.idAlumno != inscri.idAlumno")->getResult();
+            $alum=$em->getRepository('AppBundle:Alumno')->findAll();
+            $ins=$em->getRepository('AppBundle:InscripcionCurso')->findAll();
 
-            return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('alum'=>$alum,'cur'=>$cur,'usu'=>$usu,'dp'=>$dp));
+            for($i=0; $i<count($alum); $i++){
+                $contador=0;
+                if($ins){
+                    for($j=0; $j<count($ins); $j++){
+                        if($alum[$i]->getIdAlumno()==$ins[$j]->getIdAlumno()->getIdAlumno()){
+                            $contador=$contador+1;
+                        }
+                    }
+                    if($contador==0){
+                        $aluminsc[]=$alum[$i];
+                    }
+                }else{
+                    $aluminsc[]=$alum[$i];
+                }
+
+            }
+
+//            $alum=$em->createQuery("Select alum from AppBundle:Alumno as alum , AppBundle:InscripcionCurso as inscri WHERE alum.estadoAlumno = 'activo' AND alum.idAlumno != inscri.idAlumno")->getResult();
+
+            return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('alum'=>$aluminsc,'cur'=>$cur,'usu'=>$usu,'dp'=>$dp));
         }else{
             return $this->redirectToRoute('login');
         }

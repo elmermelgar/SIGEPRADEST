@@ -129,7 +129,7 @@ class AlumnoController extends Controller
         $idDatosPersonales =$request->get("datosPer");
 
         //obtenemos el numero de usuarios registrados el cual para ser insertado debe de ser cero
-        $entityUsuario2 = $em->getRepository('AppBundle:Alumno')->findByidUi( $idUsuario);
+        $entityUsuario2 = $em->getRepository('AppBundle:Alumnos')->findByidUi( $idUsuario);
         $numeroUsuarios = count( $entityUsuario2);
 
         if($numeroUsuarios== 0){
@@ -169,18 +169,23 @@ class AlumnoController extends Controller
 
 
 //            var_dump($entityAlumno->getIdDp());
+            return array(
+                'exito' => "Usuario guardado correctamente",
+                'general'   => "Saludos",
+                'idDatosPerson'   => $entityAlumno->getIdDp()->getIdDp(),
+                'idAlum'   => $entityAlumno->getIdAlumno(),
+                'curriculum'   => $entityCurruculum->getIdCurriculum(),
+            );
+        }else{
+
+            return $this->redirect($this->generateUrl('alumno', array('resultado' => "error al crecar")));
+
         }
 
 
 
 //
-        return array(
-            'exito' => "Usuario guardado correctamente",
-            'general'   => "Saludos",
-            'idDatosPerson'   => $entityAlumno->getIdDp()->getIdDp(),
-            'idAlum'   => $entityAlumno->getIdAlumno(),
-            'curriculum'   => $entityCurruculum->getIdCurriculum(),
-        );
+
     }
 
     /**
