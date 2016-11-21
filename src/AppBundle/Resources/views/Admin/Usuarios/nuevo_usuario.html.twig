@@ -60,10 +60,9 @@
                                     <div class="form-group">
                                         <label>Tipo de Usuario</label>
                                         <select class="form-control" name="rol">
-                                            <option value="1">Administrador</option>
-                                            <option value="2">Tutor</option>
-                                            <option value="5">Secretaria</option>
-                                            <option value="2">Director</option>
+                                                {% for rol in rol %}
+                                                    <option  value="{{ rol.idRol }}">{{ rol.nombreRol }}</option>
+                                                {% endfor %}
                                         </select>
                                     </div>
                                 </div>

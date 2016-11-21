@@ -37,34 +37,44 @@ class UsuariosController extends SecurityController
      */
     public function nuevoUsuarioAction(Request $request){
         $em2=$this->getDoctrine()->getManager("default");
-        if($request->isMethod("POST"))
-        {
-            //Creando usuario
-            $u = new Usuario();
-            $u->setNomusuario($request->get("username"));
-            $u->setNombre($request->get("nombre"));
-            $u->setIdRol($em2->getRepository('AppBundle:Roles')->find($request->get('rol')));
-            $u->setCorreo($request->get("email"));
-            $u->setApellido($request->get("apellido"));
-            $u->setTelefono($request->get("tel"));
-            $u->setIdEmpleado($request->get("id_emp"));
-            $u->setIsactive(1);
-            //Cifra la contrase?a
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($u);
-            $password = $encoder->encodePassword($request->get("pass"), $u->getSalt());
-            $u->setPassword($password);
-            //Persistencia
-            $em2->persist($u);
-            $em2->flush();
-            //redireccionamiento
-            $this->MensajeFlash('exito','Usuario creado correctamente!');
-
+        $rol=$em2->getRepository('AppBundle:Roles')->findAll();
+        $usu=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario'=>$request->get("username")));
+        if($usu){
+            $this->MensajeFlash('error','El usuario ya existe. No puede crear usuarios repetidos!');
             $em2=$this->getDoctrine()->getManager("default");
             $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
             return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
         }
-        return $this->render('AppBundle:Admin/Usuarios:nuevo_usuario.html.twig');
+        else{
+            if($request->isMethod("POST"))
+            {
+                //Creando usuario
+                $u = new Usuario();
+                $u->setNomusuario($request->get("username"));
+                $u->setNombre($request->get("nombre"));
+                $u->setIdRol($em2->getRepository('AppBundle:Roles')->find($request->get('rol')));
+                $u->setCorreo($request->get("email"));
+                $u->setApellido($request->get("apellido"));
+                $u->setTelefono($request->get("tel"));
+                $u->setIdEmpleado($request->get("id_emp"));
+                $u->setIsactive(1);
+                //Cifra la contrase?a
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($u);
+                $password = $encoder->encodePassword($request->get("pass"), $u->getSalt());
+                $u->setPassword($password);
+                //Persistencia
+                $em2->persist($u);
+                $em2->flush();
+                //redireccionamiento
+                $this->MensajeFlash('exito','Usuario creado correctamente!');
+
+                $em2=$this->getDoctrine()->getManager("default");
+                $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
+                return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
+            }
+        }
+        return $this->render('AppBundle:Admin/Usuarios:nuevo_usuario.html.twig',array('rol'=>$rol));
     }
 
     /**
@@ -74,6 +84,7 @@ class UsuariosController extends SecurityController
         $em2=$this->getDoctrine()->getManager("default");
         //Seleccionando un solo usuario";
         $datos=$this->getDoctrine()->getRepository('AppBundle:Usuario')->find($id);
+        $rol=$em2->getRepository('AppBundle:Roles')->findAll();
         if($request->isMethod("POST"))
         {
 
@@ -94,7 +105,7 @@ class UsuariosController extends SecurityController
             return $this->redirect($this->generateUrl('usuarios', array('usuarios'=>$usuarios)));
         }
         return $this->render('AppBundle:Admin/Usuarios:editar_usuario.html.twig', array(
-            'usuario' => $datos));
+            'usuario' => $datos,'rol'=>$rol));
     }
 
     /**

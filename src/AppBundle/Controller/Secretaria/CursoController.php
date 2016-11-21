@@ -215,8 +215,6 @@ class CursoController extends DSIController
                             }
                             $datos->setNumCuotas($nun_cuo);
 
-                            $datos->setEstadoCurso("Registro");
-
                             //Proceso de almacenamiento de datos de entidad Horario Curso
                             $hc->setFechaInicio(new \DateTime($request->get("fechaini")));
                             $hc->setFechaFin(new \DateTime($request->get("fechafin")));

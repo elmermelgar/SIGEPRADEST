@@ -20,8 +20,12 @@
     <div class="row-fluid sortable">
         <div class="box span12">
             <div class="box-content">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Curso en proceso de registro
+                    </div>
                <fieldset>
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
                             <div class="control-group" >
                                 <div class="controls">
                                     <a href="" onclick="window.open('{{ asset('public') }}/{{ datos.broshureInformativo}}');">
@@ -30,12 +34,12 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6" class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
                             <div class="control-group" >
                                 <label class="control-label" for="prependedInput">Archivo PDF</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <a href="" onclick="window.open('{{ asset('public') }}/{{ datos.rutaPdf}}');">Ver</a>
+                                        <a class="btn btn-success" onclick="window.open('{{ asset('public') }}/{{ datos.rutaPdf}}');">Ver o Descargar</a>
                                     </div>
                                 </div>
                             </div>
@@ -100,6 +104,7 @@
                             </div>
                         </div>
                     </fieldset>
+                </div>
                     <h2>Fechas de {{ datos.nombreCurso }}</h2>
                     <hr>
                     <fieldset>
