@@ -235,7 +235,7 @@ class CursoController extends DSIController
 
                             $this->del_d1($id);
 
-                            //Manejando relación de muchos a muchos
+                            //Manejando relaciÃ³n de muchos a muchos
                             for ($i = 0; $i < count($array_doc); $i++) {
 
                                 $this->manytomany($id,$array_doc[$i]);

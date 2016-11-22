@@ -16,59 +16,65 @@ class Usuarios2Controller extends SecurityController
     /**
      * @Route("/director/usuario/create", name="nuevo_usuario2")
      */
-    public function nuevoUsuarioAction(Request $request){
-        $em2=$this->getDoctrine()->getManager("default");
+    public function nuevoUsuarioAction(Request $request)
+    {
+        $em2 = $this->getDoctrine()->getManager("default");
+        $usu = $em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $request->get("username")));
+        if ($usu) {
+            $this->MensajeFlash('error', 'El usuario ya existe. No puede crear usuarios repetidos!');
+            $em2 = $this->getDoctrine()->getManager("default");
+            $usuarios = $em2->getRepository('AppBundle:Usuario')->findAll();
+            return $this->redirect($this->generateUrl('usuarios2', array('usuarios' => $usuarios)));
+        } else {
+            if ($request->isMethod("POST")) {
+                $existe = $em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $request->get("username")));
+                $email = $em2->getRepository('AppBundle:Usuario')->findOneBy(array('correo' => $request->get("email")));
+                if ($existe or $email) {
+                    $this->MensajeFlash('error', 'El nombre de usuario o correo ya existe!');
+                    $em2 = $this->getDoctrine()->getManager("default");
+                    $usuarios = $em2->getRepository('AppBundle:Usuario')->findAll();
+                    return $this->redirect($this->generateUrl('usuarios2', array('usuarios' => $usuarios)));
+                } else {
+                    //Creando usuario
+                    $u = new Usuario();
+                    $u->setNomusuario($request->get("username"));
+                    $u->setNombre($request->get("nombre"));
+                    $usuario = $request->get("username");
+                    $u->setIdRol($em2->getRepository('AppBundle:Roles')->find(2));
+                    $u->setCorreo($request->get("email"));
+                    $u->setApellido($request->get("apellido"));
+                    $u->setTelefono($request->get("tel"));
+                    $u->setIdEmpleado($request->get("id_emp"));
+                    $u->setIsactive(1);
+                    //Cifra la contrasenia
+                    $factory = $this->get('security.encoder_factory');
+                    $encoder = $factory->getEncoder($u);
+                    $password = $encoder->encodePassword($request->get("pass"), $u->getSalt());
+                    $u->setPassword($password);
+                    //Persistencia
+                    $em2->persist($u);
+                    $em2->flush();
+                    //Creando un tutor a partir de un Usuario de tipo tutor
+                    $tutor = $em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $usuario));
+                    $doc = new Doctores();
+                    $doc->setNombreDoc($request->get("nombre"));
+                    $doc->setApellidoDoc($request->get("apellido"));
+                    $doc->setDuiDoc($request->get("id_emp"));
+                    $doc->setEspecialidad($request->get("especialidad"));
+                    $doc->setTurno($request->get("turno"));
+                    $usu = $em2->getRepository('AppBundle:Usuario')->find($tutor->getIdUi());
+                    $doc->setIdUi($usu);
+                    $em2->persist($doc);
+                    $em2->flush();
+                    //redireccionamiento
+                    $this->MensajeFlash('exito', 'Usuario creado correctamente!');
 
-        if($request->isMethod("POST"))
-        {
-            $existe=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $request->get("username")));
-            $email=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('correo' => $request->get("email")));
-            if($existe or $email){
-                $this->MensajeFlash('error','El nombre de usuario o correo ya existe!');
-                $em2=$this->getDoctrine()->getManager("default");
-                $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
-                return $this->redirect($this->generateUrl('usuarios2', array('usuarios'=>$usuarios)));
+                    $em2 = $this->getDoctrine()->getManager("default");
+                    $usuarios = $em2->getRepository('AppBundle:Usuario')->findAll();
+                    return $this->redirect($this->generateUrl('usuarios2', array('usuarios' => $usuarios)));
+                }
+
             }
-            else{
-                //Creando usuario
-                $u = new Usuario();
-                $u->setNomusuario($request->get("username"));
-                $u->setNombre($request->get("nombre"));
-                $usuario=$request->get("username");
-                $u->setIdRol($em2->getRepository('AppBundle:Roles')->find(2));
-                $u->setCorreo($request->get("email"));
-                $u->setApellido($request->get("apellido"));
-                $u->setTelefono($request->get("tel"));
-                $u->setIdEmpleado($request->get("id_emp"));
-                $u->setIsactive(1);
-                //Cifra la contrasenia
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($u);
-                $password = $encoder->encodePassword($request->get("pass"), $u->getSalt());
-                $u->setPassword($password);
-                //Persistencia
-                $em2->persist($u);
-                $em2->flush();
-                //Creando un tutor a partir de un Usuario de tipo tutor
-                $tutor=$em2->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario' => $usuario));
-                $doc = new Doctores();
-                $doc->setNombreDoc($request->get("nombre"));
-                $doc->setApellidoDoc($request->get("apellido"));
-                $doc->setDuiDoc($request->get("id_emp"));
-                $doc->setEspecialidad($request->get("especialidad"));
-                $doc->setTurno($request->get("turno"));
-                $usu=$em2->getRepository('AppBundle:Usuario')->find($tutor->getIdUi());
-                $doc->setIdUi($usu);
-                $em2->persist($doc);
-                $em2->flush();
-                //redireccionamiento
-                $this->MensajeFlash('exito','Usuario creado correctamente!');
-
-                $em2=$this->getDoctrine()->getManager("default");
-                $usuarios=$em2->getRepository('AppBundle:Usuario')->findAll();
-                return $this->redirect($this->generateUrl('usuarios2', array('usuarios'=>$usuarios)));
-            }
-
         }
         return $this->render('AppBundle:Director/Usuarios2:nuevo_usuario.html.twig');
     }
