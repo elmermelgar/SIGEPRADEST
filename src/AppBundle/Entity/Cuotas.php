@@ -32,6 +32,13 @@ class Cuotas
     /**
      * @var string
      *
+     * @ORM\Column(name="descrip_cuota", type="string", length=200, nullable=true)
+     */
+    private $descripCuota;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="monto", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $monto;
@@ -45,6 +52,36 @@ class Cuotas
      * })
      */
     private $idCurso;
+
+    /**
+     * @var \Pago
+     *
+     * @ORM\ManyToOne(targetEntity="Pago")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_pago__", referencedColumnName="id_pago__")
+     * })
+     */
+    private $idPago;
+
+    /**
+     * @var \LineaTrabajo
+     *
+     * @ORM\ManyToOne(targetEntity="LineaTrabajo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_linea_trabajo__", referencedColumnName="id_linea_trabajo__")
+     * })
+     */
+    private $idLineaTrabajo;
+
+    /**
+     * @var \CuentaBanco
+     *
+     * @ORM\ManyToOne(targetEntity="CuentaBanco")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_cuenta_banco__", referencedColumnName="id_cuenta_banco__")
+     * })
+     */
+    private $idCuentaBanco;
 
 
 
@@ -95,6 +132,22 @@ class Cuotas
     }
 
     /**
+     * @return string
+     */
+    public function getDescripCuota()
+    {
+        return $this->descripCuota;
+    }
+
+    /**
+     * @param string $descripCuota
+     */
+    public function setDescripCuota($descripCuota)
+    {
+        $this->descripCuota = $descripCuota;
+    }
+
+    /**
      * Get monto
      *
      * @return string 
@@ -125,5 +178,74 @@ class Cuotas
     public function getIdCurso()
     {
         return $this->idCurso;
+    }
+
+    /**
+     * Set idPago
+     *
+     * @param \AppBundle\Entity\Pago $idPago
+     * @return PagoCuota
+     */
+    public function setIdPago(\AppBundle\Entity\Pago $idPago = null)
+    {
+        $this->idPago = $idPago;
+
+        return $this;
+    }
+
+    /**
+     * Get idPago
+     *
+     * @return \AppBundle\Entity\Pago
+     */
+    public function getIdPago()
+    {
+        return $this->idPago;
+    }
+
+    /**
+     * Set idLineaTrabajo
+     *
+     * @param \AppBundle\Entity\LineaTrabajo $idLineaTrabajo
+     * @return PagoCuota
+     */
+    public function setIdLineaTrabajo(\AppBundle\Entity\LineaTrabajo $idLineaTrabajo = null)
+    {
+        $this->idLineaTrabajo = $idLineaTrabajo;
+
+        return $this;
+    }
+
+    /**
+     * Get idLineaTrabajo
+     *
+     * @return \AppBundle\Entity\LineaTrabajo
+     */
+    public function getIdLineaTrabajo()
+    {
+        return $this->idLineaTrabajo;
+    }
+
+    /**
+     * Set idCuentaBanco
+     *
+     * @param \AppBundle\Entity\CuentaBanco $idCuentaBanco
+     * @return PagoCuota
+     */
+    public function setIdCuentaBanco(\AppBundle\Entity\CuentaBanco $idCuentaBanco = null)
+    {
+        $this->idCuentaBanco = $idCuentaBanco;
+
+        return $this;
+    }
+
+    /**
+     * Get idCuentaBanco
+     *
+     * @return \AppBundle\Entity\CuentaBanco
+     */
+    public function getIdCuentaBanco()
+    {
+        return $this->idCuentaBanco;
     }
 }

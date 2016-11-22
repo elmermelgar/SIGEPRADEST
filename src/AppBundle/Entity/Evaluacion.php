@@ -32,6 +32,13 @@ class Evaluacion
     /**
      * @var string
      *
+     * @ORM\Column(name="descrip_eva", type="string", length=200, nullable=true)
+     */
+    private $descripEva;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="porcentaje", type="integer", nullable=true)
      */
     private $porcentaje;
@@ -92,6 +99,22 @@ class Evaluacion
         $this->porcentaje = $porcentaje;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescripEva()
+    {
+        return $this->descripEva;
+    }
+
+    /**
+     * @param string $descripEva
+     */
+    public function setDescripEva($descripEva)
+    {
+        $this->descripEva = $descripEva;
     }
 
     /**

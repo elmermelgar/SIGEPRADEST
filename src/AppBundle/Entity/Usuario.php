@@ -52,6 +52,14 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="foto", type="string", length=200, nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $foto;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="telefono", type="string", length=9, nullable=true)
      */
     private $telefono;
@@ -70,6 +78,13 @@ class Usuario implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="password", type="string", length=30, nullable=true)
      */
     private $password;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_nacimiento_ui", type="date", nullable=true)
+     */
+    private $fechaNacimientoUi;
 
     /**
      * @var integer
@@ -141,6 +156,38 @@ class Usuario implements AdvancedUserInterface, \Serializable
         $this->apellido = $apellido;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
+     * @param string $foto
+     */
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFechaNacimientoUi()
+    {
+        return $this->fechaNacimientoUi;
+    }
+
+    /**
+     * @param \DateTime $fechaNacimientoUi
+     */
+    public function setFechaNacimientoUi($fechaNacimientoUi)
+    {
+        $this->fechaNacimientoUi = $fechaNacimientoUi;
     }
 
     /**

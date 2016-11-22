@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PagoCuota
  *
- * @ORM\Table(name="pago_cuota", uniqueConstraints={@ORM\UniqueConstraint(name="pago_cuota_pk", columns={"id_pagos"})}, indexes={@ORM\Index(name="h1_fk", columns={"id_cuota"}), @ORM\Index(name="m_fk", columns={"id_dc"}), @ORM\Index(name="p4_fk", columns={"id_pago__"}), @ORM\Index(name="p5_fk", columns={"id_linea_trabajo__"}), @ORM\Index(name="p6_fk", columns={"id_cuenta_banco__"})})
+ * @ORM\Table(name="pago_cuota", uniqueConstraints={@ORM\UniqueConstraint(name="pago_cuota_pk", columns={"id_pagos"})}, indexes={@ORM\Index(name="h1_fk", columns={"id_cuota"}), @ORM\Index(name="m_fk", columns={"id_dc"})})
  * @ORM\Entity
  */
 class PagoCuota
@@ -76,37 +76,6 @@ class PagoCuota
      * })
      */
     private $idDc;
-
-    /**
-     * @var \Pago
-     *
-     * @ORM\ManyToOne(targetEntity="Pago")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pago__", referencedColumnName="id_pago__")
-     * })
-     */
-    private $idPago;
-
-    /**
-     * @var \LineaTrabajo
-     *
-     * @ORM\ManyToOne(targetEntity="LineaTrabajo")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_linea_trabajo__", referencedColumnName="id_linea_trabajo__")
-     * })
-     */
-    private $idLineaTrabajo;
-
-    /**
-     * @var \CuentaBanco
-     *
-     * @ORM\ManyToOne(targetEntity="CuentaBanco")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_cuenta_banco__", referencedColumnName="id_cuenta_banco__")
-     * })
-     */
-    private $idCuentaBanco;
-
 
 
     /**
@@ -280,72 +249,5 @@ class PagoCuota
         return $this->idDc;
     }
 
-    /**
-     * Set idPago
-     *
-     * @param \AppBundle\Entity\Pago $idPago
-     * @return PagoCuota
-     */
-    public function setIdPago(\AppBundle\Entity\Pago $idPago = null)
-    {
-        $this->idPago = $idPago;
 
-        return $this;
-    }
-
-    /**
-     * Get idPago
-     *
-     * @return \AppBundle\Entity\Pago 
-     */
-    public function getIdPago()
-    {
-        return $this->idPago;
-    }
-
-    /**
-     * Set idLineaTrabajo
-     *
-     * @param \AppBundle\Entity\LineaTrabajo $idLineaTrabajo
-     * @return PagoCuota
-     */
-    public function setIdLineaTrabajo(\AppBundle\Entity\LineaTrabajo $idLineaTrabajo = null)
-    {
-        $this->idLineaTrabajo = $idLineaTrabajo;
-
-        return $this;
-    }
-
-    /**
-     * Get idLineaTrabajo
-     *
-     * @return \AppBundle\Entity\LineaTrabajo 
-     */
-    public function getIdLineaTrabajo()
-    {
-        return $this->idLineaTrabajo;
-    }
-
-    /**
-     * Set idCuentaBanco
-     *
-     * @param \AppBundle\Entity\CuentaBanco $idCuentaBanco
-     * @return PagoCuota
-     */
-    public function setIdCuentaBanco(\AppBundle\Entity\CuentaBanco $idCuentaBanco = null)
-    {
-        $this->idCuentaBanco = $idCuentaBanco;
-
-        return $this;
-    }
-
-    /**
-     * Get idCuentaBanco
-     *
-     * @return \AppBundle\Entity\CuentaBanco 
-     */
-    public function getIdCuentaBanco()
-    {
-        return $this->idCuentaBanco;
-    }
 }
