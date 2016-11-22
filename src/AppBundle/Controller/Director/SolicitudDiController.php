@@ -4,6 +4,12 @@ namespace AppBundle\Controller\Director;
 
 use AppBundle\Controller\DSIController;
 use AppBundle\Entity\Solicitud;
+use AppBundle\Entity\Cita;
+use AppBundle\Entity\HorarioEntrevista;
+use AppBundle\Entity\Usuario;
+use AppBundle\Entity\DatosPersonales;
+use AppBundle\Entity\Curso;
+
 use AppBundle\Tests\Controller\DetalleCursoControllerTest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,8 +30,10 @@ class SolicitudDiController extends DSIController
             $usu=$em->getRepository('AppBundle:Usuario')->findAll();
             $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
             $cur=$em->getRepository('AppBundle:Curso')->findAll();
+            $he=$em->getRepository('AppBundle:HorarioEntrevista')->findAll();
+            $ct=$em->getRepository('AppBundle:Cita')->findBy(array('idSolicitud'=>$sol));
 
-            return $this->render('AppBundle:Director/Solicitud(eva):Sol.html.twig', array('sol'=>$sol,'usu'=>$usu,'dp'=>$dp,'cur'=>$cur));
+            return $this->render('AppBundle:Director/Solicitud(eva):Sol.html.twig', array('sol'=>$sol,'usu'=>$usu,'dp'=>$dp,'cur'=>$cur,'he'=>$he,'ct'=>$ct));
         }else{
             return $this->redirectToRoute('login');
         }
