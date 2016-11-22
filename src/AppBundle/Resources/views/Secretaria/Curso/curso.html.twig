@@ -35,7 +35,6 @@
                         </thead>
                         <tbody>
                         <script>
-
                             $('#dataTables-example').DataTable({
                                 ordering: false
                             });
@@ -70,8 +69,6 @@
         </div>
         <!-- End  Kitchen Sink -->
     </div>
-
-
 {% endblock %}
 {% block javascripts %}
     {% for flashMessage in app.session.flashbag.get('error') %}
@@ -91,7 +88,6 @@
         </script>
     {% endfor %}
     <script>
-
             function confirmar(id){
                 //un confirm
                 alertify.confirm("<p>Esta seguro que desea Desabilitar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
@@ -102,19 +98,12 @@
                 });
                 return false
             }
-
         </script>
-
     <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
-
         <script>
-        $(document).ready(function() {
-
-            $('#example').DataTable( {
-                "order": [[ 3, "desc" ]]
-            } );
-        } );
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
     </script>
-
 {% endblock %}

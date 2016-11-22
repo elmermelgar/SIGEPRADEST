@@ -76,7 +76,7 @@
                                 <div class="controls">
                                     <div class="input-prepend">
                                         {% for tc in tc %}
-                                            <option {% if datos.idTc.idTc == tc.idTc %} selected  {% endif %} value="{{ tc.idTc }}">{{ tc.nombreTc }}</option>
+                                            {% if datos.idTc.idTc == tc.idTc %} {{ tc.nombreTc }}{% endif %}
                                         {% endfor %}
                                     </div>
                                 </div>
