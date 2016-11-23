@@ -129,7 +129,7 @@ class AlumnoController extends Controller
         $idDatosPersonales =$request->get("datosPer");
 
         //obtenemos el numero de usuarios registrados el cual para ser insertado debe de ser cero
-        $entityUsuario2 = $em->getRepository('AppBundle:Alumnos')->findByidUi( $idUsuario);
+        $entityUsuario2 = $em->getRepository('AppBundle:Alumno')->findByidUi( $idUsuario);
         $numeroUsuarios = count( $entityUsuario2);
 
         if($numeroUsuarios== 0){
