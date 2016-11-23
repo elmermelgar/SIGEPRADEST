@@ -244,10 +244,12 @@ class CursoController extends DSIController
                             return $this->redirectToRoute("verCurso");
 
                         }else
-                            return new Response('El Archivo no es un archivo PDF');
+                            $this->MensajeFlash('error','El archivo no es un PDF!');
+                            return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1));
                     }
                     else
-                        return new Response('El Archivo no es una imagen');
+                        $this->MensajeFlash('error','El Archivo no es una imagen!');
+                        return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1));
                 }
             }
         }

@@ -264,7 +264,6 @@
             $("#fechafineva").datetimepicker({format: 'DD-MM-YYYY'});
         });
 
-        /*funciones para validar que las fechas no esten invertidas*/
         function validar() {
             var nombre = document.getElementById('nombrecurso').value;
             var cantidad = document.getElementById('cant_alum').value;
@@ -276,12 +275,12 @@
             var finalcurso  =(new Date (document.getElementById('fechafin').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
             var iniciodocu = (new Date (document.getElementById('fechainirec').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
             var finaldocu  = (new Date (document.getElementById('fechafinrec').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
-            var inicioentre =(new Date (document.getElementById('fechainientre').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+            var inicioentre = (new Date (document.getElementById('fechainientre').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
             var finalentre  = (new Date (document.getElementById('fechafinentre').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
             var inicioeva  = (new Date (document.getElementById('fechainieva').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
             var finaleva  = (new Date (document.getElementById('fechafineva').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
 
-            var fechaAhora = moment().format('DD-MM-YYYY');
+            var fechaImp = document.getElementById('fechaini').value;
 
             if (nombre == '' && cantidad == '' && numero == '' && img == '' && pdf == '' && iniciocurso == '' && finalcurso == '' && iniciodocu == '' && finaldocu == '' && inicioentre == '' && finalentre == '' && inicioeva == '' && finaleva == '') {
                 alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
@@ -301,44 +300,76 @@
                                 if (numero < 1) {
                                     alertify.error("El Numero de Cuotas debe ser igual o mayor a 1");
                                 } else {
-                                    if (iniciocurso == '') {
-                                        alertify.error("Es Obligatorio Seleccionar Fecha Inicio del Curso");
+                                    if (img == '') {
+                                        alertify.error("Es Obligatorio Subir una Imagen");
                                     } else {
-                                        if (finalcurso == '') {
-                                            alertify.error("Es Obligatorio Seleccionar Fecha Fin del Curso");
+                                        if (pdf == '') {
+                                            alertify.error("Es Obligatorio Subir un archivo PDF");
                                         } else {
-                                            if (iniciocurso > finalcurso) {
-                                                alertify.error("La fecha de Inicio de Curso debe ser menor que la fecha de Fin de curso");
+                                            if (iniciocurso == 'Invalid Date') {
+                                                alertify.error("Es Obligatorio Seleccionar Fecha Inicio del Curso");
                                             } else {
-                                                if (iniciodocu == '') {
-                                                    alertify.error("Es Obligatorio Seleccionar Fecha Inicio de Recepción de Documentos");
+                                                if (finalcurso == 'Invalid Date') {
+                                                    alertify.error("Es Obligatorio Seleccionar Fecha Fin del Curso");
                                                 } else {
-                                                    if (finaldocu == '') {
-                                                        alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Recepción de Documentos");
+                                                    if (iniciocurso > finalcurso) {
+                                                        alertify.error("La fecha de Inicio de Curso debe ser menor que la fecha de Fin de curso");
                                                     } else {
-                                                        if (iniciodocu > finaldocu) {
-                                                            alertify.error("La fecha de Inicio de Recepción de Documentos debe ser menor que la fecha de Fin de Recepción de Documentos");
+                                                        if (iniciodocu == 'Invalid Date') {
+                                                            alertify.error("Es Obligatorio Seleccionar Fecha Inicio de Recepción de Documentos");
                                                         } else {
-                                                            if (inicioentre == '') {
-                                                                alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Entrevista");
+                                                            if (iniciodocu > iniciocurso) {
+                                                                alertify.error("La fecha de Inicio de Recepción de Documentos debe ser menor o igual a " + fechaImp);
                                                             } else {
-                                                                if (finalentre == '') {
-                                                                    alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Entrevista");
+                                                                if (finaldocu == 'Invalid Date') {
+                                                                    alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Recepción de Documentos");
                                                                 } else {
-                                                                    if (inicioentre > finalentre) {
-                                                                        alertify.error("La fecha de Inicio de Entrevista debe ser menor que la fecha de Fin de Entrevista");
+                                                                    if (finaldocu > iniciocurso) {
+                                                                        alertify.error("La fecha de Fin de Recepción de Documentos debe ser menor o igual a " + fechaImp);
                                                                     } else {
-                                                                        if (inicioeva == '') {
-                                                                            alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Evaluación");
+                                                                        if (iniciodocu > finaldocu) {
+                                                                            alertify.error("La fecha de Inicio de Recepción de Documentos debe ser menor que la fecha de Fin de Recepción de Documentos");
                                                                         } else {
-                                                                            if (finaleva == '') {
-                                                                                alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Evaluación");
+                                                                            if (inicioentre == 'Invalid Date') {
+                                                                                alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Entrevista");
                                                                             } else {
-                                                                                if (inicioeva > finaleva) {
-                                                                                    alertify.error("La fecha de Inicio de Evaluación debe ser menor que la fecha de Fin de Evaluación");
+                                                                                if (inicioentre > iniciocurso) {
+                                                                                    alertify.error("La fecha de Inicio de Entrevista debe ser menor o igual a " + fechaImp);
                                                                                 } else {
-                                                                                    /*identifica el nombre del formulario*/
-                                                                                    document.formulario.submit()
+                                                                                    if (finalentre == 'Invalid Date') {
+                                                                                        alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Entrevista");
+                                                                                    } else {
+                                                                                        if (finalentre > iniciocurso) {
+                                                                                            alertify.error("La fecha de Fin de Entrevista debe ser menor o igual a " + fechaImp);
+                                                                                        } else {
+                                                                                            if (inicioentre > finalentre) {
+                                                                                                alertify.error("La fecha de Inicio de Entrevista debe ser menor que la fecha de Fin de Entrevista");
+                                                                                            } else {
+                                                                                                if (inicioeva == 'Invalid Date') {
+                                                                                                    alertify.error("Es Obligatorio Seleccionar Fecha de Inicio de Evaluación");
+                                                                                                } else {
+                                                                                                    if (inicioeva > iniciocurso) {
+                                                                                                        alertify.error("La fecha de Inicio de Evaluación debe ser menor o igual a " + fechaImp);
+                                                                                                    } else {
+                                                                                                        if (finaleva == 'Invalid Date') {
+                                                                                                            alertify.error("Es Obligatorio Seleccionar Fecha de Fin de Evaluación");
+                                                                                                        } else {
+                                                                                                            if (finaleva > iniciocurso) {
+                                                                                                                alertify.error("La fecha de Fin de Evaluación debe ser menor o igual a " + fechaImp);
+                                                                                                            } else {
+                                                                                                                if (inicioeva > finaleva) {
+                                                                                                                    alertify.error("La fecha de Inicio de Evaluación debe ser menor que la fecha de Fin de Evaluación");
+                                                                                                                } else {
+                                                                                                                    /*identifica el nombre del formulario*/
+                                                                                                                    document.formulario.submit()
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
