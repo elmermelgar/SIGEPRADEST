@@ -29,12 +29,6 @@ class Cita
      */
     private $comentarioCita;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="estado_cita", type="string", length=200, nullable=true)
-     */
-    private $estadoCita;
 
     /**
      * @var \HorarioEntrevista
@@ -91,28 +85,6 @@ class Cita
         return $this->comentarioCita;
     }
 
-    /**
-     * Set estadoCita
-     *
-     * @param string $estadoCita
-     * @return Cita
-     */
-    public function setEstadoCita($estadoCita)
-    {
-        $this->estadoCita = $estadoCita;
-
-        return $this;
-    }
-
-    /**
-     * Get estadoCita
-     *
-     * @return string
-     */
-    public function getEstadoCita()
-    {
-        return $this->estadoCita;
-    }
 
     /**
      * Set idHe

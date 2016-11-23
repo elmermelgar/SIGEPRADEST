@@ -30,7 +30,6 @@ class CitaController extends DSIController
                 $cita->setIdHe($em->getRepository("AppBundle:HorarioEntrevista")->find($request->get("he")));
                 $cita->setIdSolicitud($em->getRepository("AppBundle:Solicitud")->find($id));
                 $cita->setComentarioCita($request->get('comen'));
-                $cita->setEstadoCita('programada');
 
                 $eva = new EvaluacionPrevia();
                 $eva->setIdHe($em->getRepository("AppBundle:HorarioEntrevista")->find($request->get("he")));

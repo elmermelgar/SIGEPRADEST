@@ -95,7 +95,7 @@ class ModulosController extends SecurityController
         $por=0;
         $promedio=0;
         $db = $em->getConnection();
-        $sql = "select e.* from evaluacion as e left join nota as n on e.id_evaluacion=n.id_evaluacion where n.id_evaluacion is null and e.id_modulo=$id1";
+        $sql = "select e.* from evaluacion as e left join nota as n on e.id_evaluacion=n.id_evaluacion where n.id_evaluacion not in (select n.id_evaluacion from evaluacion as e,nota as n where e.id_evaluacion=n.id_evaluacion and n.id_dc=$id2) and e.id_modulo=$id1";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $disp = $stmt->fetchAll();
@@ -106,7 +106,7 @@ class ModulosController extends SecurityController
             $promedio=$promedio+($n->getNota()*($n->getIdEvaluacion()->getPorcentaje()));
         }
         if($request->isMethod("POST")) {
-            $nota=$this->getDoctrine()->getRepository('AppBundle:Nota')->find($request->get("evaluacion"));
+            $nota=$this->getDoctrine()->getRepository('AppBundle:Nota')->findOneBy(array('idEvaluacion'=>$request->get("evaluacion"), 'idDc'=>$id2));
 
             if($nota){
                 $this->MensajeFlash('error','Ya ha sido asignada una nota para esta evaluacion');

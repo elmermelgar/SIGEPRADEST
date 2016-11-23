@@ -28,13 +28,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Sigepradest</a>
+            <a class="navbar-brand" href="#">Escuela de Posgrado FOUES</a>
         </div>
         <div style="color: white;
 padding: 15px 50px 5px 50px;
 float: right;
-font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ path('logout') }}" class="btn btn-primary square-btn-adjust">Logout</a>
-            <a id="ayudabtn" name="ayudabtn" class="btn bg-danger bg-color-green square-btn-adjust" style="background-color: #3c763d"
+font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp;
+            <a id="ayudabtn" name="ayudabtn" class="btn bg-warning square-btn-adjust" style="background: #4D4D4D"
 
                     {% if app.user.idrol.nombrerol== 'administrador' %}
                         href="{{ path('adminAyuda') }}"
@@ -47,7 +47,8 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                     {% elseif app.user.idrol.nombrerol== 'tutor'%}
                         href="{{ path('tutorAyuda') }}"
                     {% endif %}
-            >ayuda  <span class="glyphicon glyphicon-question-sign green"></span></a>
+            >  <span class="glyphicon glyphicon-question-sign warning"></span></a>
+            <a href="{{ path('logout') }}" class="btn btn-primary square-btn-adjust">Cerrar Sesión</a>
         </div>
     </nav>
     {% for flashMessage in app.session.flashbag.get('mensaje') %}
@@ -89,7 +90,7 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                             <a href="{{ path('verCurso') }}">Administrar Cursos</a>
                         </li>
                         <li>
-                            <a href="{{ path('doctores_secre') }}">Tutores Disponibles</a>
+                            <a href="{{ path('doctores_secre') }}">Lista de Tutores</a>
                         </li>
                     </ul>
                 </li>
@@ -98,6 +99,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp; <a href="{{ pat
                 </li>
                     <li>
                         <a  href="{{ path('verSol(sec)') }}"><i class="fa fa-edit fa-3x"></i>Solicitud de Entrevistas</a>
+                    </li>
+                    <li>
+                        <a  href="{{ path('cursoscuotas') }}"><i class="fa fa-money fa-3x"></i> Cuotas</a>
                     </li>
                     <!-- anidado de Alumnos  -->
                     <li>

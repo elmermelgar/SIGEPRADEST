@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>DUI </label>
-                                        <input class="form-control" name="dui" value="{{ doctor.duiDoc }}"/>
+                                        <input class="form-control" name="dui" pattern="[0-9]{8}-[0-9]{1}" title="Debe introducir un DUI con formato 00000000-0" value="{{ doctor.duiDoc }}"/>
 
                                     </div>
 
@@ -51,8 +51,16 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">Turno</label>
-                                        <input class="form-control" name="turno" value="{{ doctor.turno }}" />
-
+                                        <select class="form-control" name="turno">
+                                            <option value="Lunes-Viernes: Mañana">Lunes-Viernes: Mañana</option>
+                                            <option value="Lunes-Viernes: Tarde">Lunes-Viernes: Tarde</option>
+                                            <option value="Lunes-Viernes: Noche">Lunes-Viernes: Noche</option>
+                                            <option value="Lunes-Sabado: Mañana">Lunes-Sabado: Mañana</option>
+                                            <option value="Lunes-Sabado: Tarde">Lunes-Sabado: Tarde</option>
+                                            <option value="Sábados: Mañana">Sábados: Mañana</option>
+                                            <option value="Sábados: Tarde">Sábados: Tarde</option>
+                                            <option value="Sábados: Tarde">Cualquier Horario</option>
+                                        </select>
                                     </div>
 
                                 </div>

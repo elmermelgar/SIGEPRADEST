@@ -16,8 +16,8 @@ class CuotasController extends SecurityController
     public function cuotasViewsAction($id,Request $request){
         if($this->getUser()){
             $em2=$this->getDoctrine()->getManager("default");
-            $cuotas=$em2->getRepository('AppBundle:Cuotas')->findBy('id_curso',$id);
-            return $this->render('AppBundle:Admin/Doctores:doctores_views.html.twig', array('doctores'=>$doctores));
+            $cuotas=$em2->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id));
+            return $this->render('AppBundle:Secretaria/Cuotas:cuotas_views.html.twig', array('cuotas'=>$cuotas));
         }
         else{
             return $this->redirectToRoute('login');

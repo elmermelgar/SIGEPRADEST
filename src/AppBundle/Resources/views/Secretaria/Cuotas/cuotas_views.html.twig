@@ -9,73 +9,31 @@
         <li><a href="{{ path('secretaria') }}">Inicio</a></li>
         <li class="active">Cuotas</li>
     </ol>
-    <h2>Doctores</h2><a href="{{ path('new_doctor_ext') }}" style="float: right; margin-top: -35px;" title="Agregar" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Doctor Externo</a>
+    <h2>Cuotas de </h2><a href="#" style="float: right; margin-top: -35px;" title="Agregar" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuota</a>
 </div>
 {% endblock %}
 {% block body %}
     <div class="col-md-12">
-        <!--   Kitchen Sink -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Doctores de Posgrado <a href="{{ path('empleados_doc') }}" style="float: right; margin-top: -8px;" title="Agregar" class="btn btn-success" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nueva Cita</a>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                        <thead>
-                        <tr>
-                            <th style="text-align: center">#</th>
-                            <th style="text-align: center">Nombre</th>
-                            <th style="text-align: center">Especialidad</th>
-                            <th style="text-align: center">Turno</th>
-                            <th style="text-align: center">Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {% for doctores in doctores %}
-                        <tr>
-                            <td>{{ doctores.idDoctores }}</td>
-                            <td>{{ doctores.nombreDoc }} {{ doctores.apellidoDoc }}</td>
-                            <td>{{ doctores.especialidad }}</td>
-                            <td>{{ doctores.turno }}</td>
-                            <td style="text-align: center;">
-                                <a href="{{ path('edit_doctor', {'id': doctores.idDoctores }) }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                                -
-                                <button onClick="confirmar({{ doctores.idDoctores }})" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
-                            </td>
-                        </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+        <!--   Cuerpo -->
+        {% for cuotas in cuotas %}
+        <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="panel panel-primary text-center no-boder bg-color-blue">
+                <div class="panel-footer main-temp-back">
+                    {{ cuotas.cuota }}
+                </div>
+                <div class="panel-body">
+                    <i class="fa fa-money fa-2x"></i>
+                    <h3>$ {{ cuotas.monto }}</h3>
+                </div>
+                <div class="panel-footer main-temp-back" style="font-size: 12px;">
+                    {{ cuotas.descripCuota}}
                 </div>
             </div>
         </div>
-        <!-- End  Kitchen Sink -->
+        {% endfor %}
+        <!-- fin del cuerpo -->
     </div>
 {% endblock %}
 {% block javascripts %}
-    {% for doctores in doctores %}
-        <script>
 
-            function confirmar(id){
-                //un confirm
-                alertify.confirm("<p>Esta seguro que desea eliminar el Tutor?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
-                    if (e) {
-                        location.href="{{ asset('/secretaria/doctor/delete') }}/"+id;
-                    } else { alertify.error("Has cancelado la operacion");
-                    }
-                });
-                return false
-            }
-
-        </script>
-    {% endfor %}
-    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#dataTables-example').dataTable();
-        });
-    </script>
 {% endblock %}
