@@ -19,50 +19,178 @@
     <form class="form-horizontal"  enctype="multipart/form-data" name="formulario">
         <fieldset>
             <div class="col-md-12">
-                <div align="center" style="border:4px solid mediumpurple; padding: 15px" id="mensajePrincipal" >
+                <div align="center"  id="menuPrincipal" >
+                    <strong> Ayuda? </strong>
+                </div>
+
+                <dl>
+                    <dt> a) Diseño de Sigepradest </dt>
+                    <ul> La Nagevacion en Sigepradest se compone de cinco grupos de elementos en la pantalla:
+                        <li value="1" ><a href="#alternar1" id="nav1"> Panel de Navegacion</a></li>
+                        <li> <a href="#alternar2" id="nav2" > Barra de titulo y botones de accion</a></li>
+                        <li> <a href="#alternar3" id="nav3"> Botones de navegacion</a></li>
+                        <li> <a href="#alternar4" id="nav4"> Barra de busqueda y registros en las tablas</a></li>
+                        <li> <a href="#alternar5" id="nav5"> Area de trabajo</a></li>
+                    </ul>
+
+                    <dt><br> b) Actividad: </dt>
+                    <ul>
+                        <li> <a href="#alternar-respuesta-ej1" id="nav11">Agregar tutores </a></li>
+                        <li> <a href="#alternar-respuesta-ej2" id="nav12">Editar tutores </a></li>
+                        <li> <a href="#alternar-respuesta-ej3" id="nav13">Cambiar tutores </a></li>
+                        <li> <a href="#alternar-respuesta-ej4" id="nav14">Eliminar tutores </a></li>
+                        <li> <a href="#alternar-respuesta-ej5" id="nav15">Aprobar o Denegar solicitudes de entrevistas</a></li>
+                        <li> <a href="#alternar-respuesta-ej6" id="nav16">Cambiar mi contraseña </a></li>
+                    </ul>
+                </dl> <br><br><br><br><br>
+            </div>
+
+
+
+
+
+
+
+            <div>
+
+                <div class="col-md-12">
+                    <div align="center" style="border:4px solid mediumpurple; padding: 15px" id="panelDiseño" >
+                        <strong> Elementos graficos de pantalla de Sigepradest </strong>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="control-group">
+                        <div class='section' id='apartado-menu1'>
+
+
+                            <p><strong>Panel de navegacion </strong><br>(<a href="#imagen1" id="alternar1"> descripcion </a>)
+                            <div id="mostrar1" style="display:none">
+                                <ul > Comprime el contenido de las acciones para ayudarle a navegar más rápido y permitir acceder a las acciones operacionales segun sea su tipo de usuario.
+                                    Haga clic en la ficha de una página para ver su contenido (Panel de la izquierda)</ul>
+                                <div align="center"><img id= "imagen1" src="/public/assets/img/PanelNavegacion.png" class="img-responsive"></div>
+                            </div>
+
+                            <p><strong>Barra de titulo y botones de accion </strong><br>(<a href="#imagen2" id="alternar2"> descripcion </a>)
+                            <div id="mostrar2" style="display:none">
+                                <li value="1">login : permite acceder al sistema e iniciar sesion, se debe de introducir las credenciales correctas username y paswoord</li>
+                                <li>logout: termina la sesion actual</li>
+                                <li>Ayuda: segun el tipo de usuario permite lanzar un material de informacion de ayuda al usuario</li>
+                                <li>Cambiar passwoord: Permite realizar cambio respecto a la paswoord del usuario actual logueado</li>
+                                <div align="center"><img  id= "imagen2" src="/public/assets/img/barraTituloAcciones.png" class="img-responsive"></div>
+                            </div>
+
+                            <p><strong>Barra de navegacion </strong><br>(<a href="#imagen3" id="alternar3"> descripcion </a>)
+                            <div id="mostrar3" style="display:none">
+                                <ul >Cambia segun la actividad que se esta realizando actualmente por el usuario.
+                                    Caracteristicas:
+                                    <li> Cuando un usuario inicia sesion esta en: inicio </li>
+                                    <li> Si realiza una accion del Panel de nagevacion o una operacion: se agrega una ruta </li>
+                                    <li> La navegacion es inversa , puede retroceder dando clic en una ruta anterior.</li>
+                                </ul>
+                                <div align="center"><img id= "imagen3" src="/public/assets/img/barraNavegacion.png" class="img-responsive"></div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="control-group">
+                        <div class='section' id='apartado-menu2'>
+
+
+                            <p><strong>barra de busqueda y registros en las tablas </strong><br>(<a href="#imagen4" id="alternar4"> descripcion </a>)
+                            <div id="mostrar4" style="display:none">
+
+                                <ul>Elementos comunes de una tabla:
+                                    <li>Agregar Nuevo: llama un formulario, en el se debe de llenar los datos respetivos y cumplir las condiciones si existiesen.</li>
+                                    <li>Buscar: permite realizar una busqueda en los registros actuales, realiza un filtro y los muestra en la tabla actual</li>
+                                    <li>Mostrar # de registro: permite mostrar 10, 25 , 50  o 100 registro en una tabla , si exceden a estos se agrega  otra tabla esto es una pagina y sirve para lograr ver los registros faltantes.</li>
+                                    <li>Avanzar y Retroceder Pagina: opciones que permite mostrar en una tabla los registros , y estan a disposicion los botones de numerales, anterior y siguiente para visaulizarlos</li>
+                                    <div align="center"><img src="/public/assets/img/elementosTablas.png" class="img-responsive"></div>
+                                </ul>
+                                <ul><br>   Seccion de botones de accion:
+                                    <li>Editar: se localiza y se selecciona un registro que desea editar del sistema.</li>
+                                    <li>Eliminar: se localiza y se selecciona un registro que desea eliminar del sistema.</li>
+                                    <li>Cambiar Contraseña: se localiza y se selecciona un registro que desea cambiar del sistema</li>
+                                    <div align="center"><img src="/public/assets/img/botonesAccion.png" class="img-responsive"></div>
+                                </ul>
+
+                                <ul><br>
+                                    Botones de confirmacion:
+                                    <li>Guardar: segun sea la operacion a realizar, crea un registro y lo almacena en el sistema</li>
+                                    <li>Actualizar: se localiza y se selecciona un registro que desea editar , guarda los cambios realizados en el sistema.</li>
+                                    <div align="center"><img id= "imagen4" src="/public/assets/img/guardarActualizar.png" class="img-responsive"></div>
+                                </ul>
+                            </div>
+
+
+
+                            <p><strong>Area de trabajo </strong><br>(<a href="#imagen5" id="alternar5"> descripcion </a>)
+                            <div id="mostrar5" style="display:none">
+                                <ul>En este espacio, es donde muestra las operaciones segun sea la accion hecha en panel de navegacion.</ul>
+                                <div align="center"><img id= "imagen5" src="/public/assets/img/navegacionTrabajoDirector.png" class="img-responsive"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="col-md-12">
+                <div align="center" style="border:4px solid mediumpurple; padding: 15px" id="panelNavegacion" >
                     <strong>¿Necesitas ayuda acerca de ?</strong>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="control-group">
-                    <div class='section' id='apartado-menu1'>
+                    <div class='section' id='apartado-menu3'>
+
 
                         <p><strong>Pregunta 1 :
                                 <br>¿Como agregar un nuevo docente, tutor o asistente ?
-                                <br>¿Como agregar una persona a la lista de docentes , tutores, asistentes, etc. que imparten los cursos de Postgrados?
+                                <br>¿Como agregar una persona a la lista de docentes , tutores, asistentes, etc. que imparten cursos?
                                 <br>¿Estos usuarios son los ingresados al sistema  pero que datos se solicita?
-                            </strong><br>(<a href="#" id="alternar-respuesta-ej1">ver respuesta</a>)
+                            </strong><br>(<a href="#final1" id="alternar-respuesta-ej1">ver respuesta</a>)
                         <div id="respuesta-ej1" style="display:none">
                             <dl>
                                 <ol>
-                                    <dt>Desde el Panel del Director se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel Director / clic en el boton:   Usuarios Tutores </li>
+                                    <dt>Desde el Panel de navegacion del Director se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel navegacion / clic en el boton:   Usuarios Tutores </li>
                                     <li> En la ventana: Usuarios / clic en el boton:   +Agregar Nuevo Usuario</li>
                                     <li> En la ventana: Nuevo Usuario, se debe colocar:</li>
-                                    <ul> a) Los datos Complementarios solicitados son:
-                                        <ol>
-                                            <li type="circle" >Nombre, Apellido, Correo, DUI, Especilidad y Turno que imparte, Telefono</li>
-                                            <li type="circle" >El acceso que se concede es de tipo academico, correspondientemente, estos permisos son establecidos al crear y asignarle un cursos</li>
+                                    <ul> Los datos Complementarios solicitados son:
+                                        <ol>Nombre, Apellido, Correo, DUI, Usuario, Password,Especilidad y Turno que imparte, Telefono
+                                            <li type="circle" >El nombre de usuario y su passwod, se debe de dar a la persona para tener acceso al sistema</li>
+                                            <li type="circle" >El acceso que se concede es de tipo tutor - academico - estos permisos son establecidos al crear y asignarle un cursos por la secretaria</li>
                                         </ol>
                                     </ul>
-
-                                    <ul> b) Siempre en datos complementarios se debe de asignar un nombre de Usuario y paswoord para que el tenga acceso al sistema</ul>
-                                    <li> Al finalizar dar clic en el boton: Guardar Usuario</li>
+                                    <li id="final1"> Al finalizar dar clic en el boton: Guardar Usuario</li>
                                 </ol>
                             </dl>
                         </div>
 
                         <p><strong>Pregunta 2 :
                                 <br> ¿Quiero cambiar un dato de un usuario en especifico?
-                                <br> ¿Como se hace para editar un usuario ?
-                                <br> No se puede editar el paswoord y nombre de usuario, se debe de solicitar al administrador que lo realice
-                            </strong><br>(<a href="#" id="alternar-respuesta-ej2">ver respuesta</a>)
+                                <br> ¿Como se hace para editar un tutor ?
+                                <br> Nota: No se puede editar el nombre de usuario o el password de un tutor, se debe de solicitar al administrador del sistema que lo realice
+                            </strong><br>(<a href="#final2" id="alternar-respuesta-ej2">ver respuesta</a>)
                         <div id="respuesta-ej2" style="display:none">
                             <dl>
                                 <ol>
-                                    <dt>Desde el Panel del Director se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel Director / clic en el boton:   Usuarios Tutores</li>
+                                    <dt>Desde el Panel de navegacion del Director se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel navegacion / clic en el boton:   Usuarios Tutores</li>
                                     <li> En la ventana: Usuarios
                                         <ol> Si en la tabla existe muchos usuarios:
                                             <ol>
@@ -88,7 +216,7 @@
                                         </ol>
                                     </ul>
 
-                                    <li> Al finalizar dar clic en el boton: Actualizar Usuario, para realizar los cambios</li>
+                                    <li id="final2"> Al finalizar dar clic en el boton: Actualizar Usuario, para realizar los cambios</li>
                                 </ol>
                             </dl>
                         </div>
@@ -101,42 +229,42 @@
 
             <div class="col-md-6">
                 <div class="control-group">
-                    <div class='section' id='apartado-menu2'>
+                    <div class='section' id='apartado-menu4'>
 
                         <p><strong>Pregunta 3 :
-                                <br> ¿Quiero cambiar el passwoord de un usuario en especifico?
-                            </strong><br>(<a href="#" id="alternar-respuesta-ej3">ver respuesta</a>)
+                                <br> ¿Quiero cambiar el password o nombre de un usuario tutor en especifico?
+                            </strong><br>(<a href="#final3" id="alternar-respuesta-ej3">ver respuesta</a>)
                         <div id="respuesta-ej3" style="display:none">
                             <dl>
-                                <li> Esta peticion no es posible, ya que los unicos que tiene acceso es el mismo usuario y el administrador del sistema para realizarlo</li>
+                                <li id="final3"> Esta peticion no es posible, ya que los unicos que tiene acceso es el mismo usuario y el administrador del sistema para realizarlo</li>
                             </dl>
                         </div>
 
                         <p><strong>Pregunta 4 :
                                 <br> ¿Como puedo cambiar mi passwoord ?
-                            </strong><br>(<a href="#" id="alternar-respuesta-ej4">ver respuesta</a>)
+                            </strong><br>(<a href="#final4" id="alternar-respuesta-ej4">ver respuesta</a>)
                         <div id="respuesta-ej4" style="display:none">
                             <dl>
                                 <ol>
-                                    <dt>Desde el Panel del Director se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel Director / clic en el boton:   Cambiar Contraseña</li>
+                                    <dt>Desde el Panel de navegacion del Director se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel de navegacion / clic en el boton:   Cambiar Contraseña</li>
                                     <li> En la ventana: Cambiar Contraseña, se debe de hacer:
                                         <ul type="circle" > Introducir el nuevo password en <br>los cuadros de Password y confirmar Password</ul>
                                     </li>
-                                    <li> Al finalizar dar clic en el boton: Guardar Cambio, para realizar los cambios</li>
+                                    <li id="final4"> Al finalizar dar clic en el boton: Guardar Cambio, para realizar los cambios</li>
 
                                 </ol>
                             </dl>
                         </div>
 
                         <p><strong>Pregunta 5 :
-                                <br> ¿Quiero eliminar un usuario en especifico que esta en la lista ?
-                            </strong><br>(<a href="#" id="alternar-respuesta-ej5">ver respuesta</a>)
+                                <br> ¿Quiero eliminar un usuario tutor en especifico que esta en la lista ?
+                            </strong><br>(<a href="#final5" id="alternar-respuesta-ej5">ver respuesta</a>)
                         <div id="respuesta-ej5" style="display:none">
                             <dl>
                                 <ol>
-                                    <dt>Desde el Panel del Director se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel Director / clic en el boton:   Usuarios Tutores</li>
+                                    <dt>Desde el Panel de navegacion del Director se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel navegacion / clic en el boton:   Usuarios Tutores</li>
                                     <li> En la ventana: Usuarios
                                         <ol> Si en la tabla existe muchos usuarios:
                                             <ol>
@@ -154,7 +282,7 @@
                                             <br> localizado en el cuadro de acciones a la posicion derecha final del registro.
                                         </ol>
                                     </li>
-                                    <li> Aqui a seleccion debe escoger
+                                    <li id="final5"> Aqui a seleccion debe escoger
                                         <br> Aceptar o Enter para eliminar / Cancelar o Esc para suspender la eliminacion
                                     </li>
                                 </ol>
@@ -165,6 +293,7 @@
                     </div>
                 </div>
             </div>
+
         </fieldset>
     </form>
 
@@ -173,26 +302,110 @@
 {% block javascripts %}
     <script>
         $(document).ready(function(){
+            $('#nav1').on('click',function(){
+                cerrarTodo();
+                $('#mostrar1').toggle('slow');
+            });
+
+            $('#nav2').on('click',function(){
+                cerrarTodo();
+                $('#mostrar2').toggle('slow');
+            });
+
+            $('#nav3').on('click',function(){
+                cerrarTodo();
+                $('#mostrar3').toggle('slow');
+            });
+
+            $('#nav4').on('click',function(){
+                cerrarTodo();
+                $('#mostrar4').toggle('slow');
+            });
+
+            $('#nav5').on('click',function(){
+                cerrarTodo();
+                $('#mostrar5').toggle('slow');
+            });
+
+            $('#alternar1').on('click',function(){
+                $('#mostrar1').toggle('slow');
+            });
+
+            $('#alternar2').on('click',function(){
+                $('#mostrar2').toggle('slow');
+            });
+
+            $('#alternar3').on('click',function(){
+                $('#mostrar3').toggle('slow');
+            });
+
+            $('#alternar4').on('click',function(){
+                $('#mostrar4').toggle('slow');
+            });
+
+            $('#alternar5').on('click',function(){
+                $('#mostrar5').toggle('slow');
+            });
+
+            $('#nav11').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej1').toggle('slow');
+            });
+
+            $('#nav12').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej2').toggle('slow');
+            });
+
+            $('#nav13').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej3').toggle('slow');
+            });
+
+            $('#nav14').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej4').toggle('slow');
+            });
+
+            $('#nav15').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej5').toggle('slow');
+            });
+
             $('#alternar-respuesta-ej1').on('click',function(){
-                $('#respuesta-ej1').toggle('800');
+                $('#respuesta-ej1').toggle('slow');
             });
 
             $('#alternar-respuesta-ej2').on('click',function(){
-                $('#respuesta-ej2').toggle('900');
+                $('#respuesta-ej2').toggle('slow');
             });
 
             $('#alternar-respuesta-ej3').on('click',function(){
-                $('#respuesta-ej3').toggle('700');
+                $('#respuesta-ej3').toggle('slow');
             });
 
             $('#alternar-respuesta-ej4').on('click',function(){
-                $('#respuesta-ej4').toggle('700');
+                $('#respuesta-ej4').toggle('slow');
             });
 
             $('#alternar-respuesta-ej5').on('click',function(){
-                $('#respuesta-ej5').toggle('700');
+                $('#respuesta-ej5').toggle('slow');
             });
         });
+
+        function cerrarTodo(){
+            $('#mostrar1').toggle(false);
+            $('#mostrar2').toggle(false);
+            $('#mostrar3').toggle(false);
+            $('#mostrar4').toggle(false);
+            $('#mostrar5').toggle(false);
+
+            $('#respuesta-ej1').toggle(false);
+            $('#respuesta-ej2').toggle(false);
+            $('#respuesta-ej3').toggle(false);
+            $('#respuesta-ej4').toggle(false);
+            $('#respuesta-ej5').toggle(false);
+        }
     </script>
 
 
