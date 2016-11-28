@@ -171,7 +171,7 @@ class CursoController extends DSIController
     public function editCursoAction($id, Request $request)
     {
         $em=$this->getDoctrine()->getManager();
-        $doc = $em->getRepository("AppBundle:Doctores")->findBy(array(),array('nombreDoc'=>'ASC'));
+        //$doc = $em->getRepository("AppBundle:Doctores")->findBy(array(),array('nombreDoc'=>'ASC'));
 
         $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
         $datos=$em->getRepository('AppBundle:Curso')->find($id);
@@ -179,6 +179,12 @@ class CursoController extends DSIController
         $id_hc=$hc->getIdHc();
         $hc=$em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
         $d1=$this->mostrarD1s($id);
+
+        $db = $em->getConnection();
+        $sql = "SELECT r.*,d.nombre_doc,d.apellido_doc FROM doctores d LEFT JOIN d1 r ON d.id_doctores = r.id_doctores AND r.id_curso = $id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $doc = $stmt->fetchAll();
 
         //Verificando que hay una peticion POST
         if($request->isMethod("POST")) {

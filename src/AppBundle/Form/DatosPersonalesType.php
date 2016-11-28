@@ -21,22 +21,33 @@ class DatosPersonalesType extends AbstractType
                 'widget' => 'single_text',
                 // do not render as type="date", to avoid HTML5 date pickers
                 'html5' => false,
-                'format' => 'dd-MM-yyyy'))
+                'format' => 'dd-MM-yyyy',
+                'required' => true))
             ->add('estadoCivil', 'choice', array('choices' => array(
                 'Acompañado(a)' => 'Acompañado(a)',
                 'Casado(a)' => 'Casado(a)',
                 'Divorciado(a)' => 'Divorciado(a)',
                 'Separado(a)' => 'Separado(a)',
                 'Soltero(a)' => 'Soltero(a)',
-                'Viudo(a)' => 'Viudo(a)'
-                ),
-                'placeholder' => 'Seleccione una opción...'))
+                'Viudo(a)' => 'Viudo(a)' ),
+                'placeholder' => 'Seleccione una opción...',
+                'required' => true))
             ->add('direccionParticular', 'textarea')
-            ->add('lugarTrabajo', 'textarea')
-            ->add('direccionTrabajo', 'textarea')
-            ->add('telefonoMovil')
-            ->add('telefonoParticular')
-            ->add('telefonoTrabajo')
+            ->add('lugarTrabajo', 'textarea',array(
+                'required' => false, 'empty_data' => null
+            ))
+            ->add('direccionTrabajo', 'textarea', array(
+                'required' => false, 'empty_data' => null
+            ))
+            ->add('telefonoMovil','text', array(
+                'required' => false, 'empty_data' => null
+            ))
+            ->add('telefonoParticular','text', array(
+                'required' => false, 'empty_data' => null
+            ))
+            ->add('telefonoTrabajo','text', array(
+                'required' => false, 'empty_data' => null
+            ))
             ->add('correo', 'email')
             ->add('guardar', 'submit', array('label' => 'Guardar'));
     }

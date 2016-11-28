@@ -214,7 +214,7 @@ class InteresadoController extends SecurityController
 
         } else {
             //Crear nuevo perfil
-            $this->MensajeFlash('exito', 'Primero debe llenar su perfil');
+            $this->MensajeFlash('error', 'Primero debe llenar su perfil');
             return $this->redirectToRoute('index_interesado');
         }
     }
@@ -248,7 +248,6 @@ class InteresadoController extends SecurityController
     public function createInfoAcademicaAction($idc, $ids, Request $request)
     {
         $info = new InformacionAcademica();
-        //$idc = $request->get('idc');
         $form = $this->createInfoAcademicaForm($info, $idc, $ids);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -275,8 +274,6 @@ class InteresadoController extends SecurityController
     public function editInfoAcademicaAction($idc, $idia, Request $request)
     {
         //Editar info academica
-        //$idc = $request->get('idc');
-        //$idia = $request->get('idia');
         $repoinfo = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica');
         $info = $repoinfo->findOneBy(
             array('idIfacad' => $idia)
@@ -325,12 +322,14 @@ class InteresadoController extends SecurityController
         $em = $this->getDoctrine()->getManager();
         $info = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica')->find($idia);
         if (!$info) {
-            throw $this->createNotFoundException('No existe registro con el ID ' . $idia);
+            $this->MensajeFlash('error', 'Error al tratar de eliminar el registro');
+            return $this->redirectToRoute('interesado_solicitud', array('idc' => $idc));
+        }else {
+            $em->remove($info);
+            $em->flush();
+            $this->MensajeFlash('exito', 'Registro eliminado correctamente!');
+            return $this->redirectToRoute('interesado_solicitud', array('idc' => $idc));
         }
-        $em->remove($info);
-        $em->flush();
-        $this->MensajeFlash('exito', 'Registro eliminado correctamente!');
-        return $this->redirectToRoute('interesado_solicitud', array('idc' => $idc));
     }
 
     /**

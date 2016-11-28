@@ -107,14 +107,10 @@
                                     <div class="input-prepend">
                                         <select class="js-example-basic-multiple" class="form-control" style="width: 100%"  multiple="multiple"  name="doc[]">
                                             {% for doc in doc %}
-                                                {% if d1 == NULL %}
-                                                    <option value="{{ doc.id_doctores }}">{{ doc.nombre_doc }}</option>
+                                                {% if doc.id_curso %}
+                                                    <option selected value="{{ doc.id_doctores}}">{{ doc.nombre_doc }} {{ doc.apellido_doc }}</option>
                                                 {% else %}
-                                                    {% for d1 in d1 %}
-                                                        {% if doc.idDoctores == d1.id_doctores %}
-                                                            <option selected value="{{ doc.idDoctores }}">{{ doc.nombreDoc }} {{ doc.apellidoDoc }}</option>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                    <option value="{{ doc.id_doctores}}">{{ doc.nombre_doc }} {{ doc.apellido_doc }}</option>
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
