@@ -9,7 +9,7 @@
         <li><a href="{{ path('secretaria') }}">Inicio</a></li>
         <li class="active">Cuotas</li>
     </ol>
-    <h2>Cuotas de </h2><a href="#" style="float: right; margin-top: -35px;" title="Agregar" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuota</a>
+    <h2>Cuotas de </h2><a href="{{ path('cuotas_create', {'id': idcurso}) }}" style="float: right; margin-top: -35px;" title="Agregar" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuota</a>
 </div>
 {% endblock %}
 {% block body %}

@@ -30,6 +30,13 @@ class Pago
     private $nombrePago;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="monto_pago", type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $montoPago;
+
+    /**
      * @var \Especifico
      *
      * @ORM\ManyToOne(targetEntity="Especifico")
@@ -72,6 +79,22 @@ class Pago
     public function getNombrePago()
     {
         return $this->nombrePago;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMontoPago()
+    {
+        return $this->montoPago;
+    }
+
+    /**
+     * @param string $montoPago
+     */
+    public function setMontoPago($montoPago)
+    {
+        $this->montoPago = $montoPago;
     }
 
     /**

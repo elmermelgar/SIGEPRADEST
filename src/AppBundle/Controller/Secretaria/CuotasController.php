@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Secretaria;
 
+use AppBundle\Entity\Cuotas;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ class CuotasController extends SecurityController
         if($this->getUser()){
             $em2=$this->getDoctrine()->getManager("default");
             $cuotas=$em2->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id));
-            return $this->render('AppBundle:Secretaria/Cuotas:cuotas_views.html.twig', array('cuotas'=>$cuotas));
+            return $this->render('AppBundle:Secretaria/Cuotas:cuotas_views.html.twig', array('cuotas'=>$cuotas, 'idcurso'=>$id));
         }
         else{
             return $this->redirectToRoute('login');
@@ -32,6 +33,46 @@ class CuotasController extends SecurityController
             $em2=$this->getDoctrine()->getManager("default");
             $cursos=$em2->getRepository('AppBundle:Curso')->findAll();
             return $this->render('AppBundle:Secretaria/Cuotas:curso.html.twig', array('cursos'=>$cursos));
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
+    }
+
+    /**
+     * @Route("/secretaria/cuotas/create/{id}", name="cuotas_create")
+     */
+    public function cuotasCreateAction($id,Request $request){
+        if($this->getUser()){
+            $em2=$this->getDoctrine()->getManager("default");
+            $unidades=$em2->getRepository('AppBundle:UnidadPresupuesto')->findAll();
+            $linea=$em2->getRepository('AppBundle:LineaTrabajo')->findAll();
+            $especifico=$em2->getRepository('AppBundle:Especifico')->findAll();
+            $pago=$em2->getRepository('AppBundle:Pago')->findAll();
+            $cuenta=$em2->getRepository('AppBundle:CuentaBanco')->findAll();
+            if($request->isMethod("POST")) {
+                $cuota=$em2->getRepository('AppBundle:Cuotas')->findOneBy(array('cuota'=>$request->get("nombrecuota")));
+                if ($cuota) {
+                    $this->MensajeFlash('error', 'Ya existe una cuota con este nombre!');
+                    return $this->render('AppBundle:Secretaria/Cuotas:cuota_create.html.twig', array('unidad' => $unidades, 'linea' => $linea, 'especifico' => $especifico, 'pago' => $pago, 'cuenta' => $cuenta, 'idcurso' => $id));
+                } else {
+                    $c=new Cuotas();
+                    $c->setCuota($request->get("nombrecuota"));
+                    $c->setDescripCuota($request->get("des_cuota"));
+                    $c->setIdCuentaBanco($em2->getRepository('AppBundle:CuentaBanco')->find($request->get('cuenta')));
+                    $c->setIdCurso($em2->getRepository('AppBundle:Curso')->find($id));
+                    $c->setIdLineaTrabajo($em2->getRepository('AppBundle:LineaTrabajo')->findOneBy(array('idLineaTrabajo'=>$request->get('linea'))));
+                    $c->setIdPago($em2->getRepository('AppBundle:Pago')->find($request->get('pago')));
+                    $c->setMonto($request->get('monto'));
+
+                    $em2->persist($c);
+                    $em2->flush();
+                    $this->MensajeFlash('exito', 'Cuota creada correctamente!');
+                    $cuotas=$em2->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id));
+                    return $this->render('AppBundle:Secretaria/Cuotas:cuotas_views.html.twig', array('cuotas'=>$cuotas, 'idcurso'=>$id));
+                }
+            }
+            return $this->render('AppBundle:Secretaria/Cuotas:cuota_create.html.twig', array('unidad'=>$unidades, 'linea'=>$linea, 'especifico'=>$especifico, 'pago'=>$pago, 'cuenta'=>$cuenta, 'idcurso'=>$id));
         }
         else{
             return $this->redirectToRoute('login');
