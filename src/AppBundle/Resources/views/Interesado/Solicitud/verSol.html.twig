@@ -7,6 +7,7 @@
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="{{ path('index_interesado') }}">Inicio</a></li>
+            <li><a href="{{ path('interesado_sol_vertodas') }}">Solicitudes</a></li>
             <li class="active">Solicitud</li>
         </ol>
     </div>
@@ -14,7 +15,8 @@
 {% block body %}
     <div class="col-md-12">
 
-        <h3>NUEVA SOLICITUD DE INGRESO</h3>
+        <h3>SOLICITUD DE INGRESO</h3>
+        <h3 class="form-control">ESTADO DE LA SOLICITUD: {{ solicitud.estado }}</h3>
         <h2>I. DATOS PERSONALES</h2>
         <div class="col-md-6">
             <div class="form-group">
@@ -105,13 +107,10 @@
         </div>
 
         <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span style="font-size: 14px; font-weight: bold;">Estudios realizados</span>
-                    <a href="{{ path('interesado_infoacademica',{'idc' : curso.idCurso, 'ids' : solicitud.idSolicitud}) }}"
-                       style="float: right; margin-top: -8px;"
-                       title="Agregar"
-                       class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background-color: #8C64a3">
+                    <span style="font-size: 14px; font-weight: bold; color: white">Estudios realizados</span>
+
                 </div>
 
                 <div class="panel-body">
@@ -122,7 +121,6 @@
                                 <th style="text-align: center">Universidad de procedencia</th>
                                 <th style="text-align: center">T&iacutetulo Obtenido</th>
                                 <th style="text-align: center">A&ntildeo</th>
-                                <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -131,17 +129,6 @@
                                     <td>{{ e.institucion }}</td>
                                     <td>{{ e.titulo }}</td>
                                     <td>{{ e.anio }}</td>
-                                    <td>
-                                        <a href="{{ path('interesado_infoacademica_edit', {'idia': e.idIfacad, 'idc' : curso.idCurso}) }}"
-                                           title="Editar"
-                                           class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span
-                                                    class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                                        -
-                                        <button onClick="confirmar({{ e.idIfacad }},{{ curso.idCurso }})"
-                                                title="Eliminar" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"/>
-                                        </button>
-                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -151,37 +138,21 @@
             </div>
         </div>
         <div class="col-md-8">
-            <form role="form" action="{{ path('interesado_solicitud_enviar', {'ids': solicitud.idSolicitud}) }}"
-                  method="post">
-                <div class="form-group">
-                    <label>Disponibilidad: (Su tiempo disponible para asistir a entrevista)</label>
-                    <textarea name="dispo" rows="2" maxlength="100" class="form-control"
-                              required>{{ solicitud.rangoDisponibilidad }}</textarea>
-                </div>
-                <div style="margin: 30px 30px;">
-                    <button type="submit" class="btn btn-success">Enviar Solicitud</button>
-                </div>
-            </form>
+            <div class="form-group">
+                <label>Disponibilidad: (Su tiempo disponible para asistir a entrevista)</label>
+                <textarea name="dispo" rows="2" maxlength="100" class="form-control"
+                          readonly>{{ solicitud.rangoDisponibilidad }}</textarea>
+            </div>
         </div>
-
+        <div class="col-md-12" style="margin: 20px">
+            <a class="btn btn-default" href="{{ path('interesado_sol_vertodas') }}"><span
+                        class="glyphicon glyphicon-arrow-left" aria-hidden="true"/> Regresar</a>
+        </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script>
 
-        function confirmar(idia, idc) {
-            //un confirm
-            alertify.confirm("<p>¿Está seguro que desea eliminar el este registro?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
-                if (e) {
-                    location.href = "{{ asset('/interesado/infoacademica/delete') }}/" + idia + "/" + idc;
-                } else {
-                    alertify.error("Has cancelado la operacion");
-                }
-            });
-            return false
-        }
-    </script>
     <!--<script src="{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>-->
     <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
     <script>

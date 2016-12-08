@@ -25,14 +25,23 @@ class InteresadoController extends SecurityController
      */
     public function indexAction(Request $request)
     {
-        $cursos = null;
+        //$cursos = null;
         //Recuperando los cursos disponibles
+        /*
         $repository = $this->getDoctrine()->getRepository('AppBundle:Curso');
         $cursos = $repository->findBy(
             array('estadoCurso' => 'disponible')
         );
+        */
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            "SELECT hc FROM AppBundle:HorarioCurso hc, AppBundle:Curso cu  
+            WHERE hc.idCurso = cu.idCurso AND cu.estadoCurso = 'disponible' 
+            ORDER BY hc.fechaInicio ASC"
+        );
+        $hc = $query->getResult();
 
-        return $this->render('AppBundle:Interesado:index.html.twig', array('cursos' => $cursos));
+        return $this->render('AppBundle:Interesado:index.html.twig', array('cursos' => $hc));
     }
 
 
@@ -144,7 +153,7 @@ class InteresadoController extends SecurityController
     }
 
     /**
-     * @Route("/solicitud/{idc}", name="interesado_solicitud")
+     * @Route("/solicitud/nueva/{idc}", name="interesado_solicitud")
      */
     public function solicitudAction($idc, Request $request)
     {
@@ -217,6 +226,28 @@ class InteresadoController extends SecurityController
             $this->MensajeFlash('error', 'Primero debe llenar su perfil');
             return $this->redirectToRoute('index_interesado');
         }
+    }
+
+    /**
+     * @Route("/solicitud/ver/{ids}", name="interesado_solicitud_ver")
+     */
+    public function verSolicitudAction($ids, Request $request)
+    {
+        $reposol = $this->getDoctrine()->getRepository('AppBundle:Solicitud');
+        $solicitud = $reposol->findOneBy(array(
+            'idSolicitud' => $ids
+        ));
+        //Informacion academica
+        $repoia = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica');
+        $infoacademica = $repoia->findBy(
+            array('idSolicitud' => $ids)
+        );
+        return $this->render('AppBundle:Interesado/Solicitud:verSol.html.twig', array(
+            'perfil' => $solicitud->getIdDp(),
+            'solicitud' => $solicitud,
+            'estudios' => $infoacademica,
+            'curso' => $solicitud->getIdCurso()
+        ));
     }
 
 

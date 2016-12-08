@@ -9,43 +9,37 @@
     </div>
 {% endblock %}
 {% block body %}
-    <div class="col-md-12">
-
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2>SOLICITUDES DE INGRESO REALIZADAS</h2>
-                </div>
-
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table id="datatable-sols" class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th style="text-align: center">Fecha</th>
-                                <th style="text-align: center">Aplicando a</th>
-                                <th style="text-align: center">Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for s in solicitudes %}
-                                <tr {% if s.estado=='aprobada' %} class="success" {% elseif s.estado=='denegada'%} class="alert-danger" {%  endif %}>
-                                    <td>{{ s.fechaRegistro|date('d-m-Y') }}</td>
-                                    <td>{{ s.idCurso.nombreCurso }}</td>
-                                    <td>{{ s.estado }}</td>
-                                    <td>
-                                        <a class="btn btn-default" style="background: #0AA5E2;color: #ffffff;">Ver</a>
-
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background-color: #8C64a3">
+            <h3>SOLICITUDES DE INGRESO REALIZADAS</h3>
         </div>
 
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table id="datatable-sols" class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center">Fecha</th>
+                        <th style="text-align: center">Aplicando a</th>
+                        <th style="text-align: center">Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for s in solicitudes %}
+                        <tr {% if s.estado=='aprobada' %} class="success" {% elseif s.estado=='denegada' %} class="alert-danger" {% endif %}>
+                            <td>{{ s.fechaRegistro|date('d-m-Y') }}</td>
+                            <td>{{ s.idCurso.nombreCurso }}</td>
+                            <td>{{ s.estado }}</td>
+                            <td>
+                                <a class="btn btn-default" href="{{ path('interesado_solicitud_ver', {'ids' : s.idSolicitud}) }}" style="background: #0AA5E2;color: #ffffff;">Ver</a>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}

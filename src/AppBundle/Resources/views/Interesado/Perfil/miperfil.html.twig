@@ -1,20 +1,22 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block Header %}
-    <span style="color:royalblue;margin-left: 20px;font-size: 14px;">Mi perfil</span>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="active"><a href="{{ path('index_interesado') }}">Inicio</a></li>
+            <li class="active">Perfil</li>
+        </ol>
+    </div>
 {% endblock %}
 {% block styles %}
     <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block body %}
-    <div class="col-md-12">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('index_interesado') }}">Inicio</a></li>
-            <li class="active">Perfil</li>
-        </ol>
-
-        <div class="panel panel-default">
-
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background-color: #8C64a3">
+            Perfil Personal
+        </div>
+        <div class="panel-body">
             <div class="col-md-12">
                 <div class="form-group">
                     <label>Nombre:</label><br>
@@ -25,12 +27,12 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>DUI</label>
-                    {{ form_widget(form.duiAlumno, {'attr' : {'class' : 'form-control', 'placeholder' : 'DUI', 'pattern' : '[0-9]{8}-[0-9]{1}', 'required' : true}}) }}
+                    {{ form_widget(form.duiAlumno, {'attr' : {'class' : 'form-control', 'placeholder' : '########-#', 'pattern' : '[0-9]{8}-[0-9]{1}', 'required' : true}}) }}
                     <span class="text-danger">{{ form_errors(form.duiAlumno) }}</span>
                 </div>
                 <div class="form-group">
                     <label>NIT</label>
-                    {{ form_widget(form.nitAlumno, {'attr' : {'class' : 'form-control', 'placeholder' : 'NIT', 'pattern' : '[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}', 'required' : true}}) }}
+                    {{ form_widget(form.nitAlumno, {'attr' : {'class' : 'form-control', 'placeholder' : '####-######-###-#', 'pattern' : '[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}', 'required' : true}}) }}
                     <span class="text-danger">{{ form_errors(form.nitAlumno) }}</span>
                 </div>
                 <div class="form-group">
