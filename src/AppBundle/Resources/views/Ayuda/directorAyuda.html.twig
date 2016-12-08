@@ -2,6 +2,7 @@
 {% block active %}active-menu{% endblock %}
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('public/assets/css/fancyzoom.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 
@@ -68,7 +69,7 @@
                             <div id="mostrar1" style="display:none">
                                 <ul > Comprime el contenido de las acciones para ayudarle a navegar más rápido y permitir acceder a las acciones operacionales segun sea su tipo de usuario.
                                     Haga clic en la ficha de una página para ver su contenido (Panel de la izquierda)</ul>
-                                <div align="center"><img id= "imagen1" src="{{ asset('public/assets/img/ayuda/panelNavegacionDirector.png') }}" class="img-responsive"></div>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/panelNavegacionDirector.png') }}" class="fancy"><img id= "imagen1" src="{{ asset('public/assets/img/ayuda/panelNavegacionDirector.png') }}" class="img-responsive"></a></div>
                             </div>
 
                             <p><strong>Barra de titulo y botones de accion </strong><br>(<a href="#imagen2" id="alternar2"> descripcion </a>)
@@ -77,7 +78,7 @@
                                 <li>logout: termina la sesion actual</li>
                                 <li>Ayuda: segun el tipo de usuario permite lanzar un material de informacion de ayuda al usuario</li>
                                 <li>Cambiar passwoord: Permite realizar cambio respecto a la paswoord del usuario actual logueado</li>
-                                <div align="center"><img  id= "imagen2" src="{{ asset('public/assets/img/ayuda/barraTituloAcciones.png') }}" class="img-responsive"></div>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/barraTituloAcciones.png') }}" class="fancy"><img id= "imagen2" src="{{ asset('public/assets/img/ayuda/barraTituloAcciones.png') }}" class="img-responsive"></a></div>
                             </div>
 
                             <p><strong>Barra de navegacion </strong><br>(<a href="#imagen3" id="alternar3"> descripcion </a>)
@@ -88,7 +89,7 @@
                                     <li> Si realiza una accion del Panel de nagevacion o una operacion: se agrega una ruta </li>
                                     <li> La navegacion es inversa , puede retroceder dando clic en una ruta anterior.</li>
                                 </ul>
-                                <div align="center"><img id= "imagen3" src="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="img-responsive"></div>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="fancy"><img id= "imagen3" src="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="img-responsive"></a></div>
                             </div>
 
 
@@ -110,20 +111,20 @@
                                     <li>Buscar: permite realizar una busqueda en los registros actuales, realiza un filtro y los muestra en la tabla actual</li>
                                     <li>Mostrar # de registro: permite mostrar 10, 25 , 50  o 100 registro en una tabla , si exceden a estos se agrega  otra tabla esto es una pagina y sirve para lograr ver los registros faltantes.</li>
                                     <li>Avanzar y Retroceder Pagina: opciones que permite mostrar en una tabla los registros , y estan a disposicion los botones de numerales, anterior y siguiente para visaulizarlos</li>
-                                    <div align="center"><img src="{{ asset('public/assets/img/ayuda/elementosTablas.png') }}" class="img-responsive"></div>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/elementosTablas.png') }}" class="fancy"><img src="{{ asset('public/assets/img/ayuda/elementosTablas.png') }}" class="img-responsive"></a></div>
                                 </ul>
                                 <ul><br>   Seccion de botones de accion:
                                     <li>Editar: se localiza y se selecciona un registro que desea editar del sistema.</li>
                                     <li>Eliminar: se localiza y se selecciona un registro que desea eliminar del sistema.</li>
                                     <li>Cambiar Contraseña: se localiza y se selecciona un registro que desea cambiar del sistema</li>
-                                    <div align="center"><img src="{{ asset('public/assets/img/ayuda/botonesAccion.png') }}" class="img-responsive"></div>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/botonesAccion.png') }}" class="fancy"><img src="{{ asset('public/assets/img/ayuda/botonesAccion.png') }}" class="img-responsive"></a></div>
                                 </ul>
 
                                 <ul><br>
                                     Botones de confirmacion:
                                     <li>Guardar: segun sea la operacion a realizar, crea un registro y lo almacena en el sistema</li>
                                     <li>Actualizar: se localiza y se selecciona un registro que desea editar , guarda los cambios realizados en el sistema.</li>
-                                    <div align="center"><img id= "imagen4" src="{{ asset('public/assets/img/ayuda/guardarActualizar.png') }}" class="img-responsive"></div>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/guardarActualizar.png') }}" class="fancy"><img id = "imagen4" src="{{ asset('public/assets/img/ayuda/guardarActualizar.png') }}" class="img-responsive"></a></div>
                                 </ul>
                             </div>
 
@@ -132,7 +133,7 @@
                             <p><strong>Area de trabajo </strong><br>(<a href="#imagen5" id="alternar5"> descripcion </a>)
                             <div id="mostrar5" style="display:none">
                                 <ul>En este espacio, es donde muestra las operaciones segun sea la accion hecha en panel de navegacion.</ul>
-                                <div align="center"><img id= "imagen5" src="{{ asset('public/assets/img/ayuda/navegacionTrabajoDirector.png') }}" class="img-responsive"></div>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/navegacionTrabajoDirector.png') }}" class="fancy"><img id = "imagen5" src="{{ asset('public/assets/img/ayuda/navegacionTrabajoDirector.png') }}" class="img-responsive"></a></div>
                             </div>
 
                         </div>
@@ -161,7 +162,7 @@
                         <p><strong>Pregunta 1 :
                                 <br>¿Como agregar un nuevo docente, tutor o asistente ?
                                 <br>¿Como agregar una persona a la lista de docentes , tutores, asistentes, etc. que imparten cursos?
-                                <br>¿Estos usuarios son los ingresados al sistema  pero que datos se solicita?
+                                <br>¿Estos usuarios son los ingresados al sistema,  pero que datos se solicita?
                             </strong><br>(<a href="#final1" id="alternar-respuesta-ej1">ver respuesta</a>)
                         <div id="respuesta-ej1" style="display:none">
                             <dl>
@@ -172,7 +173,7 @@
                                     <li> En la ventana: Nuevo Usuario, se debe colocar:</li>
                                     <ul> Los datos Complementarios solicitados son:
                                         <ol>Nombre, Apellido, Correo, DUI, Usuario, Password,Especilidad y Turno que imparte, Telefono
-                                            <li type="circle" >El nombre de usuario y su passwod, se debe de dar a la persona para tener acceso al sistema</li>
+                                            <li type="circle" >El nombre de usuario y su password, se debe de dar a la persona para tener acceso al sistema</li>
                                             <li type="circle" >El acceso que se concede es de tipo tutor - academico - estos permisos son establecidos al crear y asignarle un cursos por la secretaria</li>
                                         </ol>
                                     </ul>
@@ -184,7 +185,7 @@
                         <p><strong>Pregunta 2 :
                                 <br> ¿Quiero cambiar un dato de un usuario en especifico?
                                 <br> ¿Como se hace para editar un tutor ?
-                                <br> Nota: No se puede editar el nombre de usuario o el password de un tutor, se debe de solicitar al administrador del sistema que lo realice
+                                <br> Nota: No se puede editar el nombre de usuario o el password de acceso a un tutor, se debe de solicitar al administrador del sistema que lo realice el cambio de password
                             </strong><br>(<a href="#final2" id="alternar-respuesta-ej2">ver respuesta</a>)
                         <div id="respuesta-ej2" style="display:none">
                             <dl>
@@ -232,7 +233,7 @@
                     <div class='section' id='apartado-menu4'>
 
                         <p><strong>Pregunta 3 :
-                                <br> ¿Quiero cambiar el password o nombre de un usuario tutor en especifico?
+                                <br> ¿Quiero cambiar el password tutor en especifico?
                             </strong><br>(<a href="#final3" id="alternar-respuesta-ej3">ver respuesta</a>)
                         <div id="respuesta-ej3" style="display:none">
                             <dl>
@@ -251,7 +252,7 @@
                                     <li> En la ventana: Cambiar Contraseña, se debe de hacer:
                                         <ul type="circle" > Introducir el nuevo password en <br>los cuadros de Password y confirmar Password</ul>
                                     </li>
-                                    <li id="final4"> Al finalizar dar clic en el boton: Guardar Cambio, para realizar los cambios</li>
+                                    <li id="final4"> Al finalizar dar clic en el boton: Guardar Cambio, esto es para realizar los cambios</li>
 
                                 </ol>
                             </dl>
@@ -300,8 +301,12 @@
 {%endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('public/assets/js/jquery.fancyzoom.js') }}"></script>
     <script>
         $(document).ready(function(){
+
+            $("a.fancy").fancyZoom();
+
             $('#nav1').on('click',function(){
                 cerrarTodo();
                 $('#mostrar1').toggle('slow');
