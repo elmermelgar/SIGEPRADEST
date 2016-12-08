@@ -18,7 +18,9 @@ class CuotasController extends SecurityController
         if($this->getUser()){
             $em2=$this->getDoctrine()->getManager("default");
             $cuotas=$em2->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id));
-            return $this->render('AppBundle:Secretaria/Cuotas:cuotas_views.html.twig', array('cuotas'=>$cuotas, 'idcurso'=>$id));
+            $curso=$em2->getRepository('AppBundle:Curso')->find($id);
+            $contar=count($cuotas);
+            return $this->render('AppBundle:Secretaria/Cuotas:cuotas_views.html.twig', array('cuotas'=>$cuotas, 'idcurso'=>$id, 'curso'=>$curso, 'contar'=>$contar));
         }
         else{
             return $this->redirectToRoute('login');
@@ -73,6 +75,42 @@ class CuotasController extends SecurityController
                 }
             }
             return $this->render('AppBundle:Secretaria/Cuotas:cuota_create.html.twig', array('unidad'=>$unidades, 'linea'=>$linea, 'especifico'=>$especifico, 'pago'=>$pago, 'cuenta'=>$cuenta, 'idcurso'=>$id));
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
+    }
+
+    /**
+     * @Route("/secretaria/cuotas/{id}/{id2}/edit", name="cuotas_edit")
+     */
+    public function cuotasEditAction($id,$id2,Request $request){
+        if($this->getUser()){
+            $em2=$this->getDoctrine()->getManager("default");
+            $unidades=$em2->getRepository('AppBundle:UnidadPresupuesto')->findAll();
+            $linea=$em2->getRepository('AppBundle:LineaTrabajo')->findAll();
+            $especifico=$em2->getRepository('AppBundle:Especifico')->findAll();
+            $pago=$em2->getRepository('AppBundle:Pago')->findAll();
+            $cuenta=$em2->getRepository('AppBundle:CuentaBanco')->findAll();
+            $c=$em2->getRepository('AppBundle:Cuotas')->find($id);
+            if($request->isMethod("POST")) {
+
+                    $c->setCuota($request->get("nombrecuota"));
+                    $c->setDescripCuota($request->get("des_cuota"));
+                    $c->setIdCuentaBanco($em2->getRepository('AppBundle:CuentaBanco')->find($request->get('cuenta')));
+                    $c->setIdLineaTrabajo($em2->getRepository('AppBundle:LineaTrabajo')->findOneBy(array('idLineaTrabajo'=>$request->get('linea'))));
+                    $c->setIdPago($em2->getRepository('AppBundle:Pago')->find($request->get('pago')));
+                    $c->setMonto($request->get('monto'));
+                    $em2->flush();
+                    $this->MensajeFlash('exito', 'Cuota actualizada correctamente!');
+                $cuotas=$em2->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id));
+                $curso=$em2->getRepository('AppBundle:Curso')->find($id2);
+                $contar=count($cuotas);
+                return $this->redirectToRoute('cursoscuotas');
+//                return $this->render('AppBundle:Secretaria/Cuotas:cuotas_views.html.twig', array('cuotas'=>$cuotas, 'idcurso'=>$id, 'curso'=>$curso, 'contar'=>$contar));
+
+            }
+            return $this->render('AppBundle:Secretaria/Cuotas:cuota_edit.html.twig', array('unidad'=>$unidades, 'linea'=>$linea, 'especifico'=>$especifico, 'pago'=>$pago, 'cuenta'=>$cuenta, 'idcurso'=>$id2, 'cuota'=>$c));
         }
         else{
             return $this->redirectToRoute('login');
