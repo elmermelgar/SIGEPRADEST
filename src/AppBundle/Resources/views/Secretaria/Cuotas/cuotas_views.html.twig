@@ -9,7 +9,7 @@
         <li><a href="{{ path('secretaria') }}">Inicio</a></li>
         <li class="active">Cuotas</li>
     </ol>
-    <h2>Cuotas de </h2><a href="{{ path('cuotas_create', {'id': idcurso}) }}" style="float: right; margin-top: -35px;" title="Agregar" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuota</a>
+    <h2>Cuotas del "{{ curso.nombreCurso }}"</h2> {% if curso.numCuotas>contar %}<h4>Cuotas Disponibles: {{ curso.numCuotas-contar }}</h4><a href="{{ path('cuotas_create', {'id': idcurso}) }}" style="float: right; margin-top: -35px;" title="Agregar" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuota</a>{% endif %}
 </div>
 {% endblock %}
 {% block body %}
@@ -19,7 +19,7 @@
         <div class="col-md-3 col-sm-12 col-xs-12">
             <div class="panel panel-primary text-center no-boder bg-color-blue">
                 <div class="panel-footer main-temp-back">
-                    {{ cuotas.cuota }}
+                    {{ cuotas.cuota }}<a href="{{ path('cuotas_edit', {'id': cuotas.idCuota, 'id2': idcurso}) }}" title="Editar" class="btn btn-success" style="background: #8702A8; float: right;margin-top: -6px;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                 </div>
                 <div class="panel-body">
                     <i class="fa fa-money fa-2x"></i>

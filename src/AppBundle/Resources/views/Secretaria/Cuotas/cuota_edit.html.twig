@@ -1,0 +1,168 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('cursoscuotas') }}">Cursos</a></li>
+            <li class="active">Crear</li>
+        </ol>
+        <h2>Creando una nueva Cuota</h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-content">
+                <form  id="formulario" class="form-horizontal" action="{{ path('cuotas_edit', {'id': cuota.idCuota, 'id2': idcurso}) }}" method="post" enctype="multipart/form-data" name="formulario">
+                    <fieldset>
+                        <div class="col-md-6">
+
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Unidad Presupuestaria</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <select class="js-example-basic-multiple" class="form-control" style="width: 100%"   name="unidad">
+                                            {% for unidad in unidad %}
+                                                <option value="{{ unidad.idUnidadPresupuestaria }}" {% if unidad.idUnidadPresupuestaria=='03' %}selected{% endif %}>({{ unidad.idUnidadPresupuestaria }}) {{ unidad.nombreUnidadPresupuestaria }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Linea de Trabajo</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <select class="js-example-basic-multiple" class="form-control" style="width: 100%" name="linea">
+                                            {% for linea in linea %}
+                                                <option {% if cuota.idLineaTrabajo.idLineaTrabajo==linea.idLineaTrabajo %} {% endif %} value="{{ linea.idLineaTrabajo }}" {% if linea.idLineaTrabajo=='03-07     ' %}selected{% endif %}>({{ linea.codLineaTrabajo }}) {{ linea.nombreLineaTrabajo }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Nombre Cuota</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <input id="nombrecuota" value="{{ cuota.cuota }}" class="form-control" name="nombrecuota" size="16" type="text" >
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Descripción de la Cuota</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <textarea name="des_cuota" class="form-control" rows="3">{{ cuota.descripCuota }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+
+
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Especifico</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <select id="select1" class="js-example-basic-multiple" class="form-control" style="width: 100%"  name="especifico">
+                                            {% for esp in especifico %}
+                                                <option value="{{ esp.idEspecifico }}">({{ esp.idEspecifico }}) {{ esp.nombreEspecifico }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group">
+                                <label class="control-label" for="prependedInput">Pago</label>
+
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <select id="select2" class="js-example-basic-multiple" class="form-control"
+                                                style="width: 100%;" name="pago">
+                                            {% for pago in pago %}
+                                                <option {% if cuota.idPago.idPago==pago.idPago %}selected{% endif %} value="{{ pago.idPago }}">{{ pago.nombrePago }} (${{ pago.montoPago }})</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group">
+                                <label class="control-label" for="prependedInput">Monto</label>
+
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <input class="form-control" value="{{ cuota.monto }}" name="monto" step="0.01" min="0" size="16" type="number" placeholder="0.00">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="control-group">
+                                <label class="control-label" for="prependedInput">Cuenta:</label>
+
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <select class="js-example-basic-multiple" class="form-control"
+                                                style="width: 100%" name="cuenta">
+                                            {% for cuenta in cuenta %}
+                                                <option value="{{ cuenta.idCuentaBanco }}"{% if cuenta.idCuentaBanco=='590-055717-5        ' %}selected{% endif %}>{{ cuenta.nombreCuenta }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+
+                        <br><br>
+                        <div class="col-md-12" style="text-align: center; margin-top: 10px">
+                            <input type="submit" class="btn btn-primary" style="width: 15%;" value="Guardar">
+                        </div>
+
+                </form>
+            </div>
+        </div><!--/span-->
+
+    </div><!--/row-->
+{% endblock %}
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="{{ asset('public/assets/js/select2.min.js') }}"></script>
+    <script type="text/javascript">
+
+        $(".js-example-basic-multiple").select2();
+
+        $("#select1").change(function() {
+            if ($(this).data('options') == undefined) {
+                /*Taking an array of all options-2 and kind of embedding it on the select1*/
+                $(this).data('options', $('#select2 option').clone());
+            }
+            var id = $(this).val();
+            var options = $(this).data('options').filter('[value=' + id + ']');
+            $('#select2').html(options);
+        });
+    </script>
+{% endblock %}
