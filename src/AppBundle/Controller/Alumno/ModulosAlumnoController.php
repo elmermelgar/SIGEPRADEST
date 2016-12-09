@@ -61,6 +61,18 @@ class ModulosAlumnoController extends SecurityController
         return $this->render('AppBundle:Alumno/Cursos:mis_notas.html.twig', array('alumnos'=>$alumnos,'modulo'=>$modulo,'curso'=>$alumnos->getIdCurso()->getIdCurso(),'notas'=>$notas,'por'=>$por,'promedio'=>$promedio));
     }
 
-    
+    //Metodo para mostrar las cuotas y los pagos
+    /**
+     * @Route("/alumno/cuotas/{id}/{id2}", name="cuotas_curso_alumno")
+     */
+    public function cuotasCursoAction($id,$id2, Request $request)
+    {
+        $cuotas=$this->getDoctrine()->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id));
+        $inscrip=$this->getDoctrine()->getRepository('AppBundle:InscripcionCurso')->find($id2);
+        $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($id);
+        $count=0;
+        return $this->render('AppBundle:Alumno/Cursos:cuotasCurso.html.twig', array('cuotas'=>$cuotas,'curso'=>$curso,'inscrip'=>$inscrip));
+    }
+
 
 }

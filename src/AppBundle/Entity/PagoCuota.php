@@ -58,6 +58,20 @@ class PagoCuota
     private $numeroRecibo;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="verificado", type="string", length=50, nullable=true)
+     */
+    private $verificado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacion", type="string", length=200, nullable=true)
+     */
+    private $observacion;
+
+    /**
      * @var \Cuotas
      *
      * @ORM\ManyToOne(targetEntity="Cuotas")
@@ -122,6 +136,38 @@ class PagoCuota
         $this->cuotaDiferenciada = $cuotaDiferenciada;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVerificado()
+    {
+        return $this->verificado;
+    }
+
+    /**
+     * @param string $verificado
+     */
+    public function setVerificado($verificado)
+    {
+        $this->verificado = $verificado;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObservacion()
+    {
+        return $this->observacion;
+    }
+
+    /**
+     * @param string $observacion
+     */
+    public function setObservacion($observacion)
+    {
+        $this->observacion = $observacion;
     }
 
     /**

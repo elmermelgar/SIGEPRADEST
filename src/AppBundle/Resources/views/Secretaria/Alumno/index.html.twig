@@ -7,65 +7,79 @@
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="{{ path('secretaria') }}">Inicio</a></li>
-            <li class="active">Alumnos </li>
+            <li class="active">Alumnos</li>
         </ol>
         <h2>Alumnos </h2>
     </div>
 {% endblock %}
 {% block body %}
-<div class="col-md-12">
-    <!--   Kitchen Sink -->
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            Alumnos inscritos en el sistema
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Alumnos inscritos en el sistema
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th><span class="label label-default">Usuario</span></th>
+                            <th><span class="label label-default">Nombre</span></th>
+                            <th><span class="label label-default">Apellidos</span></th>
+                            <th><span class="label label-default">Correo</span></th>
+
+                            <th><span class="label label-default">TelÃ©fono</span></th>
+                            <th><span class="label label-default">Activo</span></th>
+                            <th><span class="label label-default">Acciones</span></th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for entity in entities %}
+                            <tr>
+                                <td><i class="fa fa-user" aria-hidden="true"></i></td>
+                                <td>{{ entity.idAlumno.idUi.nomusuario }}</td>
+                                <td>{{ entity.idAlumno.idUi.nombre }}</td>
+                                <td>{{ entity.idAlumno.idUi.apellido }}</td>
+                                <td>{{ entity.idAlumno.idUi.correo }}</td>
+                                <td>{{ entity.idAlumno.idUi.telefono }}</td>
+                                <td>{% if entity.idAlumno.idUi.isactive %}{{ "Si" }}{% else %}{{ "No" }}{% endif %}</td>
+                                {#<td>{% if entity.idAlumno.idUi.idEmpleado == null or entity.idUi.idEmpleado == "" %}{{ " - " }}{% else %}{{ entity.idUi.idEmpleado }}{% endif %}</td>#}
+                                {#<td>{{ entity.idCurso.nombreCurso }}</td>#}
+                                {#<td>{{ entity.estado }}</td>#}
+                                <td style="text-align: center">
+                                    <ul>
+                                        <a href="{{ path('curriculumTo', { 'id':  entity.idCurriculum }) }}"
+                                           class="btn btn-primary" style="margin: 5px">
+                                            Curriculum
+                                        </a>
+                                        <br/>
+                                        <a href="{{ path('alumno_edit', { 'id': entity.idAlumno.idAlumno }) }}"
+                                           class="btn btn-info" style="margin: 5px">
+                                            Datos Personales
+                                        </a>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-
-        <div class="panel-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-        <thead>
-        <tr>
-            <th>Usuario</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>correo</th>
-
-            <th>teléfono</th>
-            <th>activo</th>
-            <th>Acciones</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.idAlumno.idUi.nomusuario }}</td>
-                <td>{{ entity.idAlumno.idUi.nombre }}</td>
-                <td>{{ entity.idAlumno.idUi.apellido }}</td>
-                <td>{{ entity.idAlumno.idUi.correo }}</td>
-                <td>{{ entity.idAlumno.idUi.telefono }}</td>
-                <td>{% if entity.idAlumno.idUi.isactive %}{{ "Si" }}{% else %}{{ "No" }}{% endif %}</td>
-                {#<td>{% if entity.idAlumno.idUi.idEmpleado == null or entity.idUi.idEmpleado == "" %}{{ " - " }}{% else %}{{ entity.idUi.idEmpleado }}{% endif %}</td>#}
-                {#<td>{{ entity.idCurso.nombreCurso }}</td>#}
-                {#<td>{{ entity.estado }}</td>#}
-                <td>
-                    <ul>
-                        <a href="{{ path('curriculumTo', { 'id':  entity.idCurriculum }) }}" class="btn btn-primary">
-                            Curriculum
-                        </a>
-                        <br/>
-                        <a href="{{ path('alumno_edit', { 'id': entity.idAlumno.idAlumno }) }}" class="btn btn-info">
-                            Datos Personales
-                        </a>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-
+    </div>
             {#<a href="{{ path('alumno_new') }}"> Create a new entry </a>#}
 
-
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
 {% endblock %}

@@ -347,6 +347,17 @@ text-align: center;
 font-size: 12px;
 line-height: 1.428571429;
 }
+.btn-circle2 {
+    width: 30px;
+    height: 30px;
+    padding: 3px 0;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.428571429;
+}
 
 /*==============================================
     MEDIA QUERIES     
