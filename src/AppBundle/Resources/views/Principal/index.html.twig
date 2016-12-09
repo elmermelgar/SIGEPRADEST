@@ -71,8 +71,9 @@
 <div class="container carousel">
     <div class="row">
         <br/>
-        {% if cursos %}
+
         {% for cursos in cursos %}
+            {% if cursos.estadoCurso=='disponible' %}
         <div class="col-md-4">
             <div class="ca-hover">
                 <div class="carousel-img">
@@ -85,10 +86,11 @@
                 <div class="overlay"></div>
             </div>
         </div>
-        {% endfor %}
         {% else %}
-        <h1>No hay Cursos Disponibles</h1>
-        {% endif %}
+            <h1>No hay Cursos Disponibles</h1>
+            {% endif %}
+        {% endfor %}
+
     </div>
 </div>
 <div class="text-inter">
