@@ -6,7 +6,7 @@
 {% block Header %}
 <div class="col-md-12">
     <ol class="breadcrumb">
-        <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+        <li><a href="{{ path('director') }}">Inicio</a></li>
         <li class="active">Tutores</li>
     </ol>
     <h2>Usuarios Tutores</h2>
@@ -43,6 +43,8 @@
                             <td>{{ usuarios.correo }}</td>
                             <td>{{ usuarios.nomusuario }}</td>
                             <td style="text-align: center;">
+                                <a href="{{ path("verTutor", {"id": usuarios.idUi}) }}" title="Detalles" class="btn btn-default" style="background: #81379C;color: #ffffff;"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                                -
                                 <a href="{{ path('editar_usuario2', {'id': usuarios.idUi}) }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                 -
                                 <button onClick="confirmar({{ usuarios.idUi }})" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
