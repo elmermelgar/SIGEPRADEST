@@ -42,6 +42,41 @@ class CuotasController extends SecurityController
     }
 
     /**
+     * @Route("/secretaria/pagoCuotas/", name="pagocuotas")
+     */
+    public function pagoCuotasAction(Request $request){
+        if($this->getUser()){
+            $em2=$this->getDoctrine()->getManager("default");
+            $pagos=$em2->getRepository('AppBundle:PagoCuota')->findAll();
+            return $this->render('AppBundle:Secretaria/Cuotas:pagos.html.twig', array('pago'=>$pagos));
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
+    }
+    /**
+     * @Route("/secretaria/verPago/{id}", name="verpago")
+     */
+    public function pagoCuotasViewsAction($id,Request $request){
+        if($this->getUser()){
+            $em2=$this->getDoctrine()->getManager("default");
+            $pagos=$em2->getRepository('AppBundle:PagoCuota')->find($id);
+            if($request->isMethod("POST")) {
+                $pagos->setVerificado($request->get('orden'));
+                $pagos->setObservacion($request->get('observacion'));
+
+                $em2->flush();
+                $this->MensajeFlash('exito', 'Condicion guardada correctamente!');
+                return $this->redirectToRoute('pagocuotas');
+            }
+            return $this->render('AppBundle:Secretaria/Cuotas:pagos_ver.html.twig', array('pago'=>$pagos));
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
+    }
+
+    /**
      * @Route("/secretaria/cuotas/create/{id}", name="cuotas_create")
      */
     public function cuotasCreateAction($id,Request $request){

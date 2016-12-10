@@ -1,0 +1,163 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('director') }}">Inicio</a></li>
+            <li><a href="{{ path('verSol(dir)') }}">Solicitudes</a></li>
+            <li class="active">Detalle de solicitud</li>
+        </ol>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+
+        <h3>SOLICITUD DE INGRESO</h3>
+        <h3 class="form-control">ESTADO DE LA SOLICITUD: {{ solicitud.estado }}</h3>
+        <h2>I. DATOS PERSONALES</h2>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Apellidos</label><br>
+                <input class="form-control" name="apellido" value="{{ app.user.apellido }}" readonly/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Nombres</label><br>
+                <input class="form-control" name="nombre" value="{{ app.user.nombre }}" readonly/>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>DUI</label>
+                <input class="form-control" name="dui" value="{{ perfil.duiAlumno }}" readonly/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>NIT</label>
+                <input class="form-control" name="dui" value="{{ perfil.nitAlumno }}" readonly/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Fecha de nacimiento</label>
+                <input class="form-control" name="fechanac" value="{{ perfil.fechaNacimiento|date("d-m-Y") }}"
+                       readonly/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Estado civil</label>
+                <input class="form-control" name="estadocivil" value="{{ perfil.estadoCivil }}" readonly/>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Dirección particular</label>
+                <textarea class="form-control" name="dirparticular" rows="3"
+                          readonly>{{ perfil.direccionParticular }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Lugar de trabajo</label>
+                <textarea class="form-control" name="lugartrabajo" rows="2"
+                          readonly>{{ perfil.lugarTrabajo }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Dirección de trabajo</label>
+                <textarea class="form-control" name="dirtrabajo" rows="3"
+                          readonly>{{ perfil.direccionTrabajo }}</textarea>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Teléfono particular</label>
+                <input class="form-control" name="telparticular" value="{{ perfil.telefonoParticular }}" readonly/>
+            </div>
+            <div class="form-group">
+                <label>Teléfono trabajo</label>
+                <input class="form-control" name="teltrabajo" value="{{ perfil.telefonoTrabajo }}" readonly/>
+            </div>
+            <div class="form-group">
+                <label>Teléfono móvil personal</label>
+                <input class="form-control" name="telmovil" value="{{ perfil.telefonoMovil }}" readonly/>
+            </div>
+            <div class="form-group">
+                <label>Correo electrónico</label>
+                <input class="form-control" name="correo" value="{{ perfil.direccionTrabajo }}" readonly/>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <h2>II. INFORMACION ACADEMICA</h2>
+        </div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span style="font-size: 14px; font-weight: bold;">Curso al que esta aplicando: </span>
+                    <span style="font-size: 16px; font-weight: bold; color: #002a80">{{ curso.nombreCurso }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background-color: #8C64a3">
+                    <span style="font-size: 14px; font-weight: bold; color: white">Estudios realizados</span>
+
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="datatable-infoacad" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Universidad de procedencia</th>
+                                <th style="text-align: center">T&iacutetulo Obtenido</th>
+                                <th style="text-align: center">A&ntildeo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for e in estudios %}
+                                <tr>
+                                    <td>{{ e.institucion }}</td>
+                                    <td>{{ e.titulo }}</td>
+                                    <td>{{ e.anio }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Disponibilidad: (Su tiempo disponible para asistir a entrevista)</label>
+                <textarea name="dispo" rows="2" maxlength="100" class="form-control"
+                          readonly>{{ solicitud.rangoDisponibilidad }}</textarea>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin: 20px">
+            <a class="btn btn-default" href="{{ path('verSol(dir)') }}"><span
+                        class="glyphicon glyphicon-arrow-left" aria-hidden="true"/> Regresar</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <!--<script src="{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>-->
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable-infoacad').dataTable();
+        });
+    </script>
+{% endblock %}

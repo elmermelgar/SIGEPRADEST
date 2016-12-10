@@ -43,33 +43,21 @@ class InscribirAlumnoController extends DSIController
     public function verAlumnoAction($id)
     {
         if($this->getUser()){
-            $em=$this->getDoctrine()->getManager("default");
-            $usu=$em->getRepository('AppBundle:Usuario')->findAll();
-            $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
-            $cur=$em->getRepository('AppBundle:Curso')->find($id);
-            $alum=$em->getRepository('AppBundle:Alumno')->findAll();
-            $ins=$em->getRepository('AppBundle:InscripcionCurso')->findAll();
 
-            for($i=0; $i<count($alum); $i++){
-                $contador=0;
-                if($ins){
-                    for($j=0; $j<count($ins); $j++){
-                        if($alum[$i]->getIdAlumno()==$ins[$j]->getIdAlumno()->getIdAlumno()){
-                            $contador=$contador+1;
-                        }
-                    }
-                    if($contador==0){
-                        $aluminsc[]=$alum[$i];
-                    }
-                }else{
-                    $aluminsc[]=$alum[$i];
-                }
+            $sql = "SELECT * FROM (SELECT a.id_alumno idalumno,s.id_solicitud,u.nombre,u.apellido,dp.dui_alumno,u.id_ui 
+            FROM alumno a, solicitud s, usuario u, datos_personales dp  
+            WHERE s.id_curso= :idcurso AND s.estado='inscrito' AND u.id_ui=s.id_ui AND dp.id_ui=u.id_ui AND a.id_ui=a.id_ui   
+            ) al LEFT JOIN inscripcion_curso ic ON al.idalumno = ic.id_alumno AND ic.id_curso= :idcurso";
+            $em=$this->getDoctrine()->getManager();
+            $db = $em->getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue('idcurso', $id);
+            $stmt->execute();
+            $alums = $stmt->fetchAll();
+            $curso=$em->getRepository('AppBundle:Curso')->findOneBy(array('idCurso'=>$id));
 
-            }
+            return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('alum'=>$alums, 'curso' => $curso));
 
-//            $alum=$em->createQuery("Select alum from AppBundle:Alumno as alum , AppBundle:InscripcionCurso as inscri WHERE alum.estadoAlumno = 'activo' AND alum.idAlumno != inscri.idAlumno")->getResult();
-
-            return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('alum'=>$aluminsc,'cur'=>$cur,'usu'=>$usu,'dp'=>$dp));
         }else{
             return $this->redirectToRoute('login');
         }
@@ -85,7 +73,8 @@ class InscribirAlumnoController extends DSIController
         if($request->isMethod("POST")) {
             //Recuperar y seteando valores enviados
             $array_alum = $request->get("alum");
-            for ($i = 0; $i < count($array_alum); $i++) {
+            $i = 0;
+            for ($i; $i < count($array_alum); $i++) {
                 $insc= new InscripcionCurso();
                 $insc->setIdCurso($em->getRepository('AppBundle:Curso')->find($idcurso));
                 $insc->setIdAlumno($em->getRepository('AppBundle:Alumno')->find($array_alum[$i]));
@@ -96,8 +85,12 @@ class InscribirAlumnoController extends DSIController
                 //Guradar en la BD
                 $em->flush();
             }
+            if ($i > 0){
+                $this->MensajeFlash('exito','Alumnos Inscritos Correctamente en el Curso!');
+            }else{
+                $this->MensajeFlash('error','No seleccionó alumnos para inscribir');
+            }
 
-            $this->MensajeFlash('exito','Alumnos Inscritos Correctamente en el Curso!');
             return $this->redirectToRoute("verCursoDisp");
         }
     }

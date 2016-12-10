@@ -17,7 +17,7 @@
         <!--   Kitchen Sink -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                Cursos Disponibles
+                Cursos Permitidos
             </div>
 
             <div class="panel-body">
@@ -31,7 +31,7 @@
                         </thead>
                         <tbody>
                         {% for cursos in cursos %}
-                        {% if cursos.estadoCurso=='disponible' and cursos.estadoCurso=='registro' %}
+                        {% if cursos.estadoCurso=='disponible' or cursos.estadoCurso=='registro' %}
                         <tr>
                             <td>
                             <ul class="chat-box">

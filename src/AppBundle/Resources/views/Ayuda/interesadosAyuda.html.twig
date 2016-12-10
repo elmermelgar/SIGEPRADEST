@@ -1,7 +1,7 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block styles %}
-    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('public/assets/css/fancyzoom.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 
@@ -36,17 +36,15 @@
                     <dt><br> b) Actividad: </dt>
                     <ul>
                         <li> <a href="#alternar-respuesta-ej1" id="nav11">Como es el proceso de inscripcion </a></li>
-                        <li> <a href="#alternar-respuesta-ej2" id="nav12">Ver y seleccionar un curso </a></li>
-                        <li> <a href="#alternar-respuesta-ej3" id="nav13">Crear o editar mi perfil </a></li>
-                        <li> <a href="#alternar-respuesta-ej4" id="nav14">Ver mis solicitudes procesadas </a></li>
-                        <li> <a href="#alternar-respuesta-ej5" id="nav15">Ver mis citas</a></li>
-                        <li> <a href="#alternar-respuesta-ej6" id="nav16">Cambiar mi contraseña </a></li>
+                        <li> <a href="#alternar-respuesta-ej2" id="nav12">Como funciona la pantalla de inicio</a></li>
+                        <li> <a href="#alternar-respuesta-ej3" id="nav13">Crear o editar mi perfil</a></li>
+                        <li> <a href="#alternar-respuesta-ej4" id="nav14">Solicitar Cita para la Inscripcion de un curso </a></li>
+                        <li> <a href="#alternar-respuesta-ej5" id="nav15">Ver mis solicitudes</a></li>
+                        <li> <a href="#alternar-respuesta-ej6" id="nav16">Ver mis citas</a></li>
+                        <li> <a href="#alternar-respuesta-ej7" id="nav17">Cambiar mi contraseña </a></li>
                     </ul>
                 </dl> <br><br><br><br><br>
             </div>
-
-
-
 
 
             <div>
@@ -66,7 +64,9 @@
                             <div id="mostrar1" style="display:none">
                                 <ul > Comprime el contenido de las acciones para ayudarle a navegar más rápido y permitir acceder a las acciones operacionales segun sea su tipo de usuario.
                                     Haga clic en la ficha de una página para ver su contenido (Panel de la izquierda)</ul>
-                                <div align="center"><img id= "imagen1" src="/public/assets/img/PanelNavegacion.png" class="img-responsive"></div>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/panelNavegacionInteresado.png') }}" class="fancy"><img id= "imagen1" src="{{ asset('public/assets/img/ayuda/panelNavegacionInteresado.png') }}" class="img-responsive"></a></div>
+
+
                             </div>
 
                             <p><strong>Barra de titulo y botones de accion </strong><br>(<a href="#imagen2" id="alternar2"> descripcion </a>)
@@ -75,7 +75,7 @@
                                 <li>logout: termina la sesion actual</li>
                                 <li>Ayuda: segun el tipo de usuario permite lanzar un material de informacion de ayuda al usuario</li>
                                 <li>Cambiar passwoord: Permite realizar cambio respecto a la paswoord del usuario actual logueado</li>
-                                <div align="center"><img  id= "imagen2" src="/public/assets/img/barraTituloAcciones.png" class="img-responsive"></div>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/barraTituloAcciones.png') }}" class="fancy"><img id= "imagen2" src="{{ asset('public/assets/img/ayuda/barraTituloAcciones.png') }}" class="img-responsive"></a></div>
                             </div>
 
                             <p><strong>Barra de navegacion </strong><br>(<a href="#imagen3" id="alternar3"> descripcion </a>)
@@ -86,10 +86,8 @@
                                     <li> Si realiza una accion del Panel de nagevacion o una operacion: se agrega una ruta </li>
                                     <li> La navegacion es inversa , puede retroceder dando clic en una ruta anterior.</li>
                                 </ul>
-                                <div align="center"><img id= "imagen3" src="/public/assets/img/barraNavegacion.png" class="img-responsive"></div>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="fancy"><img id= "imagen3" src="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="img-responsive"></a></div>
                             </div>
-
-
 
                         </div>
                     </div>
@@ -104,24 +102,24 @@
                             <div id="mostrar4" style="display:none">
 
                                 <ul>Elementos comunes de una tabla:
-                                    <li>Agregar Nuevo: llama un formulario, en el se debe de llenar los datos respetivos y cumplir las condiciones si existiesen.</li>
+                                    <li>Agregar: llama un formulario, en el se debe de llenar los datos respetivos y cumplir las condiciones si existiesen.</li>
                                     <li>Buscar: permite realizar una busqueda en los registros actuales, realiza un filtro y los muestra en la tabla actual</li>
                                     <li>Mostrar # de registro: permite mostrar 10, 25 , 50  o 100 registro en una tabla , si exceden a estos se agrega  otra tabla esto es una pagina y sirve para lograr ver los registros faltantes.</li>
                                     <li>Avanzar y Retroceder Pagina: opciones que permite mostrar en una tabla los registros , y estan a disposicion los botones de numerales, anterior y siguiente para visaulizarlos</li>
-                                    <div align="center"><img src="/public/assets/img/elementosTablas.png" class="img-responsive"></div>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/elementosTablasTutor.png') }}" class="fancy"><img src="{{ asset('public/assets/img/ayuda/elementosTablasTutor.png') }}" class="img-responsive"></a></div>
                                 </ul>
                                 <ul><br>   Seccion de botones de accion:
                                     <li>Editar: se localiza y se selecciona un registro que desea editar del sistema.</li>
                                     <li>Eliminar: se localiza y se selecciona un registro que desea eliminar del sistema.</li>
-                                    <li>Cambiar Contraseña: se localiza y se selecciona un registro que desea cambiar del sistema</li>
-                                    <div align="center"><img src="/public/assets/img/botonesAccion.png" class="img-responsive"></div>
+                                    <li>Ver: Muestra la solicitud, para realizar la cita</li>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/botonesAccionInteresado.png') }}" class="fancy"><img src="{{ asset('public/assets/img/ayuda/botonesAccionInteresado.png') }}" class="img-responsive"></a></div>
                                 </ul>
 
                                 <ul><br>
                                     Botones de confirmacion:
                                     <li>Guardar: segun sea la operacion a realizar, crea un registro y lo almacena en el sistema</li>
                                     <li>Actualizar: se localiza y se selecciona un registro que desea editar , guarda los cambios realizados en el sistema.</li>
-                                    <div align="center"><img id= "imagen4" src="/public/assets/img/guardarActualizar.png" class="img-responsive"></div>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/guardarActualizarV1.png') }}" class="fancy"><img id= "imagen3" src="{{ asset('public/assets/img/ayuda/guardarActualizarV1.png') }}" class="img-responsive"></a></div>
                                 </ul>
                             </div>
 
@@ -130,7 +128,7 @@
                             <p><strong>Area de trabajo </strong><br>(<a href="#imagen5" id="alternar5"> descripcion </a>)
                             <div id="mostrar5" style="display:none">
                                 <ul>En este espacio, es donde muestra las operaciones segun sea la accion hecha en panel de navegacion.</ul>
-                                <div align="center"><img id= "imagen5" src="/public/assets/img/navegacionTrabajo.png" class="img-responsive"></div>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/navegacionTrabajoInteresado.png') }}" class="fancy"><img id= "imagen5" src="{{ asset('public/assets/img/ayuda/navegacionTrabajoInteresado.png') }}" class="img-responsive"></a></div>
                             </div>
 
                         </div>
@@ -139,48 +137,95 @@
             </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="col-md-12">
-                <div align="center" style="border:4px solid mediumpurple; padding: 15px" id="panelNavegacion" >
+            <div class="col-md-12"> <br><br><br><br>
+                <div align="center" style="border:4px solid peru; padding: 15px"   id="panelNavegacion" >
                     <strong>¿Necesitas ayuda acerca de ?</strong>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="control-group">
                     <div class='section' id='apartado-menu3'>
 
                         <p><strong>Pregunta 1 :
-                                <br>¿Como puedo solicitar una cita de un curso que me interesa ?
-                                <br>¿Que debo de hacer para inscribirme a un curso, <br> anunciados en la pagina de Escuela de Postgrado ?
-                            </strong><br>(<a href="#" id="alternar-respuesta-ej1">ver respuesta</a>)
+                                <br>¿Como es el proceso de inscripcion ?
+                                <br>¿Que debo de hacer para inscribirme a un curso, publicado en la pagina de Escuela de Postgrado FOUES?
+                            </strong><br>(<a href="#final1" id="alternar-respuesta-ej1">ver respuesta</a>)
                         <div id="respuesta-ej1" style="display:none">
                             <dl>
                                 <ol>
-                                    <li value="1"> Llenar la ficha de perfil con nuestros datos</li>
-                                    <li> Ingresar al panel citas - ver y seleccionar un horario disponible para ese curso activo </li>
+                                    <dt>Los pasos a seguir para el procesos de inscripcion son los siguientes:</dt><br>
+                                    <li type="circle"> Si el usuario es nuevo en el proceso, entonces en este momento usted es un usuario de tipo: interesado
+                                        <br> Ya que esta en el sistema esta registrado, pero inscrito en un curso.
+                                        <ol> <br>Entonces Debera de realizar los siguientes pasos:<br>
+
+                                            <br><li type="circle">Periodo: Recepción de documentos
+                                                <ol>
+                                                    <li value="1">Llenar su hoja perfil </li>
+                                                    <li>Buscar y Seleccionar un curso de la pantalla inicio</li>
+                                                    <li>Llenar la hoja de solicitud para realizar una cita, solo debe de ingresar su informacion academica <br>y su disponibilidad de tiempo para realizar un cita</li>
+                                                    <li>Esperar el proceso de evaluacion en la aprobacion o denegacion de su solicitud</li>
+                                                </ol>
+                                            </li>
+
+                                            <br><li type="circle">Periodo: Entrevistas
+                                                <ol>
+                                                    <li value="5">Una vez aprobada la solicitud, buscar en el apartado de citas, la fecha y hora que debera <br> presentarse a las instalacion de La Escuela de Postgrado FOUES</li>
+                                                    <li>Realizar los pagos respectivos, segun las indicaciones proporcionadas en la cita: <br> preinscripcion, inscripcion si existiesen</li>
+                                                    <li>Esperar el proceso de cambio del tipo de usuario: Interesado a Alumno,<br>  siempre ingresara con las misma credenciales al sistema</li>
+                                                </ol>
+                                            </li>
+
+                                            <br><li type="circle">Periodo: Evaluación
+                                                <ol>
+                                                    <li value="7">Presentarse para realizar las evaluaciones en FOUES, segun las indicaciones proporcionadas en la cita, si existiesen</li>
+                                                    <li>Llenar la hoja de Curriculum y datos personales</li>
+                                                    <li>Realizar los pagos respectivos, segun las indicaciones proporcionadas en la cita: matricula y 1° cuota</li>
+                                                    <li>Esperar el proceso de inscripcion de todos los interesados que haya finalizado, <br> si ha cumplido con todo lo anterior entonces se le inscribira en el curso solicitado y se le notificara</li>
+                                                </ol>
+                                            </li>
+
+                                            <br><li id="final1" type="circle">Periodo: inicio de curso  y fin de curso
+                                                <ol>
+                                                    <li value="11">Presentarse a las clases y evaluaciones respectivas segun indicado en la informacion del curso</li>
+                                                    <li>Realizar los pagos de cuotas segun las fechas respectivas</li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <br><li type="circle">Los unicos procesos que requieren presencia de la persona en FOUES son:
+                                        <ol>
+                                            <li type="circle">El dia de la entrevista, el paso 5</li>
+                                            <li type="circle">Para realizar los pagos respectivos, el paso 6,9</li>
+                                            <li type="circle">Para realizar las evaluciones si existiesen, paso 7</li>
+                                        </ol>
+                                    </li>
+                                    <br><li type="circle">Debe de tener presente que para cada curso publicado se necesita un minimo de N personas, que realicen este proceso de solicitud e inscripcion</li>
+                                    <br><li type="circle">Debe de tener presenta para los periodos las fecha respectivas del cursos solicitado:
+                                        <ol>
+                                            <li type="circle">Fecha Inicio recepción de documentos y Fecha Fin recepción de documentos</li>
+                                            <li type="circle">Fecha Inicio de entrevistas y Fecha Fin de entrevistas</li>
+                                            <li type="circle">Fecha Inicio de evaluación y Fecha Fin de evaluación</li>
+                                            <li id="final1" type="circle"> Fecha inicio de curso  y Fecha fin de curso</li>
+                                        </ol>
+                                    </li>
                                 </ol>
                             </dl>
                         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <br>¿Como funciona la pantalla de inicio ?
 
                         <p><strong>Pregunta 2 :
                                 <br> ¿Donde esta esa ficha de perfil ?
@@ -206,16 +251,7 @@
                                 </ol>
                             </dl>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-
-
-
-            <div class="col-md-6">
-                <div class="control-group">
-                    <div class='section' id='apartado-menu4'>
 
                         <p><strong>Pregunta 3 :
                                 <br> ¿Quiero solicitar una cita pero el sistema no me deja?
@@ -264,14 +300,22 @@
                     </div>
                 </div>
             </div>
+
+
         </fieldset>
     </form>
 
 {%endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('public/assets/js/jquery.fancyzoom.js') }}"></script>
+
+
     <script>
         $(document).ready(function(){
+
+            $("a.fancy").fancyZoom();
+
             $('#nav1').on('click',function(){
                 cerrarTodo();
                 $('#mostrar1').toggle('slow');
@@ -317,6 +361,7 @@
                 $('#mostrar5').toggle('slow');
             });
 
+
             $('#nav11').on('click',function(){
                 cerrarTodo();
                 $('#respuesta-ej1').toggle('slow');
@@ -342,6 +387,26 @@
                 $('#respuesta-ej5').toggle('slow');
             });
 
+            $('#nav16').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej6').toggle('slow');
+            });
+
+            $('#nav17').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej7').toggle('slow');
+            });
+
+            $('#nav18').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej8').toggle('slow');
+            });
+
+            $('#nav19').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej9').toggle('slow');
+            });
+
             $('#alternar-respuesta-ej1').on('click',function(){
                 $('#respuesta-ej1').toggle('slow');
             });
@@ -361,6 +426,23 @@
             $('#alternar-respuesta-ej5').on('click',function(){
                 $('#respuesta-ej5').toggle('slow');
             });
+
+            $('#alternar-respuesta-ej6').on('click',function(){
+                $('#respuesta-ej6').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej7').on('click',function(){
+                $('#respuesta-ej7').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej8').on('click',function(){
+                $('#respuesta-ej8').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej9').on('click',function(){
+                $('#respuesta-ej9').toggle('slow');
+            });
+
         });
 
         function cerrarTodo(){
@@ -375,6 +457,10 @@
             $('#respuesta-ej3').toggle(false);
             $('#respuesta-ej4').toggle(false);
             $('#respuesta-ej5').toggle(false);
+            $('#respuesta-ej6').toggle(false);
+            $('#respuesta-ej7').toggle(false);
+            $('#respuesta-ej8').toggle(false);
+            $('#respuesta-ej9').toggle(false);
         }
     </script>
 
