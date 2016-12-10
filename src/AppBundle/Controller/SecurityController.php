@@ -104,7 +104,9 @@ class SecurityController extends Controller
      */
     public function directorAction()
     {
-        return $this->render('AppBundle:Director:index.html.twig');
+        $em=$this->getDoctrine()->getManager("default");
+        $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+        return $this->render('AppBundle:Director:index.html.twig', array('cursos'=>$cursos));
     }
 
     /**

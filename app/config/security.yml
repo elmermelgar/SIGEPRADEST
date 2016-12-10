@@ -33,6 +33,6 @@ security:
          - { path: ^/interesado, roles: [ROLE_interesado, ROLE_alumno]}
          - { path: ^/tutor, roles: ROLE_tutor }
          - { path: ^/alumno, roles: [ROLE_alumno, ROLE_secretaria ]}
-         - { path: ^/secretaria, roles: ROLE_secretaria }
-         - { path: ^/director, roles: ROLE_director }
+         - { path: ^/secretaria, roles: [ROLE_secretaria, ROLE_administrador] }
+         - { path: ^/director, roles: [ROLE_director, ROLE_administrador] }
         # - { path: ^/admin, roles: ROLE_ADMINISTRADOR }
