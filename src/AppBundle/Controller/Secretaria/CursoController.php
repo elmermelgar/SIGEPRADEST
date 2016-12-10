@@ -60,7 +60,15 @@ class CursoController extends DSIController
 
         return $this->render("AppBundle:Secretaria/Curso:curso_ver.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1, 'cuota'=>$cuota));
     }
-
+    /**
+     * @Route("/secretaria/historial", name="historial")
+     */
+    public function secretariaAction()
+    {
+        $em=$this->getDoctrine()->getManager("default");
+        $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+        return $this->render('AppBundle:Secretaria/Curso:historialcursos.html.twig', array('cursos'=>$cursos));
+    }
 
     /**
      *

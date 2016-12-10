@@ -125,6 +125,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp;
                         <a  href="{{ path('verCursoDisp') }}"><i class="glyphicon glyphicon-plus-sign"></i> Inscribir a Curso</a>
                     </li>
                     <li  >
+                        <a  href="{{ path('historial') }}"><i class="fa fa-bars"></i> Historial de Cursos</a>
+                    </li>
+                    <li  >
                         <a  href="{{ path('cambiar_pass_secre', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
                     </li>
                 {% endif %}
