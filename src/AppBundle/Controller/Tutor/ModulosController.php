@@ -91,7 +91,7 @@ class ModulosController extends SecurityController
         $alumnos=$this->getDoctrine()->getRepository('AppBundle:InscripcionCurso')->findOneBy(array('idDc'=>$id2));
         $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulos')->findOneBy(array('idModulo'=>$id1));
         $notas=$this->getDoctrine()->getRepository('AppBundle:Nota')->findBy(array('idDc'=>$id2,'idModulo'=>$id1));
-        $eva=$this->getDoctrine()->getRepository('AppBundle:Evaluacion')->findAll();
+        $eva=$this->getDoctrine()->getRepository('AppBundle:Evaluacion')->findBy(array('idModulo'=>$id1));
         $por=0;
         $promedio=0;
         $db = $em->getConnection();
@@ -106,7 +106,7 @@ class ModulosController extends SecurityController
             $promedio=$promedio+($n->getNota()*($n->getIdEvaluacion()->getPorcentaje()));
         }
         if($request->isMethod("POST")) {
-            $nota=$this->getDoctrine()->getRepository('AppBundle:Nota')->findOneBy(array('idEvaluacion'=>$request->get("evaluacion"), 'idDc'=>$id2));
+            $nota=$this->getDoctrine()->getRepository('AppBundle:Nota')->findOneBy(array('idEvaluacion'=>$request->get("evaluacion"), 'idDc'=>$id2, 'idModulo'=>$id1));
 
             if($nota){
                 $this->MensajeFlash('error','Ya ha sido asignada una nota para esta evaluacion');
