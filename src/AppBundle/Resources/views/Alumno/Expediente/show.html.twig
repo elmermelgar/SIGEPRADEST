@@ -1,102 +1,255 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
+            <li class="active">Detalles</li>
+        </ol>
+        <h2>Detalles de   {{ entity.nombreExp }}</h2>
+    </div>
 
-{% block body -%}
+{% endblock %}
+{% block body %}
     <h1>Expediente</h1>
 
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-content">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Curso en proceso de registro
+                </div>
+
+
+                <fieldset>
+                    <div class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
+                        <div class="control-group">
+                            <div class="controls">
+
+                                <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Idexp</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.idExp }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Nombreexp</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.nombreExp }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Datoscarrera</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.datosCarrera }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Genero</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.genero }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Paisnacimiento</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.paisNacimiento }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Nacionalidad</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.nacionalidad }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Fechanaci</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.fechaNaci|date('Y-m-d H:i:s') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Duiexp</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.duiExp }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Nitexp</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.nitExp }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Estadocivilexp</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.estadoCivilExp }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Situacionlaboral</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.situacionLaboral }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Tipoestudiante</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.tipoEstudiante }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
+                            <div class="control-group">
+                                <div class="controls">
+
+
+
+                                    <br> <div class="control-group" >
+                                        <label class="control-label" for="prependedInput">Direccionexp</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                {{ entity.direccionExp }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br> <div class="control-group" >
+                                        <label class="control-label" for="prependedInput">Deptorecidencia</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                {{ entity.deptoRecidencia }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br> <div class="control-group" >
+                                        <label class="control-label" for="prependedInput">Municipiorecidencia</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                {{ entity.municipioRecidencia }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br> <div class="control-group" >
+                                        <label class="control-label" for="prependedInput">Telefono</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                {{ entity.telefono }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br> <div class="control-group" >
+                                        <label class="control-label" for="prependedInput">Emailexp</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                {{ entity.emailExp }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br> <div class="control-group" >
+                                        <label class="control-label" for="prependedInput">Fechatitulacion</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                {{ entity.fechaTitulacion|date('Y-m-d H:i:s') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br> <div class="control-group" >
+                                        <label class="control-label" for="prependedInput">Fechaexptitulo</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                {{ entity.fechaExpTitulo|date('Y-m-d H:i:s') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Institucionexp</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.institucionExp }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Bachillerato</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.bachillerato }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Cambioscarreraaprob</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.cambiosCarreraAprob }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br> <div class="control-group" >
+                                    <label class="control-label" for="prependedInput">Fecharegistro</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            {{ entity.fechaRegistro|date('Y-m-d H:i:s') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                       </div>
+                            </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+<br>
+    <br>
     <table class="record_properties">
         <tbody>
-            <tr>
-                <th>Idexp</th>
-                <td>{{ entity.idExp }}</td>
-            </tr>
-            <tr>
-                <th>Nombreexp</th>
-                <td>{{ entity.nombreExp }}</td>
-            </tr>
-            <tr>
-                <th>Datoscarrera</th>
-                <td>{{ entity.datosCarrera }}</td>
-            </tr>
-            <tr>
-                <th>Genero</th>
-                <td>{{ entity.genero }}</td>
-            </tr>
-            <tr>
-                <th>Paisnacimiento</th>
-                <td>{{ entity.paisNacimiento }}</td>
-            </tr>
-            <tr>
-                <th>Nacionalidad</th>
-                <td>{{ entity.nacionalidad }}</td>
-            </tr>
-            <tr>
-                <th>Fechanaci</th>
-                <td>{{ entity.fechaNaci|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Duiexp</th>
-                <td>{{ entity.duiExp }}</td>
-            </tr>
-            <tr>
-                <th>Nitexp</th>
-                <td>{{ entity.nitExp }}</td>
-            </tr>
-            <tr>
-                <th>Estadocivilexp</th>
-                <td>{{ entity.estadoCivilExp }}</td>
-            </tr>
-            <tr>
-                <th>Situacionlaboral</th>
-                <td>{{ entity.situacionLaboral }}</td>
-            </tr>
-            <tr>
-                <th>Tipoestudiante</th>
-                <td>{{ entity.tipoEstudiante }}</td>
-            </tr>
-            <tr>
-                <th>Direccionexp</th>
-                <td>{{ entity.direccionExp }}</td>
-            </tr>
-            <tr>
-                <th>Deptorecidencia</th>
-                <td>{{ entity.deptoRecidencia }}</td>
-            </tr>
-            <tr>
-                <th>Municipiorecidencia</th>
-                <td>{{ entity.municipioRecidencia }}</td>
-            </tr>
-            <tr>
-                <th>Telefono</th>
-                <td>{{ entity.telefono }}</td>
-            </tr>
-            <tr>
-                <th>Emailexp</th>
-                <td>{{ entity.emailExp }}</td>
-            </tr>
-            <tr>
-                <th>Fechatitulacion</th>
-                <td>{{ entity.fechaTitulacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Fechaexptitulo</th>
-                <td>{{ entity.fechaExpTitulo|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Institucionexp</th>
-                <td>{{ entity.institucionExp }}</td>
-            </tr>
-            <tr>
-                <th>Bachillerato</th>
-                <td>{{ entity.bachillerato }}</td>
-            </tr>
-            <tr>
-                <th>Cambioscarreraaprob</th>
-                <td>{{ entity.cambiosCarreraAprob }}</td>
-            </tr>
-            <tr>
-                <th>Fecharegistro</th>
-                <td>{{ entity.fechaRegistro|date('Y-m-d H:i:s') }}</td>
-            </tr>
+
+
         </tbody>
     </table>
 

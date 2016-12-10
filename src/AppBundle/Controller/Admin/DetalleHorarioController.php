@@ -242,7 +242,7 @@ class DetalleHorarioController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('detallehorario_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'btn btn-danger',
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger',
                 'style' => "width: 100%;")))
             ->getForm();
     }

@@ -57,9 +57,13 @@
                                             Curriculum
                                         </a>
                                         <br/>
-                                        <a href="{{ path('alumno_edit', { 'id': entity.idAlumno.idAlumno }) }}"
+                                        {#<a href="{{ path('alumno_edit', { 'id': entity.idAlumno.idAlumno }) }}"#}
+                                           {#class="btn btn-info" style="margin: 5px">#}
+                                            {#Datos Personales#}
+                                        {#</a>#}
+                                        <a href="{{ path('alumno_expediente_edit_idAlum', { 'id': entity.idAlumno.idAlumno }) }}"
                                            class="btn btn-info" style="margin: 5px">
-                                            Datos Personales
+                                           Expediente
                                         </a>
                                     </ul>
                                 </td>

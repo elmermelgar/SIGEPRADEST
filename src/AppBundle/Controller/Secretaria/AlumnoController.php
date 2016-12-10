@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Secretaria;
 use Proxies\__CG__\AppBundle\Entity\Curriculum;
+use Proxies\__CG__\AppBundle\Entity\Expediente;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -27,10 +28,11 @@ class AlumnoController extends Controller
      */
     public function indexAction()
     {
+
         $em = $this->getDoctrine()->getManager();
         //usamos esta consulta para ver las solicitudes que no contienen usuarios. por lo que mostraremos solo solicitudes que tengan aspirantes
 //        $entities = $em->createQuery('Select soli from AppBundle:Solicitud soli ')->getResult();
-        $entities = $em->createQuery('Select soli,use from AppBundle:Solicitud soli JOIN soli.idUi use WHERE use.idRol = 4  ')->getResult();
+        $entities = $em->createQuery('Select soli,use from AppBundle:Solicitud soli JOIN soli.idUi use WHERE use.idRol = 4   ')->getResult();
 
 //        $entities = $em->getRepository('AppBundle:Solicitud')->findBy( array('name' => 'someValue'));
 //  var_dump($entities[0]->getIdAlumno());
@@ -137,6 +139,8 @@ class AlumnoController extends Controller
          // seteamoas las nueva entidades a guardar
         $entityCurruculum= new Curriculum();
         $entityAlumno = new Alumno();
+        $entityExpediente = new Expediente();
+
 
         // obtenemos las entidadedes
         $entityUsuario = $em->getRepository('AppBundle:Usuario')->find( $idUsuario);
@@ -157,12 +161,20 @@ class AlumnoController extends Controller
         $entityAlumno->setIdUi($entityUsuario);
         $entityAlumno->setIdDp($entityDatosPer);
 
-           $entityCurruculum->setIdAlumno($entityAlumno);
+            $entityCurruculum->setIdAlumno($entityAlumno);
+            $entityExpediente->setIdAlumno($entityAlumno);
 
+         // se le pondran fechas por defecto para que pueda ser leido desde la edicion
+            $date = new \DateTime("now");
+            $entityExpediente->setFechaExpTitulo($date);
+            $entityExpediente->setFechaNaci($date);
+            $entityExpediente->setFechaRegistro($date);
+            $entityExpediente->setFechaTitulacion($date);
+            $entityExpediente->setTipoEstudiante("1");
 
         $em->persist($entityAlumno);
         $em->persist($entityCurruculum);
-
+        $em->persist($entityExpediente);
 
 
             $em->flush();
@@ -175,6 +187,7 @@ class AlumnoController extends Controller
                 'idDatosPerson'   => $entityAlumno->getIdDp()->getIdDp(),
                 'idAlum'   => $entityAlumno->getIdAlumno(),
                 'curriculum'   => $entityCurruculum->getIdCurriculum(),
+                'expediente'   => $entityExpediente->getIdExp(),
             );
         }else{
 

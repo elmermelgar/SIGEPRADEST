@@ -30,13 +30,13 @@ class ExpedienteType extends AbstractType
             ->add('deptoRecidencia')
             ->add('municipioRecidencia')
             ->add('telefono')
-            ->add('emailExp')
-            ->add('fechaTitulacion','date')
-            ->add('fechaExpTitulo','date')
+            ->add('emailExp','email')
+            ->add('fechaTitulacion','text')
+            ->add('fechaExpTitulo','text')
             ->add('institucionExp')
             ->add('bachillerato')
             ->add('cambiosCarreraAprob')
-            ->add('fechaRegistro','date')
+            ->add('fechaRegistro','text')
             ->add('idAlumno','entity',array('class'=>'AppBundle\Entity\Alumno','property' =>'idAlumno'))
         ;
     }

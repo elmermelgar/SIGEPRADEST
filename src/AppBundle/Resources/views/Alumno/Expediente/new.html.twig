@@ -3,9 +3,10 @@
 {% block styles %}
     <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
-    {#<link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>#}
+    <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 
 {% endblock %}
+
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
@@ -18,28 +19,6 @@
 
 {% endblock %}
 {% block body %}
-
-    {#<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">#}
-
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    {#<script src="https://code.jquery.com/jquery-1.12.4.js"></script>#}
-
-    <script src="{{ asset('public/js/jquery-ui-1.10.0.custom.min.js') }}"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $( function() {
-            $( "#datepicker" ).datepicker();
-        } );
-    </script>
-
-
-
-    <p>Date: <input type="text" id="datepicker" data-provide=datepicker></p>
-
-    <br/>
-    <br/>
-    <br/>
-    <br/>
 
     <div class="row-fluid sortable">
         <div class="box span12">
@@ -111,7 +90,7 @@
                         <div class="control-group">
                             {{form_label(form.fechaTitulacion, 'Nombre del fechaTitulacion', {'label_attr': {'class': 'control-label'}}) }}
                             <div class="input-prepend">
-                                {{form_widget(form.fechaTitulacion, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                                {{form_widget(form.fechaTitulacion, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
                             </div>
                         </div><br/>
 
@@ -163,7 +142,7 @@
                               <div class="controls">
                                 <div class="input-prepend">
                                     <div class='input-group date' >
-                                        {{form_widget(form.fechaNaci, {"attr":{"style":" width: 80%;",'class': 'form-control ',"placeholder":"dd/mm/aaaa"} }) }}
+                                        {{form_widget(form.fechaNaci, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
 
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
@@ -211,7 +190,7 @@
                         <div class="control-group">
                             {{form_label(form.fechaExpTitulo, 'Nombre del fechaExpTitulo', {'label_attr': {'class': 'control-label'}}) }}
                             <div class="input-prepend">
-                                {{form_widget(form.fechaExpTitulo, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                                {{form_widget(form.fechaExpTitulo,{"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
                             </div>
                         </div><br/>
 
@@ -225,7 +204,7 @@
                         <div class="control-group">
                             {{form_label(form.fechaRegistro, 'Nombre del fechaRegistro', {'label_attr': {'class': 'control-label'}}) }}
                             <div class="input-prepend">
-                                {{form_widget(form.fechaRegistro, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                                {{form_widget(form.fechaRegistro, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
                             </div>
                         </div><br/>
 
@@ -266,6 +245,6 @@
 </ul>
 {% endblock %}
 {% block javascripts %}
-    {#<script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>#}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
 
 {% endblock %}

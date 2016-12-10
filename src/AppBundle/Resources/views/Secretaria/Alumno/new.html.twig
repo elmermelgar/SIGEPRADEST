@@ -60,19 +60,28 @@ Edicion de datos
 
                             </div>
                         </div>
+                        {#<div class="col-md-3">#}
+                                {#<div class="form-group">#}
+                                    {#<a href="{{ path('alumno_edit',{'id': idDatosPerson }) }}" class="btn btn-info" style="width: 100%">#}
+                                        {#Editar datos personales#}
+                                    {#</a>#}
+
+
+                                {#</div>#}
+                        {#</div>#}
                         <div class="col-md-3">
-                                <div class="form-group">
-                                    <a href="{{ path('alumno_edit',{'id': idDatosPerson }) }}" class="btn btn-info" style="width: 100%">
-                                        Editar datos personales
-                                    </a>
+                            <div class="form-group">
+                                <a href="{{ path('alumno_expediente_edit',{'id': expediente }) }}" class="btn btn-primary" style="width: 100%">
+                                    Editar expediente
+                                </a>
 
 
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <a href="{{ path('alumno') }}">
-                    Back to the list
+                <a href="{{ path('alumnos') }}">
+                 Regresar
                 </a>
             </div>
         </div>
