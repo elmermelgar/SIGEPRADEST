@@ -39,6 +39,7 @@
                         <li> <a href="#alternar-respuesta-ej2" id="nav12">Editar Usuario </a></li>
                         <li> <a href="#alternar-respuesta-ej3" id="nav13">Cambiar Usuario </a></li>
                         <li> <a href="#alternar-respuesta-ej4" id="nav14">Eliminar Usuario </a></li>
+                        <li> <a href="#alternar-respuesta-ej5" id="nav15">Actividades Secundarias Heredadas </a></li>
                     </ul>
                 </dl> <br><br><br><br><br>
             </div>
@@ -152,9 +153,6 @@
                                     <ul> c) Seleccionar un tipo de usuario realizar lo siguiente:
                                         <ol>
                                             <li type="circle"> Administrador </li>
-                                            <li type="circle"> Tutor</li>
-                                            <li type="circle"> Alumno</li>
-                                            <li type="circle"> Interesado</li>
                                             <li type="circle"> Secretaria</li>
                                             <li type="circle"> Director</li>
                                         </ol>
@@ -166,9 +164,9 @@
                         </div >
 
                         <p><strong>Pregunta 2 :
-                                <br> ¿Quiero cambiar un dato personal de un usuario en especifico?
-                                <br> ¿Como se hace para editar un usuario?
-                                <br> ¿como editar el password de usuario? , ¿pero se podra editar el nombre del usuario?
+                                <br> ¿Modificar datos personales de un usuario en especifico?
+                                <br> ¿Editar un usuario?
+                                <br> ¿Se puede editar el nombre del usuario?
                             </strong><br>(<a href="#final2" id="alternar-respuesta-ej2">ver respuesta</a>)
                         <div id="respuesta-ej2" style="display:none">
                             <dl>
@@ -197,9 +195,6 @@
                                     <ul> b) Seleccionar un tipo de nuevo de usuario:
                                         <ol>
                                             <li type="circle"> Administrador </li>
-                                            <li type="circle"> Tutor</li>
-                                            <li type="circle"> Alumno</li>
-                                            <li type="circle"> Interesado</li>
                                             <li type="circle"> Secretaria</li>
                                             <li type="circle"> Director</li>
                                         </ol>
@@ -280,6 +275,29 @@
                                     <li id="final4"> Aqui a seleccion debe escoger
                                         <br> Aceptar o Enter para eliminar / Cancelar o Esc para suspender la eliminacion
                                     </li>
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 5 :
+                                <br> ¿Actividade Secundarias Heredadas?
+                            </strong><br>(<a href="#final5" id="alternar-respuesta-ej5">ver respuesta</a>)
+                        <div id="respuesta-ej5" style="display:none">
+                            <dl>
+                                <ol>
+
+                                    <li type="circle"> submenu: Cursos / clic en: Administrar Cursos</li>
+                                    <li type="circle"> submenu: Cursos / clic en: Lista de Tutores</li>
+                                    <li type="circle"> Horario de entrevistas</li>
+                                    <li type="circle"> Solicitud de entrevistas</li>
+                                    <li type="circle"> Cuotas</li>
+                                    <li type="circle"> Pagos</li>
+                                    <li type="circle"> submenu: Gestion de Alumnos / clic en: Crear Alumno</li>
+                                    <li type="circle"> submenu: Gestion de Alumnos / clic en: Ver Alumno</li>
+                                    <li type="circle"> Inscribir Curso</li>
+                                    <li type="circle"> Solicitud de entrevistas</li>
+                                    <li type="circle"> usuarios Tutores</li>
+
                                 </ol>
                             </dl>
                         </div>
@@ -366,6 +384,11 @@
                 $('#respuesta-ej4').toggle('slow');
             });
 
+            $('#nav15').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej5').toggle('slow');
+            });
+
             $('#alternar-respuesta-ej1').on('click',function(){
                 $('#respuesta-ej1').toggle('slow');
             });
@@ -381,6 +404,10 @@
             $('#alternar-respuesta-ej4').on('click',function(){
                 $('#respuesta-ej4').toggle('slow');
             });
+
+            $('#alternar-respuesta-ej5').on('click',function(){
+                $('#respuesta-ej5').toggle('slow');
+            });
         });
 
         function cerrarTodo(){
@@ -394,6 +421,7 @@
             $('#respuesta-ej2').toggle(false);
             $('#respuesta-ej3').toggle(false);
             $('#respuesta-ej4').toggle(false);
+            $('#respuesta-ej5').toggle(false);
         }
     </script>
 {% endblock %}
