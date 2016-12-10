@@ -1,10 +1,8 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block styles %}
-    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
     <link href="{{ asset('public/assets/css/fancyzoom.css') }}" rel="stylesheet"/>
 {% endblock %}
-
 
 {% block Header %}
     <div class="col-md-12">
@@ -45,7 +43,6 @@
                 </dl> <br><br><br><br><br>
             </div>
 
-
             <div>
 
                 <div class="col-md-12">
@@ -57,8 +54,6 @@
                 <div class="col-md-6">
                     <div class="control-group">
                         <div class='section' id='apartado-menu1'>
-
-
                             <p><strong>Panel de navegacion </strong><br>(<a href="#imagen1" id="alternar1"> descripcion </a>)
                             <div id="mostrar1" style="display:none">
                                 <ul > Comprime el contenido de las acciones para ayudarle a navegar más rápido y permitir acceder a las acciones operacionales segun sea su tipo de usuario.
@@ -88,8 +83,6 @@
                                 <div align="center"><a href="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="fancy"><img id= "imagen3" src="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="img-responsive"></a></div>
                             </div>
 
-
-
                         </div>
                     </div>
                 </div>
@@ -97,7 +90,6 @@
                 <div class="col-md-6">
                     <div class="control-group">
                         <div class='section' id='apartado-menu2'>
-
 
                             <p><strong>barra de busqueda y registros en las tablas </strong><br>(<a href="#imagen4" id="alternar4"> descripcion </a>)
                             <div id="mostrar4" style="display:none">
@@ -124,8 +116,6 @@
                                 </ul>
                             </div>
 
-
-
                             <p><strong>Area de trabajo </strong><br>(<a href="#imagen5" id="alternar5"> descripcion </a>)
                             <div id="mostrar5" style="display:none">
                                 <ul>En este espacio, es donde muestra las operaciones segun sea la accion hecha en panel de navegacion.</ul>
@@ -139,8 +129,8 @@
 
 
 
-            <div class="col-md-12">
-                <div align="center" style="border:4px solid mediumpurple; padding: 15px" id="panelNavegacion" >
+            <div class="col-md-12"> <br><br><br><br>
+                <div align="center" style="border:4px solid peru; padding: 15px" id="panelNavegacion" >
                     <strong>¿Necesitas ayuda acerca de ?</strong>
                 </div>
             </div>
@@ -148,8 +138,6 @@
             <div class="col-md-6">
                 <div class="control-group">
                     <div class='section' id='apartado-menu3'>
-
-
 
                         <p><strong>Pregunta 1 : ¿Como agregar un usuario ?</strong><br>(<a href="#final1" id="alternar-respuesta-ej1">ver respuesta</a>)
                         <div id="respuesta-ej1" style="display:none">
@@ -296,7 +284,6 @@
                             </dl>
                         </div>
 
-
                     </div>
                 </div>
             </div>
@@ -409,6 +396,4 @@
             $('#respuesta-ej4').toggle(false);
         }
     </script>
-
-
 {% endblock %}

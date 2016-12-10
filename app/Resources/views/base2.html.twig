@@ -46,6 +46,8 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp;
                         href="{{ path('interesadoAyuda') }}"
                     {% elseif app.user.idrol.nombrerol== 'tutor'%}
                         href="{{ path('tutorAyuda') }}"
+                    {% elseif app.user.idrol.nombrerol== 'alumno'%}
+                        href="{{ path('alumnoAyuda') }}"
                     {% endif %}
             >  <span class="glyphicon glyphicon-question-sign warning"></span></a>
             <a href="{{ path('logout') }}" class="btn btn-primary square-btn-adjust">Cerrar Sesión</a>
@@ -103,6 +105,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp;
                     <li>
                         <a  href="{{ path('cursoscuotas') }}"><i class="fa fa-money fa-3x"></i> Cuotas</a>
                     </li>
+                    <li>
+                        <a  href="{{ path('pagocuotas') }}"><i class="fa fa-credit-card"></i> Pagos</a>
+                    </li>
                     <!-- anidado de Alumnos  -->
                     <li>
                         <a class="" href="#"><i class="fa fa-graduation-cap"></i> Gestión de Alumnos<span class="fa arrow"></span></a>
@@ -118,6 +123,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp;
                 </li>
                     <li  >
                         <a  href="{{ path('verCursoDisp') }}"><i class="glyphicon glyphicon-plus-sign"></i> Inscribir a Curso</a>
+                    </li>
+                    <li  >
+                        <a  href="{{ path('historial') }}"><i class="fa fa-bars"></i> Historial de Cursos</a>
                     </li>
                     <li  >
                         <a  href="{{ path('cambiar_pass_secre', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>

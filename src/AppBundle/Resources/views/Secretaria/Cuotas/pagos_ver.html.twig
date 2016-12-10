@@ -1,0 +1,95 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
+            <li class="active">Detalles</li>
+        </ol>
+        <h2>Detalles de Pago</h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-content">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                       Informacion de Pago
+                    </div>
+               <fieldset>
+                        <div class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
+                            <div class="control-group" >
+                                <div class="controls">
+                                    <a href="" onclick="window.open('{{ asset('public') }}/{{ pago.imagenRecibo}}');">
+                                        <img src="{{ asset('public') }}/{{ pago.imagenRecibo }}" alt="img1" style="width: 100%;"></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6" class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Cuota:</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        {{ pago.idCuota.cuota }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Numero de recibo:</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        {{ pago.numeroRecibo }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Monto del pago</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        {{ pago.montoPagado }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fecha de pago</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                       {{ pago.fechaPago.format('d/m/y') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <form  class="form-horizontal" action="{{ path('verpago', {'id': pago.idPagos}) }}" method="post">
+                                <hr>
+                                <label>Estado</label>
+                                <select class="form-control" name="orden">
+                                    <option value="aprobado">Aprobar</option>
+                                    <option value="denegado">Denegar</option>
+                                </select>
+                                <label for="disabledSelect">Observacion</label>
+                                <textarea class="form-control" name="observacion" rows="3" maxlength="200" required ></textarea>
+                                <div class="col-md-12" style="text-align: center; margin-top: 10px">
+                                    <button type="submit" class="btn btn-primary" style="width: 35%;">Guardar Condicion</button>
+                                </div>
+                            </form>
+                        </div>
+                    </fieldset>
+                </div>
+
+
+            </div>
+        </div><!--/span-->
+
+    </div><!--/row-->
+{% endblock %}

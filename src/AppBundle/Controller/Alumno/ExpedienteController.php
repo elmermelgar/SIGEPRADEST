@@ -9,11 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Expediente;
 use AppBundle\Form\ExpedienteType;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Expediente controller.
  *
- * @Route("/alumno/expediente")
+ * @Route("/alumnos/expediente")
  */
 class ExpedienteController extends Controller
 {
@@ -47,9 +48,15 @@ class ExpedienteController extends Controller
         $entity = new Expediente();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+         if ($form->isValid()) {
+             var_dump(( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaRegistro())));
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+             $em = $this->getDoctrine()->getManager();
+            $entity->setFechaTitulacion( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaTitulacion())) );
+            $entity->setFechaExpTitulo( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaExpTitulo())) );
+            $entity->setFechaNaci(  new \DateTime(preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaNaci())) );
+            $entity->setFechaRegistro( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaRegistro())) );
+
             $em->persist($entity);
             $em->flush();
 
@@ -127,6 +134,40 @@ class ExpedienteController extends Controller
     /**
      * Displays a form to edit an existing Expediente entity.
      *
+     * @Route("/{id}/editfromalum", name="alumno_expediente_edit_idAlum")
+     * @Method("GET")
+     * @Template("@App/Alumno/Expediente/edit.html.twig")
+     */
+    public function editActionFromAlum($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:Expediente')->findOneByidAlumno($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Expediente entity.');
+        }
+
+        $entity->setFechaTitulacion($entity->getFechaTitulacion()->format('d-m-Y') );
+        $entity->setFechaExpTitulo($entity->getFechaExpTitulo()->format('d-m-Y'));
+        $entity->setFechaNaci(  $entity->getFechaNaci()->format('d-m-Y') );
+        $entity->setFechaRegistro( $entity->getFechaRegistro()->format('d-m-Y') );
+      //  var_dump($entity->getFechaRegistro()->format('d-m-Y') );
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+
+
+    /**
+     * Displays a form to edit an existing Expediente entity.
+     *
      * @Route("/{id}/edit", name="alumno_expediente_edit")
      * @Method("GET")
      * @Template("@App/Alumno/Expediente/edit.html.twig")
@@ -141,6 +182,11 @@ class ExpedienteController extends Controller
             throw $this->createNotFoundException('Unable to find Expediente entity.');
         }
 
+        $entity->setFechaTitulacion($entity->getFechaTitulacion()->format('d-m-Y') );
+        $entity->setFechaExpTitulo($entity->getFechaExpTitulo()->format('d-m-Y'));
+        $entity->setFechaNaci(  $entity->getFechaNaci()->format('d-m-Y') );
+        $entity->setFechaRegistro( $entity->getFechaRegistro()->format('d-m-Y') );
+        //  var_dump($entity->getFechaRegistro()->format('d-m-Y') );
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -150,6 +196,10 @@ class ExpedienteController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
+
+
+
 
     /**
     * Creates a form to edit a Expediente entity.
@@ -165,7 +215,8 @@ class ExpedienteController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar','attr' => array('class' => 'btn btn-primary square-btn-adjust',
+          )));
 
         return $form;
     }
@@ -191,6 +242,14 @@ class ExpedienteController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $entity->setFechaTitulacion( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaTitulacion())) );
+            $entity->setFechaExpTitulo( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaExpTitulo())) );
+            $entity->setFechaNaci(  new \DateTime(preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaNaci())) );
+            $entity->setFechaRegistro( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaRegistro())) );
+
+
+
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('alumno_expediente_edit', array('id' => $id)));
@@ -240,7 +299,7 @@ class ExpedienteController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('alumno_expediente_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'btn btn-primary square-btn-adjust')))
             ->getForm()
         ;
     }

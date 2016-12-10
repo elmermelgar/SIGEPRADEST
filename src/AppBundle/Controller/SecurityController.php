@@ -112,7 +112,9 @@ class SecurityController extends Controller
      */
     public function secretariaAction()
     {
-        return $this->render('AppBundle:Secretaria:index.html.twig');
+        $em=$this->getDoctrine()->getManager("default");
+        $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+        return $this->render('AppBundle:Secretaria:index.html.twig', array('cursos'=>$cursos));
     }
 
     //Para envio de mensajes Flash

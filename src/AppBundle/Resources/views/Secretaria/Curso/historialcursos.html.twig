@@ -4,17 +4,16 @@
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="{{ path('secretaria') }}">Inicio</a></li>
-
+            <li class="active">Historial de Cursos</li>
         </ol>
-        <h2>Bienvenido Secretaria</h2>
+        <h2>Historial de Cursos</h2>
     </div>
 {% endblock %}
 {% block body %}
     <div class="row">
         {% for cursos in cursos %}
-            {% if cursos.estadoCurso=='disponible' %}
             <div class="col-md-4 col-sm-4">
-                <div class="panel panel-primary">
+                <div {% if cursos.estadoCurso=='disponible' %}class="panel panel-success"{% elseif cursos.estadoCurso=='registro' %}class="panel panel-warning"{% elseif cursos.estadoCurso=='finalizado' %}class="panel panel-danger"{% endif %}>
                     <div class="panel-heading">
                         {{ cursos.estadoCurso }}
                     </div>
@@ -33,7 +32,6 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

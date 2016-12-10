@@ -1,10 +1,8 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block styles %}
-    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
     <link href="{{ asset('public/assets/css/fancyzoom.css') }}" rel="stylesheet"/>
 {% endblock %}
-
 
 {% block Header %}
     <div class="col-md-12">
@@ -47,11 +45,6 @@
             </div>
 
 
-
-
-
-
-
             <div>
 
                 <div class="col-md-12">
@@ -91,8 +84,6 @@
                                 </ul>
                                 <div align="center"><a href="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="fancy"><img id= "imagen3" src="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="img-responsive"></a></div>
                             </div>
-
-
 
                         </div>
                     </div>
@@ -140,12 +131,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
 
 
             <div class="col-md-12">
@@ -224,9 +209,6 @@
                     </div>
                 </div>
             </div>
-
-
-
 
             <div class="col-md-6">
                 <div class="control-group">
@@ -412,6 +394,5 @@
             $('#respuesta-ej5').toggle(false);
         }
     </script>
-
 
 {% endblock %}

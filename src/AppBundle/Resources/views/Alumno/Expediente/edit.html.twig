@@ -1,16 +1,235 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+<link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+<link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
+            <li class="active">Detalles</li>
+        </ol>
+        <h2>Detalles de   {{ entity.nombreExp }}</h2>
+    </div>
 
-{% block body -%}
-    <h1>Expediente edit</h1>
+{% endblock %}
+{% block body %}
+    <h1>Edición de Expediente </h1>
+    <br>
+<br>
 
-    {{ form(edit_form) }}
+    {#{{ form(edit_edit_form) }}#}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-content ">
+                {{ form_start(edit_form) }}
+                <fieldset>
+                    <div class="col-md-6">
+           <div class="control-group">
+                            {{form_label(edit_form.nombreExp, 'Nombre del Expediente', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.nombreExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('alumno_expediente') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+                        <div class="control-group">
+                            {{form_label(edit_form.genero, 'Nombre del genero', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.genero, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.nacionalidad, 'Nacionalidad', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.nacionalidad, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.duiExp, 'DUI', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.duiExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.estadoCivilExp, 'Estado civil', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.estadoCivilExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        {#<div class="control-group">#}
+                            {#{{form_label(edit_form.tipoEstudiante, 'Tipo Estudiante', {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="input-prepend">#}
+                                {#{{form_widget(edit_form.tipoEstudiante, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}#}
+                            {#</div>#}
+                        {#</div><br/><br/>#}
+
+
+                        <div class="control-group">
+                            {{form_label(edit_form.deptoRecidencia, 'Dept de Recidencia ', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.deptoRecidencia, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.telefono, 'Telefono', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.telefono, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.fechaTitulacion, 'Fecha de Titulo', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.fechaTitulacion, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.institucionExp, 'Nombre de la institucion procedente', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.institucionExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.cambiosCarreraAprob, 'N° de cambios Aprobados', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.cambiosCarreraAprob, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group" style="display: none">
+                            {{form_label(edit_form.idAlumno, 'Confirmar Id dAlumno', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.idAlumno, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div>
+                        <br/>
+                        <a href="{{ path('alumnosall') }}" class="btn btn-primary square-btn-adjust">Regresar</a>
+
+                    </div>
+                    <div class="col-md-6">
+
+
+
+
+                        <div class="control-group">
+                            {{form_label(edit_form.datosCarrera, 'Carrera Universitaria', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.datosCarrera,{"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.paisNacimiento, 'Pais Nacimiento', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.paisNacimiento,{"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group ">
+                            {{form_label(edit_form.fechaNaci, 'Fecha de Nacimiento', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="controls"  >
+                                <div class="input-prepend"  >
+                                    <div class='input-group date' style="width: 80%" >
+                                        {{form_widget(edit_form.fechaNaci, {"attr":{'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.nitExp, 'Nombre del nitExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.nitExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.situacionLaboral, 'Nombre del situacionLaboral', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.situacionLaboral, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.direccionExp, 'Nombre del direccionExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.direccionExp, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+
+
+                        <div class="control-group">
+                            {{form_label(edit_form.municipioRecidencia, 'Nombre del municipioRecidencia', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.municipioRecidencia,{"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.emailExp, 'Nombre del emailExp', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.emailExp,{"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.fechaExpTitulo, 'Nombre del fechaExpTitulo', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="controls"  >
+                                <div class="input-prepend"  >
+                                    <div class='input-group date' style="width: 80%" >
+                                {{form_widget(edit_form.fechaExpTitulo,{"attr":{'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div></div>
+                            </div> </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.bachillerato, 'Nombre del bachillerato', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.bachillerato, {"attr":{"style":" width: 80%;",'class': 'form-control' } }) }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="control-group">
+                            {{form_label(edit_form.fechaRegistro, 'Fecha Registro', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.fechaRegistro, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="control-group" style="display: none;">
+                            {{form_label(edit_form.tipoEstudiante, 'tipoEstudiante', {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="input-prepend">
+                                {{form_widget(edit_form.tipoEstudiante, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+                            </div>
+                        </div>
+
+                        {{ form_end(edit_form) }}
+                        <br>
+
+                        <br><br>
+                        {#{{ form(delete_form) }}#}
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
+
 {% endblock %}

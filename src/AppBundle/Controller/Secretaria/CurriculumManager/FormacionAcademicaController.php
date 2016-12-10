@@ -58,7 +58,7 @@ class FormacionAcademicaController extends Controller
 
         return array(
             'entities' => $entities,
-            'curriculum'=>  $cur,
+            'curriculum'=>  (int) $cur,
 
         );
     }
@@ -109,6 +109,7 @@ class FormacionAcademicaController extends Controller
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'curriculum'=>  (int) $cur,
         );
     }
 
