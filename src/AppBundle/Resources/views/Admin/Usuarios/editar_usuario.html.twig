@@ -68,7 +68,9 @@
                                         <label>Tipo de Usuario</label>
                                         <select class="form-control" name="rol">
                                             {% for rol in rol %}
+                                            {% if rol.idRol!='2' and rol.idRol!='3' and rol.idRol!='4' %}
                                                 <option {% if usuario.idRol.idRol==rol.idRol %} selected {% endif %}  value="{{ rol.idRol }}">{{ rol.nombreRol }}</option>
+                                            {% endif %}
                                             {% endfor %}
                                         </select>
                                     </div>
