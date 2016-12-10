@@ -10,7 +10,7 @@
             <li><a href="{{ path('verCursoDisp') }}">Cursos Disponibles</a></li>
             <li class="active">Alumnos a Inscribir</li>
         </ol>
-        <h2>Alumnos a Inscribir en {{ cur.nombreCurso }}</h2>
+        <h2>Alumnos a Inscribir en {{ curso.nombreCurso }}</h2>
     </div>
 {% endblock %}
 {% block body %}
@@ -20,7 +20,7 @@
 
             <div class="panel-body">
                 <div class="table-responsive">
-                    <form  id="formulario" class="form-horizontal" action="{{ path('inscribir',{'idcurso': cur.idCurso}) }}" method="post" enctype="multipart/form-data" name="formulario">
+                    <form  id="formulario" class="form-horizontal" action="{{ path('inscribir',{'idcurso': curso.idCurso}) }}" method="post" enctype="multipart/form-data" name="formulario">
                     <table class="table table-striped table-bordered table-hover" order="desc" id="dataTables-example">
                         <thead>
                         <tr>
@@ -31,27 +31,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for alum in alum %}
-                            {% for usu in usu %}
-                                {% if alum.idUi.idUI == usu.idUi %}
-                                    {% for dp in dp %}
-                                        {% if usu.idUi==dp.idUi.idUi %}
-                                            <tr>
-                                                <td style="text-align: center;">{{ dp.duiAlumno }}</td>
-                                                <td style="text-align: center;">{{ usu.nombre }}</td>
-                                                <td style="text-align: center;">{{ usu.apellido }}</td>
-                                                <td style="text-align: center;">
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input name="alum[]" type="checkbox" value="{{ alum.idAlumno }}" />
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                </tr>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
+                        {% for al in alum %}
+                            {% if al.id_dc is null %}
+                            <tr>
+                                <td style="text-align: center;">{{ al.dui_alumno }}</td>
+                                <td style="text-align: center;">{{ al.nombre }}</td>
+                                <td style="text-align: center;">{{ al.apellido }}</td>
+                                <td style="text-align: center;">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="alum[]" type="checkbox" value="{{ al.id_alumno }}" />
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>
@@ -91,7 +85,7 @@
             alertify.confirm("<p>Esta seguro que desea Desabilitar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
                 if (e) {
                     location.href="{{ asset('/secretaria/curso_desabilitar') }}/"+id;
-                } else { alertify.error("Has cancelado la operación");
+                } else { alertify.error("Has cancelado la operaciï¿½n");
                 }
             });
             return false

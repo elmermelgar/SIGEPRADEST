@@ -26,14 +26,13 @@ class SolicitudDiController extends DSIController
     {
         if($this->getUser()){
             $em=$this->getDoctrine()->getManager("default");
-            $sol=$em->getRepository('AppBundle:Solicitud')->findBy(array("estado"=>"evaluacion"));
-            $usu=$em->getRepository('AppBundle:Usuario')->findAll();
-            $dp=$em->getRepository('AppBundle:DatosPersonales')->findAll();
-            $cur=$em->getRepository('AppBundle:Curso')->findAll();
-            $he=$em->getRepository('AppBundle:HorarioEntrevista')->findAll();
-            $ct=$em->getRepository('AppBundle:Cita')->findBy(array('idSolicitud'=>$sol));
+            $sql = $em->createQuery("SELECT ct FROM AppBundle\Entity\Cita ct, AppBundle\Entity\Curso cu, AppBundle\Entity\Solicitud so
+            WHERE ct.idSolicitud=so.idSolicitud AND so.idCurso=cu.idCurso 
+            AND cu.estadoCurso='disponible' AND so.estado='evaluacion'");
 
-            return $this->render('AppBundle:Director/Solicitud(eva):Sol.html.twig', array('sol'=>$sol,'usu'=>$usu,'dp'=>$dp,'cur'=>$cur,'he'=>$he,'ct'=>$ct));
+            $citas = $sql->getResult();
+
+            return $this->render('AppBundle:Director/Solicitud(eva):Sol.html.twig', array('citas'=>$citas));
         }else{
             return $this->redirectToRoute('login');
         }
@@ -64,6 +63,34 @@ class SolicitudDiController extends DSIController
         $em->flush();
 
         return $this->redirectToRoute('verSol(dir)');
+    }
+
+    /**
+     * @route("/director/detalle/sol/{ids}",name="verDetalleSol")
+     */
+    public function verDetalleSolAction($ids)
+    {
+        if($this->getUser()){
+            $em=$this->getDoctrine()->getManager("default");
+            //solicitud de ingreso
+            $repoSol = $em->getRepository('AppBundle:Solicitud');
+            $sol = $repoSol->findOneBy(array(
+                'idSolicitud' => $ids
+            ));
+            //Informacion academica
+            $repoia = $this->getDoctrine()->getRepository('AppBundle:InformacionAcademica');
+            $infoacademica = $repoia->findBy(
+                array('idSolicitud' => $ids)
+            );
+            return $this->render('AppBundle:Director/Solicitud(eva):detalleSol.html.twig', array(
+                'perfil' => $sol->getIdDp(),
+                'solicitud' => $sol,
+                'estudios' => $infoacademica,
+                'curso' => $sol->getIdCurso()
+            ));
+        }else{
+            return $this->redirectToRoute('login');
+        }
     }
 
 }
