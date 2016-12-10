@@ -125,7 +125,7 @@ class ModulosController extends SecurityController
                 return $this->redirectToRoute('notas_alumno', array('id1'=>$id1,'id2'=>$id2));
             }
         }
-        return $this->render('AppBundle:Tutor/Modulos:notas_alumno.html.twig', array('alumnos'=>$alumnos,'modulo'=>$modulo,'notas'=>$notas,'por'=>$por,'promedio'=>$promedio,'eva'=>$disp));
+        return $this->render('AppBundle:Tutor/Modulos:notas_alumno.html.twig', array('alumnos'=>$alumnos,'modulo'=>$modulo,'notas'=>$notas,'por'=>$por,'promedio'=>$promedio,'eva'=>$eva));
     }
 
     //Metodo para ver y agregar evaluaciones
