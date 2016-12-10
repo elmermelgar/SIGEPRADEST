@@ -1,0 +1,77 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('tutor') }}">Inicio</a></li>
+            <li><a href="{{ path('cursos_alumno') }}">Cursos Asignados</a></li>
+            <li class="active">Cuotas y Pagos</li>
+        </ol>
+     </div>
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Pagos
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Editar Pago</h3>
+
+                            <form role="form" action="{{ path('cuotas_edit_alumno', {'id': pago.idPagos, 'id2': curso.idCurso}) }}" method="post" enctype="multipart/form-data" >
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Cuota</label>
+                                        <input class="form-control" value="{{ pago.idCuota.idCuota }}" name="cuota" type="hidden" required/>
+                                        <input class="form-control" value="{{ pago.idCuota.cuota }}" type="text" readonly/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabledSelect">Monto</label>
+                                    <input class="form-control" value="{{ pago.montoPagado }}" step="0.01" name="monto" type="number" required/>
+                                    </div>
+                                    <div class="form-group">
+                                         <label for="disabledSelect">Cuota Diferenciada</label>
+                                    <select name="dif" class="form-control">
+                                                <option selected value="FALSE">No</option>
+                                                <option value="TRUE">Si</option>
+                                    </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                         <label for="img">Imagen de Recibo</label>
+                                         <input class="form-control" id="imagen" name="imagen" type="file" required/>
+                                    </div>
+                                    <div class="form-group">
+                                         <label for="num">Número de Recibo</label>
+                                         <input class="form-control" value="{{ pago.numeroRecibo }}" name="numrecibo" type="number" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fecha">Fecha de Pago</label>
+                                    <input class="form-control"  type="date" name="fechapago" required placeholder="Introduzca una fecha"/>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="reset" style="width: 20%;margin-top: 10px;float: left" class="btn btn-default">Limpiar</button>
+                                    <button type="submit" style="width: 20%;margin-top: 10px;float: right" class="btn btn-primary">Actualizar Datos</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+
+</div>
+
+{% endblock %}

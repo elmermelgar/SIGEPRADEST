@@ -1,0 +1,81 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+            <li class="active">Pagos Registrados</li>
+        </ol>
+        <h2>Pagos Registrados</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">
+Pagos Registrados
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">#</th>
+                            <th style="text-align: center"><span class="label label-primary">Alumno</span></th>
+                            <th style="text-align: center"><span class="label label-primary">Cuota</span></th>
+                            <th style="text-align: center"><span class="label label-primary">Fecha</span></th>
+                            <th style="text-align: center"><span class="label label-primary"># Recibo</span></th>
+                            <th style="text-align: center"><span class="label label-primary">Monto</span></th>
+
+                            <th style="text-align: center"><span class="label label-primary">Acciones</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for pago in pago %}
+                                    {% if pago.verificado == 'enviado' %}
+                                        <tr>
+                                            <td><i class="fa fa-money" aria-hidden="true"></i></td>
+                                            <td>{{ pago.idDc.idAlumno.idUi.nombre }} {{ pago.idDc.idAlumno.idUi.apellido }}</td>
+                                            <td>{{ pago.idCuota.cuota }}</td>
+                                            <td  class="sorting_desc" aria-sort="descending">{{ pago.fechaPago.format("d/m/Y")}}</td>
+                                            <td>{{ pago.numeroRecibo }}</td>
+                                            <td>{{ pago.montoPagado }}</td>
+                                            <td style="text-align: center;">
+                                                <a href="{{ path('verpago', {'id': pago.idPagos}) }}" title="Seleccionar Curso" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-share" aria-hidden="true"/> Seleccionar</a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End  Kitchen Sink -->
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            $('#example').DataTable( {
+                "order": [[ 3, "desc" ]]
+            } );
+        } );
+    </script>
+
+
+{% endblock %}
