@@ -4,11 +4,11 @@
     <div class="col-md-12">
 
     <ol class="breadcrumb">
-        <li><a href="{{ path('secretaria') }}">Inicio</a></li>
+        <li><a href="{{ path('director') }}">Inicio</a></li>
         <li><a href="{{ path('usuarios2') }}">Usuarios</a></li>
         <li class="active">Nuevo Usuario</li>
     </ol>
-    <h2>Creando un nuevo tutor</h2>
+    <h2>Creando Un nuevo Tutor</h2>
     </div>
 {% endblock %}
 {% block body %}
@@ -24,8 +24,13 @@
                         <div class="col-md-12">
                             <h3>Datos Complementarios</h3>
 
-                            <form role="form" action="{{ path('nuevo_usuario2') }}" method="post" >
+                            <form id="formulario" action="{{ path('nuevo_usuario2') }}" method="post" enctype="multipart/form-data" >
                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Fotografía </label>
+                                        <input id="foto" type="file" name="foto" required/>
+                                    </div>
+
                                     <div class="form-group">
                                         <label>Nombres </label>
                                             <input class="form-control" name="nombre" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Debe introducir un Nombre sin numeros" required/>
@@ -35,6 +40,10 @@
                                             <input class="form-control" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Debe introducir un Apellido sin numeros" name="apellido" required/>
                                     </div>
                                     <div class="form-group">
+                                        <label>Fecha de Nacimiento </label>
+                                        <input class="form-control" id="fechaNac" name="fechaNac" type="date" required/>
+                                    </div>
+                                    <div class="form-group">
                                         <label>Correo </label>
                                         <input class="form-control" type="email" name="email" required/>
                                     </div>
@@ -42,13 +51,27 @@
                                         <label for="disabledSelect">DUI</label>
                                         <input class="form-control" name="id_emp" type="text" pattern="[0-9]{8}-[0-9]{1}" title="Debe introducir un DUI con formato 00000000-0" required placeholder="00000000-0"/>
                                     </div>
+
+
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="form-control">Especialidad</label>
                                         <input class="form-control" name="especialidad" max="50" type="text" />
                                     </div>
-
-                                </div>
-                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Turno </label>
+                                        <select class="form-control" name="turno">
+                                            <option value="Lunes-Viernes: Mañana">Lunes-Viernes: Mañana</option>
+                                            <option value="Lunes-Viernes: Tarde">Lunes-Viernes: Tarde</option>
+                                            <option value="Lunes-Viernes: Noche">Lunes-Viernes: Noche</option>
+                                            <option value="Lunes-Sabado: Mañana">Lunes-Sábado: Mañana</option>
+                                            <option value="Lunes-Sabado: Tarde">Lunes-Sábado: Tarde</option>
+                                            <option value="Sábados: Mañana">Sábados: Mañana</option>
+                                            <option value="Sábados: Tarde">Sábados: Tarde</option>
+                                            <option value="Sábados: Tarde">Cualquier Horario</option>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">Usuario</label>
                                             <input class="form-control" name="username" required />
@@ -62,22 +85,10 @@
                                         <input id="confirm_password" class="form-control" type="password"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>Telefono </label>
+                                        <label>Teléfono </label>
                                         <input class="form-control" type="text" name="tel" max="9" placeholder="9999-9999"/>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Turno </label>
-                                        <select class="form-control" name="turno">
-                                            <option value="Lunes-Viernes: Mañana">Lunes-Viernes: Mañana</option>
-                                            <option value="Lunes-Viernes: Tarde">Lunes-Viernes: Tarde</option>
-                                            <option value="Lunes-Viernes: Noche">Lunes-Viernes: Noche</option>
-                                            <option value="Lunes-Sabado: Mañana">Lunes-Sabado: Mañana</option>
-                                            <option value="Lunes-Sabado: Tarde">Lunes-Sabado: Tarde</option>
-                                            <option value="Sábados: Mañana">Sábados: Mañana</option>
-                                            <option value="Sábados: Tarde">Sábados: Tarde</option>
-                                            <option value="Sábados: Tarde">Cualquier Horario</option>
-                                        </select>
-                                    </div>
+
                                 </div>
                                 <div class="col-md-12">
                                     <button type="reset" style="width: 20%;margin-top: 10px;float: left" class="btn btn-default">Limpiar</button>

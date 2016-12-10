@@ -95,4 +95,13 @@ class DSIController extends Controller
         $d1 = $stmt->fetchAll();
         return $d1;
     }
+    protected function cur($id){
+        $em=$this->getDoctrine()->getManager();
+        $db = $em->getConnection();
+        $sql = "select id_doctores, id_curso from d1 where id_doctores=$id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $d1 = $stmt->fetchAll();
+        return $d1;
+    }
 }
