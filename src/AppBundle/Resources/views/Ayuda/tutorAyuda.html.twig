@@ -1,7 +1,7 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block styles %}
-    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('public/assets/css/fancyzoom.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 
@@ -11,32 +11,495 @@
             <li><a href="{{ path('tutor') }}">Inicio</a></li>
             <li class="active">Ayuda </li>
         </ol>
-        <h2>Ayuda al usuario tuto / docente </h2>
+        <h2>Ayuda al usuario tutor</h2>
     </div>
 {% endblock %}
 
 {% block body %}
     <form class="form-horizontal"  enctype="multipart/form-data" name="formulario">
-
         <fieldset>
-            <div class="col-md-6">
-                <div class="control-group">
+            <div class="col-md-12">
+                <div align="center"  id="menuPrincipal" >
+                    <strong> Ayuda? </strong>
+                </div>
+
+                <dl>
+                    <dt> a) Diseño de Sigepradest </dt>
+                    <ul> La Nagevacion en Sigepradest se compone de cinco grupos de elementos en la pantalla:
+                        <li value="1" ><a href="#alternar1" id="nav1"> Panel de Navegacion</a></li>
+                        <li> <a href="#alternar2" id="nav2"> Barra de titulo y botones de accion</a></li>
+                        <li> <a href="#alternar3" id="nav3"> Botones de navegacion</a></li>
+                        <li> <a href="#alternar4" id="nav4"> Barra de busqueda y registros en las tablas</a></li>
+                        <li> <a href="#alternar5" id="nav5"> Area de trabajo</a></li>
+                    </ul>
+
+                    <dt><br> b) Actividad: </dt>
+                    <ul>
+                        <li> <a href="#alternar-respuesta-ej1" id="nav11"> Mostrar los cursos asignados  </a></li>
+                        <li> <a href="#alternar-respuesta-ej2" id="nav12"> Mostrar las evaluaciones de un curso </a></li>
+                        <li> <a href="#alternar-respuesta-ej3" id="nav13"> Agregar evaluaciones </a></li>
+                        <li> <a href="#alternar-respuesta-ej4" id="nav14"> Editar evaluaciones </a></li>
+                        <li> <a href="#alternar-respuesta-ej5" id="nav15"> Eliminar evaluaciones </a></li>
+                        <li> <a href="#alternar-respuesta-ej6" id="nav16"> Ver los alumnos inscritos en un cursos asignado  </a></li>
+                        <li> <a href="#alternar-respuesta-ej7" id="nav17"> Agregar o Subir Notas al sistema</a></li>
+                        <li> <a href="#alternar-respuesta-ej8" id="nav18"> Se puede editar o modificar una nota subida?</a></li>
+                        <li> <a href="#alternar-respuesta-ej9" id="nav19"> Cambiar Contraseña </a></li>
+                    </ul>
+                </dl> <br><br><br><br><br>
+            </div>
+
+            <div>
+
+                <div class="col-md-12">
+                    <div align="center" style="border:4px solid mediumpurple; padding: 15px" id="panelDiseño" >
+                        <strong> Elementos graficos de pantalla de Sigepradest </strong>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="control-group">
+                        <div class='section' id='apartado-menu1'>
+
+
+                            <p><strong>Panel de navegacion </strong><br>(<a href="#imagen1" id="alternar1"> descripcion </a>)
+                            <div id="mostrar1" style="display:none">
+                                <ul > Comprime el contenido de las acciones para ayudarle a navegar más rápido y permitir acceder a las acciones operacionales segun sea su tipo de usuario.
+                                    Haga clic en la ficha de una página para ver su contenido (Panel de la izquierda)</ul>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/panelNavegacionTutor.png') }}" class="fancy"><img id= "imagen1" src="{{ asset('public/assets/img/ayuda/panelNavegacionTutor.png') }}" class="img-responsive"></a></div>
+
+
+                            </div>
+
+                            <p><strong>Barra de titulo y botones de accion </strong><br>(<a href="#imagen2" id="alternar2"> descripcion </a>)
+                            <div id="mostrar2" style="display:none">
+                                <li value="1">login : permite acceder al sistema e iniciar sesion, se debe de introducir las credenciales correctas username y paswoord</li>
+                                <li>logout: termina la sesion actual</li>
+                                <li>Ayuda: segun el tipo de usuario permite lanzar un material de informacion de ayuda al usuario</li>
+                                <li>Cambiar passwoord: Permite realizar cambio respecto a la paswoord del usuario actual logueado</li>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/barraTituloAcciones.png') }}" class="fancy"><img id= "imagen2" src="{{ asset('public/assets/img/ayuda/barraTituloAcciones.png') }}" class="img-responsive"></a></div>
+                            </div>
+
+                            <p><strong>Barra de navegacion </strong><br>(<a href="#imagen3" id="alternar3"> descripcion </a>)
+                            <div id="mostrar3" style="display:none">
+                                <ul >Cambia segun la actividad que se esta realizando actualmente por el usuario.
+                                    Caracteristicas:
+                                    <li> Cuando un usuario inicia sesion esta en: inicio </li>
+                                    <li> Si realiza una accion del Panel de nagevacion o una operacion: se agrega una ruta </li>
+                                    <li> La navegacion es inversa , puede retroceder dando clic en una ruta anterior.</li>
+                                </ul>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="fancy"><img id= "imagen3" src="{{ asset('public/assets/img/ayuda/barraNavegacion.png') }}" class="img-responsive"></a></div>
+                            </div>
 
 
 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="control-group">
+                        <div class='section' id='apartado-menu2'>
+
+
+                            <p><strong>barra de busqueda y registros en las tablas </strong><br>(<a href="#imagen4" id="alternar4"> descripcion </a>)
+                            <div id="mostrar4" style="display:none">
+
+                                <ul>Elementos comunes de una tabla:
+                                    <li>Agregar: llama un formulario, en el se debe de llenar los datos respetivos y cumplir las condiciones si existiesen.</li>
+                                    <li>Buscar: permite realizar una busqueda en los registros actuales, realiza un filtro y los muestra en la tabla actual</li>
+                                    <li>Mostrar # de registro: permite mostrar 10, 25 , 50  o 100 registro en una tabla , si exceden a estos se agrega  otra tabla esto es una pagina y sirve para lograr ver los registros faltantes.</li>
+                                    <li>Avanzar y Retroceder Pagina: opciones que permite mostrar en una tabla los registros , y estan a disposicion los botones de numerales, anterior y siguiente para visaulizarlos</li>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/elementosTablasTutor.png') }}" class="fancy"><img src="{{ asset('public/assets/img/ayuda/elementosTablasTutor.png') }}" class="img-responsive"></a></div>
+                                </ul>
+                                <ul><br>   Seccion de botones de accion:
+                                    <li>Editar: se localiza y se selecciona un registro que desea editar del sistema.</li>
+                                    <li>Eliminar: se localiza y se selecciona un registro que desea eliminar del sistema.</li>
+                                    <li>Subir: abre una ventana donde se seleccionara la evaluacion a subir respeto a una nota de un alumno asignado.</li>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/botonesAccionTutor.png') }}" class="fancy"><img src="{{ asset('public/assets/img/ayuda/botonesAccionTutor.png') }}" class="img-responsive"></a></div>
+                                </ul>
+
+                                <ul><br>
+                                    Botones de confirmacion:
+                                    <li>Guardar: segun sea la operacion a realizar, crea un registro y lo almacena en el sistema</li>
+                                    <li>Actualizar: se localiza y se selecciona un registro que desea editar , guarda los cambios realizados en el sistema.</li>
+                                    <div align="center"><a href="{{ asset('public/assets/img/ayuda/guardarActualizarV1.png') }}" class="fancy"><img id= "imagen3" src="{{ asset('public/assets/img/ayuda/guardarActualizarV1.png') }}" class="img-responsive"></a></div>
+                                </ul>
+                            </div>
+
+
+
+                            <p><strong>Area de trabajo </strong><br>(<a href="#imagen5" id="alternar5"> descripcion </a>)
+                            <div id="mostrar5" style="display:none">
+                                <ul>En este espacio, es donde muestra las operaciones segun sea la accion hecha en panel de navegacion.</ul>
+                                <div align="center"><a href="{{ asset('public/assets/img/ayuda/navegacionTrabajoTutor.png') }}" class="fancy"><img id= "imagen5" src="{{ asset('public/assets/img/ayuda/navegacionTrabajoTutor.png') }}" class="img-responsive"></a></div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
-
+            <div class="col-md-12"> <br><br><br><br><br>
+                <div align="center" style="border:4px solid peru; padding: 15px" id="panelNavegacion" >
+                    <strong>¿Necesitas ayuda acerca de ?</strong>
+                </div>
+            </div>
 
             <div class="col-md-12">
-                <br>
-                <div class="panel panel-default">
+                <div class="control-group">
+                    <div class='section' id='apartado-menu3'>
 
 
+
+                        <p><strong>Pregunta 1 : ¿Como puedo ver o mostrar mis cursos asignados?
+                            </strong><br>(<a href="#final1" id="alternar-respuesta-ej1">ver respuesta</a>)
+                        <div id="respuesta-ej1" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Desde el Panel de Navegacion Tutor se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel del Navegacion / clic en el boton: Cursos Asignados</li>
+                                    <li> En la ventana: Cursos Asignados, puede tener 0 o muchos recuadros llamados: cursos, <br> sus caracteristicas son:
+                                        <ol>
+                                            <li type="circle" > Los cursos asignados seran publicados en recuadros independientes</li>
+                                            <li type="circle" > Los cursos asignados puede tener un estado, esto se muestra en la parte superior de cada recuadro y puede ser:
+                                                    <ul> a) registro, no ah comenzado el curso ya que se encuentra en proceso de seleccion e inscripcion de alumnos</ul>
+                                                    <ul> b) disponible, contiene por lo menos un numero de alumnos para comenzar el curso, pero no la minima cantidad exigida</ul>
+                                            </li>
+                                            <li type="circle"> Nombre del curso asignado</li>
+                                            <li type="circle"> Tipo de curso, y este puede ser:
+                                                <br> Ortodoncia, Diplomado, Curso, Especialidad, Doctorado o  Maestria
+                                            </li>
+                                            <li type="circle" id="final1"> Un boton de color verde: Modulo del Curso, aqui es donde accedera a curso asignado</li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                            </dl>
+                        </div >
+
+                        <p><strong>Pregunta 2 :
+                                <br> ¿Mostrar las evaluaciones de un curso?
+                            </strong><br>(<a href="#final2" id="alternar-respuesta-ej2">ver respuesta</a>)
+                        <div id="respuesta-ej2" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Realizar los pasos de la pregunta 1, para acceder a un curso seleccionado <br> siempre en la ventana: Cursos Asignados, se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> clic en el boton: Modulos del curso</li>
+                                    <li> en la ventana: Modulo , clic en el boton: Administrar Evaluaciones</li>
+                                    <ol id="final2"> En esta ventana: Evaluaciones, se mostraran todas las evaluaciones si existiesen.
+                                        <br> Las operaciones que se realizan sobre esta ventana son: <br> Agregar, editar y eliminar evaluaciones
+                                    </ol>
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 3 :
+                                <br> ¿Agregar evaluaciones?
+                            </strong><br>(<a href="#final3" id="alternar-respuesta-ej3">ver respuesta</a>)
+                        <div id="respuesta-ej3" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Realizar los pasos de la pregunta 1, para acceder a un curso seleccionado <br> siempre en la ventana: Cursos Asignados, se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> clic en el boton: Modulos del curso</li>
+                                    <li> en la ventana: Modulo , clic en el boton: Administrar Evaluaciones</li>
+                                    <li> En esta ventana: Evaluaciones, se mostraran todas las evaluaciones si existiesen</li>
+                                    <li> clic en el boton: + Agregar Evaluacion, en la siguiente ventana debera de colocar:
+                                        <ul type="circle">Evaluacion: un nombre corto descriptivo.</ul>
+                                        <ul type="circle">porcentaje: un valor entero 0 hasta 100, representativo de una nota porcentual</ul>
+                                    </li>
+                                    <li id="final3">Al finalizar, clic en guardar, para almacenar la esta evaluacion</li>
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 4 :
+                                <br> ¿Editar evaluaciones?
+                            </strong><br>(<a href="#final4" id="alternar-respuesta-ej4">ver respuesta</a>)
+                        <div id="respuesta-ej4" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Realizar los pasos de la pregunta 1, para acceder a un curso seleccionado <br> siempre en la ventana: Cursos Asignados, se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> clic en el boton: Modulos del curso</li>
+                                    <li> en la ventana: Modulo , clic en el boton: Administrar Evaluaciones</li>
+                                    <li> En esta ventana: Evaluaciones, se mostraran todas las evaluaciones si existiesen</li>
+                                    <li> clic en el boton: Editar, tiene una forma de un lapiz dentro de un recuadro azul y podra modificar:
+                                        <ul type="circle">Evaluacion: que es un nombre corto descriptivo.</ul>
+                                        <ul type="circle">porcentaje: un valor entero 0 hasta 100, representativo de una nota porcentual</ul>
+                                    </li>
+                                    <li id="final4">Al finalizar, clic en el boton: Actualizar, para almacenar los cambios</li>
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 5 :
+                                <br> ¿Eliminar evaluaciones?
+                            </strong><br>(<a href="#final5" id="alternar-respuesta-ej5">ver respuesta</a>)
+                        <div id="respuesta-ej5" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Realizar los pasos de la pregunta 1, para acceder a un curso seleccionado <br> siempre en la ventana: Cursos Asignados, se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> clic en el boton: Modulos del curso</li>
+                                    <li> en la ventana: Modulo , clic en el boton: Administrar Evaluaciones</li>
+                                    <li> En esta ventana: Evaluaciones, se mostraran todas las evaluaciones si existiesen</li>
+                                    <li id="final5"> clic en el boton: Eliminar, tiene una forma de un basurero dentro de un recuadro rojo:
+                                        <ol> podra eliminar una evaluacion si cumple con la condicion:
+                                            <ul type="circle">Si no tiene una nota de un alumno asociada con esta evaluacion a eliminar </ul>
+                                        </ol>
+                                    </li>
+
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 6 :
+                                <br> ¿Ver los alumnos inscritos en un cursos asignado?
+                            </strong><br>(<a href="#final6" id="alternar-respuesta-ej6">ver respuesta</a>)
+                        <div id="respuesta-ej6" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Realizar los pasos de la pregunta 1, para acceder a un curso seleccionado <br> siempre en la ventana: Cursos Asignados, se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> clic en el boton: Modulos del curso</li>
+                                    <li> en la ventana: Modulo , clic en el boton: Asignar Notas</li>
+                                    <li> En esta ventana: Alumnos Inscritos en el Curso, se mostraran todos los alumnos si existiesen</li>
+                                    <li id="final6">Los elementos de esta ventana son:
+                                        <ol>
+                                            <li type="circle">Una tabla con los alumnos inscritos, nombre, email, DUI </li>
+                                            <li type="circle">La accion de subir nota para un alumno inscrito </li>
+                                        </ol>
+                                    </li>
+
+                                </ol>
+                            </dl>
+                        </div>
+
+
+                        <p><strong>Pregunta 7 :
+                                <br> ¿Como Agregar o Subir Notas al sistema?
+                            </strong><br>(<a href="#final7" id="alternar-respuesta-ej7">ver respuesta</a>)
+                        <div id="respuesta-ej7" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Realizar los pasos de la pregunta 1, para acceder a un curso seleccionado <br> siempre en la ventana: Cursos Asignados, se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> clic en el boton: Modulos del curso</li>
+                                    <li> en la ventana: Modulo , clic en el boton: Asignar Notas</li>
+                                    <li> En esta ventana: Alumnos Inscritos en el Curso, se mostraran en una tabla todos los alumnos si existiesen.
+                                        <ol> Si en la tabla existe muchos alumnos y desea buscar uno en especifico:
+                                            <ol>
+                                                <li type="circle"> Existe un cuadro de texto llamado: Buscar:
+                                                    <br> ( esta posicionado en la tabla - superior derecha )
+                                                </li>
+                                                <li type="circle"> digite una palabra significativa para localizarlo</li>
+                                            </ol>
+                                        </ol>
+                                    </li>
+                                    <li>Una vez localizado, clic en el boton azul: Subir Notas,<br>en la ventana: Notas, se tiene los siguientes elementos:
+                                        <ol>
+                                            <li type="circle"> Una Tabla de resumen de la evaluaciones asignadas(Evaluacion, Nota, Porcentaje, Promedio)</li>
+                                            <li type="circle"> Un boton: +Subir Nota</li>
+                                        </ol>
+                                    </li>
+                                    <li>damos clic en el boton: +Subir Nota, aparecera la ventana: Agrega Nota</li>
+                                    <li>Seleccionamos una evaluacion del listado disponible e introducimos una nota,
+                                        <br> si no existiese evaluaciones a seleccionar entonces realizar los pasos de la pregunta 3, Agregar Evaluacion
+                                    </li>
+                                    <li id="final7">Al finalizar, clic en guardar, para almacenar esta nota</li>
+                                </ol>
+                            </dl>
+                        </div>
+
+                        <p><strong>Pregunta 8 :
+                                <br> ¿Se puede editar o modificar una nota subida?
+                            </strong><br>(<a href="#final8" id="alternar-respuesta-ej8">ver respuesta</a>)
+                        <div id="respuesta-ej8" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt id="final8">Estrictamente ningun USUARIO tiene autorizacion de: <br> modificar o cambiar una nota una vez que haya sido subida</dt>
+                                </ol>
+                            </dl>
+                        </div>
+
+
+                        <p><strong>Pregunta 9 :
+                                <br> ¿Como puedo cambiar mi contraseña ?
+                            </strong><br>(<a href="#final9" id="alternar-respuesta-ej9">ver respuesta</a>)
+                        <div id="respuesta-ej9" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Desde el Panel Navegacion del Tutor se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel Navegacion / clic en el boton:   Cambiar Contraseña</li>
+                                    <li> En la ventana: Cambiar Contraseña, se debe de hacer:
+                                        <ul type="circle" > Introducir el nuevo password en <br>los cuadros de: Password y confirmar Password</ul>
+                                    </li>
+                                    <li id="final9"> Al finalizar dar clic en el boton: Guardar Cambio, para realizar los cambios</li>
+
+                                </ol>
+                            </dl>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </fieldset>
     </form>
 
 {%endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('public/assets/js/jquery.fancyzoom.js') }}"></script>
+
+
+    <script>
+        $(document).ready(function(){
+
+            $("a.fancy").fancyZoom();
+
+            $('#nav1').on('click',function(){
+                cerrarTodo();
+                $('#mostrar1').toggle('slow');
+            });
+
+            $('#nav2').on('click',function(){
+                cerrarTodo();
+                $('#mostrar2').toggle('slow');
+            });
+
+            $('#nav3').on('click',function(){
+                cerrarTodo();
+                $('#mostrar3').toggle('slow');
+            });
+
+            $('#nav4').on('click',function(){
+                cerrarTodo();
+                $('#mostrar4').toggle('slow');
+            });
+
+            $('#nav5').on('click',function(){
+                cerrarTodo();
+                $('#mostrar5').toggle('slow');
+            });
+
+            $('#alternar1').on('click',function(){
+                $('#mostrar1').toggle('slow');
+            });
+
+            $('#alternar2').on('click',function(){
+                $('#mostrar2').toggle('slow');
+            });
+
+            $('#alternar3').on('click',function(){
+                $('#mostrar3').toggle('slow');
+            });
+
+            $('#alternar4').on('click',function(){
+                $('#mostrar4').toggle('slow');
+            });
+
+            $('#alternar5').on('click',function(){
+                $('#mostrar5').toggle('slow');
+            });
+
+
+            $('#nav11').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej1').toggle('slow');
+            });
+
+            $('#nav12').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej2').toggle('slow');
+            });
+
+            $('#nav13').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej3').toggle('slow');
+            });
+
+            $('#nav14').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej4').toggle('slow');
+            });
+
+            $('#nav15').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej5').toggle('slow');
+            });
+
+            $('#nav16').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej6').toggle('slow');
+            });
+
+            $('#nav17').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej7').toggle('slow');
+            });
+
+            $('#nav18').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej8').toggle('slow');
+            });
+
+            $('#nav19').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej9').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej1').on('click',function(){
+                $('#respuesta-ej1').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej2').on('click',function(){
+                $('#respuesta-ej2').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej3').on('click',function(){
+                $('#respuesta-ej3').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej4').on('click',function(){
+                $('#respuesta-ej4').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej5').on('click',function(){
+                $('#respuesta-ej5').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej6').on('click',function(){
+                $('#respuesta-ej6').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej7').on('click',function(){
+                $('#respuesta-ej7').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej8').on('click',function(){
+                $('#respuesta-ej8').toggle('slow');
+            });
+
+            $('#alternar-respuesta-ej9').on('click',function(){
+                $('#respuesta-ej9').toggle('slow');
+            });
+
+        });
+
+        function cerrarTodo(){
+            $('#mostrar1').toggle(false);
+            $('#mostrar2').toggle(false);
+            $('#mostrar3').toggle(false);
+            $('#mostrar4').toggle(false);
+            $('#mostrar5').toggle(false);
+
+            $('#respuesta-ej1').toggle(false);
+            $('#respuesta-ej2').toggle(false);
+            $('#respuesta-ej3').toggle(false);
+            $('#respuesta-ej4').toggle(false);
+            $('#respuesta-ej5').toggle(false);
+            $('#respuesta-ej6').toggle(false);
+            $('#respuesta-ej7').toggle(false);
+            $('#respuesta-ej8').toggle(false);
+            $('#respuesta-ej9').toggle(false);
+        }
+    </script>
+
+
+{% endblock %}
