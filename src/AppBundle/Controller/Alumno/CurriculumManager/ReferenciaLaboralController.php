@@ -170,8 +170,8 @@ class ReferenciaLaboralController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
+        $form->add('submit', 'submit', array('label' => 'Actualizar','attr' => array('class' => 'btn btn-primary square-btn-adjust',
+        )));
         return $form;
     }
     /**

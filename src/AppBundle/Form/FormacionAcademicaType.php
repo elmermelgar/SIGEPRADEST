@@ -22,8 +22,8 @@ class FormacionAcademicaType extends AbstractType
         $builder
             ->add('tipoFa')
             ->add('institucionFa')
-            ->add('fechaInicioFa')
-            ->add('fechaFinFa')
+            ->add('fechaInicioFa','text')
+            ->add('fechaFinFa','text')
             ->add('formal')
             ->add('imgTitulo','file')
             ->add('idCurriculum','entity',array('class'=>'AppBundle\Entity\Curriculum','property' =>'idCurriculum'))

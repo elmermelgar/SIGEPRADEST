@@ -1,57 +1,103 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li class="active">Formación Académica</li>
+        </ol>
+        <h2>Formación Académica</h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="col-md-12">
+    <!--   Kitchen Sink -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Formación Académica <a href="{{ path('formacionacademica_new', { 'curriculum': curriculum }) }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Nueva Formación Académica</a>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                    <tr>
+                        {#<th>Idfa</th>#}
+                        <th>Nombre</th>
+                        <th>Institucion</th>
+                        <th>Fecha de inicio</th>
+                        <th>Fechaf de fin</th>
+                        <th>Formal</th>
+                        <th>Imagen del titulo</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--recorro la llave y la entidad del arreglo de entidades  -->
+                    {% for  entity in entities %}
+                        <tr>
+                            {#<td>#}
+                                {#<a href="{{ path('formacionacademica_show', { 'id': entity.idFa }) }}">{{ entity.idFa }}</a>#}
+                            {#</td>#}
+                            <td>{{ entity.tipoFa }}</td>
+                            <td>{{ entity.institucionFa }}</td>
+                            <td>{% if entity.fechaInicioFa %}{{ entity.fechaInicioFa|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>{% if entity.fechaFinFa %}{{ entity.fechaFinFa|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>{% if entity.formal %}{{ "Si" }}{% else %}{{ "No" }}{% endif %}</td>
+                            <td style="width: 10%;"><img alt="EmbeddedImage" src="{{ entity.imgTitulo }}"  style="width: 100%;" /></td>
+                            {#<td><img alt="Embedded Image" src="data:image/png;base64,{{ images[key] }}" /></td>#}
+                            <td>
 
-{% block body -%}
-    <h1>FormacionAcademica list</h1>
+                                        <a class="btn btn-default" style="background: #0AA5E2;color: #ffffff;" href="{{ path('formacionacademica_show', { 'id': entity.idFa ,'curriculum': curriculum  }) }}"> <span class="glyphicon  glyphicon-pencil" aria-hidden="true" /> </a>
+                                        <br/>
+                                        <a class="btn btn-default" style="background: #0AA5E2;color: #ffffff;" href="{{ path('formacionacademica_edit', { 'id': entity.idFa,'curriculum': curriculum  }) }}">  <span class="glyphicon  glyphicon-eye-open" aria-hidden="true" /></a>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Idfa</th>
-                <th>Tipofa</th>
-                <th>Institucionfa</th>
-                <th>Fechainiciofa</th>
-                <th>Fechafinfa</th>
-                <th>Formal</th>
-                <th>Imgtitulso</th>
-                <th>Imgtitulo2</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        <!--recorro la llave y la entidad del arreglo de entidades  -->
-        {% for  entity in entities %}
-            <tr>
-                <td><a href="{{ path('formacionacademica_show', { 'id': entity.idFa }) }}">{{ entity.idFa }}</a></td>
-                <td>{{ entity.tipoFa }}</td>
-                <td>{{ entity.institucionFa }}</td>
-                <td>{% if entity.fechaInicioFa %}{{ entity.fechaInicioFa|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.fechaFinFa %}{{ entity.fechaFinFa|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.formal %}{{ "Si" }}{% else%}{{ "No" }}{% endif %}</td>
-                <td><img alt="EmbeddedImage" src="{{ entity.imgTitulo }}" style="width: 100%;" /></td>
-                {#<td><img alt="Embedded Image" src="data:image/png;base64,{{ images[key] }}" /></td>#}
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('formacionacademica_show', { 'id': entity.idFa ,'curriculum': curriculum  }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('formacionacademica_edit', { 'id': entity.idFa,'curriculum': curriculum  }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ul>
         <li>
-            <a href="{{ path('formacionacademica_new', { 'curriculum': curriculum }) }}">
-               Agregar nueva formacion academica
-            </a>
+
             <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
-                Regresar a Curriculum
+                Regresar a gestión de currículum
             </a>
         </li>
     </ul>
+
     {% endblock %}
+    {% block javascripts %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('exito') %}
+        <script>
+            window.onload = function notificacion(){
+                alertify.success("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+        {% endfor %}
+
+        <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+        <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+
+    {% endblock %}
+

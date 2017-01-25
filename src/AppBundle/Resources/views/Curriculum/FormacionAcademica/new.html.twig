@@ -1,8 +1,105 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 
-{% block body -%}
-    <h1>FormacionAcademica creation</h1>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
+            <li class="active">Crear</li>
+        </ol>
+        <h2>Nueva formación académica</h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading" style="padding-bottom: 15px;">
+                Creacion de una formación académica
+            </div>
+
+
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+                {% endfor %}
+
+<br/>
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+<br/>
+
     {{ form_start(form) }}
+
+                <div class="col-md-6">
+                    <div class="form-group" style=" /*display:none;">
+                        <label> <label>Nombre de formación</label> </label>
+                        {{ form_widget(form.tipoFa,{"attr":{"class":"form-control"},"required":"required"}) }}
+                    </div>
+
+
+                    
+                    <div class="form-group">
+                        <label> <label>Fecha de Inicio</label> </label>
+                        {{form_widget(form.fechaInicioFa, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+
+                     </div>
+
+                    <div class="form-group">
+                        <label> <label>Fecha de gruaduacion</label> </label>
+                 {{form_widget(form.fechaFinFa, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+
+                    </div>
+                  </div>
+
+
+                   <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label>Institucion de procedencia</label>
+
+                        {{ form_widget(form.institucionFa,{"attr":{"class":"form-control"},"required":"required"}) }}
+
+                    </div>
+
+
+                                <div class="form-group ">
+                                    <label> <label>Educacion Formal</label> </label><br>
+                                    {{ form_widget(form.formal,{"attr":{"class":""},"required":"required"}) }}
+                                </div>
+
+
+                                <div class="form-group ">
+                                    <label> <label>Imagen del titulo</label> </label><br>
+                                    {{ form_widget(form.imgTitulo,{"attr":{"class":""},"required":"required"}) }}
+                                </div>
+                   </div>
+
+</table></div>
+
+
+
+
+
     {#{{ form(form) }}#}
     {#{{form_widget(form.tipoFa,{"attr":{"style":"background-color:white;"}})}}#}
     {#{{form_widget(form.institucionFa,{"attr":{"style":"background-color:white;"} })}}#}
@@ -10,13 +107,31 @@
     {#{{form_widget(form.fechaFinFa,{"attr":{"style":"background-color:white;"} })}}#}
     {#{{form_widget(form.formal,{"attr":{"style":"background-color:white;"} })}}#}
     {#{{form_widget(form.imgTitulo,{"attr":{"style":"background-color:white;"} })}}#}
-    {{form_widget(form.idCurriculum, {'value': curriculum, "attr":{"style":"display:nosne;"}}) }}
+    {{form_widget(form.idCurriculum, {'value': curriculum, "attr":{"style":"display:none;"}}) }}
     {{ form_end(form) }}
+
+
+
+
+</div>
+    </div><!--/span-->
+
+
         <ul class="record_actions">
     <li>
         <a href="{{ path('formacionacademicaCurriculum' ,{ 'cur': curriculum }) }}">
-            Back to the list
+            Regresar Formación académica
         </a>
     </li>
 </ul>
+
+
+
+
+
+{{ form_widget(form.submit) }}
+</div><!--/row-->
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
 {% endblock %}

@@ -96,6 +96,14 @@ class FormacionAcademicaController extends Controller
             //metemos los binarios de data en la entidad
             $entity->setImgTitulo("../../../public/img/formacion/" . $nombreArchivo);
 
+            //tranformamos las fechas de texto al tipo esparado en la base
+
+            $entity->setFechaInicioFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaInicioFa())) );
+            $entity->setFechaFinFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaFinFa())) );
+
+
+
+
 //          persistimos-----------------------------------fin de file-----------------
 
 
@@ -122,13 +130,14 @@ class FormacionAcademicaController extends Controller
      */
     private function createCreateForm(FormacionAcademica $entity, $cur)
     {
-        var_dump($cur);
+//        var_dump($cur);
         $form = $this->createForm(new FormacionAcademicaType(), $entity, array(
             'action' => $this->generateUrl('formacionacademica_create',array('curriculum'=>$cur )),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
 
         return $form;
     }
@@ -200,6 +209,10 @@ class FormacionAcademicaController extends Controller
             throw $this->createNotFoundException('Unable to find FormacionAcademica entity.');
         }
 
+        $entity->setFechaInicioFa($entity->getFechaInicioFa()->format('d-m-Y') );
+        $entity->setFechaFinFa($entity->getFechaFinFa()->format('d-m-Y'));
+
+
         $editForm = $this->createEditForm($entity,$cur);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -231,7 +244,8 @@ class FormacionAcademicaController extends Controller
             'method' => 'PUT',
         ));
 //        $form->remove('imgTitulo');
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar','attr' => array('class' => 'btn btn-primary square-btn-adjust',
+        )));
 
         return $form;
     }
@@ -263,6 +277,7 @@ class FormacionAcademicaController extends Controller
 
         if ($editForm->isValid()) {
 
+
             if ($editForm['imgTitulo']->getData() == null)
                 $entity->setImgTitulo($exArchivo);
             else {
@@ -290,6 +305,12 @@ class FormacionAcademicaController extends Controller
 
 
             }
+
+            //ponemos en el formato correcot las fechas que actualemnte son texto
+            $entity->setFechaInicioFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaInicioFa())) );
+            $entity->setFechaFinFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaFinFa())) );
+//ahora las fechas tipo date en el formato que espera la base
+
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add(
@@ -300,10 +321,14 @@ class FormacionAcademicaController extends Controller
             return $this->redirect($this->generateUrl('formacionacademica_show', array('id' => $id,'curriculum'=>$cur )));
         }
 
+//            print_r($editForm);
+
+
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'curriculum'=>$cur,
         );
     }
 
@@ -352,7 +377,7 @@ class FormacionAcademicaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('formacionacademica_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm();
     }
 }
