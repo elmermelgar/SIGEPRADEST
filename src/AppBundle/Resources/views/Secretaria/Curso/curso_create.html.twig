@@ -85,7 +85,7 @@
                             <label class="control-label" for="prependedInput">Imagen Publicitaria</label>
                             <div class="controls">
                                 <div class="input-prepend">
-                                    <input id="imagen" type="file" name="imagen">
+                                    <input class="form-control" id="imagen" type="file" name="imagen">
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                                 <label class="control-label" for="prependedInput">Broschure de Información (PDF)</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <input id="archivo" type="file"  name="archivo">
+                                        <input class="form-control" id="archivo" type="file"  name="archivo">
                                     </div>
                                 </div>
                             </div>
@@ -227,12 +227,11 @@
                         <br><br>
                         <div class="col-md-12" style="text-align: center; margin-top: 10px">
                             <button onclick="validar()" type="button" class="btn btn-primary" style="width: 15%;">Guardar</button>
+                            <button type="reset" class="btn btn-default" style="width: 15%;">Limpiar</button>
                         </div>
-
                 </form>
             </div>
         </div><!--/span-->
-
     </div><!--/row-->
 {% endblock %}
 {% block javascripts %}

@@ -29,12 +29,13 @@
                             <div class="control-group" >
                                 <div class="controls">
                                     <a href="" onclick="window.open('{{ asset('public') }}/{{ datos.broshureInformativo}}');">
-                                        <img src="{{ asset('public') }}/{{ datos.broshureInformativo }}" alt="img1" style="width: 520px; height: 500px;"></a>
+                                        <img src="{{ asset('public') }}/{{ datos.broshureInformativo }}" alt="img1" style="width: 100%; height: auto;"></a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6" class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
+
+                        <div class="col-md-6" style="margin-top: 18px;margin-bottom: 18px;">
                             <div class="control-group" >
                                 <label class="control-label" for="prependedInput">Broschure de Información (PDF)</label>
                                 <div class="controls">
@@ -88,9 +89,7 @@
                                 <div class="controls">
                                     <div class="input-prepend">
                                         {% for doc in doc %}
-                                                {% if d1 == NULL %}
-                                                    <option value="{{ doc.id_doctores }}">{{ doc.nombre_doc }}</option>
-                                                {% else %}
+                                                {% if d1 != "" %}
                                                     {% for d1 in d1 %}
                                                         {% if doc.idDoctores == d1.id_doctores %}
                                                            - {{ doc.nombreDoc }} {{ doc.apellidoDoc }}<br>
@@ -102,11 +101,84 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <br>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <a class="btn btn-info" data-toggle="modal" data-target="#ModalImg"><i aria-hidden="true"></i> Cambiar Imagen </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="ModalImg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                <h4 class="modal-title" id="myModalLabel">Cambiar imagen de {{ datos.nombreCurso }}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="col-md-12">
+                                                    <form role="form" action="{{ path('camImg', {'idcurso': datos.idCurso}) }}" method="post" enctype="multipart/form-data" >
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" id="imagen" name="imagen" type="file" required/>
+                                                            </div>
+                                                        <div class="col-md-12 col-md-offset-3">
+                                                            <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar </button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <div class="col-md-6">
+                                <br>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <a class="btn btn-info" data-toggle="modal" data-target="#ModalPDF"><i aria-hidden="true"></i> Cambiar PDF </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="ModalPDF" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            <h4 class="modal-title" id="myModalLabel">Cambiar Archivo PDF de {{ datos.nombreCurso }}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-md-12">
+                                                <form role="form" action="{{ path('camPDF', {'idcurso': datos.idCurso}) }}" method="post" enctype="multipart/form-data" >
+
+                                                    <div class="form-group">
+                                                        <input class="form-control" id="archivo" name="archivo" type="file" required/>
+                                                    </div>
+                                                    <div class="col-md-12 col-md-offset-3">
+                                                        <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar </button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
                     <h2>Fechas de {{ datos.nombreCurso }}</h2>
-                    <hr>
+                <hr>
                     <fieldset>
                         <div class="col-md-3">
                             <div class="control-group" >

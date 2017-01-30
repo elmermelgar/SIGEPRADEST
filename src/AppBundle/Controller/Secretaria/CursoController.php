@@ -178,96 +178,66 @@ class CursoController extends DSIController
      */
     public function editCursoAction($id, Request $request)
     {
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         //$doc = $em->getRepository("AppBundle:Doctores")->findBy(array(),array('nombreDoc'=>'ASC'));
 
-        $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
-        $datos=$em->getRepository('AppBundle:Curso')->find($id);
-        $hc=$em->getRepository('AppBundle:HorarioCurso')->findOneBy(array('idCurso'=> $id));
-        $id_hc=$hc->getIdHc();
-        $hc=$em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
-        $d1=$this->mostrarD1s($id);
+        $tc = $em->getRepository("AppBundle:TipoCurso")->findAll();
+        $datos = $em->getRepository('AppBundle:Curso')->find($id);
+        $hc = $em->getRepository('AppBundle:HorarioCurso')->findOneBy(array('idCurso' => $id));
+        $id_hc = $hc->getIdHc();
+        $hc = $em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
+        $d1 = $this->mostrarD1s($id);
 
         $db = $em->getConnection();
-        $sql = "SELECT r.*,d.nombre_doc,d.apellido_doc FROM doctores d LEFT JOIN d1 r ON d.id_doctores = r.id_doctores AND r.id_curso = $id";
+        $sql = "SELECT r.*,d.id_doctores,d.nombre_doc,d.apellido_doc FROM doctores d LEFT JOIN d1 r ON d.id_doctores = r.id_doctores AND r.id_curso = $id";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $doc = $stmt->fetchAll();
 
         //Verificando que hay una peticion POST
-        if($request->isMethod("POST")) {
-            if ($_FILES["imagen"]["error"] > 0){
-                return new Response('Error en la subida de la imagen');
-            }else{
-                if($_FILES["archivo"]["error"] > 0){
-                    return new Response('Error en la subida de la del PDF');
-                }else {
-                    if($this->infoTipoImagen('imagen')[0]=='image'){
-                        if($this->infoTipoImagen('archivo')[0]=='application'){
-                            $nomCurso=$request->get('nombrecurso');
-                            $nombreImagen=$nomCurso.$this->infoTipoImagen('imagen')[1];
-                            $nombrePDF=$nomCurso.$this->infoTipoImagen('archivo')[1];
+        if ($request->isMethod("POST")) {
 
-                            //Recuperar valores enviados
-                            $nom_cur = $request->get("nombrecurso");
-                            $nun_cuo = $request->get("nun_cuo");
-                            $can_alum = $request->get("cant_alum");
-                            $des_info = $request->get("des_info");
-                            $tc = $request->get("tc");
-                            $array_doc = $request->get("doc");
+            //Recuperar valores enviados
+            $nom_cur = $request->get("nombrecurso");
+            $nun_cuo = $request->get("nun_cuo");
+            $can_alum = $request->get("cant_alum");
+            $des_info = $request->get("des_info");
+            $tc = $request->get("tc");
+            $array_doc = $request->get("doc");
 
-                            //Proceso de almacenamiento de datos en entidad Curso
-                            $datos->setIdTc($em->getRepository("AppBundle:TipoCurso")->find($tc));
-                            $datos->setNombreCurso($nom_cur);
-                            $datos->setCantAlumnosLimit($can_alum);
-                            $datos->setTextoInformativo($des_info);
-                            if($nombreImagen!=NULL){
-                                $datos->setBroshureInformativo("img/brochure/".$nombreImagen);
-                            }
-                            if($nombrePDF!=NULL){
-                                $datos->setRutaPdf("img/pdf/".$nombrePDF);
-                            }
-                            $datos->setNumCuotas($nun_cuo);
+            //Proceso de almacenamiento de datos en entidad Curso
+            $datos->setIdTc($em->getRepository("AppBundle:TipoCurso")->find($tc));
+            $datos->setNombreCurso($nom_cur);
+            $datos->setCantAlumnosLimit($can_alum);
+            $datos->setTextoInformativo($des_info);
 
-                            //Proceso de almacenamiento de datos de entidad Horario Curso
-                            $hc->setFechaInicio(new \DateTime($request->get("fechaini")));
-                            $hc->setFechaFin(new \DateTime($request->get("fechafin")));
-                            $hc->setInicioRecepDoc(new \DateTime($request->get("fechainirec")));
-                            $hc->setFinRecepDoc(new \DateTime($request->get("fechafinrec")));
-                            $hc->setDefechaEntrevista(new \DateTime($request->get("fechainientre")));
-                            $hc->setAfechaEntrevista(new \DateTime($request->get("fechafinentre")));
-                            $hc->setDefechaEvaluacion(new \DateTime($request->get("fechainieva")));
-                            $hc->setAfechaEvaluacion(new \DateTime($request->get("fechafineva")));
+            $datos->setNumCuotas($nun_cuo);
 
-                            //Guradar en la BD
-                            $em->flush();
+            //Proceso de almacenamiento de datos de entidad Horario Curso
+            $hc->setFechaInicio(new \DateTime($request->get("fechaini")));
+            $hc->setFechaFin(new \DateTime($request->get("fechafin")));
+            $hc->setInicioRecepDoc(new \DateTime($request->get("fechainirec")));
+            $hc->setFinRecepDoc(new \DateTime($request->get("fechafinrec")));
+            $hc->setDefechaEntrevista(new \DateTime($request->get("fechainientre")));
+            $hc->setAfechaEntrevista(new \DateTime($request->get("fechafinentre")));
+            $hc->setDefechaEvaluacion(new \DateTime($request->get("fechainieva")));
+            $hc->setAfechaEvaluacion(new \DateTime($request->get("fechafineva")));
 
-                            //Subiendo la Imagen
-                            $this->subirImagen('imagen',$nombreImagen);
-                            //Subiendo el PDF
-                            $this->subirPDF('archivo',$nombrePDF);
+            //Guradar en la BD
+            $em->flush();
 
-                            $this->del_d1($id);
+            $this->del_d1($id);
 
-                            //Manejando relación de muchos a muchos
-                            for ($i = 0; $i < count($array_doc); $i++) {
+            //Manejando relación de muchos a muchos
+            for ($i = 0; $i < count($array_doc); $i++) {
 
-                                $this->manytomany($id,$array_doc[$i]);
-                            }
-                            $this->MensajeFlash('exito','El Curso se Edito correctamente!');
-                            return $this->redirectToRoute("verCurso");
-
-                        }else
-                            $this->MensajeFlash('error','El archivo no es un PDF!');
-                            return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1));
-                    }
-                    else
-                        $this->MensajeFlash('error','El Archivo no es una imagen!');
-                        return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1));
-                }
+                $this->manytomany($id, $array_doc[$i]);
             }
+            $this->MensajeFlash('exito', 'El Curso se Edito correctamente!');
+            return $this->redirectToRoute("verCurso");
+
         }
-        return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1));
+        return $this->render("AppBundle:Secretaria/Curso:curso_edit.html.twig", array("tc" => $tc, 'datos' => $datos, "doc" => $doc, "hc" => $hc, "d1" => $d1));
     }
 
     /**
@@ -311,4 +281,62 @@ class CursoController extends DSIController
 
         return $this->redirectToRoute("verCurso");
     }
+
+    /**
+     * @Route("/secretaria/curso_cambiarImg/{idcurso}",name="camImg")
+     */
+    public function cambiarImg($idcurso, Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $c = $em->getRepository('AppBundle:Curso')->find($idcurso);
+
+        //Verificando que hay una peticion POST
+        if($request->isMethod("POST")) {
+            if ($_FILES["imagen"]["error"] > 0) {
+                return new Response('Error en la subida de la imagen');
+            } else {
+                if ($this->infoTipoImagen('imagen')[0] == 'image') {
+                    $nomCurso = $c->getNombreCurso();
+                    $nombreImagen = $nomCurso . $this->infoTipoImagen('imagen')[1];
+                    //Subiendo la Imagen
+                    $this->subirImagen('imagen', $nombreImagen);
+                    $this->MensajeFlash('exito', 'Imagen del curso editada correctamente!');
+                    return $this->redirectToRoute("detallesCurso", array('id' => $idcurso));
+                } else {
+                    $this->MensajeFlash('error', 'El archivo no es una imagen!');
+                    return $this->redirectToRoute("detallesCurso", array('id' => $idcurso));
+                }
+            }
+        }
+
+    }
+
+    /**
+     * @Route("/secretaria/curso_cambiarPDF/{idcurso}",name="camPDF")
+     */
+    public function cambiarPDF($idcurso, Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $c = $em->getRepository('AppBundle:Curso')->find($idcurso);
+
+        //Verificando que hay una peticion POST
+        if($request->isMethod("POST")) {
+            if($_FILES["archivo"]["error"] > 0){
+                return new Response('Error en la subida de la del PDF');
+            }else {
+                if($this->infoTipoImagen('archivo')[0]=='application'){
+                    $nomCurso=$c->getNombreCurso();
+                    $nombrePDF=$nomCurso.$this->infoTipoImagen('archivo')[1];
+                    //Subiendo el PDF
+                    $this->subirPDF('archivo',$nombrePDF);
+                    $this->MensajeFlash('exito','PDF del curso editado correctamente!');
+                    return $this->redirectToRoute("detallesCurso",array('id'=>$idcurso));
+                }
+                else{
+                    $this->MensajeFlash('error','El archivo no es un PDF!');
+                    return $this->redirectToRoute("detallesCurso",array('id'=>$idcurso));
+                }
+            }
+        }
+    }
+
+
 }
