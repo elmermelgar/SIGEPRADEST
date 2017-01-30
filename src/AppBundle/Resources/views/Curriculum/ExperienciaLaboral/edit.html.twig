@@ -1,26 +1,108 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 
-{% block body -%}
-    <h1>ExperienciaLaboral edit</h1>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('secretaria_experiencialaboral', { 'cur': curriculum }) }}">Experiencia Laboral</a></li>
+            <li class="active">Edición </li>
+        </ol>
+        <h2>Edición de Experiencia Laboral </h2>
+    </div>
 
-    {#{{ form(edit_form) }}#}
+{% endblock %}
+{% block body %}
+<div class="col-md-12">
+    <!--   Kitchen Sink -->
+    <div class="panel panel-default">
+        <div class="panel-heading" style="padding-bottom: 15px;">
+            Edición de Experiencia Laboral
+        </div>
 
 
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <script>
+                window.onload = function error(){
+                    alertify.error("{{ flashMessage }}.");
+                    return false;
+                }
+            </script>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('exito') %}
+            <script>
+                window.onload = function notificacion(){
+                    alertify.success("{{ flashMessage }}.");
+                    return false;
+                }
+            </script>
+        {% endfor %}
+
+        <br/>
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+            <br/>
     {{ form_start(edit_form) }}
     {#{{ form_widget(edit_form, { attr: {novalidate: 'novalidate'} }) }}#}
 
-    {{form_widget(edit_form.idCurriculum, {attr :{"style":"display:none;"}}) }}
+    <div class="col-md-6">
+{{form_widget(edit_form.idCurriculum, {attr :{"style":"display:none;"}}) }}
 
+     <div class="form-group" style=" /*display:none;">
+        <label>Nombre de formación</label>
+           {{ form_widget(edit_form.institucionEl,{"attr":{"class":"form-control"},"required":"required"}) }}
+      </div>
 
-    {{ form_end(edit_form) }}
+       <div class="form-group" style=" /*display:none;">
+        <label>Cargo</label>
+           {{ form_widget(edit_form.cargoEl,{"attr":{"class":"form-control"},"required":"required"}) }}
+      </div>
 
+       <div class="form-group" style=" /*display:none;">
+        <label>País</label>
+           {{ form_widget(edit_form.paisEl,{"attr":{"class":"form-control"},"required":"required"}) }}
+      </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('secretaria_experiencialaboral',{ 'cur': curriculum }) }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+      <br><br>
+ <div class="form-group" style=" /*display:none;">
+
+    {{ form_widget(edit_form.submit) }}
+       </div>
+
+    </div>
+    <div class="col-md-6">
+
+       <div class="form-group" style=" /*display:none;">
+        <label>País</label>
+    {{form_widget(edit_form.fechaInicioEl, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+     </div>
+
+       <div class="form-group" style=" /*display:none;">
+        <label>País</label>
+     {{form_widget(edit_form.fechaFinEl, {"attr":{"style":" width: 80%;",'class': 'form-control', 'data-provide':'datepicker', 'data-date-format' : 'dd-mm-yyyy','data-date-language' : 'es', 'required' : true  } }) }}
+     </div>
+
+       <div class="form-group" style=" /*display:none;">
+        <label>Información adicional </label>
+
+           {{ form_widget(edit_form.infoAdicionalEl,{"attr":{"class":"form-control"},"required":"required"}) }}
+      </div>
+
+<br/>
+       {{ form_end(edit_form) }}
+    </div>
+
+<br/>
+
+   {{ form(delete_form) }}
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
+
 {% endblock %}

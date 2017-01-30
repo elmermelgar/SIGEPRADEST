@@ -9,8 +9,8 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('admin') }}">Inicio</a></li>
-            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
+            <li><a href="{{ path('curriculumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('formacionacademicaCurriculum', { 'cur': curriculum }) }}">Formación Académica</a></li>
             <li class="active">Crear</li>
         </ol>
         <h2>Nueva formación académica</h2>

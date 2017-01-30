@@ -15,7 +15,7 @@ class ReferenciaLaboralType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcionRf')
+            ->add('descripcionRf','textarea')
             ->add('personaRf')
             ->add('telefonoRf')
             ->add('puestoRf')

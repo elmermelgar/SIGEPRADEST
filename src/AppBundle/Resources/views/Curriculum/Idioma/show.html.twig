@@ -1,48 +1,115 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 
-{% block body -%}
-    <h1>Idioma</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Ididioma</th>
-                <td>{{ entity.idIdioma }}</td>
-            </tr>
-            <tr>
-                <th>Idioma</th>
-                <td>{{ entity.idioma }}</td>
-            </tr>
-            <tr>
-                <th>Comprensionauditiva</th>
-                <td>{{ entity.comprensionAuditiva }}</td>
-            </tr>
-            <tr>
-                <th>Expresionoral</th>
-                <td>{{ entity.expresionOral }}</td>
-            </tr>
-            <tr>
-                <th>Expresionescrita</th>
-                <td>{{ entity.expresionEscrita }}</td>
-            </tr>
-            <tr>
-                <th>Leguamaterna</th>
-                <td>{{ entity.leguaMaterna }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('idioma',{ 'cur': curriculum }) }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('idioma_edit', { 'id': entity.idIdioma }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('idioma', { 'cur': curriculum }) }}">Otras competencias</a></li>
+            <li class="active">Detalles</li>
+        </ol>
+        <h2>Competencia</h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading" style="padding-bottom: 15px;">
+                Competencia
+            </div>
+
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+
+            <br/>
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                <br/>
+
+
+                <fieldset>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label>Idioma</label> <br/>
+                            {{ entity.idioma }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Comprensionauditiva </label> <br/>
+                            {{ entity.comprensionAuditiva }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Expresionoral </label> <br/>
+                           {{ entity.expresionOral }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label>Expresión Escrita</label> <br/>
+                            {{ entity.expresionEscrita }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Legua materna </label> <br/>
+                            {% if entity.leguaMaterna %}{{ "Si" }}{% else %}{{ "No" }}{% endif %}
+                        </div>
+
+
+
+
+                    </div>
+
+
+                </fieldset>
+                <br/>
+
+                <div class="col-xs-3">
+                    <a href="{{ path('idioma',{ 'cur': curriculum }) }}" class='btn btn-info square-btn-adjust' >
+                        Regresar
+                    </a>
+                </div>
+                <div class="col-xs-3">
+
+                    {{ form(delete_form) }}
+
+                </div>
+
+                <br/> <br/> <br/>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
+
+{% endblock %}
+

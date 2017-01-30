@@ -9,11 +9,11 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('admin') }}">Inicio</a></li>
-            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
+            <li><a href="{{ path('curriculumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('formacionacademicaCurriculum', { 'cur': curriculum }) }}">Formación Académica</a></li>
             <li class="active">Detalles</li>
         </ol>
-        <h2>FormacionAcademica edit  </h2>
+        <h2>Edición de Formación Académica </h2>
     </div>
 
 {% endblock %}
@@ -69,11 +69,14 @@
 
                 </div>
 
-                {{ form_widget(edit_form.submit) }}                <br/> <br/>
+                {{ form_widget(edit_form.submit) }}                <br/>
 
-                {{ form(delete_form) }}
+                {#{{ form(delete_form) }}#}
                 <br/>
-                <a href="{{ path('formacionacademicaCurriculum' ,{ 'cur': curriculum }) }}">Regresar Formación académica</a>
+                {#<a href="{{ path('formacionacademicaCurriculum' ,{ 'cur': curriculum }) }}">Regresar Formación académica</a>#}
+                <a href="{{ path('formacionacademica_delete2' ,{ 'id': id }) }}" class='btn btn-danger square-btn-adjust' >Eliminar</a>
+
+                <br/><br/>
             </div>
 
 
@@ -98,7 +101,7 @@
                     {{ form_widget(edit_form.imgTitulo,{"attr":{"class":""},"required":"required"}) }}
                 </div>
 
-                {#{{form_widget(edit_form.idCurriculum, {'value': curriculum, "attr":{"style":"display:none;"}}) }}#}
+                {{form_widget(edit_form.idCurriculum, {'value': curriculum, "attr":{"style":"display:none;"}}) }}
 
             </div>
 

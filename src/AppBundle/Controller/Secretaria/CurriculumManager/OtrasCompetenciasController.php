@@ -78,7 +78,8 @@ class OtrasCompetenciasController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
 
         return $form;
     }
@@ -199,7 +200,7 @@ class OtrasCompetenciasController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('secretaria_otrascompetencias_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('secretaria_otrascompetencias_show', array('id' => $id)));
         }
 
         return array(
@@ -247,7 +248,7 @@ class OtrasCompetenciasController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('secretaria_otrascompetencias_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm()
         ;
     }

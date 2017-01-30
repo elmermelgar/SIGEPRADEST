@@ -1,55 +1,129 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 
-{% block body -%}
-    <h1>FormacionAcademica</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Idfa</th>
-                <td>{{ entity.idFa }}</td>
-            </tr>
-            <tr>
-                <th>Tipofa</th>
-                <td>{{ entity.tipoFa }}</td>
-            </tr>
-            <tr>
-                <th>Institucionfa</th>
-                <td>{{ entity.institucionFa }}</td>
-            </tr>
-            <tr>
-                <th>Fechainiciofa</th>
-                <td>{{ entity.fechaInicioFa|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Fechafinfa</th>
-                <td>{{ entity.fechaFinFa|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Formal</th>
-                <td>{{ entity.formal }}</td>
-            </tr>
-            <tr>
-                <th>Imgtitulo</th>
-                {#<td>{{ entity.imgTitulo }}</td>#}
-                <td><img alt="EmbeddedImage" src="{{ entity.imgTitulo }}"/></td>
-
-            </tr>
-
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('formacionacademicaCurriculum' ,{ 'cur': curriculum }) }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('formacionacademica_edit', { 'id': entity.idFa,'curriculum': curriculum  }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('formacionacademicaCurriculum', { 'cur': curriculum }) }}">Formación Académica</a></li>
+            <li class="active">Detalles</li>
+        </ol>
+        <h2>Formación Académica </h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading" style="padding-bottom: 15px;">
+               formación académica
+            </div>
+
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+
+            <br/>
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                <br/>
+
+
+                 <fieldset>
+                    <div class="col-md-6">
+
+
+                        <div class="form-group">
+                            <label> <label>Imagen del titulo</label> </label>
+                            <br/>
+                           <img  style="width: 100%;" alt="EmbeddedImage" src="{{ entity.imgTitulo }}"/>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group" style=" /*display:none;">
+                            <label> <label>Nombre de formación</label> </label> <br/>
+                            {{ entity.tipoFa }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Institución de procedencia</label><br/>
+                            {{ entity.institucionFa }}
+
+                        </div>
+
+                        <div class="form-group">
+                            <label> <label>Fecha de Inicio</label> </label><br/>
+                            {{ entity.fechaInicioFa|date('Y-m-d H:i:s') }}
+
+                        </div>
+
+                        <div class="form-group">
+                            <label> <label>Fecha de gruaduacion</label> </label><br/>
+
+                            {{ entity.fechaFinFa|date('Y-m-d H:i:s') }}
+                        </div>
+
+
+
+                        <div class="form-group ">
+                            <label> <label>Educacion Formal</label> </label><br>
+                            {% if entity.formal %}{{ "Si" }}{% else %}{{ "No" }}{% endif %}
+                         </div>
+
+
+
+
+
+
+                    </div>
+
+
+
+                </fieldset>
+
+
+                <div class="col-xs-2">
+                    <a href="{{ path('formacionacademica_delete2' ,{ 'id': id }) }}" class='btn btn-danger square-btn-adjust' >Eliminar</a>
+                </div>
+                <div class="col-xs-2">
+                    <a href="{{ path('formacionacademicaCurriculum', { 'cur': curriculum }) }}"class='btn btn-info square-btn-adjust' >Regresar</a>
+                </div>
+                <br><br>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
+
+{% endblock %}
+

@@ -18,9 +18,9 @@ class ExperienciaLaboralType extends AbstractType
             ->add('institucionEl')
             ->add('cargoEl')
             ->add('paisEl')
-            ->add('fechaInicioEl')
-            ->add('fechaFinEl')
-            ->add('infoAdicionalEl')
+            ->add('fechaInicioEl','text')
+            ->add('fechaFinEl','text')
+            ->add('infoAdicionalEl', 'textarea')
             ->add('idCurriculum','entity',array('class'=>'AppBundle\Entity\Curriculum','property' =>'idCurriculum'))
         ;
     }

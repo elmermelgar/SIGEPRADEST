@@ -1,48 +1,114 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 
-{% block body -%}
-    <h1>ReferenciaLaboral</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Idrf</th>
-                <td>{{ entity.idRf }}</td>
-            </tr>
-            <tr>
-                <th>Descripcionrf</th>
-                <td>{{ entity.descripcionRf }}</td>
-            </tr>
-            <tr>
-                <th>Personarf</th>
-                <td>{{ entity.personaRf }}</td>
-            </tr>
-            <tr>
-                <th>Telefonorf</th>
-                <td>{{ entity.telefonoRf }}</td>
-            </tr>
-            <tr>
-                <th>Puestorf</th>
-                <td>{{ entity.puestoRf }}</td>
-            </tr>
-            <tr>
-                <th>Empresaorigenrf</th>
-                <td>{{ entity.empresaOrigenRf }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('secretaria_referencialaboral',{ 'cur': curriculum }) }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('secretaria_referencialaboral_edit', { 'id': entity.idRf }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('secretaria_referencialaboral', { 'cur': curriculum }) }}">Referencia laboral</a></li>
+            <li class="active">Detalles</li>
+        </ol>
+        <h2>Referencia laboral</h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading" style="padding-bottom: 15px;">
+                Referencia laboral
+            </div>
+
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+
+            <br/>
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                <br/>
+
+
+                <fieldset>
+                    <div class="col-md-6">
+
+
+                        <div class="form-group">
+                            <label>Persona</label> <br/>
+                            {{ entity.personaRf }}
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label> <br/>
+                            {{ entity.telefonoRf }}
+                        </div>
+                        <div class="form-group">
+                            <label>Descripcion</label> <br/>
+                            {{ entity.descripcionRf }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label>Puesto</label> <br/>
+                            {{ entity.puestoRf }}
+                        </div>
+                        <div class="form-group">
+                            <label>Empresa de referencia</label> <br/>
+                            {{ entity.empresaOrigenRf }}
+                        </div>
+
+
+                    </div>
+
+
+                </fieldset>
+                <br/>
+
+                <div class="col-xs-2">
+                    <a href="{{ path('secretaria_referencialaboral',{ 'cur': curriculum }) }}" class='btn btn-info square-btn-adjust' >
+                        Regresar
+                    </a>
+                </div>
+                <div class="col-xs-2">
+
+                    {{ form(delete_form) }}
+
+                </div>
+
+                <br/> <br/> <br/>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
+
+{% endblock %}
+
+
+
+

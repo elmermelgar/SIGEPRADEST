@@ -1,21 +1,111 @@
-{% extends '::base2.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 
-{% block body -%}
-    <h1>Idioma edit</h1>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('idioma', { 'cur': curriculum }) }}">Idioma</a>
+            </li>
+            <li class="active">Actualizar</li>
+        </ol>
+        <h2>Actualizar idioma</h2>
+    </div>
 
-    {#{{ form(edit_form) }}#}
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading" style="padding-bottom: 15px;">
+                Actualización de un idioma
+            </div>
 
-    {{ form_start(edit_form) }}
-    {{form_widget(edit_form.idCurriculum, {attr :{"style":"display:none;"}}) }}
-    {{ form_end(edit_form) }}
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+
+            <br/>
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                <br/>
+
+                {{ form_start(edit_form) }}
+
+                {{form_widget(edit_form.idCurriculum, {'value': curriculum, "attr":{"style":"display:none;"}}) }}
 
 
-    <ul class="record_actions">
-    <li>
-        <a href="{{ path('idioma',{ 'cur': curriculum }) }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label>Idioma</label>
+                        {{ form_widget(edit_form.idioma,{"attr":{"class":"form-control"},"required":"required"}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Comprensión Auditiva</label>
+                        {{ form_widget(edit_form.comprensionAuditiva,{"attr":{"class":"form-control"},"required":"required"}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Expresión Oral</label>
+                        {{ form_widget(edit_form.expresionOral,{"attr":{"class":"form-control"},"required":"required"}) }}
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label>Expresión Escrita </label>
+                        {{ form_widget(edit_form.expresionEscrita,{"attr":{"class":"form-control"},"required":"required"}) }}
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Lengua Materna</label> <br/>
+                        {{ form_widget(edit_form.leguaMaterna) }}
+
+                    </div>
+
+
+
+
+                </div>
+
+
+                <div class="col-md-12 text-center">
+                    <br/>
+                    {{ form_widget(edit_form.submit) }}<br/><br/>
+                </div>
+                <br/><br/>
+                {{ form_end(edit_form) }}
+
+            </table>
+        </div>
+
+
+    </div><!--/row-->
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
 {% endblock %}

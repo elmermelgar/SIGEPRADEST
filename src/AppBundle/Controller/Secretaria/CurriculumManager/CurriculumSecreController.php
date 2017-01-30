@@ -33,9 +33,18 @@ class CurriculumSecreController extends Controller
 
         $entities = $em->getRepository('AppBundle:Curriculum')->findAll();
 
+        //obtencion del nombre del usuario
+        $usuario = $em->getRepository('AppBundle:Curriculum')->findOneBy(array('idCurriculum' => $id));
+        $nombre = $usuario->getIdAlumno()->getIdUi()->getNombre();
+        $apellido = $usuario->getIdAlumno()->getIdUi()->getApellido();
+
+
+
         return array(
             'entities' => $entities,
             'curriculum' => $id,
+            'nombre' => $nombre,
+            'apellido' => $apellido,
         );
     }
 

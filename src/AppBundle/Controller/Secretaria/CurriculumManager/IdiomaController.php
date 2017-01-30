@@ -78,8 +78,8 @@ class IdiomaController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
         return $form;
     }
 
@@ -199,7 +199,7 @@ class IdiomaController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('idioma_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('idioma_show', array('id' => $id)));
         }
 
         return array(
@@ -247,7 +247,7 @@ class IdiomaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('idioma_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm()
         ;
     }

@@ -31,7 +31,7 @@ class AlumnoController extends Controller
         $em = $this->getDoctrine()->getManager();
         //usamos esta consulta para ver las solicitudes que no contienen usuarios. por lo que mostraremos solo solicitudes que tengan aspirantes
 //        $entities = $em->createQuery('Select soli from AppBundle:Solicitud soli ')->getResult();
-        //se le agrego a la consulta un join con usuario para asegurarnos que sea interesado 
+        //se le agrego a la consulta un join con usuario para asegurarnos que sea interesado
         $entities = $em->createQuery("SELECT so FROM AppBundle\Entity\Solicitud so, AppBundle\Entity\Curso cu,AppBundle\Entity\Usuario usuario
         WHERE so.idCurso=cu.idCurso  and usuario.idUi = so.idUi
          AND so.estado='aprobada' AND cu.estadoCurso='disponible' AND usuario.idRol='4'")->getResult();

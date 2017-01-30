@@ -29,19 +29,19 @@ class FormacionAcademicaController extends Controller
      * @Method("GET")
      * @Template("@App/Curriculum/FormacionAcademica/index.html.twig")
      */
-    public function indexAction()
-    {
-
-
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AppBundle:FormacionAcademica')->findAll();
-
-       return array(
-            'entities' => $entities,
-
-        );
-    }
+//    public function indexAction()
+//    {
+//
+//
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entities = $em->getRepository('AppBundle:FormacionAcademica')->findAll();
+//
+//       return array(
+//            'entities' => $entities,
+//
+//        );
+//    }
     /**
      * Lists all FormacionAcademica entities.
      *
@@ -74,7 +74,7 @@ class FormacionAcademicaController extends Controller
     {
         $entity = new FormacionAcademica();
         $cur = $request->get("curriculum");
-        var_dump($cur); var_dump("-----------------");
+       // var_dump($cur); var_dump("-----------------");
         $form = $this->createCreateForm($entity,$cur);
         $form->handleRequest($request);
 
@@ -82,22 +82,20 @@ class FormacionAcademicaController extends Controller
 //----------------------------------------inicio de File
             //obtenemos la imagen que subimos desde el form
             $file = $entity->getImgTitulo();
-
             //seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
             $dirDestino = $_SERVER['DOCUMENT_ROOT'] . "\\public\\img\\formacion\\";
             $nombreArchivo = $file->getClientOriginalName();
-
             //echo $dirDestino."    -     ".$nombreArchivo;
-
             //efectuamos el movimiento
             $file->move($dirDestino, $nombreArchivo);
             //obtenemos los binarios de nuestra imgen a traves de la ruta especificada
-
             //metemos los binarios de data en la entidad
             $entity->setImgTitulo("../../../public/img/formacion/" . $nombreArchivo);
+//=========================================================
+
+
 
             //tranformamos las fechas de texto al tipo esparado en la base
-
             $entity->setFechaInicioFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaInicioFa())) );
             $entity->setFechaFinFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaFinFa())) );
 
@@ -172,9 +170,8 @@ class FormacionAcademicaController extends Controller
     public function showAction($id,Request $request)
     {
         $cur = $request->get("curriculum");
-        var_dump("sss\n");
-
-        var_dump($cur);
+      //  var_dump("sss\n");
+//        var_dump($cur);
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:FormacionAcademica')->find($id);
@@ -189,6 +186,8 @@ class FormacionAcademicaController extends Controller
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
             'curriculum'=>$cur,
+            'id' => $id,
+
         );
     }
 
@@ -221,6 +220,7 @@ class FormacionAcademicaController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'curriculum'=>$cur,
+            'id' => $id,
         );
     }
 
@@ -329,6 +329,7 @@ class FormacionAcademicaController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'curriculum'=>$cur,
+            'id' => $id,
         );
     }
 
@@ -380,4 +381,43 @@ class FormacionAcademicaController extends Controller
             ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm();
     }
+
+    /**
+     * Deletes a FormacionAcademica entity.
+     *
+     * @Route("/del/{id}", name="formacionacademica_delete2")
+     *
+     */
+    public function delete2Action(Request $request, $id)
+    {
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        //if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('AppBundle:FormacionAcademica')->find($id);
+
+        $curriculum = $entity->getIdCurriculum()->getIdCurriculum();
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find FormacionAcademica entity.');
+            }
+
+//----------------seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
+            $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '', $entity->getImgTitulo()));//-> lo ponemos en formato deseado
+            $dirDestino = $_SERVER['DOCUMENT_ROOT'];
+            $rutaArchivo = $dirDestino . $cadenaArchvo;
+            unlink($rutaArchivo);//eliminamo y removemos
+//-----------------------fin de la eliminacion
+
+            $em->remove($entity);
+            $em->flush();
+      //  }
+
+        return $this->redirect($this->generateUrl('formacionacademicaCurriculum',array('cur' => $curriculum)));
+    }
+
+
+
+
 }
