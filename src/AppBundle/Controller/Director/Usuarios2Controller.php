@@ -90,7 +90,6 @@ class Usuarios2Controller extends DSIController
                         $this->MensajeFlash('error', 'El archivo no es una imagen!');
                         return $this->render("AppBundle:Director/Usuarios2:nuevo_usuario.html.twig");
                     }
-
                 }
             }
         }
@@ -105,53 +104,66 @@ class Usuarios2Controller extends DSIController
         //Seleccionando un solo usuario";
         $datos=$this->getDoctrine()->getRepository('AppBundle:Usuario')->find($id);
         $tutor=$this->getDoctrine()->getRepository('AppBundle:Doctores')->findOneBy(array("idUi"=>$id));
-        if($request->isMethod("POST")) {
-            if ($_FILES["foto"]["error"] > 0) {
-                return new Response('Error en la subida de la Fotografía');
-            } else {
-                if ($this->infoTipoImagen('foto')[0] == 'image') {
+        if ($request->isMethod("POST")) {
+            $usu = $em2->getRepository('AppBundle:Usuario')->find($id);
+            $correo = $usu->getCorreo();
+            if($correo==$request->get('email')){
+                $datos->setFechaNacimientoUi(new \DateTime($request->get("fechaNac")));
+                $datos->setNombre($request->get("nombre"));
+                $datos->setCorreo($request->get("email"));
+                $datos->setApellido($request->get("apellido"));
+                $datos->setTelefono($request->get("tel"));
+                $datos->setIdEmpleado($request->get("id_emp"));
 
-                    $email = $em2->getRepository('AppBundle:Usuario')->findOneBy(array('correo' => $request->get("email")));
-                    if ($email) {
-                        $this->MensajeFlash('error', 'El correo ya existe!');
-                        $em2 = $this->getDoctrine()->getManager("default");
-                        $usuarios = $em2->getRepository('AppBundle:Usuario')->findAll();
-                        return $this->redirect($this->generateUrl('usuarios2', array('usuarios' => $usuarios)));
-                    } else {
-                        $datos->setFechaNacimientoUi(new \DateTime($request->get("fechaNac")));
-                        $datos->setNombre($request->get("nombre"));
-                        $datos->setCorreo($request->get("email"));
-                        $datos->setApellido($request->get("apellido"));
-                        $datos->setTelefono($request->get("tel"));
-                        $datos->setIdEmpleado($request->get("id_emp"));
+                $tutor->setNombreDoc($request->get("nombre"));
+                $tutor->setApellidoDoc($request->get("apellido"));
+                $tutor->setDuiDoc($request->get("id_emp"));
+                $tutor->setEspecialidad($request->get("especialidad"));
+                $tutor->setTurno($request->get("turno"));
 
-                        $tutor->setNombreDoc($request->get("nombre"));
-                        $tutor->setApellidoDoc($request->get("apellido"));
-                        $tutor->setDuiDoc($request->get("id_emp"));
-                        $tutor->setEspecialidad($request->get("especialidad"));
-                        $tutor->setTurno($request->get("turno"));
+                $em2->flush();
 
-                        $em2->flush();
+                //redireccionamiento
+                $this->MensajeFlash('exito', 'Tutor actualizado correctamente!');
 
-                        $nombrefoto=$request->get('username').$this->infoTipoImagen('foto')[1];
+                $em2 = $this->getDoctrine()->getManager("default");
+                $usuarios = $em2->getRepository('AppBundle:Usuario')->findAll();
+                return $this->redirect($this->generateUrl('usuarios2', array('usuarios' => $usuarios)));
 
-                        //Subiendo la Imagen
-                        $this->subirImagen('foto',$nombrefoto);
+            }else{
+                $email = $em2->getRepository('AppBundle:Usuario')->findOneBy(array('correo' => $request->get("email")));
+                if ($email) {
+                    $this->MensajeFlash('error', 'El correo ya existe!');
+                    $em2 = $this->getDoctrine()->getManager("default");
+                    $usuarios = $em2->getRepository('AppBundle:Usuario')->findAll();
+                    return $this->redirect($this->generateUrl('usuarios2', array('usuarios' => $usuarios)));
+                }
+                else{
+                    $datos->setFechaNacimientoUi(new \DateTime($request->get("fechaNac")));
+                    $datos->setNombre($request->get("nombre"));
+                    $datos->setCorreo($request->get("email"));
+                    $datos->setApellido($request->get("apellido"));
+                    $datos->setTelefono($request->get("tel"));
+                    $datos->setIdEmpleado($request->get("id_emp"));
 
-                        //redireccionamiento
-                        $this->MensajeFlash('exito', 'Tutor actualizado correctamente!');
+                    $tutor->setNombreDoc($request->get("nombre"));
+                    $tutor->setApellidoDoc($request->get("apellido"));
+                    $tutor->setDuiDoc($request->get("id_emp"));
+                    $tutor->setEspecialidad($request->get("especialidad"));
+                    $tutor->setTurno($request->get("turno"));
 
-                        $em2 = $this->getDoctrine()->getManager("default");
-                        $usuarios = $em2->getRepository('AppBundle:Usuario')->findAll();
-                        return $this->redirect($this->generateUrl('usuarios2', array('usuarios' => $usuarios)));
-                    }
-                } else {
-                    $this->MensajeFlash('error', 'El archivo no es una imagen!');
-                    return $this->render("AppBundle:Director/Usuarios2:editar_usuario.html.twig");
+                    $em2->flush();
+
+                    //redireccionamiento
+                    $this->MensajeFlash('exito', 'Tutor actualizado correctamente!');
+
+                    $em2 = $this->getDoctrine()->getManager("default");
+                    $usuarios = $em2->getRepository('AppBundle:Usuario')->findAll();
+                    return $this->redirect($this->generateUrl('usuarios2', array('usuarios' => $usuarios)));
                 }
             }
         }
-            return $this->render('AppBundle:Director/Usuarios2:editar_usuario.html.twig', array('usuario' => $datos, 'doc'=>$tutor));
+        return $this->render('AppBundle:Director/Usuarios2:editar_usuario.html.twig', array('usuario' => $datos, 'doc' => $tutor));
 
     }
 

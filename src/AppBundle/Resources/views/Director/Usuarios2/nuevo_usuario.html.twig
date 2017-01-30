@@ -1,14 +1,18 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block Header %}
-    <div class="col-md-12">
+    {% block styles %}
+        <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+        <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+    {% endblock %}
 
+    <div class="col-md-12">
     <ol class="breadcrumb">
         <li><a href="{{ path('director') }}">Inicio</a></li>
         <li><a href="{{ path('usuarios2') }}">Usuarios</a></li>
         <li class="active">Nuevo Usuario</li>
     </ol>
-    <h2>Creando Un nuevo Tutor</h2>
+    <h2>Creando un nuevo Tutor</h2>
     </div>
 {% endblock %}
 {% block body %}
@@ -23,41 +27,42 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h3>Datos Complementarios</h3>
-
-                            <form id="formulario" action="{{ path('nuevo_usuario2') }}" method="post" enctype="multipart/form-data" >
+                            <form  action="{{ path('nuevo_usuario2') }}" method="post" enctype="multipart/form-data" name="formulario">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Fotografía </label>
-                                        <input id="foto" type="file" name="foto" required/>
+                                        <input class="form-control" id="foto" type="file" name="foto" required/>
                                     </div>
 
                                     <div class="form-group">
                                         <label>Nombres </label>
-                                            <input class="form-control" name="nombre" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Debe introducir un Nombre sin numeros" required/>
+                                            <input class="form-control" name="nombre" id="nombre" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Debe introducir un Nombre sin numeros" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Apellidos </label>
-                                            <input class="form-control" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Debe introducir un Apellido sin numeros" name="apellido" required/>
+                                            <input class="form-control" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" title="Debe introducir un Apellido sin numeros" name="apellido" id="apellido" required/>
                                     </div>
                                     <div class="form-group">
                                         <label>Fecha de Nacimiento </label>
-                                        <input class="form-control" id="fechaNac" name="fechaNac" type="date" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Correo </label>
-                                        <input class="form-control" type="email" name="email" required/>
+                                        <div class='input-group date' >
+                                            <input id="fechaNac" class="form-control" name="fechaNac" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">DUI</label>
-                                        <input class="form-control" name="id_emp" type="text" pattern="[0-9]{8}-[0-9]{1}" title="Debe introducir un DUI con formato 00000000-0" required placeholder="00000000-0"/>
+                                        <input class="form-control" name="id_emp" id="id_emp" type="text" pattern="[0-9]{8}-[0-9]{1}" title="Debe introducir un DUI con formato 00000000-0" required placeholder="00000000-0"/>
                                     </div>
-
-
+                                    <div class="form-group">
+                                        <label>Correo </label>
+                                        <input class="form-control" type="email" name="email" id="email" required/>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="form-control">Especialidad</label>
-                                        <input class="form-control" name="especialidad" max="50" type="text" />
+                                        <input class="form-control" name="especialidad" id="especialidad" max="50" type="text" />
                                     </div>
                                     <div class="form-group">
                                         <label>Turno </label>
@@ -69,7 +74,7 @@
                                             <option value="Lunes-Sabado: Tarde">Lunes-Sábado: Tarde</option>
                                             <option value="Sábados: Mañana">Sábados: Mañana</option>
                                             <option value="Sábados: Tarde">Sábados: Tarde</option>
-                                            <option value="Sábados: Tarde">Cualquier Horario</option>
+                                            <option value="Cualquier Horario">Cualquier Horario</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -86,42 +91,100 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Teléfono </label>
-                                        <input class="form-control" type="text" name="tel" max="9" placeholder="9999-9999"/>
+                                        <input class="form-control" type="text" name="tel" id="tel" max="9" placeholder="9999-9999"/>
                                     </div>
 
                                 </div>
-                                <div class="col-md-12">
-                                    <button type="reset" style="width: 20%;margin-top: 10px;float: left" class="btn btn-default">Limpiar</button>
-                                    <button type="submit" style="width: 20%;margin-top: 10px;float: right" class="btn btn-primary">Guardar Usuario</button>
+                                <div class="col-md-12" style="text-align: center">
+                                    <button onclick="validar()" type="button" style="width: 15%;margin-top: 10px" class="btn btn-primary">Guardar Usuario</button>
+                                    <button type="reset" style="width: 15%;margin-top: 10px" class="btn btn-default">Limpiar</button>
                                 </div>
-
                             </form>
                         </div>
-
-
                     </div>
                 </div>
             </div>
             <!-- End Form Elements -->
         </div>
     </div>
-
 {% endblock %}
 
 {% block javascripts %}
-    <script>
+    <script src="{{ asset('public/js/moment.js') }} "></script>
+    <script src="{{ asset('public/js/bootstrap-datetimepicker.min.js') }} "></script>
+
+        <script type="text/javascript">
+
+        $(function () {
+            $("#fechaNac").datetimepicker({format: 'DD-MM-YYYY'});
+        });
+
+        /*funciones para validar que las fechas no estén invertidas*/
+        function validar() {
+            var foto = document.getElementById('foto').value;
+            var nombre = document.getElementById('nombre').value;
+            var apellido = document.getElementById('apellido').value;
+            var dui = document.getElementById('id_emp').value;
+            var correo = document.getElementById('email').value;
+            var esp = document.getElementById('especialidad').value;
+            var tel = document.getElementById('tel').value;
+
+            var fechaNac = (new Date (document.getElementById('fechaNac').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+
+            if (foto == '' && nombre == '' && apellido == '' && dui == '' && correo == '' && esp == '' && tel == '' && fechaNac == 'Invalid Date') {
+                alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
+            } else {
+                if (foto == '') {
+                    alertify.error("Es Obligatorio Subir una Fotografía");
+                } else {
+                    if (nombre == '') {
+                        alertify.error("Es Obligatorio Llenar el Nombre del Tutor");
+                    } else {
+                        if (apellido == '') {
+                            alertify.error("Es Obligatorio Llenar el Apellido del Tutor");
+                        } else {
+                            if (fechaNac == 'Invalid Date') {
+                                alertify.error("Es Obligatorio Llenar la Fecha de Nacimiento");
+                            } else {
+                                if (dui == '') {
+                                    alertify.error("Es Obligatorio Llenar el Numero de DUI");
+                                } else {
+                                    if (correo == '') {
+                                        alertify.error("Es Obligatorio Llenar el Correo");
+                                    } else {
+                                        if (esp == '') {
+                                            alertify.error("Es Obligatorio Llenar la Especialización");
+                                        } else {
+                                            if (tel == '') {
+                                                alertify.error("Es Obligatorio Llenar el Teléfono");
+                                            } else {
+                                                /*identifica el nombre del formulario*/
+                                                document.formulario.submit()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         var password = document.getElementById("password")
                 , confirm_password = document.getElementById("confirm_password");
 
         function validatePassword() {
             if (password.value != confirm_password.value) {
-                confirm_password.setCustomValidity("Passwords no coinciden!");
+                confirm_password.setCustomValidity("Contraseñas no coinciden!");
             } else {
                 confirm_password.setCustomValidity('');
             }
         }
-
         password.onchange = validatePassword;
         confirm_password.onkeyup = validatePassword;
+
     </script>
 {% endblock %}
+
+

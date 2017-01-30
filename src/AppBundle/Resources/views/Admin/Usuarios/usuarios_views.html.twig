@@ -27,7 +27,6 @@
                             <th style="text-align: center">Nombre</th>
                             <th style="text-align: center">Apellido</th>
                             <th style="text-align: center">Tipo Usuario</th>
-                            <th style="text-align: center">Correo</th>
                             <th style="text-align: center">Usuario</th>
                             <th style="text-align: center">Acciones</th>
                         </tr>
@@ -40,9 +39,10 @@
                             <td>{{ usuarios.nombre }}</td>
                             <td>{{ usuarios.apellido }}</td>
                             <td>{{ usuarios.idRol.nombreRol }}</td>
-                            <td>{{ usuarios.correo }}</td>
                             <td>{{ usuarios.nomusuario }}</td>
                             <td style="text-align: center;">
+                                <a href="{{ path("verTutor", {"id": usuarios.idUi}) }}" title="Detalles" class="btn btn-default" style="background: #81379C;color: #ffffff;"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                                -
                                 <a href="{{ path('editar_usuario', {'id': usuarios.idUi}) }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                 -
                                 <button onClick="confirmar({{ usuarios.idUi }})" title="Eliminar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
