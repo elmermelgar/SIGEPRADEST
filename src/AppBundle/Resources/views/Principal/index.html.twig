@@ -73,21 +73,25 @@
         <br/>
 
         {% for cursos in cursos %}
-            {% if cursos.estadoCurso=='disponible' %}
-        <div class="col-md-4">
-            <div class="ca-hover">
-                <div class="carousel-img">
-                    <img height="300px" src="{{ asset('public') }}/{{ cursos.broshureInformativo }}" alt="Carousel Img">
-                </div>
-                <div class="carousel-content">
-                    <h3>{{ cursos.nombreCurso }}</h3>
-                    <p>{{ cursos.textoInformativo }}</p>
-                </div>
-                <div class="overlay"></div>
-            </div>
-        </div>
-        {% else %}
-            <h1>No hay Cursos Disponibles</h1>
+            {% if cursos %}
+                {% if cursos.estadoCurso=='disponible' %}
+                    <div class="col-md-4">
+                        <div class="ca-hover">
+                            <div class="carousel-img">
+                                <img height="300px" src="{{ asset('public') }}/{{ cursos.broshureInformativo }}"
+                                     alt="Carousel Img">
+                            </div>
+                            <div class="carousel-content">
+                                <h3>{{ cursos.nombreCurso }}</h3>
+
+                                <p>{{ cursos.textoInformativo }}</p>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <h1>No hay Cursos Disponibles</h1>
             {% endif %}
         {% endfor %}
 
