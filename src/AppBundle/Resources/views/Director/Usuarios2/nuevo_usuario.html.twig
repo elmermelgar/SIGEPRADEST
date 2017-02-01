@@ -45,13 +45,13 @@
                                     <div class="form-group">
                                         <label>Fecha de Nacimiento </label>
                                         <div class='input-group date' >
-                                            <input id="fechaNac" class="form-control" name="fechaNac" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <input id="fechaNac" class="form-control" name="fechaNac" size="16" placeholder="dd/mm/aaaa" required>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="disabledSelect">DUI</label>
-                                        <input class="form-control" name="id_emp" id="id_emp" type="text" pattern="[0-9]{8}-[0-9]{1}" title="Debe introducir un DUI con formato 00000000-0" required placeholder="00000000-0"/>
+                                        <input class="form-control" name="id_emp" id="id_emp" type="text" pattern="[0-9]{8}-[0-9]{1}" title="Debe introducir un DUI con formato 12345678-9" placeholder="######## - #" required />
                                     </div>
                                     <div class="form-group">
                                         <label>Correo </label>
@@ -82,21 +82,21 @@
                                             <input class="form-control" name="username" required />
                                     </div>
                                     <div class="form-group">
-                                        <label for="disabledSelect">Password</label>
+                                        <label for="disabledSelect">Contraseña</label>
                                             <input id="password" class="form-control" name="pass" type="password" required/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="disabledSelect">Confirmar Password</label>
+                                        <label for="disabledSelect">Confirmar Contraseña</label>
                                         <input id="confirm_password" class="form-control" type="password"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Teléfono </label>
-                                        <input class="form-control" type="text" name="tel" id="tel" max="9" placeholder="9999-9999"/>
+                                        <input class="form-control" type="text" name="tel" id="tel" max="9" placeholder="#### - ####" pattern="[1-9]{4}-[0-9]{4}"/>
                                     </div>
 
                                 </div>
                                 <div class="col-md-12" style="text-align: center">
-                                    <button onclick="validar()" type="button" style="width: 15%;margin-top: 10px" class="btn btn-primary">Guardar Usuario</button>
+                                    <button type="submit" style="width: 15%;margin-top: 10px" class="btn btn-primary">Guardar Usuario</button>
                                     <button type="reset" style="width: 15%;margin-top: 10px" class="btn btn-default">Limpiar</button>
                                 </div>
                             </form>
@@ -116,60 +116,8 @@
         <script type="text/javascript">
 
         $(function () {
-            $("#fechaNac").datetimepicker({format: 'DD-MM-YYYY'});
+            $("#fechaNac").datetimepicker({format: 'DD/MM/YYYY'});
         });
-
-        /*funciones para validar que las fechas no estén invertidas*/
-        function validar() {
-            var foto = document.getElementById('foto').value;
-            var nombre = document.getElementById('nombre').value;
-            var apellido = document.getElementById('apellido').value;
-            var dui = document.getElementById('id_emp').value;
-            var correo = document.getElementById('email').value;
-            var esp = document.getElementById('especialidad').value;
-            var tel = document.getElementById('tel').value;
-
-            var fechaNac = (new Date (document.getElementById('fechaNac').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
-
-            if (foto == '' && nombre == '' && apellido == '' && dui == '' && correo == '' && esp == '' && tel == '' && fechaNac == 'Invalid Date') {
-                alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
-            } else {
-                if (foto == '') {
-                    alertify.error("Es Obligatorio Subir una Fotografía");
-                } else {
-                    if (nombre == '') {
-                        alertify.error("Es Obligatorio Llenar el Nombre del Tutor");
-                    } else {
-                        if (apellido == '') {
-                            alertify.error("Es Obligatorio Llenar el Apellido del Tutor");
-                        } else {
-                            if (fechaNac == 'Invalid Date') {
-                                alertify.error("Es Obligatorio Llenar la Fecha de Nacimiento");
-                            } else {
-                                if (dui == '') {
-                                    alertify.error("Es Obligatorio Llenar el Numero de DUI");
-                                } else {
-                                    if (correo == '') {
-                                        alertify.error("Es Obligatorio Llenar el Correo");
-                                    } else {
-                                        if (esp == '') {
-                                            alertify.error("Es Obligatorio Llenar la Especialización");
-                                        } else {
-                                            if (tel == '') {
-                                                alertify.error("Es Obligatorio Llenar el Teléfono");
-                                            } else {
-                                                /*identifica el nombre del formulario*/
-                                                document.formulario.submit()
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         var password = document.getElementById("password")
                 , confirm_password = document.getElementById("confirm_password");

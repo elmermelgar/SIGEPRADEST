@@ -116,6 +116,42 @@
                                 </div>
                             </div>
 
+
+                                <br>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <a class="btn btn-info" data-toggle="modal" data-target="#ModalImg"><i aria-hidden="true"></i> Cambiar Imagen </a>
+                                    </div>
+                                </div>
+
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="ModalImg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            <h4 class="modal-title" id="myModalLabel">Cambiar imagen de {{ tuto.nombre }} {{ tuto.apellido }}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-md-12">
+                                                <form role="form" action="{{ path('camImgTu', {'id': tuto.IdUi}) }}" method="post" enctype="multipart/form-data" >
+
+                                                    <div class="form-group">
+                                                        <input class="form-control" id="imagen" name="imagen" type="file" required/>
+                                                    </div>
+                                                    <div class="col-md-12 col-md-offset-3">
+                                                        <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar </button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                 </fieldset>
 

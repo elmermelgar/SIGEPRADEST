@@ -44,8 +44,8 @@ class Usuarios2Controller extends DSIController
                             $nombrefoto=$request->get('username').$this->infoTipoImagen('foto')[1];
                             //Creando usuario
                             $u = new Usuario();
-                            $u->setFoto("img/brochure/".$nombrefoto);
-                            $u->setFechaNacimientoUi(new \DateTime($request->get("fechaNac")));
+                            $u->setFoto("img/tutor/".$nombrefoto);
+                            $u->setFechaNacimientoUi(\DateTime::createFromFormat('d/m/Y',$request->get("fechaNac")));
                             $u->setNomusuario($request->get("username"));
                             $u->setNombre($request->get("nombre"));
                             $usuario = $request->get("username");
@@ -77,7 +77,7 @@ class Usuarios2Controller extends DSIController
                             $em2->flush();
 
                             //Subiendo la Imagen
-                            $this->subirImagen('foto',$nombrefoto);
+                            $this->subirFotografia('foto',$nombrefoto);
 
                             //redireccionamiento
                             $this->MensajeFlash('exito', 'Usuario creado correctamente!');
@@ -108,7 +108,7 @@ class Usuarios2Controller extends DSIController
             $usu = $em2->getRepository('AppBundle:Usuario')->find($id);
             $correo = $usu->getCorreo();
             if($correo==$request->get('email')){
-                $datos->setFechaNacimientoUi(new \DateTime($request->get("fechaNac")));
+                $datos->setFechaNacimientoUi(\DateTime::createFromFormat('d/m/Y',$request->get("fechaNac")));
                 $datos->setNombre($request->get("nombre"));
                 $datos->setCorreo($request->get("email"));
                 $datos->setApellido($request->get("apellido"));
@@ -235,6 +235,34 @@ class Usuarios2Controller extends DSIController
         else{
             return $this->redirectToRoute('login');
         }
+    }
+
+    /**
+     * @Route("/director/tutor_cambiarImg/{id}",name="camImgTu")
+     */
+    public function cambiarImgAction($id, Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $t = $em->getRepository('AppBundle:Usuario')->find($id);
+
+        //Verificando que hay una peticion POST
+        if($request->isMethod("POST")) {
+            if ($_FILES["imagen"]["error"] > 0) {
+                return new Response('Error en la subida de la imagen');
+            } else {
+                if ($this->infoTipoImagen('imagen')[0] == 'image') {
+                    $nomUser = $t->getUsername();
+                    $nombreImagen = $nomUser . $this->infoTipoImagen('imagen')[1];
+                    //Subiendo la Imagen
+                    $this->subirFotografia('imagen', $nombreImagen);
+                    $this->MensajeFlash('exito', 'Imagen del curso editada correctamente!');
+                    return $this->redirectToRoute("verTutor", array('id' => $id));
+                } else {
+                    $this->MensajeFlash('error', 'El archivo no es una imagen!');
+                    return $this->redirectToRoute("verTutor", array('id' => $id));
+                }
+            }
+        }
+
     }
 
 }
