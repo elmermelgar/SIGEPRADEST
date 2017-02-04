@@ -92,7 +92,7 @@
         </div>
 
         <div class="col-md-12">
-            <h2>II. INFORMACION ACADEMICA</h2>
+            <h2>II. INFORMACIÓN ACADÉMICA</h2>
         </div>
 
         <div class="col-md-12">
@@ -155,8 +155,16 @@
                   method="post">
                 <div class="form-group">
                     <label>Disponibilidad: (Su tiempo disponible para asistir a entrevista)</label>
-                    <textarea name="dispo" rows="2" maxlength="100" class="form-control"
-                              required>{{ solicitud.rangoDisponibilidad }}</textarea>
+                    <select class="form-control" name="dispo">
+                        <option value="Lunes-Viernes: Mañana">Lunes-Viernes: Mañana</option>
+                        <option value="Lunes-Viernes: Tarde">Lunes-Viernes: Tarde</option>
+                        <option value="Lunes-Viernes: Noche">Lunes-Viernes: Noche</option>
+                        <option value="Lunes-Sábado: Mañana">Lunes-Sábado: Mañana</option>
+                        <option value="Lunes-Sábado: Tarde">Lunes-Sábado: Tarde</option>
+                        <option value="Sábados: Mañana">Sábados: Mañana</option>
+                        <option value="Sábados: Tarde">Sábados: Tarde</option>
+                        <option value="Cualquier Horario">Cualquier Horario</option>
+                    </select>
                 </div>
                 <div style="margin: 30px 30px;">
                     <button type="submit" class="btn btn-success">Enviar Solicitud</button>

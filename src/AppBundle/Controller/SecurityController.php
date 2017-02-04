@@ -74,7 +74,9 @@ class SecurityController extends Controller
      * @Route("/admin/", name="admin")
      */
     public function adminAction(){
-        return $this->render('AppBundle:Admin:index.html.twig');
+        $em=$this->getDoctrine()->getManager("default");
+        $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+        return $this->render('AppBundle:Admin:index.html.twig', array('cursos'=>$cursos));
     }
 
     /**
@@ -89,14 +91,18 @@ class SecurityController extends Controller
      */
     public function tutorAction()
     {
-        return $this->render('AppBundle:Tutor:index.html.twig');
+        $em=$this->getDoctrine()->getManager("default");
+        $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+        return $this->render('AppBundle:Tutor:index.html.twig', array('cursos'=>$cursos));
     }
     /**
      * @Route("/alumno/", name="alumno")
      */
     public function alumnoAction()
     {
-        return $this->render('AppBundle:Alumno:index.html.twig');
+        $em=$this->getDoctrine()->getManager("default");
+        $cursos=$em->getRepository('AppBundle:Curso')->findAll();
+        return $this->render('AppBundle:Alumno:index.html.twig', array('cursos'=>$cursos));
     }
 
     /**

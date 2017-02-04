@@ -94,12 +94,12 @@ class ModulosAlumnoController extends DSIController
                         $cuo=$em->getRepository('AppBundle:Cuotas')->find($request->get('cuota'));
                         $nombrerecibo=$cuo->getCuota().$this->getUser().$curso->getIdCurso().$this->infoTipoImagen('imagen')[1];
                         if($nombrerecibo!=NULL){
-                            $p->setImagenRecibo("img/brochure/".$nombrerecibo);
+                            $p->setImagenRecibo("img/recibo/".$nombrerecibo);
                         }
                         $p->setIdDc($inscrip);
                         $p->setCuotaDiferenciada($request->get("dif"));
                         $p->setIdCuota($em->getRepository('AppBundle:Cuotas')->find($request->get('cuota')));
-                        $p->setFechaPago(new \DateTime($request->get("fechapago")));
+                        $p->setFechaPago(\DateTime::createFromFormat('d/m/Y',$request->get("fechapago")));
                         $p->setMontoPagado($request->get("monto"));
                         $p->setNumeroRecibo($request->get("numrecibo"));
                         $p->setVerificado('enviado');
@@ -107,7 +107,7 @@ class ModulosAlumnoController extends DSIController
                         $em->persist($p);
                         $em->flush();
                         //Subiendo la Imagen
-                        $this->subirImagen('imagen',$nombrerecibo);
+                        $this->subirRecibo('imagen',$nombrerecibo);
                         $this->MensajeFlash('exito', 'Pago creado correctamente!');
                         $inscrip=$this->getDoctrine()->getRepository('AppBundle:InscripcionCurso')->findOneBy(array('idCurso'=>$id,'idAlumno'=>$alumno->getIdAlumno()));
                         $curso = $this->getDoctrine()->getRepository('AppBundle:Curso')->find($id);
@@ -139,7 +139,7 @@ class ModulosAlumnoController extends DSIController
                         $cuo=$em->getRepository('AppBundle:Cuotas')->find($request->get('cuota'));
                         $nombrerecibo=$cuo->getCuota().$this->getUser().$curso->getIdCurso().$this->infoTipoImagen('imagen')[1];
                         if($nombrerecibo!=NULL){
-                            $pago->setImagenRecibo("img/brochure/".$nombrerecibo);
+                            $pago->setImagenRecibo("img/recibo/".$nombrerecibo);
                         }
                         $pago->setCuotaDiferenciada($request->get("dif"));
                         $pago->setFechaPago(new \DateTime($request->get("fechapago")));
@@ -149,7 +149,7 @@ class ModulosAlumnoController extends DSIController
                         $pago->setObservacion('Revisado y enviado');
                         $em->flush();
                         //Subiendo la Imagen
-                        $this->subirImagen('imagen',$nombrerecibo);
+                        $this->subirRecibo('imagen',$nombrerecibo);
                         $this->MensajeFlash('exito', 'Pago actualizado correctamente!');
                         $cuotas=$this->getDoctrine()->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id2));
                         $alumno=$this->getDoctrine()->getRepository('AppBundle:Alumno')->findOneBy(array('idUi'=>$this->getUser()));

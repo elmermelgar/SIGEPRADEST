@@ -10,5 +10,31 @@
     </div>
 {% endblock %}
 {% block body %}
+    <div class="row">
+        {% for cursos in cursos %}
+            {% if cursos.estadoCurso=='disponible' %}
+                <div class="col-md-4 col-sm-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            {{ cursos.estadoCurso }}
+                        </div>
+                        <div class="panel-body" style="text-align: center">
+                            <div class="col-md-6">
+                                <a href="" onclick="window.open('{{ asset('public') }}/{{ cursos.broshureInformativo}}');">
+                                    <img src="{{ asset('public') }}/{{ cursos.broshureInformativo }}" alt="img1" style="width: 100%;"></a>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>{{ cursos.nombreCurso }}</h4>
+                                <br/>
+                                Alumnos: {{ cursos.cantAlumnosLimit }}
+                                <br/><br/><br/>
+                                <a href="{{ path('detallesCurso', {'id': cursos.idCurso}) }}"  title="Detalles de curso" class="btn btn-primary" ><span class="fa fa-graduation-cap" aria-hidden="true"/> Ver Detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
 {% endblock %}

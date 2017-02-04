@@ -38,6 +38,11 @@ class DSIController extends Controller
         move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\tutor\\".$nombreImagen);
     }
 
+    //Para subir el rescibo al servidor
+    protected function subirRecibo($archivo,$nombreImagen){
+        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\recibo\\".$nombreImagen);
+    }
+
     //Eliminar imagen del servidor
     protected function borrarImagen($nombreImagen){
         unlink($_SERVER['DOCUMENT_ROOT']."\\public\\".$nombreImagen);

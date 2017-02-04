@@ -1,6 +1,10 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
 {% block Header %}
+    {% block styles %}
+        <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+        <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+    {% endblock %}
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="{{ path('tutor') }}">Inicio</a></li>
@@ -145,12 +149,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="disabledSelect">Fecha de Pago</label>
-                                    <input class="form-control" type="date" name="fechapago" required placeholder="Introduzca una fecha"/>
+                                    <input class="form-control" id="fechapago" name="fechapago" required placeholder="dd/mm/aaaa"/>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-md-offset-3">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar </button>
+                            <div class="col-md-12" style="text-align: center">
+                                <button type="submit" style="width: 15%;" class="btn btn-primary">Guardar </button>
+                                <button type="button" style="width: 15%;" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                             </div>
 
                         </form>
@@ -164,4 +168,16 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('public/js/moment.js') }} "></script>
+    <script src="{{ asset('public/js/bootstrap-datetimepicker.min.js') }} "></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("#fechapago").datetimepicker({format: 'DD/MM/YYYY'});
+        });
+    </script>
 {% endblock %}
