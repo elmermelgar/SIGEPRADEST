@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller\Interesado;
 
-use AppBundle\Controller\SecurityController;
+use AppBundle\Controller\DSIController;
 use AppBundle\Entity\DatosPersonales;
 use AppBundle\Entity\InformacionAcademica;
 use AppBundle\Entity\Solicitud;
@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\Date;
 /**
  * @Route("/interesado")
  */
-class InteresadoController extends SecurityController
+class InteresadoController extends DSIController
 {
     /**
      * @Route("/", name="index_interesado")
@@ -355,7 +355,7 @@ class InteresadoController extends SecurityController
         if (!$info) {
             $this->MensajeFlash('error', 'Error al tratar de eliminar el registro');
             return $this->redirectToRoute('interesado_solicitud', array('idc' => $idc));
-        }else {
+        } else {
             $em->remove($info);
             $em->flush();
             $this->MensajeFlash('exito', 'Registro eliminado correctamente!');
@@ -386,7 +386,7 @@ class InteresadoController extends SecurityController
             //Debe tener por los menos un registro en informacion academica
             if ($info) {
                 //$sol->setFechaRegistro((new \DateTime('now',new \DateTimeZone('America/El_Salvador')))->format("Y-m-d"));
-                $sol->setFechaRegistro(new \DateTime('now',new \DateTimeZone('America/El_Salvador')));
+                $sol->setFechaRegistro(new \DateTime('now', new \DateTimeZone('America/El_Salvador')));
                 //enviar solicitud de ingreso
                 $sol->setEstado('enviada');
                 $em->flush();
@@ -421,10 +421,30 @@ class InteresadoController extends SecurityController
 
         $em = $this->getDoctrine()->getManager();
         $sql = $em->createQuery("SELECT s FROM AppBundle\Entity\Solicitud s WHERE s.idUi = :usuario AND s.estado NOT IN ('creada') ORDER BY s.fechaRegistro DESC");
-        $sql->setParameter('usuario',$usuario);
+        $sql->setParameter('usuario', $usuario);
         $solicitudes = $sql->getResult();
 
         return $this->render('AppBundle:Interesado/Solicitud:verSolicitudes.html.twig', array('solicitudes' => $solicitudes));
     }
+
+    /**
+     * @Route("/curso_ver/{id}",name="inteDetalleCurso")
+     */
+    public function detallesAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $doc = $em->getRepository("AppBundle:Doctores")->findBy(array(), array('nombreDoc' => 'ASC'));
+        $tc = $em->getRepository("AppBundle:TipoCurso")->findAll();
+        $datos = $em->getRepository('AppBundle:Curso')->find($id);
+        $hc = $em->getRepository('AppBundle:HorarioCurso')->findOneBy(array('idCurso' => $id));
+        $id_hc = $hc->getIdHc();
+        $hc = $em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
+        $d1 = $this->mostrarD1s($id);
+        $cuota = $em->getRepository('AppBundle:Cuotas')->findBy(array('idCurso' => $id));
+
+        return $this->render("AppBundle:Interesado:detalleCurso.html.twig", array("tc" => $tc, 'datos' => $datos, "doc" => $doc, "hc" => $hc, "d1" => $d1, 'cuota' => $cuota));
+
+    }
+
 
 }

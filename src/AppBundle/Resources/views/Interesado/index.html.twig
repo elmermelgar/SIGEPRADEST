@@ -15,165 +15,27 @@
             {% else %}
                 <h3>Cursos disponibles:</h3>
                 {% for c in cursos %}
-                    <div class="col-md-12">
+                    <div class="col-md-4 col-sm-4">
                         <div class="panel panel-primary">
-                            <div class="panel-heading" style="background-color: #8C64a3">
-                                {{ c.idCurso.nombreCurso }}
+                            <div class="panel-heading">
+                                {{ c.idCurso.estadoCurso }}
                             </div>
-
-                            <div class="panel-body">
+                            <div class="panel-body" style="text-align: center">
                                 <div class="col-md-6">
-                                    <div class="control-group">
-                                        <div class="controls">
-                                            <a href=""
-                                               onclick="window.open('{{ asset('public') }}/{{ c.idCurso.broshureInformativo }}');">
-                                                <img src="{{ asset('public') }}/{{ c.idCurso.broshureInformativo }}"
-                                                     alt="img1"
-                                                     style="width: 420px; height: 400px;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="control-group" >
-                                        <br>
-                                        <label class="control-label" for="prependedInput">Más información aqui (PDF)</label>
-                                        <div class="controls">
-                                            <div class="input-prepend">
-                                                <a class="btn btn-success" onclick="window.open('{{ asset('public') }}/{{ c.idCurso.rutaPdf}}');">Ver / Descargar</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <a href=""
+                                       onclick="window.open('{{ asset('public') }}/{{ c.idCurso.broshureInformativo }}');">
+                                        <img src="{{ asset('public') }}/{{ c.idCurso.broshureInformativo }}" alt="img1"
+                                             style="width: 100%;"></a>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="control-group">
-                                        <div class="controls">
-                                            <div class="input-prepend">
-                                                <p>Cupo máximo: {{ c.idCurso.cantAlumnosLimit }} personas.</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <h4>{{ c.idCurso.nombreCurso }}</h4>
                                     <br/>
-                                    <div class="control-group">
-                                        <label class="control-label" for="prependedInput">Descripción</label>
-                                        <div class="controls">
-                                            <div class="input-prepend">
-                                                {{ c.idCurso.textoInformativo }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="control-group">
-                                        <label class="control-label" for="prependedInput">Número de cuotas</label>
-                                        <div class="controls">
-                                            <div class="input-prepend">
-                                                {{ c.idCurso.numCuotas }}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6" style="margin-top: 15px;">
-                                        <div class="control-group">
-                                            <label class="control-label" for="prependedInput">Fecha inicio de curso</label>
-                                            <div class="controls">
-                                                <div class="input-prepend">
-                                                    <div class='input-group date'>
-                                                        {{ c.fechaInicio.format("d/m/Y") }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" style="margin-top: 15px;">
-                                        <div class="control-group">
-                                            <label class="control-label" for="prependedInput">Fecha fin de curso</label>
-                                            <div class="controls">
-                                                <div class="input-prepend">
-                                                    <div class='input-group date'>
-                                                        {{ c.fechaFin.format("d/m/Y") }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-md-6" style="margin-top: 15px;">
-                                        <div class="control-group">
-                                            <label class="control-label" for="prependedInput">Inicio recepción de documentos</label>
-                                            <div class="controls">
-                                                <div class="input-prepend">
-                                                    <div class='input-group date'>
-                                                        {{ c.inicioRecepDoc.format("d/m/Y") }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" style="margin-top: 15px;">
-                                        <div class="control-group">
-                                            <label class="control-label" for="prependedInput">Fin recepción de documentos</label>
-                                            <div class="controls">
-                                                <div class="input-prepend">
-                                                    <div class='input-group date'>
-                                                        {{ c.finRecepDoc.format("d/m/Y") }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-md-6" style="margin-top: 15px;">
-                                        <div class="control-group">
-                                            <label class="control-label" for="prependedInput">Inicio de entrevistas</label>
-                                            <div class="controls">
-                                                <div class="input-prepend">
-                                                    <div class='input-group date'>
-                                                        {{ c.defechaEntrevista.format("d/m/Y") }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" style="margin-top: 15px;">
-                                        <div class="control-group">
-                                            <label class="control-label" for="prependedInput">Fin de entrevistas</label>
-                                            <div class="controls">
-                                                <div class="input-prepend">
-                                                    <div class='input-group date'>
-                                                        {{ c.afechaEntrevista.format("d/m/Y") }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-md-6" style="margin-top: 15px;">
-                                        <div class="control-group">
-                                            <label class="control-label" for="prependedInput">Inicio de evaluación</label>
-                                            <div class="controls">
-                                                <div class="input-prepend">
-                                                    <div class='input-group date'>
-                                                        {{ c.defechaEvaluacion.format("d/m/Y") }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" style="margin-top: 15px;">
-                                        <div class="control-group">
-                                            <label class="control-label" for="prependedInput">Fin de evaluación</label>
-                                            <div class="controls">
-                                                <div class="input-prepend">
-                                                    <div class='input-group date'>
-                                                        {{ c.afechaEvaluacion.format("d/m/Y") }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    Alumnos: {{ c.idCurso.cantAlumnosLimit }}
+                                    <br/><br/><br/>
+                                    <a href="{{ path('inteDetalleCurso', {'id': c.idCurso.idCurso}) }}"
+                                       title="Detalles de curso" class="btn btn-primary"><span
+                                                class="fa fa-graduation-cap" aria-hidden="true"/> Ver Detalles</a>
                                 </div>
-
-                            </div>
-                            <div class="panel-footer">
-                                <a href="{{ path('interesado_solicitud',{'idc' : c.idCurso.idCurso}) }}">Ver / Llenar
-                                    solicitud</a>
                             </div>
                         </div>
                     </div>
