@@ -86,7 +86,7 @@ class CurriculumSecreController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Creado correctamente');
             return $this->redirect($this->generateUrl('curriculum_show', array('id' => $entity->getIdCurriculum())));
         }
 
@@ -226,7 +226,7 @@ class CurriculumSecreController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Actualizado correctamente');
             return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $id)));
         }
 
@@ -258,7 +258,7 @@ class CurriculumSecreController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('exito','Eliminado correctamente');
         return $this->redirect($this->generateUrl('curriculum'));
     }
 

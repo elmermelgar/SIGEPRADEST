@@ -108,7 +108,7 @@ class FormacionAcademicaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Registro creado correctamente');
             return $this->redirect($this->generateUrl('formacionacademica_show', array('id' => $entity->getIdFa(),'curriculum'=>$cur )));
         }
 
@@ -317,7 +317,7 @@ class FormacionAcademicaController extends Controller
                 'notice',
                 'Edit success.'
             );
-
+            $this->get('session')->getFlashBag()->add('exito','Actualizado correctamente');
             return $this->redirect($this->generateUrl('formacionacademica_show', array('id' => $id,'curriculum'=>$cur )));
         }
 
@@ -362,7 +362,7 @@ class FormacionAcademicaController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('exito','Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('formacionacademicaCurriculum',array('cur' => $id)));
     }
 
@@ -413,7 +413,7 @@ class FormacionAcademicaController extends Controller
             $em->remove($entity);
             $em->flush();
       //  }
-
+        $this->get('session')->getFlashBag()->add('exito','Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('formacionacademicaCurriculum',array('cur' => $curriculum)));
     }
 

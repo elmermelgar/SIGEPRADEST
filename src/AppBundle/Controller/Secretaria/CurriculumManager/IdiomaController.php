@@ -53,7 +53,7 @@ class IdiomaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Registro creado correctamente');
             return $this->redirect($this->generateUrl('idioma_show', array('id' => $entity->getIdIdioma())));
     }
 
@@ -198,7 +198,7 @@ class IdiomaController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Registro actualizado correctamente');
             return $this->redirect($this->generateUrl('idioma_show', array('id' => $id)));
         }
 
@@ -231,7 +231,7 @@ class IdiomaController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('exito','Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('idioma',array('cur' => $_SESSION["Curriculum"])));
     }
 

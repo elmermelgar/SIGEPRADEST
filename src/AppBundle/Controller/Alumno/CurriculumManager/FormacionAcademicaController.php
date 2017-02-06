@@ -295,7 +295,7 @@ class FormacionAcademicaController extends Controller
                 'notice',
                 'Edit success.'
             );
-
+            $this->get('session')->getFlashBag()->add('exito','Actualizado correctamente');
             return $this->redirect($this->generateUrl('alumnoformacionacademica_show', array('id' => $id,'curriculum'=>$cur )));
         }
 

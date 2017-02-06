@@ -53,7 +53,7 @@ class ReferenciaLaboralController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Registro creado correctamente');
             return $this->redirect($this->generateUrl('secretaria_referencialaboral_show', array('id' => $entity->getIdRf())));
         }
 
@@ -199,7 +199,7 @@ class ReferenciaLaboralController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Registro actualizado correctamente');
             return $this->redirect($this->generateUrl('secretaria_referencialaboral_show', array('id' => $id)));
         }
 
@@ -232,7 +232,7 @@ class ReferenciaLaboralController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('exito','Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('secretaria_referencialaboral',array('cur' => $_SESSION["Curriculum"])));
     }
 
