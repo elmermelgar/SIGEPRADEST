@@ -83,8 +83,8 @@ class FormacionAcademicaController extends Controller
             //obtenemos la imagen que subimos desde el form
             $file = $entity->getImgTitulo();
             //seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
-            $dirDestino = $_SERVER['DOCUMENT_ROOT'] . "\\public\\img\\formacion\\";
-            $nombreArchivo = $file->getClientOriginalName();
+            $dirDestino ="C:\\wamp64\\www\\sigepradest\\web" . "\\public\\img\\formacion\\";
+            $nombreArchivo =$cur."-". $file->getClientOriginalName();
             //echo $dirDestino."    -     ".$nombreArchivo;
             //efectuamos el movimiento
             $file->move($dirDestino, $nombreArchivo);
@@ -179,7 +179,8 @@ class FormacionAcademicaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FormacionAcademica entity.');
         }
-
+        $entity->setImgTitulo(substr($entity->getImgTitulo(), 3));
+//        echo
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -235,7 +236,7 @@ class FormacionAcademicaController extends Controller
     {
 //       transformamos la direccion en la base a un FILE para que pueda ser mostrado
         $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '', $entity->getImgTitulo()));
-        $rutaArchivo = $_SERVER['DOCUMENT_ROOT'] . $cadenaArchvo;
+        $rutaArchivo ="C:\\wamp64\\www\\sigepradest\\web" . $cadenaArchvo;
 
         $entity->setImgTitulo(new File($rutaArchivo));
         // var_dump( $entity->getImgTitulo()->isValid());array('curriculum'=>$cur )
@@ -284,7 +285,7 @@ class FormacionAcademicaController extends Controller
                 //obtenemos la imagen que subimos desde el form
 //-------ELIMINACION DE ARCHIVO---------seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
                 $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '',$exArchivo));//-> lo ponemos en formato deseado
-                $dirDestino = $_SERVER['DOCUMENT_ROOT'];
+                $dirDestino ="C:\\wamp64\\www\\sigepradest\\web";
                 $rutaArchivo = $dirDestino . $cadenaArchvo;
                 unlink($rutaArchivo);//eliminamo y removemos
 //-----------------------fin de la eliminacion
@@ -293,7 +294,7 @@ class FormacionAcademicaController extends Controller
                 $file = $entity->getImgTitulo();
 //
 //            //seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
-                $dirDestino = $_SERVER['DOCUMENT_ROOT'] . "\\public\\img\\formacion\\";
+                $dirDestino ="C:\\wamp64\\www\\sigepradest\\web" . "\\public\\img\\formacion\\";
                 $nombreArchivo = $file->getClientOriginalName();
 //
 //            //efectuamos el movimiento
@@ -354,7 +355,7 @@ class FormacionAcademicaController extends Controller
 
 //----------------seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
             $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '', $entity->getImgTitulo()));//-> lo ponemos en formato deseado
-            $dirDestino = $_SERVER['DOCUMENT_ROOT'];
+            $dirDestino ="C:\\wamp64\\www\\sigepradest\\web";
             $rutaArchivo = $dirDestino . $cadenaArchvo;
             unlink($rutaArchivo);//eliminamo y removemos
 //-----------------------fin de la eliminacion
@@ -405,7 +406,7 @@ class FormacionAcademicaController extends Controller
 
 //----------------seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
             $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '', $entity->getImgTitulo()));//-> lo ponemos en formato deseado
-            $dirDestino = $_SERVER['DOCUMENT_ROOT'];
+            $dirDestino ="C:\\wamp64\\www\\sigepradest\\web";
             $rutaArchivo = $dirDestino . $cadenaArchvo;
             unlink($rutaArchivo);//eliminamo y removemos
 //-----------------------fin de la eliminacion
