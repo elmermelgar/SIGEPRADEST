@@ -36,7 +36,7 @@
                     <ul>
                         <li> <a href="#alternar-respuesta-ej1" id="nav11">Agregar tutores </a></li>
                         <li> <a href="#alternar-respuesta-ej2" id="nav12">Editar tutores </a></li>
-                        <li> <a href="#alternar-respuesta-ej3" id="nav13">Cambiar tutores </a></li>
+                        <li> <a href="#alternar-respuesta-ej3" id="nav13">Cambiar Contraseña de tutores </a></li>
                         <li> <a href="#alternar-respuesta-ej4" id="nav14">Eliminar tutores </a></li>
                         <li> <a href="#alternar-respuesta-ej5" id="nav15">Aprobar o Denegar solicitudes de entrevistas</a></li>
                         <li> <a href="#alternar-respuesta-ej6" id="nav16">Cambiar mi contraseña </a></li>
@@ -219,31 +219,14 @@
                             </strong><br>(<a href="#final3" id="alternar-respuesta-ej3">ver respuesta</a>)
                         <div id="respuesta-ej3" style="display:none">
                             <dl>
-                                <li id="final3"> Esta peticion no es posible, ya que los unicos que tiene acceso es el mismo usuario y el administrador del sistema para realizarlo</li>
+                                <li id="final3"> Esta peticion no es posible, ya que los unicos que tiene acceso es el mismo usuario y <br> el administrador del sistema si lo solicitan personalmente</li>
                             </dl>
                         </div>
 
                         <p><strong>Pregunta 4 :
-                                <br> ¿Como puedo cambiar mi passwoord ?
+                                <br> ¿Quiero eliminar un usuario tutor en especifico que esta en la lista ?
                             </strong><br>(<a href="#final4" id="alternar-respuesta-ej4">ver respuesta</a>)
                         <div id="respuesta-ej4" style="display:none">
-                            <dl>
-                                <ol>
-                                    <dt>Desde el Panel de navegacion del Director se debe realizar los siguientes pasos:</dt><br>
-                                    <li value="1"> Panel de navegacion / clic en el boton:   Cambiar Contraseña</li>
-                                    <li> En la ventana: Cambiar Contraseña, se debe de hacer:
-                                        <ul type="circle" > Introducir el nuevo password en <br>los cuadros de Password y confirmar Password</ul>
-                                    </li>
-                                    <li id="final4"> Al finalizar dar clic en el boton: Guardar Cambio, esto es para realizar los cambios</li>
-
-                                </ol>
-                            </dl>
-                        </div>
-
-                        <p><strong>Pregunta 5 :
-                                <br> ¿Quiero eliminar un usuario tutor en especifico que esta en la lista ?
-                            </strong><br>(<a href="#final5" id="alternar-respuesta-ej5">ver respuesta</a>)
-                        <div id="respuesta-ej5" style="display:none">
                             <dl>
                                 <ol>
                                     <dt>Desde el Panel de navegacion del Director se debe realizar los siguientes pasos:</dt><br>
@@ -265,12 +248,67 @@
                                             <br> localizado en el cuadro de acciones a la posicion derecha final del registro.
                                         </ol>
                                     </li>
-                                    <li id="final5"> Aqui a seleccion debe escoger
+                                    <li id="final4"> Aqui a seleccion debe escoger
                                         <br> Aceptar o Enter para eliminar / Cancelar o Esc para suspender la eliminacion
                                     </li>
                                 </ol>
                             </dl>
                         </div>
+
+
+                        <p><strong>Pregunta 5 :
+                                <br> ¿Aprobar o Denegar solicitudes de entrevistas?
+                            </strong><br>(<a href="#final5" id="alternar-respuesta-ej5">ver respuesta</a>)
+                        <div id="respuesta-ej5" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Desde el Panel de navegacion del Director se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel navegacion / clic en el boton: Solicitudes de Entrevistas</li>
+                                    <li> En la ventana: Aprobar o Denegar Solicitudes de Entrevistas
+                                        <ol> Si en la tabla existe muchos solicitudes:
+                                            <ol>
+                                                <li type="circle"> Existe un cuadro de texto llamado: Buscar:
+                                                    <br> ( esta posicionado en la tabla - superior derecha )
+                                                </li>
+                                                <li type="circle"> digite una palabra significativa para localizarlo</li>
+                                            </ol>
+                                        </ol>
+                                    </li>
+                                    <li> Siempre en la ventana: Aprobar o Denegar Solicitudes de Entrevistas
+                                        <ol> Y localizado la solicitud se tiene:
+                                            <ol>la Fecha de cita, el nombre del solicitante, el curso solicitante
+                                            <br> - Y las acciones son:
+                                                <li type="circle"> Ver informacion, que es de la persona interesada junto con su perfil y datos academicos.</li>
+                                                <li type="circle"> Aprobar o Denegar la solicitud.</li>
+                                            </ol>
+                                        </ol>
+                                    </li>
+                                    <li id="final5"> Una vez finalizada se quitara del listado esa solicitud
+                                    </li>
+                                </ol>
+                            </dl>
+                        </div>
+
+
+
+                        <p><strong>Pregunta 6 :
+                                <br> ¿Como puedo cambiar mi passwoord ?
+                            </strong><br>(<a href="#final6" id="alternar-respuesta-ej6">ver respuesta</a>)
+                        <div id="respuesta-ej6" style="display:none">
+                            <dl>
+                                <ol>
+                                    <dt>Desde el Panel de navegacion del Director se debe realizar los siguientes pasos:</dt><br>
+                                    <li value="1"> Panel de navegacion / clic en el boton:   Cambiar Contraseña</li>
+                                    <li> En la ventana: Cambiar Contraseña, se debe de hacer:
+                                        <ul type="circle" > Introducir el nuevo password en <br>los cuadros de Password y confirmar Password</ul>
+                                    </li>
+                                    <li id="final6"> Al finalizar dar clic en el boton: Guardar Cambio, esto es para realizar los cambios</li>
+
+                                </ol>
+                            </dl>
+                        </div>
+
+
 
 
                     </div>
@@ -359,6 +397,11 @@
                 $('#respuesta-ej5').toggle('slow');
             });
 
+            $('#nav16').on('click',function(){
+                cerrarTodo();
+                $('#respuesta-ej6').toggle('slow');
+            });
+
             $('#alternar-respuesta-ej1').on('click',function(){
                 $('#respuesta-ej1').toggle('slow');
             });
@@ -378,6 +421,11 @@
             $('#alternar-respuesta-ej5').on('click',function(){
                 $('#respuesta-ej5').toggle('slow');
             });
+
+            $('#alternar-respuesta-ej6').on('click',function(){
+                $('#respuesta-ej6').toggle('slow');
+            });
+
         });
 
         function cerrarTodo(){
@@ -392,6 +440,7 @@
             $('#respuesta-ej3').toggle(false);
             $('#respuesta-ej4').toggle(false);
             $('#respuesta-ej5').toggle(false);
+            $('#respuesta-ej6').toggle(false);
         }
     </script>
 
