@@ -30,17 +30,17 @@ class DSIController extends Controller
 
     //Para subir la imagen al servidor
     protected function subirImagen($archivo,$nombreImagen){
-        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\brochure\\".$nombreImagen);
+        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."sigepradest/web/public/img/brochure/".$nombreImagen);
     }
 
     //Para subir la fotografia al servidor
     protected function subirFotografia($archivo,$nombreImagen){
-        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\tutor\\".$nombreImagen);
+        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."sigepradest/web/public/img/tutor/".$nombreImagen);
     }
 
     //Para subir el rescibo al servidor
     protected function subirRecibo($archivo,$nombreImagen){
-        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\recibo\\".$nombreImagen);
+        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."sigepradest/web/public/img/recibo/".$nombreImagen);
     }
 
     //Eliminar imagen del servidor
@@ -50,7 +50,7 @@ class DSIController extends Controller
 
     //Para subir la PDF al servidor
     protected function subirPDF($archivo,$nombrePDF){
-        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."\\public\\img\\pdf\\".$nombrePDF);
+        move_uploaded_file($_FILES["".$archivo]['tmp_name'],$_SERVER['DOCUMENT_ROOT']."sigepradest/web/public/img/pdf/".$nombrePDF);
     }
 
     //Eliminar imagen del servidor
