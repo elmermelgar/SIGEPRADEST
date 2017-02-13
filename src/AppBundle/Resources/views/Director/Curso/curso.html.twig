@@ -1,0 +1,109 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('director') }}">Inicio</a></li>
+            <li class="active">Cursos</li>
+        </ol>
+        <h2>Cursos en proceso de registro</h2>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Cursos Registrados no Disponibles <a href="{{ path('createCurso') }}" style="float: right; margin-top: -7px;" title="Agregar" class="btn btn-success">Agregar Nuevo Curso</a>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center"><span class="label label-info">Fecha</span></th>
+                            <th style="text-align: center"><span class="label label-info">Nombre</span></th>
+                            <th style="text-align: center"><span class="label label-info">Alumnos</span></th>
+                            <th style="text-align: center"><span class="label label-info">Cuotas</span></th>
+                            <th style="text-align: center"><span class="label label-info">Estado</span></th>
+                            <th style="text-align: center"><span class="label label-info">Acciones</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <script>
+                            $('#dataTables-example').DataTable({
+                                ordering: false
+                            });
+                        </script>
+                        {% for hc in hc %}
+                            {% for cursos in cursos %}
+                                {#cambaiar esto luego a cursos disponible#}
+                                {% if cursos.estadoCurso=='registro' %}
+                                    {% if cursos.idCurso == hc.idCurso.idCurso %}
+                                        <tr>
+                                            <td style="text-align: center"  class="sorting_desc" aria-sort="descending">{{ hc.FechaInicio.format("d/m/Y")}}</td>
+                                            <td style="text-align: center">{{ cursos.nombreCurso }}</td>
+                                            <td style="text-align: center">{{ cursos.cantAlumnosLimit }}</td>
+                                            <td style="text-align: center">{{ cursos.numCuotas }}</td>
+                                            <td style="text-align: center">{{ cursos.estadoCurso }}</td>
+                                            <td style="text-align: center;">
+                                                <a href="{{ asset('/secretaria/curso_ver') }}/{{ cursos.idCurso }}" title="Detalles" class="btn btn-default" style="background: #81379C;color: #ffffff;"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                                                -
+                                                <a href="{{ asset('/secretaria/curso_edit') }}/{{ cursos.idCurso }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                                                -
+                                                <button onClick="confirmar({{ cursos.idCurso }})" title="Desabilitar" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></button>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End  Kitchen Sink -->
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('exito') %}
+        <script>
+            window.onload = function notificacion(){
+                alertify.success("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+    {% endfor %}
+    <script>
+            function confirmar(id){
+                //un confirm
+                alertify.confirm("<p>Esta seguro que desea Desabilitar el curso?<br><br><b>ENTER</b> y <b>ESC</b> corresponden a <b>Aceptar</b> o <b>Cancelar</b></p>", function (e) {
+                    if (e) {
+                        location.href="{{ asset('/secretaria/curso_desabilitar') }}/"+id;
+                    } else { alertify.error("Has cancelado la operación");
+                    }
+                });
+                return false
+            }
+        </script>
+    <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+    </script>
+{% endblock %}
