@@ -295,7 +295,7 @@ class FormacionAcademicaController extends Controller
 //
 //            //seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
                 $dirDestino ="C:\\wamp64\\www\\sigepradest\\web" . "\\public\\img\\formacion\\";
-                $nombreArchivo = $file->getClientOriginalName();
+                $nombreArchivo = $cur."-".  $file->getClientOriginalName();
 //
 //            //efectuamos el movimiento
                 $file->move($dirDestino, $nombreArchivo);

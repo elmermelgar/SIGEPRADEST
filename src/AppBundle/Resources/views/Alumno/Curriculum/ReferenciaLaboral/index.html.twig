@@ -18,7 +18,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('secretaria_referencialaboral_show', { 'id': entity.idRf }) }}">{{ entity.idRf }}</a></td>
+                <td><a href="{{ path('alumno_referencialaboral_show', { 'id': entity.idRf }) }}">{{ entity.idRf }}</a></td>
                 <td>{{ entity.descripcionRf }}</td>
                 <td>{{ entity.personaRf }}</td>
                 <td>{{ entity.telefonoRf }}</td>
@@ -27,10 +27,10 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('secretaria_referencialaboral_show', { 'id': entity.idRf }) }}">show</a>
+                        <a href="{{ path('alumno_referencialaboral_show', { 'id': entity.idRf }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('secretaria_referencialaboral_edit', { 'id': entity.idRf }) }}">edit</a>
+                        <a href="{{ path('alumno_referencialaboral_edit', { 'id': entity.idRf }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -41,7 +41,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('secretaria_referencialaboral_new') }}">
+            <a href="{{ path('alumno_referencialaboral_new') }}">
                 Create a new entry
             </a><br/>
             <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">

@@ -13,7 +13,7 @@ use AppBundle\Form\OtrasCompetenciasType;
 /**
  * OtrasCompetencias controller.
  *
- * @Route("/secretaria/otrascompetencias")
+ * @Route("/alumno/otrascompetencias")
  */
 class OtrasCompetenciasController extends Controller
 {
@@ -21,9 +21,9 @@ class OtrasCompetenciasController extends Controller
     /**
      * Lists all OtrasCompetencias entities.
      *
-     * @Route("/to/{cur}", name="secretaria_otrascompetencias")
+     * @Route("/to/{cur}", name="alumno_otrascompetencias")
      * @Method("GET")
-     * @Template("@App/Curriculum/OtrasCompetencias/index.html.twig")
+     * @Template("@App/Alumno/Curriculum/OtrasCompetencias/index.html.twig")
      */
     public function indexAction($cur)
     {
@@ -39,7 +39,7 @@ class OtrasCompetenciasController extends Controller
     /**
      * Creates a new OtrasCompetencias entity.
      *
-     * @Route("/", name="secretaria_otrascompetencias_create")
+     * @Route("/", name="alumno_otrascompetencias_create")
      * @Method("POST")
      * @Template("AppBundle:Curriculum/OtrasCompetencias:new.html.twig")
      */
@@ -54,7 +54,7 @@ class OtrasCompetenciasController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('secretaria_otrascompetencias_show', array('id' => $entity->getIdOc())));
+            return $this->redirect($this->generateUrl('alumno_otrascompetencias_show', array('id' => $entity->getIdOc())));
         }
 
         return array(
@@ -74,7 +74,7 @@ class OtrasCompetenciasController extends Controller
     private function createCreateForm(OtrasCompetencias $entity)
     {
         $form = $this->createForm(new OtrasCompetenciasType(), $entity, array(
-            'action' => $this->generateUrl('secretaria_otrascompetencias_create'),
+            'action' => $this->generateUrl('alumno_otrascompetencias_create'),
             'method' => 'POST',
         ));
 
@@ -86,9 +86,9 @@ class OtrasCompetenciasController extends Controller
     /**
      * Displays a form to create a new OtrasCompetencias entity.
      *
-     * @Route("/new", name="secretaria_otrascompetencias_new")
+     * @Route("/new", name="alumno_otrascompetencias_new")
      * @Method("GET")
-     * @Template("@App/Curriculum/OtrasCompetencias/new.html.twig")
+     * @Template("@App/Alumno/Curriculum/OtrasCompetencias/new.html.twig")
      */
     public function newAction()
     {
@@ -105,9 +105,9 @@ class OtrasCompetenciasController extends Controller
     /**
      * Finds and displays a OtrasCompetencias entity.
      *
-     * @Route("/{id}", name="secretaria_otrascompetencias_show")
+     * @Route("/{id}", name="alumno_otrascompetencias_show")
      * @Method("GET")
-     * @Template("@App/Curriculum/OtrasCompetencias/show.html.twig")
+     * @Template("@App/Alumno/Curriculum/OtrasCompetencias/show.html.twig")
      */
     public function showAction($id)
     {
@@ -131,9 +131,9 @@ class OtrasCompetenciasController extends Controller
     /**
      * Displays a form to edit an existing OtrasCompetencias entity.
      *
-     * @Route("/{id}/edit", name="secretaria_otrascompetencias_edit")
+     * @Route("/{id}/edit", name="alumno_otrascompetencias_edit")
      * @Method("GET")
-     * @Template("@App/Curriculum/OtrasCompetencias/edit.html.twig")
+     * @Template("@App/Alumno/Curriculum/OtrasCompetencias/edit.html.twig")
      */
     public function editAction($id)
     {
@@ -166,7 +166,7 @@ class OtrasCompetenciasController extends Controller
     private function createEditForm(OtrasCompetencias $entity)
     {
         $form = $this->createForm(new OtrasCompetenciasType(), $entity, array(
-            'action' => $this->generateUrl('secretaria_otrascompetencias_update', array('id' => $entity->getIdOc())),
+            'action' => $this->generateUrl('alumno_otrascompetencias_update', array('id' => $entity->getIdOc())),
             'method' => 'PUT',
         ));
 
@@ -177,7 +177,7 @@ class OtrasCompetenciasController extends Controller
     /**
      * Edits an existing OtrasCompetencias entity.
      *
-     * @Route("/{id}", name="secretaria_otrascompetencias_update")
+     * @Route("/{id}", name="alumno_otrascompetencias_update")
      * @Method("PUT")
      * @Template("AppBundle:Curriculum/OtrasCompetencias:edit.html.twig")
      */
@@ -198,7 +198,7 @@ class OtrasCompetenciasController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('secretaria_otrascompetencias_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('alumno_otrascompetencias_edit', array('id' => $id)));
         }
 
         return array(
@@ -211,7 +211,7 @@ class OtrasCompetenciasController extends Controller
     /**
      * Deletes a OtrasCompetencias entity.
      *
-     * @Route("/{id}", name="secretaria_otrascompetencias_delete")
+     * @Route("/{id}", name="alumno_otrascompetencias_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -231,7 +231,7 @@ class OtrasCompetenciasController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('secretaria_otrascompetencias',array('cur' => $_SESSION["Curriculum"])));
+        return $this->redirect($this->generateUrl('alumno_otrascompetencias',array('cur' => $_SESSION["Curriculum"])));
     }
 
     /**
@@ -244,7 +244,7 @@ class OtrasCompetenciasController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('secretaria_otrascompetencias_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('alumno_otrascompetencias_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

@@ -1,52 +1,114 @@
-{% extends '::base.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
 
-{% block body -%}
-    <h1>ExperienciaLaboral</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Idel</th>
-                <td>{{ entity.idEl }}</td>
-            </tr>
-            <tr>
-                <th>Institucionel</th>
-                <td>{{ entity.institucionEl }}</td>
-            </tr>
-            <tr>
-                <th>Cargoel</th>
-                <td>{{ entity.cargoEl }}</td>
-            </tr>
-            <tr>
-                <th>Paisel</th>
-                <td>{{ entity.paisEl }}</td>
-            </tr>
-            <tr>
-                <th>Fechainicioel</th>
-                <td>{{ entity.fechaInicioEl|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Fechafinel</th>
-                <td>{{ entity.fechaFinEl|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Infoadicionalel</th>
-                <td>{{ entity.infoAdicionalEl }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('secretaria_experiencialaboral',{ 'cur': curriculum }) }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('secretaria_experiencialaboral_edit', { 'id': entity.idEl }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumAlumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('alumno_experiencialaboral', { 'cur': curriculum }) }}">Formación Académica</a></li>
+            <li class="active">Detalles</li>
+        </ol>
+        <h2>Formación Académica </h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <!--   Kitchen Sink -->
+        <div class="panel panel-default">
+            <div class="panel-heading" style="padding-bottom: 15px;">
+                formación académica
+            </div>
+
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.success("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+
+            <br/>
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                <br/>
+
+
+                <fieldset>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label>Institución</label> <br/>
+                            {{ entity.institucionEl }}
+                        </div>
+                        <div class="form-group">
+                            <label>Cargo</label> <br/>
+                            {{ entity.cargoEl }}
+                        </div>
+                        <div class="form-group">
+                            <label>Información adicional </label> <br/>
+                            {{ entity.infoAdicionalEl }}
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label>País</label> <br/>
+                            {{ entity.paisEl }}
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha Inicio</label> <br/>
+                            {{ entity.fechaInicioEl|date('Y-m-d H:i:s') }}
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha Fin</label> <br/>
+                            {{ entity.fechaFinEl|date('Y-m-d H:i:s') }}
+                        </div>
+
+                    </div>
+
+
+                </fieldset>
+                <br/>
+
+                <div class="col-xs-2">
+                    <a href="{{ path('alumno_experiencialaboral',{ 'cur': curriculum }) }}" class='btn btn-info square-btn-adjust' >
+                        Regresar
+                    </a>
+                </div>
+                <div class="col-xs-2">
+
+                    {{ form(delete_form) }}
+
+                </div>
+
+                <br/> <br/> <br/>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/bootstrap-datepicker.min.js') }}"></script>
+
+{% endblock %}
+

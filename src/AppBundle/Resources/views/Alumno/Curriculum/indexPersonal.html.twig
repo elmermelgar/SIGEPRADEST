@@ -8,9 +8,9 @@
         <ol class="breadcrumb">
             <li><a href="{{ path('alumno') }}">Inicio</a></li>
             {#<li><a href="{{ path('alumnos') }}">Nuevo alumno</a></li>#}
-            <li class="active">Curriculum</li>
+            <li class="active">Currículum</li>
         </ol>
-        <h2>Gestion de curriculum</h2>
+        <h2>Gestion de currículum : {{ nombre }} {{ apellido }}</h2>
     </div>
 {% endblock %}
 {% block body -%}
@@ -20,7 +20,7 @@
         <!-- Advanced Tables -->
         <div class="panel panel-default">
             <div class="panel-heading">
-               Seleccione un recuadro para la edicion
+               Seleccione un recuadro para la edición
             </div>
 
 
@@ -82,10 +82,10 @@
                         </div>
                         <div class="panel-body" style="text-align: center;" >
                             <div class="titulo"><b>REFERENCIA LABORAL</b></div>
-                            <br/>  <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-user"></i></div>
+                            <br/>  <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-book" aria-hidden="true"></i></div>
 
                             <div style="text-align: center;" class="col-md-12">
-                                <br/>   <a href="{{ path('secretaria_referencialaboral',{cur: curriculum}) }}" style="height: auto; background: #bfacca;" class="btn btn-primary btn-xs" title="Editar Experiencia">ADMINISTRAR</a>
+                                <br/>   <a href="{{ path('alumno_referencialaboral',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Experiencia">ADMINISTRAR</a>
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                             <br/><div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="glyphicon glyphicon-list-alt glyphicon-4x"></i></div>
 
                             <div style="text-align: center;" class="col-md-12">
-                                <br/>       <a href="{{ path('secretaria_otrascompetencias',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Publicaciòn">ADMINISTRAR</a>
+                                <br/>       <a href="{{ path('alumno_otrascompetencias',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Publicaciòn">ADMINISTRAR</a>
                             </div>
                         </div>
                     </div>
@@ -116,8 +116,8 @@
                         <div class="cabecera">
                         </div>
                         <div class="panel-body" style="text-align: center;" >
-                            <div class="titulo"><b>Idiomas</b></div>
-                            <br/>  <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-group"></i></div>
+                            <div class="titulo"><b>IDIOMAS</b></div>
+                            <br/>  <div class="col-md-12" style="font-size: 500%;"><i style="color:rgba(0, 0, 0, 0.35);" class="fa fa-comment-o"></i></div>
 
                             <div style="text-align: center;" class="col-md-12">
                                 <br/>     <a href="{{ path('alumnoidioma',{cur: curriculum}) }}" style="height: auto; background: #428bca;" class="btn btn-primary btn-xs" title="Editar Asociaciòn">ADMINISTRAR</a>

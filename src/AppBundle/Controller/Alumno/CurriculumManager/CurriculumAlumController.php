@@ -35,8 +35,15 @@ class CurriculumAlumController extends Controller
         //optener el curriculum del usuario logueado       --JOIN cur.id------ JOIN cita.idUiuse WHERE hor.ocupado=true
         $id = $em->createQuery('Select cur from AppBundle:Curriculum cur JOIN cur.idAlumno  alum JOIN alum.idUi  use WHERE use = '.$curicuFromLogUser )->getResult();
 
-            var_dump( count($id));
-            var_dump($id[0]->getIdCurriculum());
+//            var_dump( count($id));
+//            var_dump($id[0]->getIdCurriculum());
+
+        //$usuario = $em->getRepository('AppBundle:Curriculum')->findOneBy(array('idCurriculum' => $id[0]->getIdCurriculum()));
+        $nombre = $id[0]->getIdAlumno()->getIdUi()->getNombre();
+        $apellido =$id[0]->getIdAlumno()->getIdUi()->getApellido();
+
+//        var_dump($id[0]->getIdAlumno());
+
         $cur=  $id[0]->getIdCurriculum();
         $_SESSION["Curriculum"] = $cur;
 //        $entities = $em->getRepository('AppBundle:Curriculum')->findBy();
@@ -44,6 +51,8 @@ class CurriculumAlumController extends Controller
         return array(
 //            'entities' => $entities,
             'curriculum' => $cur,
+            'nombre' => $nombre,
+            'apellido' => $apellido,
         );
     }
 
@@ -99,7 +108,7 @@ class CurriculumAlumController extends Controller
      *
      * @Route("/new", name="curriculumAlum_new")
      * @Method("GET")
-     * @Template("@App/Curriculum/show.html.twig")
+     * @Template("@App/Alumno/Curriculum/show.html.twig")
      */
     public function newAction()
     {
@@ -117,7 +126,7 @@ class CurriculumAlumController extends Controller
      *
      * @Route("/{id}", name="curriculumAlum_show")
      * @Method("GET")
-     * @Template("@App/Curriculum/show.html.twig")
+     * @Template("@App/Alumno/Curriculum/show.html.twig")
      */
     public function showAction($id)
     {
@@ -142,7 +151,7 @@ class CurriculumAlumController extends Controller
      *
      * @Route("/{id}/edit", name="curriculumAlum_edit")
      * @Method("GET")
-     * @Template("@App/Curriculum/edit.html.twig")
+     * @Template("@App/Alumno/Curriculum/edit.html.twig")
      */
     public function editAction($id)
     {

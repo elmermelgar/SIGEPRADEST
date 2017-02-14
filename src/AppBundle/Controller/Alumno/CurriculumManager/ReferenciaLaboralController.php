@@ -13,7 +13,7 @@ use AppBundle\Form\ReferenciaLaboralType;
 /**
  * ReferenciaLaboral controller.
  *
- * @Route("/secretaria/referencialaboral")
+ * @Route("/alumno/referencialaboral")
  */
 class ReferenciaLaboralController extends Controller
 {
@@ -21,9 +21,9 @@ class ReferenciaLaboralController extends Controller
     /**
      * Lists all ReferenciaLaboral entities.
      *
-     * @Route("/to/{cur}", name="secretaria_referencialaboral")
+     * @Route("/to/{cur}", name="alumno_referencialaboral")
      * @Method("GET")
-     * @Template("@App/Curriculum/ReferenciaLaboral/index.html.twig")
+     * @Template("@App/Alumno/Curriculum/ReferenciaLaboral/index.html.twig")
      */
     public function indexAction($cur)
     {
@@ -39,7 +39,7 @@ class ReferenciaLaboralController extends Controller
     /**
      * Creates a new ReferenciaLaboral entity.
      *
-     * @Route("/", name="secretaria_referencialaboral_create")
+     * @Route("/", name="alumno_referencialaboral_create")
      * @Method("POST")
      * @Template("AppBundle:Curriculum/ReferenciaLaboral:new.html.twig")
      */
@@ -54,7 +54,7 @@ class ReferenciaLaboralController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('secretaria_referencialaboral_show', array('id' => $entity->getIdRf())));
+            return $this->redirect($this->generateUrl('alumno_referencialaboral_show', array('id' => $entity->getIdRf())));
         }
 
         return array(
@@ -74,7 +74,7 @@ class ReferenciaLaboralController extends Controller
     private function createCreateForm(ReferenciaLaboral $entity)
     {
         $form = $this->createForm(new ReferenciaLaboralType(), $entity, array(
-            'action' => $this->generateUrl('secretaria_referencialaboral_create'),
+            'action' => $this->generateUrl('alumno_referencialaboral_create'),
             'method' => 'POST',
         ));
 
@@ -86,9 +86,9 @@ class ReferenciaLaboralController extends Controller
     /**
      * Displays a form to create a new ReferenciaLaboral entity.
      *
-     * @Route("/new", name="secretaria_referencialaboral_new")
+     * @Route("/new", name="alumno_referencialaboral_new")
      * @Method("GET")
-     * @Template("@App/Curriculum/ReferenciaLaboral/new.html.twig")
+     * @Template("@App/Alumno/Curriculum/ReferenciaLaboral/new.html.twig")
      */
     public function newAction()
     {
@@ -105,9 +105,9 @@ class ReferenciaLaboralController extends Controller
     /**
      * Finds and displays a ReferenciaLaboral entity.
      *
-     * @Route("/{id}", name="secretaria_referencialaboral_show")
+     * @Route("/{id}", name="alumno_referencialaboral_show")
      * @Method("GET")
-     * @Template("@App/Curriculum/ReferenciaLaboral/show.html.twig")
+     * @Template("@App/Alumno/Curriculum/ReferenciaLaboral/show.html.twig")
      */
     public function showAction($id)
     {
@@ -131,9 +131,9 @@ class ReferenciaLaboralController extends Controller
     /**
      * Displays a form to edit an existing ReferenciaLaboral entity.
      *
-     * @Route("/{id}/edit", name="secretaria_referencialaboral_edit")
+     * @Route("/{id}/edit", name="alumno_referencialaboral_edit")
      * @Method("GET")
-     * @Template("@App/Curriculum/ReferenciaLaboral/edit.html.twig")
+     * @Template("@App/Alumno/Curriculum/ReferenciaLaboral/edit.html.twig")
      */
     public function editAction($id)
     {
@@ -166,7 +166,7 @@ class ReferenciaLaboralController extends Controller
     private function createEditForm(ReferenciaLaboral $entity)
     {
         $form = $this->createForm(new ReferenciaLaboralType(), $entity, array(
-            'action' => $this->generateUrl('secretaria_referencialaboral_update', array('id' => $entity->getIdRf())),
+            'action' => $this->generateUrl('alumno_referencialaboral_update', array('id' => $entity->getIdRf())),
             'method' => 'PUT',
         ));
 
@@ -177,7 +177,7 @@ class ReferenciaLaboralController extends Controller
     /**
      * Edits an existing ReferenciaLaboral entity.
      *
-     * @Route("/{id}", name="secretaria_referencialaboral_update")
+     * @Route("/{id}", name="alumno_referencialaboral_update")
      * @Method("PUT")
      * @Template("AppBundle:Curriculum/ReferenciaLaboral:edit.html.twig")
      */
@@ -198,7 +198,7 @@ class ReferenciaLaboralController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('secretaria_referencialaboral_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('alumno_referencialaboral_edit', array('id' => $id)));
         }
 
         return array(
@@ -211,7 +211,7 @@ class ReferenciaLaboralController extends Controller
     /**
      * Deletes a ReferenciaLaboral entity.
      *
-     * @Route("/{id}", name="secretaria_referencialaboral_delete")
+     * @Route("/{id}", name="alumno_referencialaboral_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -231,7 +231,7 @@ class ReferenciaLaboralController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('secretaria_referencialaboral',array('cur' => $_SESSION["Curriculum"])));
+        return $this->redirect($this->generateUrl('alumno_referencialaboral',array('cur' => $_SESSION["Curriculum"])));
     }
 
     /**
@@ -244,7 +244,7 @@ class ReferenciaLaboralController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('secretaria_referencialaboral_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('alumno_referencialaboral_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

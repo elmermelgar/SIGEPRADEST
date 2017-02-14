@@ -50,6 +50,12 @@ class ExperienciaLaboralController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $entity->setFechaInicioEl(new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaInicioEl())) );
+            $entity->setFechaFinEl( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaFinEl())) );
+
+
+
             $em->persist($entity);
             $em->flush();
 
@@ -77,7 +83,8 @@ class ExperienciaLaboralController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
 
         return $form;
     }
@@ -144,6 +151,10 @@ class ExperienciaLaboralController extends Controller
             throw $this->createNotFoundException('Unable to find ExperienciaLaboral entity.');
         }
 
+        $entity->setFechaInicioEl($entity->getFechaInicioEl()->format('d-m-Y') );
+        $entity->setFechaFinEl($entity->getFechaFinEl()->format('d-m-Y'));
+
+
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -190,12 +201,20 @@ class ExperienciaLaboralController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find ExperienciaLaboral entity.');
         }
+        // aca tenemos que ver como ponemos en el formato correcto la cadena para guardar !!!!!!!!!!!!!!1
+//echo "asd"; var_dump( $entity->getFechaInicioEl());
+   //     var_dump( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaInicioEl()));
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+
+            $entity->setFechaInicioEl( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaInicioEl())) );
+            $entity->setFechaFinEl( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaFinEl())) );
+
+            $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('alumno_experiencialaboral_edit', array('id' => $id)));
@@ -246,7 +265,7 @@ class ExperienciaLaboralController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('alumno_experiencialaboral_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm()
         ;
     }

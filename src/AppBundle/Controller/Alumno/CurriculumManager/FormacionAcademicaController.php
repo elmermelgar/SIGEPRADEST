@@ -26,7 +26,7 @@ class FormacionAcademicaController extends Controller
      *
      * @Route("/", name="alumnoformacionacademica")
      * @Method("GET")
-     * @Template("@App/Curriculum/FormacionAcademica/index.html.twig")
+     * @Template("@App/Alumno/Curriculum/FormacionAcademica/index.html.twig")
      */
     public function indexAction()
     {
@@ -81,19 +81,25 @@ class FormacionAcademicaController extends Controller
 //----------------------------------------inicio de File
             //obtenemos la imagen que subimos desde el form
             $file = $entity->getImgTitulo();
-
             //seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
-            $dirDestino = $_SERVER['DOCUMENT_ROOT'] . "\\public\\img\\formacion\\";
-            $nombreArchivo = $file->getClientOriginalName();
-
+            $dirDestino ="C:\\wamp64\\www\\sigepradest\\web" . "\\public\\img\\formacion\\";
+            $nombreArchivo =$cur."-". $file->getClientOriginalName();
             //echo $dirDestino."    -     ".$nombreArchivo;
-
             //efectuamos el movimiento
             $file->move($dirDestino, $nombreArchivo);
             //obtenemos los binarios de nuestra imgen a traves de la ruta especificada
-
             //metemos los binarios de data en la entidad
             $entity->setImgTitulo("../../../public/img/formacion/" . $nombreArchivo);
+//=========================================================
+
+
+
+            //tranformamos las fechas de texto al tipo esparado en la base
+            $entity->setFechaInicioFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaInicioFa())) );
+            $entity->setFechaFinFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaFinFa())) );
+
+
+
 
 //          persistimos-----------------------------------fin de file-----------------
 
@@ -101,7 +107,7 @@ class FormacionAcademicaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Registro creado correctamente');
             return $this->redirect($this->generateUrl('alumnoformacionacademica_show', array('id' => $entity->getIdFa(),'curriculum'=>$cur )));
         }
 
@@ -126,7 +132,8 @@ class FormacionAcademicaController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
 
         return $form;
     }
@@ -171,13 +178,15 @@ class FormacionAcademicaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FormacionAcademica entity.');
         }
-
+        $entity->setImgTitulo(substr($entity->getImgTitulo(), 3));
+//        echo
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
             'curriculum'=>$cur,
+            'id' => $id,
         );
     }
 
@@ -197,6 +206,10 @@ class FormacionAcademicaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FormacionAcademica entity.');
         }
+
+        $entity->setFechaInicioFa($entity->getFechaInicioFa()->format('d-m-Y') );
+        $entity->setFechaFinFa($entity->getFechaFinFa()->format('d-m-Y'));
+
 
         $editForm = $this->createEditForm($entity,$cur);
         $deleteForm = $this->createDeleteForm($id);
@@ -220,7 +233,7 @@ class FormacionAcademicaController extends Controller
     {
 //       transformamos la direccion en la base a un FILE para que pueda ser mostrado
         $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '', $entity->getImgTitulo()));
-        $rutaArchivo = $_SERVER['DOCUMENT_ROOT'] . $cadenaArchvo;
+        $rutaArchivo ="C:\\wamp64\\www\\sigepradest\\web" . $cadenaArchvo;
 
         $entity->setImgTitulo(new File($rutaArchivo));
         // var_dump( $entity->getImgTitulo()->isValid());array('curriculum'=>$cur )
@@ -262,13 +275,14 @@ class FormacionAcademicaController extends Controller
 
         if ($editForm->isValid()) {
 
+
             if ($editForm['imgTitulo']->getData() == null)
                 $entity->setImgTitulo($exArchivo);
             else {
                 //obtenemos la imagen que subimos desde el form
 //-------ELIMINACION DE ARCHIVO---------seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
                 $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '',$exArchivo));//-> lo ponemos en formato deseado
-                $dirDestino = $_SERVER['DOCUMENT_ROOT'];
+                $dirDestino ="C:\\wamp64\\www\\sigepradest\\web";
                 $rutaArchivo = $dirDestino . $cadenaArchvo;
                 unlink($rutaArchivo);//eliminamo y removemos
 //-----------------------fin de la eliminacion
@@ -277,8 +291,8 @@ class FormacionAcademicaController extends Controller
                 $file = $entity->getImgTitulo();
 //
 //            //seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
-                $dirDestino = $_SERVER['DOCUMENT_ROOT'] . "\\public\\img\\formacion\\";
-                $nombreArchivo = $file->getClientOriginalName();
+                $dirDestino ="C:\\wamp64\\www\\sigepradest\\web" . "\\public\\img\\formacion\\";
+                $nombreArchivo = $cur."-".  $file->getClientOriginalName();
 //
 //            //efectuamos el movimiento
                 $file->move($dirDestino, $nombreArchivo);
@@ -289,6 +303,12 @@ class FormacionAcademicaController extends Controller
 
 
             }
+
+            //ponemos en el formato correcot las fechas que actualemnte son texto
+            $entity->setFechaInicioFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaInicioFa())) );
+            $entity->setFechaFinFa( new \DateTime( preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$entity->getFechaFinFa())) );
+//ahora las fechas tipo date en el formato que espera la base
+
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add(
@@ -303,6 +323,8 @@ class FormacionAcademicaController extends Controller
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'curriculum'=>$cur,
+            'id' => $id,
         );
     }
 
@@ -327,7 +349,7 @@ class FormacionAcademicaController extends Controller
 
 //----------------seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
             $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '', $entity->getImgTitulo()));//-> lo ponemos en formato deseado
-            $dirDestino = $_SERVER['DOCUMENT_ROOT'];
+            $dirDestino ="C:\\wamp64\\www\\sigepradest\\web";
             $rutaArchivo = $dirDestino . $cadenaArchvo;
             unlink($rutaArchivo);//eliminamo y removemos
 //-----------------------fin de la eliminacion
@@ -335,7 +357,7 @@ class FormacionAcademicaController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('exito','Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('alumnoformacionacademicaCurriculum',array('cur' => $id)));
     }
 
@@ -351,7 +373,45 @@ class FormacionAcademicaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('alumnoformacionacademica_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm();
     }
+
+    /**
+     * Deletes a FormacionAcademica entity.
+     *
+     * @Route("/del/{id}", name="alumnoformacionacademica_delete2")
+     *
+     */
+    public function delete2Action(Request $request, $id)
+    {
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        //if ($form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:FormacionAcademica')->find($id);
+
+        $curriculum = $entity->getIdCurriculum()->getIdCurriculum();
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find FormacionAcademica entity.');
+        }
+
+//----------------seteamos las variables de destino del doc, el nuevo nombre que tendra, y su ruta de acceso
+        $cadenaArchvo = str_replace('/', '\\', str_replace('../../..', '', $entity->getImgTitulo()));//-> lo ponemos en formato deseado
+        $dirDestino ="C:\\wamp64\\www\\sigepradest\\web";
+        $rutaArchivo = $dirDestino . $cadenaArchvo;
+        unlink($rutaArchivo);//eliminamo y removemos
+//-----------------------fin de la eliminacion
+
+        $em->remove($entity);
+        $em->flush();
+        //  }
+        $this->get('session')->getFlashBag()->add('exito','Registro eliminado correctamente');
+        return $this->redirect($this->generateUrl('alumnoformacionacademicaCurriculum',array('cur' => $curriculum)));
+    }
+
+
+
 }

@@ -17,7 +17,7 @@
     <!--   Kitchen Sink -->
     <div class="panel panel-default">
         <div class="panel-heading">
-            Referencia Laboral  <a href="{{ path('secretaria_referencialaboral_new') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Nueva Referencia Laboral</a>
+            Referencia Laboral  <a href="{{ path('alumno_referencialaboral_new') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Nueva Referencia Laboral</a>
         </div>
         <div class="panel-body">
             <div class="table-responsive">
@@ -45,9 +45,9 @@
                 <td>{{ entity.descripcionRf }}</td>
                 <td>
                 <ul>
-                    <a class="btn btn-default" style="background: #0AA5E2;color: #ffffff;" href="{{ path('secretaria_referencialaboral_show', { 'id': entity.idRf }) }}"> <span class="glyphicon  glyphicon-eye-open" aria-hidden="true" /> </a>
+                    <a class="btn btn-default" style="background: #0AA5E2;color: #ffffff;" href="{{ path('alumno_referencialaboral_show', { 'id': entity.idRf }) }}"> <span class="glyphicon  glyphicon-eye-open" aria-hidden="true" /> </a>
 
-                    <a class="btn btn-primary"  href="{{ path('secretaria_referencialaboral_edit', { 'id': entity.idRf  }) }}">  <span class="glyphicon glyphicon-pencil" aria-hidden="true" /></a>
+                    <a class="btn btn-primary"  href="{{ path('alumno_referencialaboral_edit', { 'id': entity.idRf  }) }}">  <span class="glyphicon glyphicon-pencil" aria-hidden="true" /></a>
 
 
                 </ul>
