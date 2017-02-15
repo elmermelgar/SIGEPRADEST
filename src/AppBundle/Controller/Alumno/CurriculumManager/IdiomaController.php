@@ -54,7 +54,7 @@ class IdiomaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Registro creado correctamente');
             return $this->redirect($this->generateUrl('alumnoidioma_show', array('id' => $entity->getIdIdioma())));
     }
 
@@ -79,8 +79,8 @@ class IdiomaController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
         return $form;
     }
 
@@ -199,8 +199,8 @@ class IdiomaController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('alumnoidioma_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('exito','Registro actualizado correctamente');
+            return $this->redirect($this->generateUrl('alumnoidioma_show', array('id' => $id)));
         }
 
         return array(
@@ -232,7 +232,7 @@ class IdiomaController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('exito','Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('alumnoidioma',array('cur' => $_SESSION["Curriculum"])));
     }
 
@@ -248,7 +248,7 @@ class IdiomaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('alumnoidioma_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm()
         ;
     }

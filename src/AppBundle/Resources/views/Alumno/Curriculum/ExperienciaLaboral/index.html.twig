@@ -6,7 +6,7 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('curriculumAlumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('curriculumAlumTo')}}">Inicio</a></li>
             <li class="active">Experiencia Laboral</li>
         </ol>
         <h2>Experiencia Laboral</h2>
@@ -40,8 +40,8 @@
                             <td>{{ entity.institucionEl }}</td>
                             <td>{{ entity.cargoEl }}</td>
                             <td>{{ entity.paisEl }}</td>
-                            <td>{% if entity.fechaInicioEl %}{{ entity.fechaInicioEl|date('Y-m-d H:i:s') }}{% endif %}</td>
-                            <td>{% if entity.fechaFinEl %}{{ entity.fechaFinEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>{% if entity.fechaInicioEl %}{{ entity.fechaInicioEl|date('Y-m-d') }}{% endif %}</td>
+                            <td>{% if entity.fechaFinEl %}{{ entity.fechaFinEl|date('Y-m-d') }}{% endif %}</td>
                             <td>{{ entity.infoAdicionalEl }}</td>
                             <td>
                                 <ul>
@@ -68,7 +68,7 @@
     <ul>
         <li>
 
-            <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
+            <a href="{{ path('curriculumAlumTo')}}">
                 Regresar a gestión de currículum
             </a>
         </li>

@@ -214,8 +214,15 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp;
                         <a  href="{{ path('cursos_alumno') }}" ><i class="glyphicon glyphicon-tasks"></i> Cursos Inscritos<span ></span></a>
                     </li>
                     <li  >
+                        <a  href="{{ path('curriculumAlumTo')}}"><i class="glyphicon glyphicon-list-alt"></i> Curriculum </a>
+                    </li>
+                    <li  >
+                        <a  href="{{ path('alumno_expediente_edit_user', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-bookmark"></i>Expediente</a>
+                    </li>
+                    <li  >
                         <a  href="{{ path('cambiar_pass_alumno', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
                     </li>
+
                 {% endif %}
                 {% if app.user.idrol.nombrerol== 'tutor' %}
                     <li  >

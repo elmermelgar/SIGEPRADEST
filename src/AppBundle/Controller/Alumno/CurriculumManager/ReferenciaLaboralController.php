@@ -53,7 +53,7 @@ class ReferenciaLaboralController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Creado correctamente');
             return $this->redirect($this->generateUrl('alumno_referencialaboral_show', array('id' => $entity->getIdRf())));
         }
 
@@ -78,7 +78,8 @@ class ReferenciaLaboralController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
 
         return $form;
     }
@@ -197,8 +198,8 @@ class ReferenciaLaboralController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('alumno_referencialaboral_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('exito','Actualizado correctamente');
+            return $this->redirect($this->generateUrl('alumno_referencialaboral_show', array('id' => $id)));
         }
 
         return array(
@@ -230,7 +231,7 @@ class ReferenciaLaboralController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('exito','Eliminado correctamente');
         return $this->redirect($this->generateUrl('alumno_referencialaboral',array('cur' => $_SESSION["Curriculum"])));
     }
 
@@ -246,7 +247,7 @@ class ReferenciaLaboralController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('alumno_referencialaboral_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm()
         ;
     }
