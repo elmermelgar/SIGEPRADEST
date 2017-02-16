@@ -41,20 +41,20 @@ class ModulosController extends SecurityController
      * @Route("/tutor/cursos/", name="cursos_asignados")
      */
     public function cursosAsignadosAction(Request $request)
-    {
-        $em=$this->getDoctrine()->getManager();
-        $datos=$this->getDoctrine()->getRepository('AppBundle:Doctores')->findOneBy(array('idUi'=>$this->getUser()));
-        $idcurso=$datos->getIdCurso();
-        $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->findAll();
+{
+    $em=$this->getDoctrine()->getManager();
+    $datos=$this->getDoctrine()->getRepository('AppBundle:Doctores')->findOneBy(array('idUi'=>$this->getUser()));
+    $idcurso=$datos->getIdCurso();
+    $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->findAll();
 
-        $db = $em->getConnection();
-        $sql = "SELECT * FROM d1";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $d1 = $stmt->fetchAll();
+    $db = $em->getConnection();
+    $sql = "SELECT * FROM d1";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $d1 = $stmt->fetchAll();
 
-        return $this->render('AppBundle:Tutor/Modulos:cusosAsignados.html.twig', array('doc'=>$datos,'d1'=>$d1,'cursos'=>$curso));
-    }
+    return $this->render('AppBundle:Tutor/Modulos:cusosAsignados.html.twig', array('doc'=>$datos,'d1'=>$d1,'cursos'=>$curso));
+}
 
     //Metodo para mostrar los modulos asignados
     /**
@@ -155,7 +155,7 @@ class ModulosController extends SecurityController
             $em->persist($evaluacion);
             $em->flush();
                 $this->MensajeFlash('exito','Evaluacion creada correctamente');
-            return $this->redirectToRoute('evaluaciones', array('id'=>$idmod));
+                return $this->redirectToRoute('evaluaciones', array('id'=>$idmod));
             }
             else{
                 $this->MensajeFlash('error','No puede exceder el limite de 100% en la suma de los porcentajes de las evaluaciones');

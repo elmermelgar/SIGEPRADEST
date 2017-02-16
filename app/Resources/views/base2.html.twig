@@ -183,6 +183,9 @@ font-size: 16px;"> Bienvenido : {{ app.user.nomusuario }} &nbsp;
                         <a  href="{{ path('cambiar_pass_director', {'id': app.user.idui}) }}"><i class="glyphicon glyphicon-lock"></i> Cambiar Contraseña</a>
                     </li>
                     <li  >
+                        <a  href="{{ path('cursos_disponibles') }}"><i class="fa fa-graduation-cap"></i> Cursos Disponibles</a>
+                    </li>
+                    <li  >
                         <a  href="{{ path('historial_director') }}"><i class="fa fa-bars"></i> Historial de Cursos</a>
                     </li>
                 {% endif %}

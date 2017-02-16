@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Director;
 
 use AppBundle\Controller\DSIController;
+use AppBundle\Entity\Modulos;
 use AppBundle\Entity\Solicitud;
 use AppBundle\Tests\Controller\DetalleCursoControllerTest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -63,5 +64,37 @@ class CursosModulosController extends DSIController
             return $this->redirectToRoute('login');
         }
 
+    }
+    //Metodo para mostrar al director los cursos disponibles a agregar modulos
+    /**
+     * @Route("/director/cursos/disponibles", name="cursos_disponibles")
+     */
+    public function cursosDisponiblesAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->findAll();
+
+        return $this->render('AppBundle:Director/Curso:cusosModulos.html.twig', array('cursos'=>$curso));
+    }
+    //Metodo para mostrar los modulos de cada curso
+    /**
+     * @Route("/director/modulos/{id}", name="modulos_curso_director")
+     */
+    public function modulosCursoAction($id, Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $modulos=$this->getDoctrine()->getRepository('AppBundle:Modulos')->findBy(array('idCurso'=>$id));
+        $contarmodulos=count($modulos);
+        $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($id);
+        if($request->isMethod("POST")) {
+            $modulo=new Modulos();
+            $modulo->setIdCurso($curso);
+            $modulo->setNombreModulo($request->get("modulo"));
+            $em->persist($modulo);
+            $em->flush();
+            $this->MensajeFlash('exito','Módulo creado correctamente');
+            return $this->redirectToRoute('modulos_curso_director', array('id'=>$id,'modulos'=>$modulos,'curso'=>$curso,'count'=>$contarmodulos));
+        }
+        return $this->render('AppBundle:Director/Curso:modulosCurso.html.twig', array('modulos'=>$modulos,'curso'=>$curso,'count'=>$contarmodulos));
     }
 }
