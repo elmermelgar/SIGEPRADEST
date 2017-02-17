@@ -24,17 +24,19 @@
                     <table class="table table-striped table-bordered table-hover" order="desc" id="dataTables-example">
                         <thead>
                         <tr>
-                            <th style="text-align: center">DUI</th>
+                            {#<th style="text-align: center">DUI</th>#}
                             <th style="text-align: center">Nombres</th>
                             <th style="text-align: center">Apellidos</th>
                             <th style="text-align: center">Inscribir</th>
                         </tr>
                         </thead>
                         <tbody>
+                        {#{{ dump(alum) }}#}
+                        {#{{ dump(curso) }}#}
                         {% for al in alum %}
-                            {% if al.id_dc is null %}
+                            {#{% if al.id_dc is null %}#}
                             <tr>
-                                <td style="text-align: center;">{{ al.dui_alumno }}</td>
+                                {#<td style="text-align: center;">{{ al.dui_alumno }}</td>#}
                                 <td style="text-align: center;">{{ al.nombre }}</td>
                                 <td style="text-align: center;">{{ al.apellido }}</td>
                                 <td style="text-align: center;">
@@ -45,7 +47,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            {% endif %}
+                            {#{% endif %}#}
                         {% endfor %}
                         </tbody>
                     </table>

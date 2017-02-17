@@ -1,0 +1,61 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('director') }}">Inicio</a></li>
+            <li><a href="{{ path('cursos_disponibles') }}">Cursos Disponibles</a></li>
+            <li class="active">Modulos</li>
+        </ol>
+        <h2>Modulos - "{{ curso.nombreCurso }}" <a href="#" style="font-size: 20px;font-family: Arial;float: right" title="Agregar Modulos" data-toggle="modal" data-target="#myModal" class="btn btn-success" ><span class="glyphicon glyphicon-tasks" aria-hidden="true"/> Agregar Módulos</a></h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="row">
+    {% for modulos in modulos %}
+    <div class="col-md-4 col-sm-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Modulo <h3 style="float: right;margin-top: -5px"> {{ count }}{% set count=count-1 %} </h3>
+            </div>
+            <div class="panel-body" style="text-align: center">
+                <p>{{ modulos.nombreModulo }}</p>
+                <hr/>
+               </div>
+        </div>
+    </div>
+        {% endfor %}
+</div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar Nuevo Módulo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <form role="form" action="{{ path('modulos_curso_director', {'id': curso.idCurso}) }}" method="post" >
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="disabledSelect">Nombre del módulo:</label>
+                                    <input class="form-control" max="210" name="modulo" type="text" required/>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-md-offset-3">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" style="width: 30%;" class="btn btn-primary">Guardar </button>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br/><br/><br/><br/><br/>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

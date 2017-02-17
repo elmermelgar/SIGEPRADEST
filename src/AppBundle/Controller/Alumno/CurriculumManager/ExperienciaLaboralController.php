@@ -216,8 +216,8 @@ class ExperienciaLaboralController extends Controller
 
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('alumno_experiencialaboral_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('exito','Registro actualizado correctamente');
+            return $this->redirect($this->generateUrl('alumno_experiencialaboral_show', array('id' => $id)));
         }
 
         return array(

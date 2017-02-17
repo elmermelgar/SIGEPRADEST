@@ -197,7 +197,39 @@ class ExpedienteController extends Controller
         );
     }
 
+    /**
+     * Displays a form to edit an existing Expediente entity.
+     *
+     * @Route("/{id}/editfromauser", name="alumno_expediente_edit_user")
+     * @Method("GET")
+     * @Template("@App/Alumno/Expediente/edit.html.twig")
+     */
+    public function editActionFromUser($id)
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $alum= $em->getRepository('AppBundle:Alumno')->findOneByidUi($id);
+      //  var_dump($alum);
+       $entity = $em->getRepository('AppBundle:Expediente')->findOneByidAlumno($alum->getIdAlumno());
+       // var_dump($entity);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Expediente entity.');
+        }
+
+        $entity->setFechaTitulacion($entity->getFechaTitulacion()->format('d-m-Y') );
+        $entity->setFechaExpTitulo($entity->getFechaExpTitulo()->format('d-m-Y'));
+        $entity->setFechaNaci(  $entity->getFechaNaci()->format('d-m-Y') );
+        $entity->setFechaRegistro( $entity->getFechaRegistro()->format('d-m-Y') );
+        //  var_dump($entity->getFechaRegistro()->format('d-m-Y') );
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
 
 
 
@@ -251,7 +283,7 @@ class ExpedienteController extends Controller
 
 
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Expediente actualizado correctamente');
             return $this->redirect($this->generateUrl('alumno_expediente_edit', array('id' => $id)));
         }
 

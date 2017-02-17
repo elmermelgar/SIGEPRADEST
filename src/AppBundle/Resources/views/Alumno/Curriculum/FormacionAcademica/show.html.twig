@@ -9,7 +9,7 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('curriculumAlumTo', { 'id': curriculum }) }}">Inicio</a></li>
+            <li><a href="{{ path('curriculumAlumTo')}}">Inicio</a></li>
             <li><a href="{{ path('alumnoformacionacademicaCurriculum', { 'cur': curriculum }) }}">Formación Académica</a></li>
             <li class="active">Detalles</li>
         </ol>
@@ -80,14 +80,14 @@
 
                         <div class="form-group">
                             <label> <label>Fecha de Inicio</label> </label><br/>
-                            {{ entity.fechaInicioFa|date('Y-m-d H:i:s') }}
+                            {{ entity.fechaInicioFa|date('Y-m-d ') }}
 
                         </div>
 
                         <div class="form-group">
                             <label> <label>Fecha de gruaduacion</label> </label><br/>
 
-                            {{ entity.fechaFinFa|date('Y-m-d H:i:s') }}
+                            {{ entity.fechaFinFa|date('Y-m-d') }}
                         </div>
 
 

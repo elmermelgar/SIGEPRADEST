@@ -1,52 +1,107 @@
-{% extends '::base.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumAlumTo')}}">Inicio</a></li>
+            <li class="active">Referencia Laboral</li>
+        </ol>
+        <h2>Referencia Laboral</h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="col-md-12">
+    <!--   Kitchen Sink -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Referencia Laboral  <a href="{{ path('alumno_referencialaboral_new') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Nueva Referencia Laboral</a>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                    <tr>
 
-{% block body -%}
-    <h1>ReferenciaLaboral list</h1>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Idrf</th>
-                <th>Descripcionrf</th>
-                <th>Personarf</th>
-                <th>Telefonorf</th>
-                <th>Puestorf</th>
-                <th>Empresaorigenrf</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('alumno_referencialaboral_show', { 'id': entity.idRf }) }}">{{ entity.idRf }}</a></td>
-                <td>{{ entity.descripcionRf }}</td>
-                <td>{{ entity.personaRf }}</td>
-                <td>{{ entity.telefonoRf }}</td>
-                <td>{{ entity.puestoRf }}</td>
-                <td>{{ entity.empresaOrigenRf }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('alumno_referencialaboral_show', { 'id': entity.idRf }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('alumno_referencialaboral_edit', { 'id': entity.idRf }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                        <th>Persona</th>
+                        <th>Teléfono</th>
+                        <th>Puesto</th>
+                        <th>Empresa de origen</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in entities %}
+                        <tr>
 
-        <ul>
+                            <td>{{ entity.personaRf }}</td>
+                            <td>{{ entity.telefonoRf }}</td>
+                            <td>{{ entity.puestoRf }}</td>
+                            <td>{{ entity.empresaOrigenRf }}</td>
+                            <td>{{ entity.descripcionRf }}</td>
+                            <td>
+                                <ul>
+                                    <a class="btn btn-default" style="background: #0AA5E2;color: #ffffff;" href="{{ path('alumno_referencialaboral_show', { 'id': entity.idRf }) }}"> <span class="glyphicon  glyphicon-eye-open" aria-hidden="true" /> </a>
+
+                                    <a class="btn btn-primary"  href="{{ path('alumno_referencialaboral_edit', { 'id': entity.idRf  }) }}">  <span class="glyphicon glyphicon-pencil" aria-hidden="true" /></a>
+
+
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <ul>
         <li>
-            <a href="{{ path('alumno_referencialaboral_new') }}">
-                Create a new entry
-            </a><br/>
-            <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
+
+            <a href="{{ path('curriculumAlumTo')}}">
                 Regresar a Curriculum
             </a>
+
         </li>
     </ul>
+
     {% endblock %}
+    {% block javascripts %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('exito') %}
+        <script>
+            window.onload = function notificacion(){
+                alertify.success("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+        {% endfor %}
+
+        <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+        <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+
+    {% endblock %}
+
+
+

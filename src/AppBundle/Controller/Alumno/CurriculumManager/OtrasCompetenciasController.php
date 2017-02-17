@@ -53,7 +53,7 @@ class OtrasCompetenciasController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('exito','Registro creado correctamente');
             return $this->redirect($this->generateUrl('alumno_otrascompetencias_show', array('id' => $entity->getIdOc())));
         }
 
@@ -78,7 +78,8 @@ class OtrasCompetenciasController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Guardar' ,  'attr' => array('class' => 'btn btn-primary',
+            'style' => "width: 30%")));
 
         return $form;
     }
@@ -172,6 +173,7 @@ class OtrasCompetenciasController extends Controller
 
         $form->add('submit', 'submit', array('label' => 'Actualizar','attr' => array('class' => 'btn btn-primary square-btn-adjust',
         )));
+
         return $form;
     }
     /**
@@ -197,8 +199,8 @@ class OtrasCompetenciasController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('alumno_otrascompetencias_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('exito','Registro actualizado correctamente');
+            return $this->redirect($this->generateUrl('alumno_otrascompetencias_show', array('id' => $id)));
         }
 
         return array(
@@ -230,7 +232,7 @@ class OtrasCompetenciasController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('exito','Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('alumno_otrascompetencias',array('cur' => $_SESSION["Curriculum"])));
     }
 
@@ -246,7 +248,7 @@ class OtrasCompetenciasController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('alumno_otrascompetencias_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger square-btn-adjust')))
             ->getForm()
         ;
     }

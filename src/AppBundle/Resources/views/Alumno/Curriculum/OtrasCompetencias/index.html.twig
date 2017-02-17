@@ -1,46 +1,96 @@
-{% extends '::base.html.twig' %}
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('curriculumAlumTo')}}">Inicio</a></li>
+            <li class="active">Otras competencias</li>
+        </ol>
+        <h2>Otras competencias</h2>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="col-md-12">
+    <!--   Kitchen Sink -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Otras competencias  <a href="{{ path('alumno_otrascompetencias_new') }}" style="float: right; margin-top: -5px;" title="Agregar" class="btn btn-success">Nueva competencia</a>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                    <tr>
 
-{% block body -%}
-    <h1>OtrasCompetencias list</h1>
+                        <th>Competencia</th>
+                        <th>Descripción</th>
+                        <th style="width: 20%;">Acciones </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in entities %}
+                        <tr>
+                            <td>{{ entity.competencia }}</td>
+                            <td>{{ entity.descripcionComp }}</td>
+                            <td>
+                                <ul>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Idoc</th>
-                <th>Competencia</th>
-                <th>Descripcioncomp</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('alumno_otrascompetencias_show', { 'id': entity.idOc }) }}">{{ entity.idOc }}</a></td>
-                <td>{{ entity.competencia }}</td>
-                <td>{{ entity.descripcionComp }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('alumno_otrascompetencias_show', { 'id': entity.idOc }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('alumno_otrascompetencias_edit', { 'id': entity.idOc }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                                    <a class="btn btn-default" style="background: #0AA5E2;color: #ffffff;" href="{{ path('alumno_otrascompetencias_show', { 'id': entity.idOc }) }}"> <span class="glyphicon  glyphicon-eye-open" aria-hidden="true" /> </a>
 
-        <ul>
+                                    <a class="btn btn-primary"  href="{{ path('alumno_otrascompetencias_edit', { 'id': entity.idOc }) }}">  <span class="glyphicon glyphicon-pencil" aria-hidden="true" /></a>
+
+
+
+
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <ul>
         <li>
-            <a href="{{ path('alumno_otrascompetencias_new') }}">
-                Create a new entry
-            </a><br/>
-            <a href="{{ path('curriculumTo', { 'id': curriculum }) }}">
+
+            <a href="{{ path('curriculumAlumTo')}}">
                 Regresar a Curriculum
             </a>
+
         </li>
     </ul>
+
     {% endblock %}
+    {% block javascripts %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+        <script>
+            window.onload = function error(){
+                alertify.error("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('exito') %}
+        <script>
+            window.onload = function notificacion(){
+                alertify.success("{{ flashMessage }}.");
+                return false;
+            }
+        </script>
+        {% endfor %}
+
+        <script src="{{ asset('public/assets/js/dataTables/jquery.dataTables.js') }}"></script>
+        <script src="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+
+    {% endblock %}
+
