@@ -21,7 +21,11 @@
             <div class="box-content">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        Curso disponible para inscripciones
+                        <fieldset>
+                            <div class="col-md-6">Curso disponible para inscripciones</div>
+                            <div class="col-md-6"><a href="{{ path('interesado_solicitud',{'idc':datos.idCurso}) }}" class="btn btn-default" style="float: right;">Llenar/Ver
+                                    solicitud</a></div>
+                        </fieldset>
                     </div>
                     <fieldset>
                         <div class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
@@ -42,7 +46,9 @@
                                 <div class="controls">
                                     {% if datos.rutaPdf is not null %}
                                         <div class="input-prepend">
-                                            <a class="btn btn-success" onclick="window.open('{{ asset('public') }}/{{ datos.rutaPdf }}');">Ver o Descargar</a>
+                                            <a class="btn btn-success"
+                                               onclick="window.open('{{ asset('public') }}/{{ datos.rutaPdf }}');">Ver o
+                                                Descargar</a>
                                         </div>
                                     {% endif %}
                                 </div>

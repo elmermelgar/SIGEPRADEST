@@ -2,22 +2,19 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('admin') }}">Inicio</a></li>
+            <li><a href="{{ path('index_interesado') }}">Inicio</a></li>
             <li class="active">Citas</li>
         </ol>
-        <h2>Lista de Citas</h2>
+        <h2>Historial de Citas</h2>
     </div>
 {% endblock %}
 {% block body -%}
 
 
     <div class="col-md-12">
-        <!--   Kitchen Sink -->
         <div class="panel panel-default">
             <div class="panel-heading" style="padding-bottom: 15px;">
-                Citas registradas en el sistemas <a href="{{ path('cita_new') }}"
-                                                    style="float: right; margin-top: -5px;" title="Agregar"
-                                                    class="btn btn-success">Agregar Nueva Cita</a>
+                Citas registradas
             </div>
 
             {% block javascripts %}
@@ -38,14 +35,6 @@
                 </script>
                 {% endfor %}
             {% endblock %}
-            
-
-
-
-
-
-
-
 
             <table class="table table-striped table-bordered table-hover">
                 <thead>
@@ -53,17 +42,16 @@
                     <th>#</th>
                     <th>Fecha</th>
                     <th>Hora</th>
-                    <th>Comentario cita</th>
                     <th>Curso</th>
-                    <th>Acciones</th>
+                    <th>Comentario cita</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for entity in entities %}
                     <tr>
-                        <td><a href="{{ path('cita_show', { 'id': entity.idCita }) }}">{{ entity.idCita }}</a></td>
+                        <td>{{ entity.idCita }}</td>
 
-                        <td>{{ entity.idDhe.fechaDhe|date("l m/d/Y")|replace({
+                        <td>{{ entity.idDhe.fechaDhe|date("m/d/Y")|replace({
                                 'Monday'  : 'Lunes',
                                 'Tuesday'  : 'Martes',
                                 'Thursday'  : 'Jueves',
@@ -73,18 +61,8 @@
                                 'Sunday'  : 'Domingo',
                             }) }}</td>
                         <td>{{ entity.idDhe.horaDhe|date("h:i A") }}</td>
-                        <td>{{ entity.comentarioCita }}</td>
                         <td>{{ entity.idCurso.NombreCurso }}</td>
-                        {#<td>{% if entity.idDhe.ocupado %}{{ 'Si' }}{% else %}{{ "No" }}{% endif %}</td>#}
-
-                        <td>
-
-                            <a href="{{ path('cita_show', { 'id': entity.idCita }) }}" title="Editar"
-                               class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span
-                                        class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                            - <a href="{{ path('cita_delete_personal', { 'id': entity.idCita }) }}" title="Editar"
-                                 class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a>
-                           </td>
+                        <td>{{ entity.comentarioCita }}</td>
 
                     </tr>
                 {% endfor %}

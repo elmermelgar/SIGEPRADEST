@@ -32,14 +32,11 @@ class CitaController extends DSIController
 //        setlocale (LC_TIME, "es_ES");
         $em = $this->getDoctrine()->getManager();
 
-//        $entities = $em->getRepository('AppBundle:Cita')->findBy(array());   ex validacion para encontrar todas
         $user = $this->getUser();
-        $rol = $this->getUser()->getIdrol()->getIdrol();
+        //$rol = $this->getUser()->getIdrol()->getIdrol();
 // validacion para ver si es un usuario adminitrador, o si es un interesado para solo mostrar los datos personales
 
-//         if ($rol == 1)
-//            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use  ')->getResult();
-//        else
+
             $entities = $em->createQuery('Select cita from AppBundle:Cita cita ')->getResult();
 //            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = true and use.nomusuario = \'' . $user . '\'    ')->getResult();
 
