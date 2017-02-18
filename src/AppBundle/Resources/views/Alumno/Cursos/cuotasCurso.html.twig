@@ -122,8 +122,8 @@
                                     <label for="disabledSelect">Selecione una Cuota</label>
 
                                     <select name="cuota" class="form-control">
-                                                {% for cuotas in cuotas %}
-                                                <option selected value="{{ cuotas.idCuota }}">{{ cuotas.cuota }}</option>
+                                                {% for cuota in cuotasp %}
+                                                <option selected value="{{ cuota.id_cuota }}">{{ cuota.cuota }}</option>
                                                 {% endfor %}
                                     </select>
 

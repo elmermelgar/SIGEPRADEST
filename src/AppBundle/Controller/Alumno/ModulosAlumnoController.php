@@ -71,6 +71,12 @@ class ModulosAlumnoController extends DSIController
     {
         $em=$this->getDoctrine()->getManager("default");
         $cuotas=$this->getDoctrine()->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id));
+        $db = $em->getConnection();
+        $sql = "select c.* from cuotas c where c.id_curso=$id and c.id_cuota not in (select id_cuota from pago_cuota where id_dc=$id2) ORDER BY cuota ASC";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $cuotasp = $stmt->fetchAll();
+
         $alumno=$this->getDoctrine()->getRepository('AppBundle:Alumno')->findOneBy(array('idUi'=>$this->getUser()));
         $inscrip=$this->getDoctrine()->getRepository('AppBundle:InscripcionCurso')->findOneBy(array('idCurso'=>$id,'idAlumno'=>$alumno->getIdAlumno()));
         $pago=$this->getDoctrine()->getRepository('AppBundle:PagoCuota')->findBy(array('idDc'=>$id2));
@@ -116,7 +122,7 @@ class ModulosAlumnoController extends DSIController
                 }
             }
         }
-        return $this->render('AppBundle:Alumno/Cursos:cuotasCurso.html.twig', array('cuotas'=>$cuotas,'curso'=>$curso,'inscrip'=>$inscrip, 'pago'=>$pago));
+        return $this->render('AppBundle:Alumno/Cursos:cuotasCurso.html.twig', array('cuotas'=>$cuotas,'cuotasp'=>$cuotasp,'curso'=>$curso,'inscrip'=>$inscrip, 'pago'=>$pago));
     }
 
      //Metodo para editar un pago
