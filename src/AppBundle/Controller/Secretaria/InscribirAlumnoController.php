@@ -26,12 +26,21 @@ class InscribirAlumnoController extends DSIController
         if($this->getUser()){
             $em=$this->getDoctrine()->getManager("default");
             $cursos=$em->getRepository('AppBundle:Curso')->findBy(array('estadoCurso'=>'disponible'));
+            $array_curso[]=0;
+
+            for ($i=0; $i < count($cursos); $i++) {
+                $inscritos=$em->getRepository("AppBundle:InscripcionCurso")->findBy(array('idCurso'=>$cursos[$i]->getIdCurso()));
+
+                if($cursos[$i]->getCantAlumnosLimit()<>count($inscritos)){
+                    $array_curso[$i]=$cursos[$i];
+                }
+            }
             $hc=$em->createQuery('select curso from AppBundle:HorarioCurso curso ORDER BY curso.fechaInicio DESC')->getResult();
 
             $doctores=$em->getRepository('AppBundle:Doctores')->findAll();
             $d1=$this->mostrarD1();
 
-            return $this->render('AppBundle:Secretaria/IncribirAlumno:cursoDisp.html.twig', array('cursos'=>$cursos,'doctores'=>$doctores,'d1'=>$d1, 'hc'=>$hc));
+            return $this->render('AppBundle:Secretaria/IncribirAlumno:cursoDisp.html.twig', array('cursos'=>$array_curso,'doctores'=>$doctores,'d1'=>$d1, 'hc'=>$hc));
         }else{
             return $this->redirectToRoute('login');
         }
@@ -66,20 +75,12 @@ GROUP BY
  alumno.id_alumno,
  estado_solicitud.id_solicitud";
 
-
-//            $sql = "SELECT * FROM (SELECT a.id_alumno idalumno,s.id_solicitud,u.nombre,u.apellido,dp.dui_alumno,u.id_ui
-//            FROM alumno a, solicitud s, usuario u, datos_personales dp
-//            WHERE s.id_curso= :idcurso AND s.estado='inscrito' AND u.id_ui=s.id_ui AND dp.id_ui=u.id_ui AND a.id_ui=a.id_ui
-//            ) al LEFT JOIN inscripcion_curso ic ON al.idalumno = ic.id_alumno AND ic.id_curso= :idcurso";
             $em=$this->getDoctrine()->getManager();
             $db = $em->getConnection();
             $stmt = $db->prepare($sql);
-//            $stmt->bindValue('idcurso', $id);
             $stmt->execute();
             $alums = $stmt->fetchAll();
             $curso=$em->getRepository('AppBundle:Curso')->findOneBy(array('idCurso'=>$id));
-
-//            var_dump($alums);
 
             return $this->render('AppBundle:Secretaria/IncribirAlumno:alumnos.html.twig', array('alum'=>$alums, 'curso' => $curso));
 
@@ -109,11 +110,9 @@ GROUP BY
 
                 $insc->setIdAlumno($alum);
 
-                $solicitud = $em->getRepository('AppBundle:Solicitud')->findBy(array("idUi" =>  $alum->getIdUi()->getIdUi(),
-                   "idCurso"=> $idcurso));
+                $solicitud = $em->getRepository('AppBundle:Solicitud')->findBy(array("idUi" =>  $alum->getIdUi()->getIdUi(), "idCurso"=> $idcurso));
 
-                 $solicitud[0]->setEstado('inscrito');
-
+                $solicitud[0]->setEstado('inscrito');
 
                 //Persistir
                 $em->persist($insc);
@@ -127,7 +126,6 @@ GROUP BY
             }else{
                 $this->MensajeFlash('error','No seleccionó alumnos para inscribir');
             }
-
             return $this->redirectToRoute("verCursoDisp");
         }
     }
