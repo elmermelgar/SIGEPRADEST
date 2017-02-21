@@ -34,14 +34,14 @@
                         <tbody>
 
                         {% for usuarios in usuarios %}
-                            {% if usuarios.isactive == 1 %}
+                            {% if usuarios.isactive == 1 and usuarios.idRol.idRol != 2%}
                         <tr>
                             <td>{{ usuarios.nombre }}</td>
                             <td>{{ usuarios.apellido }}</td>
                             <td>{{ usuarios.idRol.nombreRol }}</td>
                             <td>{{ usuarios.nomusuario }}</td>
                             <td style="text-align: center;">
-                                <a href="{{ path("verTutor", {"id": usuarios.idUi}) }}" title="Detalles" class="btn btn-default" style="background: #81379C;color: #ffffff;"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                                <a href="{{ path("verUser", {"id": usuarios.idUi}) }}" title="Detalles" class="btn btn-default" style="background: #81379C;color: #ffffff;"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
                                 -
                                 <a href="{{ path('editar_usuario', {'id': usuarios.idUi}) }}" title="Editar" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                                 -

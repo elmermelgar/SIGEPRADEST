@@ -165,4 +165,20 @@ class UsuariosController extends SecurityController
             'usuario' => $datos));
     }
 
+    /**
+     * @Route("/admin/DetalleUser/{id}", name="verUser")
+     */
+    public function verUserAction($id){
+        if($this->getUser()){
+            $em=$this->getDoctrine()->getManager();
+            $user=$em->getRepository('AppBundle:Usuario')->find($id);
+
+            return $this->render('AppBundle:Admin/Usuarios:detalle_user.html.twig', array('user'=>$user));
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
+    }
+
+
 }

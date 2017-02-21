@@ -164,7 +164,6 @@ class Usuarios2Controller extends DSIController
             }
         }
         return $this->render('AppBundle:Director/Usuarios2:editar_usuario.html.twig', array('usuario' => $datos, 'doc' => $tutor));
-
     }
 
     /**
@@ -228,8 +227,13 @@ class Usuarios2Controller extends DSIController
             $em=$this->getDoctrine()->getManager();
             $tutores=$em->getRepository('AppBundle:Usuario')->find($id);
             $doctores=$em->getRepository('AppBundle:Doctores')->findOneBy(array("idUi"=>$id));
+            if($doctores != NULL){
+                $curd1=$this->cur($doctores->getIdDoctores());
+            }else{
+                $curd1=NULL;
+            }
             $curso=$em->getRepository('AppBundle:Curso')->findAll();
-            $curd1=$this->cur($doctores->getIdDoctores());
+
             return $this->render('AppBundle:Director/Usuarios2:ver_tutor.html.twig', array('tuto'=>$tutores, 'doc'=>$doctores, 'cur'=>$curd1, 'curso'=>$curso));
         }
         else{

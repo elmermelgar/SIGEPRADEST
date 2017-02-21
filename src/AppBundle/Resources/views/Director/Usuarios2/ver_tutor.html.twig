@@ -100,9 +100,11 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-3" class="col-md-3" style="margin-top: 18px;margin-bottom: 18px">
                             <div class="control-group" >
                                 <label class="control-label" for="prependedInput">Asignado a Cursos</label>
+                                {% if cur != NULL %}
                                 <div class="controls">
                                     <div class="input-prepend">
                                         {% for cur in cur %}
@@ -115,15 +117,15 @@
                                     </div>
                                 </div>
                             </div>
-
+                            {% endif %}
 
                                 <br>
+                            <br>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <a class="btn btn-info" data-toggle="modal" data-target="#ModalImg"><i aria-hidden="true"></i> Cambiar Imagen </a>
                                     </div>
                                 </div>
-
 
                             <!-- Modal -->
                             <div class="modal fade" id="ModalImg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
