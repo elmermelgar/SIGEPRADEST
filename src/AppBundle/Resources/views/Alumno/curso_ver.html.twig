@@ -1,0 +1,207 @@
+{% extends 'base2.html.twig' %}
+{% block active %}active-menu{% endblock %}
+{% block styles %}
+    <link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/select2.min.css') }}">
+    <link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block Header %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('alumno') }}">Inicio</a></li>
+            <li class="active">Detalles Curso</li>
+        </ol>
+        <h2>Detalles de {{ datos.nombreCurso }}</h2>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-content">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Curso en proceso de registro
+                    </div>
+               <fieldset>
+                        <div class="col-md-6" style="margin-top: 18px;margin-bottom: 18px">
+                            <div class="control-group" >
+                                <div class="controls">
+                                    <a href="" onclick="window.open('{{ asset('public') }}/{{ datos.broshureInformativo}}');">
+                                        <img src="{{ asset('public') }}/{{ datos.broshureInformativo }}" alt="img1" style="width: 100%; height: auto;"></a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6" style="margin-top: 18px;margin-bottom: 18px;">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Broschure de Información (PDF)</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <a class="btn btn-success" onclick="window.open('{{ asset('public') }}/{{ datos.rutaPdf}}');">Ver o Descargar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Descripción</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        {{ datos.textoInformativo }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Numero de Cuotas (Matricula + Pre-Inscripción o Inscripción)</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        {{ datos.numCuotas }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Cantidad de Alumnos</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        {{ datos.cantAlumnosLimit }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Tipo Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        {% for tc in tc %}
+                                            {% if datos.idTc.idTc == tc.idTc %} {{ tc.nombreTc }}{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Tutores Asignados al Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        {% for doc in doc %}
+                                                {% if d1 != "" %}
+                                                    {% for d1 in d1 %}
+                                                        {% if doc.idDoctores == d1.id_doctores %}
+                                                           - {{ doc.nombreDoc }} {{ doc.apellidoDoc }}<br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+                    <h2>Fechas de {{ datos.nombreCurso }}</h2>
+                <hr>
+                    <fieldset>
+                        <div class="col-md-3">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fecha Inicio Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <div class='input-group date' >
+                                            {{ hc.fechaInicio.format("d/m/Y")}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fecha Fin Curso</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <div class='input-group date' >
+                                            {{ hc.fechaFin.format("d/m/Y") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Inicio Recepción Documentos</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <div class='input-group date' >
+                                            {{ hc.inicioRecepDoc.format("d/m/Y") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fin Recepción Documentos</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <div class='input-group date' >
+                                            {{ hc.finRecepDoc.format("d/m/Y") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Inicio de Entrevista</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <div class='input-group date' >
+                                            {{ hc.defechaEntrevista.format("d/m/Y") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fin de Entrevista</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <div class='input-group date' >
+                                            {{ hc.afechaEntrevista.format("d/m/Y") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Inicio de Evaluación</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <div class='input-group date' >
+                                            {{ hc.defechaEvaluacion.format("d/m/Y") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group" >
+                                <label class="control-label" for="prependedInput">Fin de Evaluación</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <div class='input-group date' >
+                                            {{ hc.afechaEvaluacion.format("d/m/Y") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+            </div>
+        </div><!--/span-->
+
+    </div><!--/row-->
+{% endblock %}

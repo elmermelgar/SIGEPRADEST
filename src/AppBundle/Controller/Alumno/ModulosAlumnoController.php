@@ -14,6 +14,24 @@ use AppBundle\Controller\SecurityController;
 
 class ModulosAlumnoController extends DSIController
 {
+    //Metodo para mostrar al Alumno los detalles de los cursos disponibles
+    /**
+     * @Route("/alumno/curso_ver/{id}",name="detallesCursoAlum")
+     */
+    public function detallesAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $doc = $em->getRepository("AppBundle:Doctores")->findBy(array(),array('nombreDoc'=>'ASC'));
+        $tc=$em->getRepository("AppBundle:TipoCurso")->findAll();
+        $datos=$em->getRepository('AppBundle:Curso')->find($id);
+        $hc=$em->getRepository('AppBundle:HorarioCurso')->findOneBy(array('idCurso'=> $id));
+        $id_hc=$hc->getIdHc();
+        $hc=$em->getRepository('AppBundle:HorarioCurso')->find($id_hc);
+        $d1=$this->mostrarD1s($id);
+        $cuota=$em->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=> $id));
+
+        return $this->render("AppBundle:Alumno:curso_ver.html.twig",array("tc"=>$tc,'datos'=>$datos,"doc"=>$doc,"hc"=>$hc,"d1"=>$d1, 'cuota'=>$cuota));
+    }
 
     //Metodo para mostrar al Alumno los cursos en los que ha sido asignado
     /**
