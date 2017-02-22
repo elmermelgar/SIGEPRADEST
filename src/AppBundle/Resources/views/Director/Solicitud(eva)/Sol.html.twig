@@ -25,6 +25,7 @@
                             <th style="text-align: center">Fecha Cita</th>
                             <th style="text-align: center">Solicitante</th>
                             <th style="text-align: center">Curso</th>
+                            <th style="text-align: center">Cupos Disponibles</th>
                             <th style="text-align: center">Acciones</th>
                         </tr>
                         </thead>
@@ -34,6 +35,13 @@
                                 <td style="text-align: center;">{{ ct.idHe.fechaDhe.format('d/m/Y') }}</td>
                                 <td style="text-align: center;">{{ ct.idSolicitud.idDp.idUi.nombre }} {{ ct.idSolicitud.idDp.idUi.apellido }}</td>
                                 <td style="text-align: center;">{{ ct.idSolicitud.idCurso.nombreCurso }}</td>
+                                {% set cont=0 %}
+                                {% for insc in insc %}
+                                    {% if ct.idSolicitud.idCurso.idCurso == insc.idCurso.idCurso %}
+                                        {% set cont=cont+1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                <td style="text-align: center;">{{ ct.idSolicitud.idCurso.cantAlumnosLimit - cont }}</td>
                                 <td style="text-align: center;">
                                     <a href="{{ path('verDetalleSol',{'ids' : ct.idSolicitud.idSolicitud}) }}" title="Detalle" class="btn btn-default" style="background: #81379C;color: #ffffff;"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/> Detalles</a>
                                     -

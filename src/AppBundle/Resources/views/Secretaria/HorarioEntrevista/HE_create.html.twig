@@ -28,7 +28,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Curso</label>
-                                        <select name="curso" class="form-control">
+                                        <select id="curso" name="curso" class="form-control" required>
                                             {% for curso in curso %}
                                                 <option  value="{{ curso.idCurso }}">{{ curso.nombreCurso }}</option>
                                             {% endfor %}
@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <label>Fecha de Entrevista</label>
                                         <div class='input-group date' >
-                                            <input id="fecha" class="form-control" name="fecha" size="16" type="text" placeholder="dd/mm/aaaa">
+                                            <input id="fecha" class="form-control" name="fecha" size="16" type="text" placeholder="dd/mm/aaaa" required>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -47,31 +47,14 @@
                                     <div class="form-group">
                                         <label for="disabledSelect">Hora de Entrevista</label>
                                         <div class='input-group date' >
-                                            <input id="hora" class="form-control" name="hora" size="16" type="text" placeholder="HH:mm">
+                                            <input id="hora" class="form-control" name="hora" size="16" type="text" placeholder="HH:mm" required>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                                         </div>
                                     </div>
                                 </div>
 
-                                {#<div class="col-md-6">#}
-                                    {#<div class="form-group">#}
-                                        {#<label for="disabledSelect">Tipo de Horario</label>#}
-                                        {#<div class="radio">#}
-                                            {#<label>#}
-                                                {#<input type="radio" name="tipoH" id="tipoH" value="Evaluacion" checked />Evaluación#}
-                                            {#</label>#}
-                                            {#<label>#}
-                                                {#<input type="radio" name="tipoH" id="tipoH" value="Cita"/>Cita#}
-                                            {#</label>#}
-                                        {#</div>#}
-                                        {#<div class="radio">#}
-
-                                        {#</div>#}
-                                    {#</div>#}
-                                {#</div>#}
-
-                                <div class="col-md-12 col-md-offset-4">
-                                    <button onclick="validar()" type="button" style="width: 30%;" class="btn btn-primary">Guardar</button>
+                                <div class="col-md-12" style="text-align: center">
+                                    <button onclick="validar()" type="button" style="width: 15%;" class="btn btn-primary">Guardar</button>
                                 </div>
                             </form>
                         </div>
@@ -90,37 +73,42 @@
 <script type="text/javascript">
 
     $(function () {
-        $("#fecha").datetimepicker({format: 'DD-MM-YYYY', minDate: "now"});
+        $("#fecha").datetimepicker({format: 'DD-MM-YYYY', minDate: 'now'});
         $("#hora").datetimepicker({format: 'HH:mm'});
     });
 
     function validar() {
-        var fecha = document.getElementById('fecha').value;
+        var curso = document.getElementById('curso').value;
         var hora = document.getElementById('hora').value;
 
+
+        var fecha = (new Date (document.getElementById('fecha').value.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
         var fechaAhora = moment().format('DD-MM-YYYY');
 
-        if(fecha=='' && hora==''){
+        if (curso == '' && fecha == 'Invalid Date' && hora == '') {
             alertify.error("Es Obligatorio Llenar Los Campos Requeridos");
-        }else{
-            if(fecha==''){
-                alertify.error("Es Obligatorio Llenar La Fecha de la Entrevista");
-            }else{
-                if(fecha<fechaAhora){
-                    alertify.error("La Fecha de la Entrevista no puede ser menor de "+fechaAhora);
-                }else{
-                    if(hora==''){
-                        alertify.error("Es Obligatorio Llenar La Hora de la Entrevista");
-                    }else{
-                        if(hora<"08:00"||hora>"14:30" ){
-                            alertify.error("La Hora de la Entrevista de Programarse en horas Laborales (8:00 - 14:30)");
-                        }else{
-                            document.formulario.submit()
+        } else {
+            if (curso == '') {
+                alertify.error("Es Obligatorio seleccionar un curso de la lista");
+            } else {
+                if (fecha == 'Invalid Date') {
+                    alertify.error("Es Obligatorio Llenar La Fecha de la Entrevista");
+                } else {
+                    if (fecha<fechaAhora) {
+                        alertify.error("La Fecha de la Entrevista no puede ser menor de " + fechaAhora);
+                    } else {
+                        if (hora == '') {
+                            alertify.error("Es Obligatorio Llenar La Hora de la Entrevista");
+                        } else {
+                            if (hora < "08:00" || hora > "14:30") {
+                                alertify.error("La Hora de la Entrevista de Programarse en horas Laborales (8:00 - 14:30)");
+                            } else {
+                                document.formulario.submit()
+                            }
                         }
                     }
                 }
             }
-
         }
     }
 

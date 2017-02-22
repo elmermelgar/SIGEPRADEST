@@ -26,7 +26,7 @@
                             <th style="text-align: center">Nombre</th>
                             <th style="text-align: center">Doctores</th>
                             <th style="text-align: center">Alumnos</th>
-                            <th style="text-align: center">Cuotas</th>
+                            <th style="text-align: center">Cupos Disponibles</th>
                             <th style="text-align: center">Estado</th>
                             <th style="text-align: center">Acciones</th>
                         </tr>
@@ -45,18 +45,24 @@
                                 {% else %}
                                     {% if cursos.IdCurso == hc.idCurso.idCurso %}
                                         <tr>
-                                            <td  class="sorting_desc" aria-sort="descending">{{ hc.FechaInicio.format("d/m/Y")}}</td>
-                                            <td>{{ cursos.nombreCurso }}</td>
-                                            <td>
+                                            <td style="text-align: center" class="sorting_desc" aria-sort="descending">{{ hc.FechaInicio.format("d/m/Y")}}</td>
+                                            <td style="text-align: center">{{ cursos.nombreCurso }}</td>
+                                            <td style="text-align: center">
                                                 {% for d1 in d1 %}
                                                     {% for doc in doctores %}
                                                         {% if cursos.idCurso == d1.id_curso %}{% if doc.idDoctores == d1.id_doctores %} {{ doc.nombreDoc }}<br>{% endif %}{% endif %}
                                                     {% endfor %}
                                                 {% endfor %}
                                             </td>
-                                            <td>{{ cursos.cantAlumnosLimit }}</td>
-                                            <td>{{ cursos.numCuotas }}</td>
-                                            <td>{{ cursos.estadoCurso }}</td>
+                                            <td style="text-align: center">{{ cursos.cantAlumnosLimit }}</td>
+                                            {% set cont=0 %}
+                                            {% for insc in insc %}
+                                                {% if cursos.idCurso == insc.idCurso.idCurso %}
+                                                    {% set cont=cont+1 %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <td style="text-align: center">{{ cursos.cantAlumnosLimit - cont }}</td>
+                                            <td style="text-align: center">{{ cursos.estadoCurso }}</td>
                                             <td style="text-align: center;">
                                                 <a href="{{ asset('/secretaria/alumno_ver') }}/{{ cursos.idCurso }}" title="Seleccionar Curso" class="btn btn-default" style="background: #0AA5E2;color: #ffffff;"><span class="glyphicon glyphicon-share" aria-hidden="true"/> Seleccionar</a>
                                             </td>

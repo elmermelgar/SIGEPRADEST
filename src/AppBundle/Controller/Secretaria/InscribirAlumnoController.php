@@ -40,7 +40,7 @@ class InscribirAlumnoController extends DSIController
             $doctores=$em->getRepository('AppBundle:Doctores')->findAll();
             $d1=$this->mostrarD1();
 
-            return $this->render('AppBundle:Secretaria/IncribirAlumno:cursoDisp.html.twig', array('cursos'=>$array_curso,'doctores'=>$doctores,'d1'=>$d1, 'hc'=>$hc));
+            return $this->render('AppBundle:Secretaria/IncribirAlumno:cursoDisp.html.twig', array('cursos'=>$array_curso,'doctores'=>$doctores,'d1'=>$d1, 'hc'=>$hc, 'insc'=>$inscritos));
         }else{
             return $this->redirectToRoute('login');
         }

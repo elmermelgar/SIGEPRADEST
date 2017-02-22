@@ -31,8 +31,9 @@ class SolicitudDiController extends DSIController
             AND cu.estadoCurso='disponible' AND so.estado='evaluacion'");
 
             $citas = $sql->getResult();
+            $insc=$em->getRepository('AppBundle:InscripcionCurso')->findAll();
 
-            return $this->render('AppBundle:Director/Solicitud(eva):Sol.html.twig', array('citas'=>$citas));
+            return $this->render('AppBundle:Director/Solicitud(eva):Sol.html.twig', array('citas'=>$citas, 'insc'=>$insc));
         }else{
             return $this->redirectToRoute('login');
         }
@@ -44,11 +45,19 @@ class SolicitudDiController extends DSIController
     {
         $em=$this->getDoctrine()->getManager("default");
         $sol=$em->getRepository('AppBundle:Solicitud')->find($id);
-        $sol->setEstado('aprobada');
-        //Guardar en la BD
-        $em->flush();
+        $cur=$em->getRepository('AppBundle:Curso')->find($sol->getIdCurso());
+        $inscritos=$em->getRepository("AppBundle:InscripcionCurso")->findBy(array('idCurso'=>$cur->getIdCurso()));
+        if($cur->getCantAlumnosLimit()<>count($inscritos)){
+            $sol->setEstado('aprobada');
+            //Guardar en la BD
+            $em->flush();
 
-        return $this->redirectToRoute('verSol(dir)');
+            return $this->redirectToRoute('verSol(dir)');
+        }else{
+            $this->MensajeFlash('error','El curso ya no tiene cupos disponibles');
+            return $this->redirectToRoute('verSol(dir)');
+        }
+
     }
 
     /**

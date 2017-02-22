@@ -272,8 +272,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    {% if cuota == NULL or datos.estadoCurso != 'registro'%}
-                    {% else %}
+                    {% if cuota != NULL and datos.estadoCurso == 'registro'%}
                 <form  class="form-horizontal" action="{{ path('disCurso',{'idcurso': datos.idCurso})}}" enctype="multipart/form-data">
                 <h4 style="color: #8702A8">Cambiar de Estado {{ datos.nombreCurso }}</h4>
                         <hr>
