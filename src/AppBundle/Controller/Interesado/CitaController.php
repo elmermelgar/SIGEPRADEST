@@ -29,21 +29,16 @@ class CitaController extends DSIController
      */
     public function indexAction()
     {
-//        setlocale (LC_TIME, "es_ES");
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->getUser();
-        //$rol = $this->getUser()->getIdrol()->getIdrol();
-// validacion para ver si es un usuario adminitrador, o si es un interesado para solo mostrar los datos personales
 
-
-            $entities = $em->createQuery('Select cita from AppBundle:Cita cita ')->getResult();
-//            $entities = $em->createQuery('Select cita,hor,use from AppBundle:Cita cita JOIN cita.idDhe hor JOIN cita.idUi use WHERE hor.ocupado = true and use.nomusuario = \'' . $user . '\'    ')->getResult();
-
-
+        $citas = $em->createQuery('Select ct from AppBundle:Cita ct, AppBundle:Solicitud s where ct.idSolicitud=s.idSolicitud and s.idUi=:usu ORDER BY s.fechaRegistro DESC')
+            ->setParameter('usu',$user)
+            ->getResult();
 
         return array(
-            'entities' => $entities,
+            'citas' => $citas,
         );
     }
 
