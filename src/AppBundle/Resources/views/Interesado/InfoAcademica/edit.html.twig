@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label>A&ntildeo</label>
-                {{ form_widget(form.anio, {'attr' : {'class' : 'form-control', 'placeholder' : 'Año', 'required' : true}}) }}
+                {{ form_widget(form.anio, {'attr' : {'class' : 'form-control', 'placeholder' : 'Año', 'required' : true,'min': 1920}}) }}
                 <span class="text-danger">{{ form_errors(form.anio) }}</span>
             </div>
             <div class="col-md-1"></div>

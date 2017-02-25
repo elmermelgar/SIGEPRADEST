@@ -8,9 +8,8 @@
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="{{ path('admin') }}">Inicio</a></li>
-            <li><a href="{{ path('verCurso') }}">Cursos</a></li>
-            <li class="active">Detalles</li>
+            <li><a href="{{ path('alumno') }}">Inicio</a></li>
+            <li class="active">Expediente</li>
         </ol>
         <h2>Detalles de   {{ entity.nombreExp }}</h2>
     </div>
@@ -113,7 +112,7 @@
                             </div>
                         </div>
                         <br/>
-                        <a href="{{ path('alumnosall') }}" class="btn btn-primary square-btn-adjust">Regresar</a>
+                        <a href="{{ path('alumno') }}" class="btn btn-primary square-btn-adjust">Regresar</a>
 
                     </div>
                     <div class="col-md-6">
