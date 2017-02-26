@@ -90,7 +90,9 @@ class UsuariosController extends SecurityController
 
             //$u->setNomusuario($request->get("username"));
             $datos->setNombre($request->get("nombre"));
-            $datos->setIdRol($em2->getRepository('AppBundle:Roles')->find($request->get('rol')));
+            if($request->get('rol')){
+                $datos->setIdRol($em2->getRepository('AppBundle:Roles')->find($request->get('rol')));
+            }
             $datos->setCorreo($request->get("email"));
             $datos->setApellido($request->get("apellido"));
             $datos->setTelefono($request->get("tel"));
