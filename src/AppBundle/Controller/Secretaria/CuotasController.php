@@ -88,7 +88,7 @@ class CuotasController extends SecurityController
             $pago=$em2->getRepository('AppBundle:Pago')->findAll();
             $cuenta=$em2->getRepository('AppBundle:CuentaBanco')->findAll();
             if($request->isMethod("POST")) {
-                $cuota=$em2->getRepository('AppBundle:Cuotas')->findOneBy(array('cuota'=>$request->get("nombrecuota")));
+                $cuota=$em2->getRepository('AppBundle:Cuotas')->findOneBy(array('cuota'=>$request->get("nombrecuota"),'idCurso'=>$id));
                 if ($cuota) {
                     $this->MensajeFlash('error', 'Ya existe una cuota con este nombre!');
                     return $this->render('AppBundle:Secretaria/Cuotas:cuota_create.html.twig', array('unidad' => $unidades, 'linea' => $linea, 'especifico' => $especifico, 'pago' => $pago, 'cuenta' => $cuenta, 'idcurso' => $id));
@@ -131,7 +131,11 @@ class CuotasController extends SecurityController
             $cuenta=$em2->getRepository('AppBundle:CuentaBanco')->findAll();
             $c=$em2->getRepository('AppBundle:Cuotas')->find($id);
             if($request->isMethod("POST")) {
-
+                $cuota=$em2->getRepository('AppBundle:Cuotas')->findOneBy(array('cuota'=>$request->get("nombrecuota"),'idCurso'=>$id2));
+                if ($cuota) {
+                    $this->MensajeFlash('error', 'Ya existe una cuota con este nombre!');
+                    return $this->render('AppBundle:Secretaria/Cuotas:cuota_edit.html.twig', array('unidad'=>$unidades, 'linea'=>$linea, 'especifico'=>$especifico, 'pago'=>$pago, 'cuenta'=>$cuenta, 'idcurso'=>$id2, 'cuota'=>$c));
+                }
                     $c->setCuota($request->get("nombrecuota"));
                     $c->setDescripCuota($request->get("des_cuota"));
                     $c->setIdCuentaBanco($em2->getRepository('AppBundle:CuentaBanco')->find($request->get('cuenta')));
