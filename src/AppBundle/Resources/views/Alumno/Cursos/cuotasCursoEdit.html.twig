@@ -1,5 +1,9 @@
 {% extends 'base2.html.twig' %}
 {% block active %}active-menu{% endblock %}
+{% block styles %}
+<link href="{{ asset('public/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+<link href="{{ asset('public/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block Header %}
     <div class="col-md-12">
         <ol class="breadcrumb">
@@ -49,17 +53,20 @@
                                     </div>
                                     <div class="form-group">
                                          <label for="num">Número de Recibo</label>
-                                         <input class="form-control" value="{{ pago.numeroRecibo }}" name="numrecibo" type="number" required/>
+                                         <input class="form-control" value="{{ pago.numeroRecibo }}" name="numrecibo" type="text" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="fecha">Fecha de Pago</label>
-                                    <input class="form-control"  type="date" name="fechapago" required placeholder="Introduzca una fecha"/>
-                                    </div>
+                                        <div class='input-group date'>
+                                            <input class="form-control" value="{{ pago.fechaPago.format('d/m/Y') }}" type="text" id="fechapago" name="fechapago" required placeholder="Introduzca una fecha" />
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                        </div>
 
                                 </div>
-                                <div class="col-md-12">
-                                    <button type="reset" style="width: 20%;margin-top: 10px;float: left" class="btn btn-default">Limpiar</button>
-                                    <button type="submit" style="width: 20%;margin-top: 10px;float: right" class="btn btn-primary">Actualizar Datos</button>
+                                <div class="col-md-12" style="text-align: center">
+                                    <button type="submit" style="width: 15%" class="btn btn-primary">Actualizar</button>
+                                    <button type="reset" style="width: 15%" class="btn btn-default">Limpiar</button>
                                 </div>
 
                             </form>
@@ -74,4 +81,15 @@
 
 </div>
 
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/moment.js') }} "></script>
+    <script src="{{ asset('public/js/bootstrap-datetimepicker.min.js') }} "></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("#fechapago").datetimepicker({format: 'DD/MM/YYYY'});
+        });
+    </script>
 {% endblock %}
