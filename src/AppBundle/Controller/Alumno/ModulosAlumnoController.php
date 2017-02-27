@@ -143,7 +143,7 @@ class ModulosAlumnoController extends DSIController
         return $this->render('AppBundle:Alumno/Cursos:cuotasCurso.html.twig', array('cuotas'=>$cuotas,'cuotasp'=>$cuotasp,'curso'=>$curso,'inscrip'=>$inscrip, 'pago'=>$pago));
     }
 
-     //Metodo para editar un pago
+    //Metodo para editar un pago
     /**
      * @Route("/alumno/cuotas/{id}/{id2}/edit", name="cuotas_edit_alumno")
      */
@@ -156,33 +156,34 @@ class ModulosAlumnoController extends DSIController
         $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($id2);
 
         if($request->isMethod("POST")) {
-                if ($_FILES["imagen"]["error"] > 0){
-                    return new Response('Error en la subida de la imagen');
-                }else {
-                    if($this->infoTipoImagen('imagen')[0]=='image') {
-                        $cuo=$em->getRepository('AppBundle:Cuotas')->find($request->get('cuota'));
-                        $nombrerecibo=$cuo->getCuota().$this->getUser().$curso->getIdCurso().$this->infoTipoImagen('imagen')[1];
-                        if($nombrerecibo!=NULL){
-                            $pago->setImagenRecibo("img/recibo/".$nombrerecibo);
-                        }
-                        $pago->setCuotaDiferenciada($request->get("dif"));
-                        $pago->setFechaPago(new \DateTime($request->get("fechapago")));
-                        $pago->setMontoPagado($request->get("monto"));
-                        $pago->setNumeroRecibo($request->get("numrecibo"));
-                        $pago->setVerificado('enviado');
-                        $pago->setObservacion('Revisado y enviado');
-                        $em->flush();
-                        //Subiendo la Imagen
-                        $this->subirRecibo('imagen',$nombrerecibo);
-                        $this->MensajeFlash('exito', 'Pago actualizado correctamente!');
-                        $cuotas=$this->getDoctrine()->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id2));
-                        $alumno=$this->getDoctrine()->getRepository('AppBundle:Alumno')->findOneBy(array('idUi'=>$this->getUser()));
-                        $inscrip=$this->getDoctrine()->getRepository('AppBundle:InscripcionCurso')->findOneBy(array('idCurso'=>$id2,'idAlumno'=>$alumno->getIdAlumno()));
-                        $pago=$this->getDoctrine()->getRepository('AppBundle:PagoCuota')->findBy(array('idDc'=>$id));
-                        $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($id2);
-                        return $this->redirectToRoute('cuotas_curso_alumno', array('id'=>$curso->getIdCurso(),'id2'=>$inscrip->getIdDc()));
+                if($this->infoTipoImagen('imagen')[0]=='image') {
+                    $cuo=$em->getRepository('AppBundle:Cuotas')->find($request->get('cuota'));
+                    $nombrerecibo=$cuo->getCuota().$this->getUser().$curso->getIdCurso().$this->infoTipoImagen('imagen')[1];
+                    if($nombrerecibo!=NULL){
+                        $pago->setImagenRecibo("img/recibo/".$nombrerecibo);
                     }
+                    //Subiendo la Imagen
+                    $this->subirRecibo('imagen',$nombrerecibo);
+                } else {
+                    $this->MensajeFlash('error', 'El archivo no es una imagen!');
+                    return $this->render('AppBundle:Alumno/Cursos:cuotasCursoEdit.html.twig', array('cuotas'=>$cuotas,'curso'=>$curso, 'pago'=>$pago));
                 }
+                $pago->setCuotaDiferenciada($request->get("dif"));
+                $pago->setFechaPago(\DateTime::createFromFormat('d/m/Y',$request->get("fechapago")));
+                $pago->setMontoPagado($request->get("monto"));
+                $pago->setNumeroRecibo($request->get("numrecibo"));
+                $pago->setVerificado('enviado');
+                $pago->setObservacion('Revisado y enviado');
+                $em->flush();
+
+                $this->MensajeFlash('exito', 'Pago actualizado correctamente!');
+                $cuotas=$this->getDoctrine()->getRepository('AppBundle:Cuotas')->findBy(array('idCurso'=>$id2));
+                $alumno=$this->getDoctrine()->getRepository('AppBundle:Alumno')->findOneBy(array('idUi'=>$this->getUser()));
+                $inscrip=$this->getDoctrine()->getRepository('AppBundle:InscripcionCurso')->findOneBy(array('idCurso'=>$id2,'idAlumno'=>$alumno->getIdAlumno()));
+                $pago=$this->getDoctrine()->getRepository('AppBundle:PagoCuota')->findBy(array('idDc'=>$id));
+                $curso=$this->getDoctrine()->getRepository('AppBundle:Curso')->find($id2);
+                return $this->redirectToRoute('cuotas_curso_alumno', array('id'=>$curso->getIdCurso(),'id2'=>$inscrip->getIdDc()));
+
 
         }
         return $this->render('AppBundle:Alumno/Cursos:cuotasCursoEdit.html.twig', array('cuotas'=>$cuotas,'curso'=>$curso, 'pago'=>$pago));
