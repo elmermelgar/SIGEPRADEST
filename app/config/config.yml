@@ -26,8 +26,7 @@ framework:
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
-        metadata_update_threshold: 900
-        handler_id:  ~
+        metadata_update_threshold: 1800
     fragments:       ~
     http_method_override: true
 
